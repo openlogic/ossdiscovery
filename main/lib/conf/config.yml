@@ -1,0 +1,146 @@
+# config.yml
+#
+# LEGAL NOTICE
+# -------------
+# 
+# OSS Discovery is a tool that finds installed open source software.
+#    Copyright (C) 2007 OpenLogic, Inc.
+#  
+# OSS Discovery is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License version 3 as 
+# published by the Free Software Foundation.  
+#  
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License version 3 (discovery2-client/license/OSSDiscoveryLicense.txt) 
+# for more details.
+#  
+# You should have received a copy of the GNU Affero General Public License along with this program.  
+# If not, see http://www.gnu.org/licenses/
+#  
+# You can learn more about OSSDiscovery or contact the team at www.ossdiscovery.com.
+# You can contact OpenLogic at info@openlogic.com.
+#
+#--------------------------------------------------------------------------------------------------
+
+#--------------------------------------------------------------------------------------
+# for enterprise wide deployments and scans, it's useful to report scans with a company
+# name so that scan results can be aggregated and enteprise-wide statistics are possible
+#
+# by default this is "anonymous"
+
+company_name: anonymous
+
+#--------------------------------------------------------------------------------------
+# machine_id needs to be universally unique and static
+# this will be changed by the system from "default" unless overridden here by a
+# different value.  If you choose to override it, insure that it's unique for each
+# machine on which a scan is run if the results are to be submitted
+
+machine_id: default
+
+
+#--------------------------------------------------------------------------------------
+# what directory to walk if no other directories are specified in the inclusion filter
+# if --path command line parameter is given, that path will override this one
+# if no --path is given and there are no filters in the inclusion_filter list, then
+# this path will be used to scan
+
+directory_to_scan: /
+
+#--------------------------------------------------------------------------------------
+# which default filter set to use
+generic_filters: /filters/filters-list.rb
+
+# Arg that will be passed to Logger.new().  From the rdoc: This is a filename (String) or IO object (typically STDOUT, STDERR, or an open file).
+log_device: <% File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'log', 'discovery.log')) %> 
+
+# Valid options are: FATAL, ERROR, WARN, INFO, DEBUG - 'WARN' is the recommended setting for 
+# productions runs, it shouldn't give you too much output, but you also won't miss importatnt warnings.
+log_level: <% Logger::INFO %>
+
+# Set this property to true if you'd like an auditable list of all the files of interested that triggered successful 
+# matches to be printed out.  If it is set to true, this will be printed to the value specified in the 'results' property.
+produce_match_audit_records: false
+
+#--------------------------------------------------------------------------------------
+# where the results should go by default, both of these may be overridden by command
+# line options.
+
+# human readable
+results: STDOUT
+
+# machine readable results file
+machine_results: scan_results.txt
+
+# whether or not to show the machine scan results after the scan is complete
+preview_results: false
+
+# whether to include location (paths) in the machine scan results file.
+include_paths: false
+
+#--------------------------------------------------------------------------------------
+# these items describe where and how scan results are sent
+# 
+
+send_results: false                                             # default to not send, can be overridden on command line
+
+# TODO - IMPORTANT: This Default/Standard URL needs to point to OpenLogic's Disco 2 server when this goes to production
+
+# Note that destination_server_url and server_base_url can neither be localhost urls if proxying is being 
+# used or tested.  You can't proxy a localhost URL.
+
+destination_server_url: http://localhost:3000/scans/scanpost   # change to OL disco production server
+# destination_server_url: http://192.168.10.133:3000/scans/scanpost   # linux development server, "smoker"
+# destination_server_url: https://192.168.10.211/cgi-bin/scanpost.rb   # linux integration test server with HTTPS
+# destination_server_url: http://192.168.10.211/cgi-bin/scanpost.rb    # linux integration test server with HTTP
+
+# Configurable options for scan rules updating.  TODO findme: clean this up, combining where possible with the 'destination_server_url' 
+# for delivering results above. Note: On hold until the server-side of things has been firmed up.
+
+# TODO - IMPORTANT: This Default/Standard URL needs to point to OpenLogic's Disco 2 server when this goes to production
+# localhost URLs won't work if testing or using a proxy - this URL must be changed the real server URL
+server_base_url: http://192.168.10.159:3000/
+rules_files_url_path: rules_files.xml
+# When you navigate in a browser to 'server_base_url + rules_files_url_path' (eg... http://localhost:3000/rules_files.xml), 
+# you should see an xml file that specifies all the scan rules files available on the server.
+
+# username password of server submission, should be nil if no authentication is in use
+username: nil
+password: nil 
+
+# TODO - IMPORTANT: proxy data needs to be nil'd out when this is released open source
+# any proxy value not specified is required to be nil
+
+proxy_host: nil # "192.168.10.211"
+proxy_port: nil # 4545 # 3128
+proxy_user: nil # 
+proxy_password: nil #
+
+
+#--------------------------------------------------------------------------------------
+# where to pick up the default scan rules
+rules_openlogic: <% File.expand_path(File.join(File.dirname(__FILE__), '..', 'rules', 'openlogic')) %>
+rules_drop_ins: <% File.expand_path(File.join(File.dirname(__FILE__), '..', 'rules', 'drop_ins')) %>
+rules_dirs: <% ['rules_openlogic', 'rules_drop_ins'] %>
+# If you only want to run the tool with your custom written rules, you would put them in the 'drop_ins' dir and change the previous line to:
+#   rules_dirs: <% ['rules_drop_ins'] %>
+
+
+#--------------------------------------------------------------------------------------
+# show permission denied directories or files
+show_permission_denied: false
+
+update_rules: false
+update_rules_and_do_scan: false
+
+
+#--------------------------------------------------------------------------------------
+# decide whether to scan symlink'd files and directories 
+# by default it's true because symlinks are so commonly used
+follow_symlinks: true
+# maximum number of indirections to follow through symlinks
+symlink_depth: 5
+

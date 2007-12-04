@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>progress_report (Walker)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/walker.rb, line 327</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">progress_report</span>()
+    
+    <span class="ruby-identifier">printf</span>( <span class="ruby-value str">&quot;directories walked: %d\n&quot;</span>, <span class="ruby-identifier">dir_ct</span>() )
+    <span class="ruby-identifier">printf</span>( <span class="ruby-value str">&quot;files encountered : %d\n&quot;</span>, <span class="ruby-identifier">file_ct</span>() )
+    <span class="ruby-identifier">printf</span>( <span class="ruby-value str">&quot;symlinks found    : %d\n&quot;</span>, <span class="ruby-identifier">sym_link_ct</span>() )
+    <span class="ruby-identifier">printf</span>( <span class="ruby-value str">&quot;bad symlink count : %d\n&quot;</span>, <span class="ruby-identifier">bad_link_ct</span>() )
+    <span class="ruby-identifier">printf</span>( <span class="ruby-value str">&quot;permission denied : %d\n&quot;</span>, <span class="ruby-identifier">permission_denied_ct</span>() )
+    <span class="ruby-identifier">printf</span>( <span class="ruby-value str">&quot;files of interest : %d\n...\n&quot;</span>, <span class="ruby-identifier">foi_ct</span>() )
+    
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

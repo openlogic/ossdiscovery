@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>found_file (RuleEngine)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/rule_engine.rb, line 94</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">found_file</span>( <span class="ruby-identifier">location</span>, <span class="ruby-identifier">filename</span>, <span class="ruby-identifier">filter_used</span> )
+  
+    <span class="ruby-keyword kw">if</span> ( <span class="ruby-identifier">$DEBUG</span> )
+      <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;found_file %s, %s, %s\n&quot;</span>, <span class="ruby-identifier">location</span>, <span class="ruby-identifier">filename</span>, <span class="ruby-identifier">filter_used</span> )
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-identifier">digest_of_found_file</span> = <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-identifier">binary_content_of_found_file</span> = <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-identifier">produce_match_audit_records</span> = <span class="ruby-constant">Config</span>.<span class="ruby-identifier">prop</span>(<span class="ruby-identifier">:produce_match_audit_records</span>)
+    
+    <span class="ruby-comment cmt"># each project_rule object contains a collection of rulesets.  each ruleset contains a collection of match rules</span>
+    
+    <span class="ruby-ivar">@project_rules</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">project_rule</span> <span class="ruby-operator">|</span>
+      <span class="ruby-identifier">project_rule</span>.<span class="ruby-identifier">rulesets</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">ruleset</span> <span class="ruby-operator">|</span> 
+        <span class="ruby-identifier">has_md5_match_occurred</span> = <span class="ruby-keyword kw">false</span>
+        <span class="ruby-identifier">match_or_not</span> = <span class="ruby-keyword kw">false</span>
+        <span class="ruby-identifier">ruleset</span>.<span class="ruby-identifier">match_rules</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">match_rule</span> <span class="ruby-operator">|</span>
+          <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">match_or_not</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">ruleset</span>.<span class="ruby-identifier">is_result_expression_or_all</span>) <span class="ruby-keyword kw">then</span>
+            <span class="ruby-comment cmt"># an optimization, if the rule is a bunch of OR's, we know one true will be enough to make the whole thing true, so there's no point in calling match? again</span>
+            <span class="ruby-keyword kw">break</span>
+          <span class="ruby-keyword kw">else</span>
+            <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">digest_of_found_file</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">match_rule</span>.<span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-constant">MatchRule</span><span class="ruby-operator">::</span><span class="ruby-constant">TYPE_MD5</span>) <span class="ruby-keyword kw">then</span>
+              <span class="ruby-comment cmt"># an optimization - only compute the digest once for any given FOI</span>
+              <span class="ruby-identifier">digest_of_found_file</span> = <span class="ruby-constant">MD5MatchRule</span>.<span class="ruby-identifier">get_digest_for</span>(<span class="ruby-identifier">location</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;/&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">filename</span>)
+            <span class="ruby-keyword kw">end</span>
+            <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">binary_content_of_found_file</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">match_rule</span>.<span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-constant">MatchRule</span><span class="ruby-operator">::</span><span class="ruby-constant">TYPE_BINARY</span>) <span class="ruby-keyword kw">then</span>
+              <span class="ruby-comment cmt"># an optimization - only read the binary content once for any given FOI</span>
+              <span class="ruby-identifier">binary_content_of_found_file</span> = <span class="ruby-constant">BinaryMatchRule</span>.<span class="ruby-identifier">get_binary_content_for</span>(<span class="ruby-identifier">location</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;/&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">filename</span>)
+            <span class="ruby-keyword kw">end</span>
+            <span class="ruby-keyword kw">begin</span>
+              <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">has_md5_match_occurred</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">match_rule</span>.<span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-constant">MatchRule</span><span class="ruby-operator">::</span><span class="ruby-constant">TYPE_MD5</span>) <span class="ruby-keyword kw">then</span>
+                <span class="ruby-comment cmt"># an optimization, don't call 'match_rule.match?', it's not necessary</span>
+                <span class="ruby-keyword kw">next</span>
+              <span class="ruby-keyword kw">else</span>
+                <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">match_rule</span>.<span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-constant">MatchRule</span><span class="ruby-operator">::</span><span class="ruby-constant">TYPE_MD5</span>) <span class="ruby-keyword kw">then</span>
+                  <span class="ruby-identifier">match_or_not</span> = <span class="ruby-identifier">match_rule</span>.<span class="ruby-identifier">match?</span>(<span class="ruby-identifier">location</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;/&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">filename</span>, <span class="ruby-identifier">digest_of_found_file</span>)
+                  <span class="ruby-identifier">has_md5_match_occurred</span> = <span class="ruby-identifier">match_or_not</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">true</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">false</span>
+                <span class="ruby-keyword kw">elsif</span> (<span class="ruby-identifier">match_rule</span>.<span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-constant">MatchRule</span><span class="ruby-operator">::</span><span class="ruby-constant">TYPE_BINARY</span>) <span class="ruby-keyword kw">then</span>
+                  <span class="ruby-identifier">match_or_not</span> = <span class="ruby-identifier">match_rule</span>.<span class="ruby-identifier">match?</span>(<span class="ruby-identifier">location</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;/&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">filename</span>, <span class="ruby-identifier">binary_content_of_found_file</span>)
+                <span class="ruby-keyword kw">else</span>
+                  <span class="ruby-identifier">match_or_not</span> = <span class="ruby-identifier">match_rule</span>.<span class="ruby-identifier">match?</span>(<span class="ruby-identifier">location</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;/&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">filename</span>)
+                <span class="ruby-keyword kw">end</span>
+                <span class="ruby-comment cmt"># For debugging purposes</span>
+                <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">produce_match_audit_records</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">match_or_not</span>)
+                  <span class="ruby-ivar">@audit_records</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">MatchAuditRecord</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">project_rule</span>.<span class="ruby-identifier">name</span>, <span class="ruby-identifier">ruleset</span>.<span class="ruby-identifier">name</span>, <span class="ruby-identifier">match_rule</span>.<span class="ruby-identifier">name</span>, <span class="ruby-identifier">location</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;/&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">filename</span>)
+                <span class="ruby-keyword kw">end</span>
+              <span class="ruby-keyword kw">end</span>
+            <span class="ruby-keyword kw">rescue</span> 
+              <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">printf</span>(<span class="ruby-node">&quot;\nMatch exception (#{$!.inspect}) with %s/%s project_rule: %s, ruleset: %s, matchrule: %s\n&quot;</span>, <span class="ruby-identifier">location</span>, <span class="ruby-identifier">filename</span>, <span class="ruby-identifier">project_rule</span>.<span class="ruby-identifier">name</span>, <span class="ruby-identifier">ruleset</span>.<span class="ruby-identifier">name</span>, <span class="ruby-identifier">match_rule</span>.<span class="ruby-identifier">name</span> )
+            <span class="ruby-keyword kw">end</span>
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># of ruleset.match_rules.each</span>
+      <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># of project_rule.rulesets.each</span>
+    <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># of @project_rules.each</span>
+
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

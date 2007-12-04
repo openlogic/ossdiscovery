@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: RuleEngine</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">RuleEngine</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/rule_engine_rb.html">
+                lib/rule_engine.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000045">files_of_interest</a>&nbsp;&nbsp;
+      <a href="#M000041">found_file</a>&nbsp;&nbsp;
+      <a href="#M000043">load_scan_rules</a>&nbsp;&nbsp;
+      <a href="#M000040">new</a>&nbsp;&nbsp;
+      <a href="#M000044">register_with_walker</a>&nbsp;&nbsp;
+      <a href="#M000042">scan_complete</a>&nbsp;&nbsp;
+      <a href="#M000046">speed=</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">analysis_elapsed</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">audit_records</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">project_rules</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">speed</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000040" class="method-detail">
+        <a name="M000040"></a>
+
+        <div class="method-heading">
+          <a href="RuleEngine.src/M000040.html" target="Code" class="method-signature"
+            onclick="popupCode('RuleEngine.src/M000040.html');return false;">
+          <span class="method-name">new</span><span class="method-args">( rulesdirs, walker, speedhint )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+create a <a href="RuleEngine.html">RuleEngine</a> with a full path to a
+rules filename and an instance of a <a href="Walker.html">Walker</a>
+</p>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000045" class="method-detail">
+        <a name="M000045"></a>
+
+        <div class="method-heading">
+          <a href="RuleEngine.src/M000045.html" target="Code" class="method-signature"
+            onclick="popupCode('RuleEngine.src/M000045.html');return false;">
+          <span class="method-name">files_of_interest</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+This method returns a Set of files that the rule engine wants the walker to
+be able to detect. This list of files should contain no duplicates and may
+consist of regular expressions that can match basenames or literal
+filenames.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000041" class="method-detail">
+        <a name="M000041"></a>
+
+        <div class="method-heading">
+          <a href="RuleEngine.src/M000041.html" target="Code" class="method-signature"
+            onclick="popupCode('RuleEngine.src/M000041.html');return false;">
+          <span class="method-name">found_file</span><span class="method-args">( location, filename, filter_used )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+callback from the walker to notify the <a
+href="RuleEngine.html">RuleEngine</a> a file of interest was found. The
+walker will call its registered subscribers with the location of the found
+file, the filename itself, and what filter matched.
+</p>
+<p>
+Since multiple rules may match the same file, the rule_used is mainly a
+diagnostic or hint which can tell the <a
+href="RuleEngine.html">RuleEngine</a> how the walker is picking stuff up
+</p>
+<p>
+TODO - need to implement found file
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000043" class="method-detail">
+        <a name="M000043"></a>
+
+        <div class="method-heading">
+          <a href="RuleEngine.src/M000043.html" target="Code" class="method-signature"
+            onclick="popupCode('RuleEngine.src/M000043.html');return false;">
+          <span class="method-name">load_scan_rules</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+reads the scan rules XML file, scan_rules_filename, loads the projects and
+rulesets into the engine
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000044" class="method-detail">
+        <a name="M000044"></a>
+
+        <div class="method-heading">
+          <a href="RuleEngine.src/M000044.html" target="Code" class="method-signature"
+            onclick="popupCode('RuleEngine.src/M000044.html');return false;">
+          <span class="method-name">register_with_walker</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000042" class="method-detail">
+        <a name="M000042"></a>
+
+        <div class="method-heading">
+          <a href="RuleEngine.src/M000042.html" target="Code" class="method-signature"
+            onclick="popupCode('RuleEngine.src/M000042.html');return false;">
+          <span class="method-name">scan_complete</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+this method is a call back from the Framework. It&#8216;s job is to now
+evaluate the ruleset combinations for all the projects and return an
+aggregated list of packages that were found during the scan
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000046" class="method-detail">
+        <a name="M000046"></a>
+
+        <div class="method-heading">
+          <a href="RuleEngine.src/M000046.html" target="Code" class="method-signature"
+            onclick="popupCode('RuleEngine.src/M000046.html');return false;">
+          <span class="method-name">speed=</span><span class="method-args">( speedhint )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+getter/setter for speed hint. this value is used to filter out which match
+rules, rulesets and evaluation expressions should be used during this scan
+and analysis.
+</p>
+<p>
+current valid values for speedhint are:
+</p>
+<pre>
+  1 - Fastest  (package name only)
+  2 - Medium   (package and usually vesion)
+  3 - Slow     (looks for matches on a wider array of files of interest - less strict file of interest filter)
+</pre>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
