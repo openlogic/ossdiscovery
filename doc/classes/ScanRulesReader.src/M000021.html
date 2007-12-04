@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>validate_expressions (ScanRulesReader)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/scan_rules_reader.rb, line 164</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-constant">ScanRulesReader</span>.<span class="ruby-identifier">validate_expressions</span>(<span class="ruby-identifier">projects</span>)
+    <span class="ruby-comment cmt"># validate the expression for the project</span>
+    <span class="ruby-identifier">projects</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">project</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">operands</span> = <span class="ruby-constant">BooleanExpression</span>.<span class="ruby-identifier">get_operands</span>(<span class="ruby-identifier">project</span>.<span class="ruby-identifier">eval_rule</span>.<span class="ruby-identifier">expression</span>)
+      <span class="ruby-identifier">all_operands_defined_as_rulesets</span> = <span class="ruby-keyword kw">false</span>
+      
+      <span class="ruby-identifier">rs_names</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span> <span class="ruby-comment cmt"># The operands in the boolean expression</span>
+      
+      <span class="ruby-identifier">project</span>.<span class="ruby-identifier">rulesets</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">rs</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">rs_names</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">rs</span>.<span class="ruby-identifier">name</span>
+        <span class="ruby-identifier">operands</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">rs</span>.<span class="ruby-identifier">name</span>)
+      <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># of project.rulesets.each</span>
+      
+      <span class="ruby-identifier">rs_names_copy</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
+      <span class="ruby-identifier">rs_names</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">rs_names_copy</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">name</span>)) <span class="ruby-keyword kw">then</span>
+          <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Invalid scan rule declaration for project '#{project.name}'. Duplicate ruleset name of '#{name}'.&quot;</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">rs_names_copy</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">name</span>
+      <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># of rs_name.each</span>
+      
+      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">operands</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>) <span class="ruby-keyword kw">then</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Invalid scan rule declaration for project '#{project.name}'. Did not have a ruleset for each operand in the eval expression '#{project.eval_rule.expression}'.&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># of projects.each</span>
+    
+    <span class="ruby-comment cmt"># validate the expressions for the rulesets that are part of the project</span>
+    <span class="ruby-identifier">projects</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">project</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">project</span>.<span class="ruby-identifier">rulesets</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">rs</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">operands</span> = <span class="ruby-constant">BooleanExpression</span>.<span class="ruby-identifier">get_operands</span>(<span class="ruby-identifier">rs</span>.<span class="ruby-identifier">result_expression</span>)
+        <span class="ruby-identifier">mr_names</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span> <span class="ruby-comment cmt"># The operands in the boolean expression</span>
+        <span class="ruby-identifier">rs</span>.<span class="ruby-identifier">match_rules</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">mr</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">mr_names</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">mr</span>.<span class="ruby-identifier">name</span>
+          <span class="ruby-identifier">operands</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">mr</span>.<span class="ruby-identifier">name</span>)
+        <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># of rs.match_rules.each</span>
+        
+        <span class="ruby-identifier">mr_names_copy</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
+        <span class="ruby-identifier">mr_names</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span>
+          <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">mr_names_copy</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">name</span>)) <span class="ruby-keyword kw">then</span>
+            <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Invalid scan rule declaration for project '#{project.name}' and ruleset '#{rs.name}'. Duplicate matchrule name of '#{name}'.&quot;</span>
+          <span class="ruby-keyword kw">end</span>
+          <span class="ruby-identifier">mr_names_copy</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">name</span>
+        <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># of mr_name.each</span>
+        
+        <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">operands</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>) <span class="ruby-keyword kw">then</span>
+          <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Invalid scan rule declaration for project '#{project.name}' and ruleset '#{rs.name}'. Did not have a matchrule for each operand in the eval expression '#{rs.result_expression}'.&quot;</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># of project.rulesets.each</span>
+    <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># of projects.each</span>
+    
+    <span class="ruby-comment cmt"># everything validated</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

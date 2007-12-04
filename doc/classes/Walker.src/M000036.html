@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>set_files_of_interest (Walker)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/walker.rb, line 410</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_files_of_interest</span>( <span class="ruby-identifier">subscriber</span>, <span class="ruby-identifier">filelist</span> )
+
+    <span class="ruby-comment cmt"># spin through the list of files and either add it to the criteria hash if it's not already found in the hash.</span>
+    <span class="ruby-comment cmt"># After that, associate the subscriber with it.  The list of files of interest, @criteria, is</span>
+    <span class="ruby-comment cmt"># a hash key'd by the file of interest whose value is a list of subscribers to </span>
+    <span class="ruby-comment cmt"># notify in a found file condition.</span>
+    <span class="ruby-comment cmt">#</span>
+    <span class="ruby-comment cmt"># it's assumed that the given file list has no duplicates in it, but even if it did, they'd</span>
+    <span class="ruby-comment cmt"># get filtered out by virtue that the criteria is keyed by filename</span>
+    <span class="ruby-comment cmt">#</span>
+    <span class="ruby-comment cmt"># a file of interest can be a regex or a literal filename, but it's a filename</span>
+    <span class="ruby-comment cmt"># or basename of a dir only, not a path</span>
+    
+    <span class="ruby-identifier">filelist</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span> <span class="ruby-identifier">file_of_interest</span> <span class="ruby-operator">|</span>
+      
+      <span class="ruby-keyword kw">if</span> ( <span class="ruby-ivar">@criteria</span>[ <span class="ruby-identifier">file_of_interest</span> ] <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> )  <span class="ruby-comment cmt"># then this is a new file or file type to watch for</span>
+        
+        <span class="ruby-comment cmt"># add the new type to the criteria list and register the subscriber</span>
+        <span class="ruby-ivar">@criteria</span>[ <span class="ruby-identifier">file_of_interest</span> ] = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>         <span class="ruby-comment cmt"># each file of interest may have multiple subscribers interested in it</span>
+        <span class="ruby-ivar">@criteria</span>[ <span class="ruby-identifier">file_of_interest</span> ].<span class="ruby-identifier">push</span>( <span class="ruby-identifier">subscriber</span> )  <span class="ruby-comment cmt"># add a subcriber to the list for that file</span>
+        
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-comment cmt"># TODO - if we can't enforce or trust that filelist has no duplicates, then we need to</span>
+        <span class="ruby-comment cmt"># check to see if this file of interest already has this subscriber in it.</span>
+        
+        <span class="ruby-ivar">@criteria</span>[ <span class="ruby-identifier">file_of_interest</span> ].<span class="ruby-identifier">push</span>( <span class="ruby-identifier">subscriber</span> )
+        
+      <span class="ruby-keyword kw">end</span>
+    }
+
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

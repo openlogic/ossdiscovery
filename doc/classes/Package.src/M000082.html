@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>create_instances (Package)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/package.rb, line 36</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Package</span>.<span class="ruby-identifier">create_instances</span>(<span class="ruby-identifier">locations</span>, <span class="ruby-identifier">project</span>)
+    
+    <span class="ruby-identifier">instances</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
+    
+    <span class="ruby-identifier">locations</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">location</span><span class="ruby-operator">|</span>
+
+      <span class="ruby-identifier">version_set</span> = <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>
+      <span class="ruby-identifier">project</span>.<span class="ruby-identifier">rulesets</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">ruleset</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">ruleset</span>.<span class="ruby-identifier">match_rules</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">match_rule</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">found_versions</span> = <span class="ruby-identifier">match_rule</span>.<span class="ruby-identifier">get_found_versions</span>(<span class="ruby-identifier">location</span>)
+          <span class="ruby-identifier">found_versions</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">version</span><span class="ruby-operator">|</span>
+          <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">version</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">version</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;&quot;</span>) <span class="ruby-keyword kw">then</span>
+            <span class="ruby-identifier">version</span> = <span class="ruby-constant">VERSION_UNKNOWN</span>
+          <span class="ruby-keyword kw">end</span>
+            <span class="ruby-identifier">version_set</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">version</span>
+          }
+        }
+        
+        <span class="ruby-comment cmt"># Essentially, here's what we're saying.</span>
+        <span class="ruby-comment cmt"># - If &quot;UNKNOWN&quot; was the only hit for a given location, report that.</span>
+        <span class="ruby-comment cmt"># - If we hit on &quot;UNKNOWN&quot; and some actual version, the &quot;UNKNOWN&quot; probably </span>
+        <span class="ruby-comment cmt">#   only exists as kruft left around from an AND of two match rules (One that </span>
+        <span class="ruby-comment cmt">#   could get us part of the way there, telling us the package existed, but not </span>
+        <span class="ruby-comment cmt">#   knowing which version, and won that finished the job by telling us the version as well.)</span>
+        <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">version_set</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>) <span class="ruby-keyword kw">then</span>
+          <span class="ruby-identifier">version_set</span>.<span class="ruby-identifier">delete_if</span>() {<span class="ruby-operator">|</span><span class="ruby-identifier">version</span><span class="ruby-operator">|</span> <span class="ruby-identifier">version</span> <span class="ruby-operator">==</span> <span class="ruby-constant">VERSION_UNKNOWN</span>}
+        <span class="ruby-keyword kw">end</span>
+      }
+      <span class="ruby-identifier">version_set</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">version</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">package</span> = <span class="ruby-constant">Package</span>.<span class="ruby-identifier">new</span>
+          <span class="ruby-identifier">package</span>.<span class="ruby-identifier">name</span> = <span class="ruby-identifier">project</span>.<span class="ruby-identifier">name</span>
+          <span class="ruby-identifier">package</span>.<span class="ruby-identifier">found_at</span> = <span class="ruby-identifier">location</span>
+          <span class="ruby-identifier">package</span>.<span class="ruby-identifier">version</span> = <span class="ruby-identifier">version</span>
+          
+          <span class="ruby-identifier">instances</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">package</span>
+      }
+    }
+    
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">instances</span>
+    
+    <span class="ruby-comment cmt"># TODO findme: Consider using this code to stream out some sort of detailed report.</span>
+<span class="ruby-comment cmt">#    results = Array.new</span>
+<span class="ruby-comment cmt">#    </span>
+<span class="ruby-comment cmt">#    found = &quot;&quot;</span>
+<span class="ruby-comment cmt">#    </span>
+<span class="ruby-comment cmt">#    locations.each { |location|</span>
+<span class="ruby-comment cmt">#      found =  &quot;Project: '#{project.name}' found at '#{location}'.\n&quot;</span>
+<span class="ruby-comment cmt">#      found &lt;&lt; &quot;         RuleSet expression: #{project.eval_rule.expression}\n&quot;</span>
+<span class="ruby-comment cmt">#</span>
+<span class="ruby-comment cmt">#      ruleset_str = &quot;&quot;</span>
+<span class="ruby-comment cmt">#      project.rulesets.each { |ruleset|</span>
+<span class="ruby-comment cmt">#        ruleset_str &lt;&lt; &quot;             expression val: '#{ruleset.name}' - ( &quot;</span>
+<span class="ruby-comment cmt">#        ruleset.match_rules.each { |match_rule| </span>
+<span class="ruby-comment cmt">#          ruleset_str &lt;&lt; &quot;[#{match_rule.to_s()}] &quot;</span>
+<span class="ruby-comment cmt">#        }</span>
+<span class="ruby-comment cmt">#        ruleset_str &lt;&lt; &quot;)\n&quot;</span>
+<span class="ruby-comment cmt">#        </span>
+<span class="ruby-comment cmt">#      }</span>
+<span class="ruby-comment cmt">#      found &lt;&lt; ruleset_str + &quot;\n&quot;</span>
+<span class="ruby-comment cmt">#      </span>
+<span class="ruby-comment cmt">#      results &lt;&lt; found</span>
+<span class="ruby-comment cmt">#    }</span>
+<span class="ruby-comment cmt">#    </span>
+<span class="ruby-comment cmt">#    return results</span>
+    
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

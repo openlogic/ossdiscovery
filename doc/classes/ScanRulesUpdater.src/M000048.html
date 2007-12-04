@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>update_scanrules (ScanRulesUpdater)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/scan_rules_updater.rb, line 118</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update_scanrules</span>(<span class="ruby-identifier">local_scan_rules_dir</span>, <span class="ruby-identifier">rules_files_url_path</span>)
+    <span class="ruby-ivar">@@log</span>.<span class="ruby-identifier">info</span>(<span class="ruby-value str">&quot;ScanRulesUpdater&quot;</span>) {<span class="ruby-node">&quot;Updating scan rules: local_scan_rules_dir: '#{local_scan_rules_dir}'; rules_files_url_path = '#{rules_files_url_path}'&quot;</span>}
+    <span class="ruby-identifier">rules_files_url_path</span> = <span class="ruby-constant">ScanRulesUpdater</span>.<span class="ruby-identifier">scrub_url_path</span>(<span class="ruby-identifier">rules_files_url_path</span>)
+    
+    <span class="ruby-comment cmt"># get the list of files that need to be downloaded</span>
+    <span class="ruby-keyword kw">begin</span>
+      <span class="ruby-identifier">rules_files_to_download</span> = <span class="ruby-identifier">http_get_rules_files_to_download</span>(<span class="ruby-identifier">rules_files_url_path</span>)
+    <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ge</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-identifier">ge</span>, <span class="ruby-value str">&quot;Can't get the list of rules files to download&quot;</span>, <span class="ruby-identifier">caller</span>
+      <span class="ruby-comment cmt"># either the server failed to respond or there was an issue on the client side or internet connection to the server</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-comment cmt"># back the scan rules dir up</span>
+    <span class="ruby-identifier">rules_dir</span> = <span class="ruby-value str">&quot;&quot;</span>
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">local_scan_rules_dir</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>) <span class="ruby-keyword kw">then</span>
+      <span class="ruby-identifier">rules_dir</span> = <span class="ruby-constant">ScanRulesUpdater</span>.<span class="ruby-identifier">get_default_scan_rules_dir</span>()
+    <span class="ruby-keyword kw">else</span> 
+      <span class="ruby-identifier">rules_dir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">local_scan_rules_dir</span>)
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># after this, 'rules_dir' will no longer exist because it will have been mv'd to a new name</span>
+    <span class="ruby-identifier">backup_dir</span> = <span class="ruby-constant">ScanRulesUpdater</span>.<span class="ruby-identifier">backup_scanrules_dir</span>(<span class="ruby-identifier">rules_dir</span>, <span class="ruby-keyword kw">nil</span>) 
+    
+    <span class="ruby-comment cmt"># download the files</span>
+    <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir</span>(<span class="ruby-identifier">rules_dir</span>) <span class="ruby-comment cmt"># making the directory for the rules to be downloaded into</span>
+      
+    <span class="ruby-keyword kw">begin</span>
+      <span class="ruby-identifier">rules_files_to_download</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file_to_download</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">download_file</span>(<span class="ruby-identifier">file_to_download</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">rules_dir</span>)
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+      <span class="ruby-constant">ScanRulesUpdater</span>.<span class="ruby-identifier">rollback_update</span>(<span class="ruby-identifier">backup_dir</span>)
+      <span class="ruby-identifier">raise</span> <span class="ruby-identifier">e</span>, <span class="ruby-value str">&quot;Scan rules update failed, rollback performed. The rules that were in effect before the update attempt occurred are still in effect.&quot;</span>, <span class="ruby-identifier">caller</span>
+    <span class="ruby-keyword kw">end</span>
+    
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
