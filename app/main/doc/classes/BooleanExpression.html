@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: BooleanExpression</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">BooleanExpression</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/expression_rb.html">
+                lib/expression.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+this class implements the logic necessary to <a
+href="BooleanExpression.html#M000069">evaluate</a> Scan Rules logical
+expressions that are found in rule sets (combination of matchrules
+outcomes) and projects (combination of rulesets outcomes)
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000070">create_expression_to_eval</a>&nbsp;&nbsp;
+      <a href="#M000069">evaluate</a>&nbsp;&nbsp;
+      <a href="#M000071">evaluate_exp</a>&nbsp;&nbsp;
+      <a href="#M000072">get_alternating_expr</a>&nbsp;&nbsp;
+      <a href="#M000074">get_and_all_expr</a>&nbsp;&nbsp;
+      <a href="#M000076">get_evaluate_call_count</a>&nbsp;&nbsp;
+      <a href="#M000075">get_operands</a>&nbsp;&nbsp;
+      <a href="#M000073">get_or_all_expr</a>&nbsp;&nbsp;
+      <a href="#M000077">is_verbose_or_all</a>&nbsp;&nbsp;
+      <a href="#M000068">new</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">AND_ALL</td>
+          <td>=</td>
+          <td class="context-item-value">&quot;AND-ALL&quot;</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">OR_ALL</td>
+          <td>=</td>
+          <td class="context-item-value">&quot;OR-ALL&quot;</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">expression</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">name</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000072" class="method-detail">
+        <a name="M000072"></a>
+
+        <div class="method-heading">
+          <a href="BooleanExpression.src/M000072.html" target="Code" class="method-signature"
+            onclick="popupCode('BooleanExpression.src/M000072.html');return false;">
+          <span class="method-name">get_alternating_expr</span><span class="method-args">(names, alt_str=&quot;AND&quot;)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000074" class="method-detail">
+        <a name="M000074"></a>
+
+        <div class="method-heading">
+          <a href="BooleanExpression.src/M000074.html" target="Code" class="method-signature"
+            onclick="popupCode('BooleanExpression.src/M000074.html');return false;">
+          <span class="method-name">get_and_all_expr</span><span class="method-args">(names)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000076" class="method-detail">
+        <a name="M000076"></a>
+
+        <div class="method-heading">
+          <a href="BooleanExpression.src/M000076.html" target="Code" class="method-signature"
+            onclick="popupCode('BooleanExpression.src/M000076.html');return false;">
+          <span class="method-name">get_evaluate_call_count</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000075" class="method-detail">
+        <a name="M000075"></a>
+
+        <div class="method-heading">
+          <a href="BooleanExpression.src/M000075.html" target="Code" class="method-signature"
+            onclick="popupCode('BooleanExpression.src/M000075.html');return false;">
+          <span class="method-name">get_operands</span><span class="method-args">(the_expression=&quot;&quot;)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000073" class="method-detail">
+        <a name="M000073"></a>
+
+        <div class="method-heading">
+          <a href="BooleanExpression.src/M000073.html" target="Code" class="method-signature"
+            onclick="popupCode('BooleanExpression.src/M000073.html');return false;">
+          <span class="method-name">get_or_all_expr</span><span class="method-args">(names)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000077" class="method-detail">
+        <a name="M000077"></a>
+
+        <div class="method-heading">
+          <a href="BooleanExpression.src/M000077.html" target="Code" class="method-signature"
+            onclick="popupCode('BooleanExpression.src/M000077.html');return false;">
+          <span class="method-name">is_verbose_or_all</span><span class="method-args">(expression)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000068" class="method-detail">
+        <a name="M000068"></a>
+
+        <div class="method-heading">
+          <a href="BooleanExpression.src/M000068.html" target="Code" class="method-signature"
+            onclick="popupCode('BooleanExpression.src/M000068.html');return false;">
+          <span class="method-name">new</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000070" class="method-detail">
+        <a name="M000070"></a>
+
+        <div class="method-heading">
+          <a href="BooleanExpression.src/M000070.html" target="Code" class="method-signature"
+            onclick="popupCode('BooleanExpression.src/M000070.html');return false;">
+          <span class="method-name">create_expression_to_eval</span><span class="method-args">(the_expression, name_value_pairs)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000069" class="method-detail">
+        <a name="M000069"></a>
+
+        <div class="method-heading">
+          <a href="BooleanExpression.src/M000069.html" target="Code" class="method-signature"
+            onclick="popupCode('BooleanExpression.src/M000069.html');return false;">
+          <span class="method-name">evaluate</span><span class="method-args">( the_expression, name_value_pairs )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+this method takes a rule evaluation expression like:
+</p>
+<p>
+(httpd AND htpasswd) OR (executables AND versionstring)
+</p>
+<p>
+and a Hash of name/value pairs and evaluates the expression returning a
+true or false
+</p>
+<p>
+The name/value pairs typically get harvested by evaluating MatchRules or
+other items by the <a href="RuleEngine.html">RuleEngine</a> and the
+structure might look something like this:
+</p>
+<p>
+name_value_pairs = { &quot;httpd&quot; =&gt; true, &quot;htpasswd&quot;
+=&gt; true, &quot;executables&quot; =&gt; false, &quot;versionstring&quot;
+=&gt; true }
+</p>
+<p>
+So, the name is the name of the rule in the expression like
+&#8216;httpd&#8217; - the name will get substituted with the value for the
+name and the whole expression evaluated.
+</p>
+<p>
+Possible errors can be generated if the hash of name/value pairs
+doesn&#8216;t include a name or an improper value for every element
+represented in the expression
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000071" class="method-detail">
+        <a name="M000071"></a>
+
+        <div class="method-heading">
+          <a href="BooleanExpression.src/M000071.html" target="Code" class="method-signature"
+            onclick="popupCode('BooleanExpression.src/M000071.html');return false;">
+          <span class="method-name">evaluate_exp</span><span class="method-args">( name_value_pairs )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a href="BooleanExpression.html#M000069">evaluate</a> the current
+expression. The current expression is set by expression=
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<project-rules>
+	
+	<project-rule name="apache" from="wild" os="linux,sunos-5.10,sunos-5.9,sunos-5.8,macosx">
+
+		<eval expression="executables" speed="1" confidence="100"/>
+		<eval expression="versionstring" speed="2" confidence="100" />    
+		
+		<match-rules name="executables">
+			<result expression="(httpd OR httpsd)"/>
+			<match-rule name="httpd" type="filename" filename="^httpd$" />
+			<match-rule name="httpsd" type="filename" filename="^httpsd$" />
+		</match-rules>
+		
+		<match-rules name="versionstring">
+			<result expression="httpd OR httpsd OR httpsd_prefork OR httpsd_worker" />
+			<match-rule name="httpd" type="binary" filename="^httpd$" regexp="Apache/([0-9].[0-9]+.[0-9]+)" />  
+			<match-rule name="httpsd" type="binary" filename="^httpsd$" regexp="Apache/([0-9].[0-9]+.[0-9]+)" /> 
+			<match-rule name="httpsd_prefork" type="binary" filename="^httpsd.prefork$" regexp="Apache/([0-9].[0-9]+.[0-9]+)" /> 
+			<match-rule name="httpsd_worker" type="binary" filename="^httpsd.worker$" regexp="Apache/([0-9].[0-9]+.[0-9]+)" /> 						
+		</match-rules>
+	</project-rule>
+	
+	<project-rule name="apache" from="wild" os="windows">
+		<eval expression="executables" speed="1" confidence="95"/> 
+		<eval expression="versionstring" speed="2" confidence="100" />
+		<match-rules name="executables">
+			<result expression="httpd_exe OR apache_exe" />
+			
+			<match-rule name="httpd_exe" type="filename" filename="^httpd.exe" />
+			<match-rule name="apache_exe" type="filename" filename="^Apache.exe" />  
+		</match-rules>
+		<match-rules name="versionstring">
+			<result expression="httpd_exe OR apache2_exe" />
+			<match-rule name="httpd_exe" type="binary" filename="^httpd.exe" regexp="build.([0-9]\.[0-9]+\.[0-9]+)" />
+			<match-rule name="apache2_exe" type="binary" filename="^Apache.exe" regexp="build.([0-9]\.[0-9]+\.[0-9]+)" />
+		</match-rules>
+	</project-rule>
+
+	<project-rule name="gcc" from="wild" os="linux,sunos-5.8,sunos-5.9,sunos-5.10,macosx" >
+
+		<eval expression="gccfile" speed="1" confidence="100" />
+		<match-rules name="gccfile">
+			<match-rule name="gcc" type="filename" filename="^gcc$"  />			
+		</match-rules>
+		
+		<eval expression="version" speed="2" confidence="100" />
+		<match-rules name="version">
+			<result expression="gccbin3 OR gccbin4" />	
+			<match-rule name="gccbin3" type="binary" filename="^gcc$" regexp="(3\.[0-9]\.[0-9]?)"/>	
+			<match-rule name="gccbin4" type="binary" filename="^gcc$" regexp="(4\.[0-9]\.[0-9]?)"/>								
+		</match-rules>
+	</project-rule>
+</project-rules>

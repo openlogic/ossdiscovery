@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>get_windows_version_str (lib/cliutils.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/cliutils.rb, line 599</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_windows_version_str</span>()
+  <span class="ruby-comment cmt"># the windows file:</span>
+  <span class="ruby-comment cmt"># %systemroot%\system32\prodspec.ini</span>
+  <span class="ruby-comment cmt"># contains the warning to not change the contents, so should be pretty stable</span>
+  <span class="ruby-comment cmt"># also makes it easy to search for the bits of version info we need</span>
+  <span class="ruby-comment cmt">#</span>
+  <span class="ruby-comment cmt"># need to find out systemroot, drive, etc before going after prodspec.ini file.</span>
+  <span class="ruby-comment cmt"># some admins put system on drives other than C:</span>
+   
+    [<span class="ruby-constant">ENV</span>[<span class="ruby-value str">'HOMEDRIVE'</span>],<span class="ruby-value str">&quot;C&quot;</span>,<span class="ruby-value str">&quot;D&quot;</span>,<span class="ruby-value str">&quot;Z&quot;</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">drivespec</span> <span class="ruby-operator">|</span>
+      
+     <span class="ruby-ivar">@prodspec_fn</span> = <span class="ruby-node">&quot;#{drivespec}:/windows/system32/prodspec.ini&quot;</span>
+     
+     <span class="ruby-keyword kw">if</span> ( <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-ivar">@prodspec_fn</span>) )
+        <span class="ruby-identifier">content</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@prodspec_fn</span>, <span class="ruby-value str">&quot;r&quot;</span>).<span class="ruby-identifier">read</span>
+        
+        <span class="ruby-comment cmt"># Product=Windows XP Professional</span>
+        <span class="ruby-comment cmt"># Version=5.0</span>
+        <span class="ruby-comment cmt"># Localization=English  </span>
+        <span class="ruby-comment cmt"># ServicePackNumber=0</span>
+        
+        <span class="ruby-identifier">product</span> = <span class="ruby-identifier">content</span>.<span class="ruby-identifier">match</span>(<span class="ruby-value str">&quot;Product=(.*?)$&quot;</span>)[<span class="ruby-value">1</span>]
+
+        <span class="ruby-keyword kw">return</span> <span class="ruby-node">&quot;Windows: #{product}&quot;</span>
+
+     <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># if</span>
+    <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># do</span>
+
+  <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;win-TODO&quot;</span>
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

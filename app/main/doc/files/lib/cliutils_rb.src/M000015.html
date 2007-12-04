@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>get_linux_version_str (lib/cliutils.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/cliutils.rb, line 652</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_linux_version_str</span>()
+
+    <span class="ruby-ivar">@linux_distros</span> = { 
+
+      <span class="ruby-value str">&quot;/etc/annvix-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Annvix&quot;</span>,
+      <span class="ruby-value str">&quot;/etc/arch-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Arch Linux&quot;</span>, 
+      <span class="ruby-value str">&quot;/etc/arklinux-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Arklinux&quot;</span>, 
+      <span class="ruby-value str">&quot;/etc/aurox-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Aurox Linux&quot;</span>, 
+      <span class="ruby-value str">&quot;/etc/blackcat-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;BlackCat&quot;</span>, 
+      <span class="ruby-value str">&quot;/etc/cobalt-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Cobalt&quot;</span>, 
+      <span class="ruby-value str">&quot;/etc/conectiva-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Conectiva&quot;</span>, 
+      <span class="ruby-value str">&quot;/etc/debian_release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Debian&quot;</span>, 
+      <span class="ruby-value str">&quot;/etc/fedora-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Fedora Core&quot;</span>, 
+      <span class="ruby-value str">&quot;/etc/gentoo-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Gentoo Linux&quot;</span>,
+      <span class="ruby-value str">&quot;/etc/immunix-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Immunix&quot;</span>,
+      <span class="ruby-value str">&quot;/etc/knoppix_version&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Knoppix&quot;</span>,
+      <span class="ruby-value str">&quot;/etc/lfs-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Linux-From-Scratch&quot;</span>,
+      <span class="ruby-value str">&quot;/etc/linuxppc-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Linux-PPC&quot;</span>, 
+      <span class="ruby-value str">&quot;/etc/mandrake-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Mandrake&quot;</span>,
+      <span class="ruby-value str">&quot;/etc/mandriva-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Mandriva/Mandrake Linux&quot;</span>,
+      <span class="ruby-value str">&quot;/etc/mandrake-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Mandriva/Mandrake Linux&quot;</span>,
+      <span class="ruby-value str">&quot;/etc/mandakelinux-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Mandriva/Mandrake Linux&quot;</span>,            
+      <span class="ruby-value str">&quot;/etc/mklinux-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;MkLinux&quot;</span>,
+      <span class="ruby-value str">&quot;/etc/nld-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Novell Linux Desktop&quot;</span>,
+      <span class="ruby-value str">&quot;/etc/pld-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;PLD Linux&quot;</span>,
+      <span class="ruby-value str">&quot;/etc/redhat-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Red Hat&quot;</span>,
+      <span class="ruby-value str">&quot;/etc/redhat_version&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Red Hat&quot;</span>,     
+      <span class="ruby-value str">&quot;/etc/slackware-version&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Slackware&quot;</span>, 
+      <span class="ruby-value str">&quot;/etc/slackware-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Slackware&quot;</span>,       
+      <span class="ruby-value str">&quot;/etc/e-smith-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;SME Server (Formerly E-Smith)&quot;</span>,
+      <span class="ruby-value str">&quot;/etc/SuSE-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;SUSE Linux&quot;</span>,
+      <span class="ruby-value str">&quot;/etc/novell-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;SUSE Linux&quot;</span>,      
+      <span class="ruby-value str">&quot;/etc/sles-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;SUSE Linux ES9&quot;</span>,
+      <span class="ruby-value str">&quot;/etc/tinysofa-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Tiny Sofa&quot;</span>,
+      <span class="ruby-value str">&quot;/etc/turbolinux-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;TurboLinux&quot;</span>,
+      <span class="ruby-value str">&quot;/etc/ultrapenguin-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;UltraPenguin&quot;</span>,
+      <span class="ruby-value str">&quot;/etc/UnitedLinux-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;UnitedLinux&quot;</span>,
+      <span class="ruby-value str">&quot;/etc/va-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;VA-Linux/RH-VALE&quot;</span>,
+      <span class="ruby-value str">&quot;/etc/yellowdog-release&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Yellow Dog&quot;</span>
+    }
+
+  <span class="ruby-ivar">@linux_distros</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">distrofile</span>, <span class="ruby-identifier">distroname</span> <span class="ruby-operator">|</span>
+    
+    <span class="ruby-keyword kw">if</span> ( <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">distrofile</span>))
+      <span class="ruby-comment cmt">#puts &quot;Found distro file: #{distrofile}\n&quot;</span>
+      <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">distrofile</span>, <span class="ruby-value str">&quot;r&quot;</span> ) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">file</span> <span class="ruby-operator">|</span> 
+              <span class="ruby-identifier">file</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">|</span>
+          <span class="ruby-identifier">distro_bits</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">strip!</span>
+          <span class="ruby-keyword kw">if</span> ( <span class="ruby-identifier">distro_bits</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> )
+            <span class="ruby-identifier">distro_bits</span> = <span class="ruby-identifier">line</span>
+          <span class="ruby-keyword kw">end</span>
+          <span class="ruby-keyword kw">return</span> <span class="ruby-node">&quot;#{distroname}: #{distro_bits}&quot;</span> 
+        <span class="ruby-keyword kw">end</span>  <span class="ruby-comment cmt"># line</span>
+      <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># file</span>
+    <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># exists</span>
+  <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># distros</span>
+  
+  <span class="ruby-comment cmt"># if we got here, none of the distro files were found, most common cause is Ubuntu.</span>
+  <span class="ruby-comment cmt"># Problem with Ubuntu using lsb-release is that lots of other distros have lsb-release, even SuSE,</span>
+  <span class="ruby-comment cmt"># as well as their own release file, so if none of the distro-specific release files were</span>
+  <span class="ruby-comment cmt"># found, look for lsb-release - as last resort it could be Ubuntu or some other flavor that</span>
+  <span class="ruby-comment cmt"># only uses lsb-release.</span>
+  
+  <span class="ruby-keyword kw">if</span> ( <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-value str">&quot;/etc/lsb-release&quot;</span>) )
+    <span class="ruby-identifier">content</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;/etc/lsb-release&quot;</span>, <span class="ruby-value str">&quot;r&quot;</span>).<span class="ruby-identifier">read</span>
+    
+    <span class="ruby-keyword kw">if</span> ( (<span class="ruby-identifier">distroname</span> = <span class="ruby-identifier">content</span>.<span class="ruby-identifier">match</span>(<span class="ruby-value str">&quot;^DISTRIB_ID=(.*?)$&quot;</span>)[<span class="ruby-value">1</span>]) <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> )
+      <span class="ruby-identifier">distroname</span> = <span class="ruby-value str">&quot;Unknown&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-keyword kw">if</span> ( (<span class="ruby-identifier">version</span> = <span class="ruby-identifier">content</span>.<span class="ruby-identifier">match</span>(<span class="ruby-value str">&quot;^DISTRIB_RELEASE=(.*?)$&quot;</span>)[<span class="ruby-value">1</span>]) <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> )
+      <span class="ruby-identifier">version</span> = <span class="ruby-value str">&quot;Unknown&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-keyword kw">if</span> ( (<span class="ruby-identifier">codename</span> = <span class="ruby-identifier">content</span>.<span class="ruby-identifier">match</span>(<span class="ruby-value str">&quot;^DISTRIB_CODENAME=(.*?)$&quot;</span>)[<span class="ruby-value">1</span>]) <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> )
+      <span class="ruby-identifier">codename</span> = <span class="ruby-value str">&quot;Unknown&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-keyword kw">if</span> ( (<span class="ruby-identifier">description</span> = <span class="ruby-identifier">content</span>.<span class="ruby-identifier">match</span>(<span class="ruby-value str">&quot;^DISTRIB_DESCRIPTION=(.*?)$&quot;</span>)[<span class="ruby-value">1</span>]) <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> )
+      <span class="ruby-identifier">description</span> = <span class="ruby-value str">&quot;Unknown&quot;</span>
+        
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-comment cmt"># strip quotes from description                </span>
+    <span class="ruby-identifier">description</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-value str">'&quot;'</span>, <span class="ruby-value str">''</span> )
+
+    <span class="ruby-keyword kw">if</span> ( <span class="ruby-identifier">distroname</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">description</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span> )
+      <span class="ruby-keyword kw">return</span> <span class="ruby-node">&quot;#{distroname}: #{description} (#{codename})&quot;</span> 
+    <span class="ruby-keyword kw">end</span>
+    
+  <span class="ruby-keyword kw">end</span>
+  
+  <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;Unknown: Unrecognized distro&quot;</span>
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

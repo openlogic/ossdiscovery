@@ -1,0 +1,45 @@
+#!/bin/bash
+#
+# this script will make a releaseable, non-platform specific package from the development 
+# subversion dirs. After running this script, you should expect find a tarball in:
+#
+#   build/bundle/discovery2-client/discovery2-client.tar.gz
+#
+# this tarball got built from the contents of build/dist
+#
+#
+
+DISCOVERSION=2
+DISTDIR=build/dist/discovery$DISCOVERSION-client
+TARDIR=build/bundle/discovery$DISCOVERSION-client
+
+# clean up old bits
+rm -rf $DISTDIR/*
+rm -rf $TARDIR/*
+
+if [ ! -d build ]
+then
+    mkdir -p $DISTDIR
+    mkdir -p $TARDIR
+fi
+
+# take top-level launch scripts
+cp discovery* $DISTDIR
+
+cp -r lib $DISTDIR
+cp -r bin $DISTDIR
+cp -r license $DISTDIR
+mkdir $DISTDIR/log
+
+pushd . 
+cd $DISTDIR
+echo It is normal for \'No such file or directory\' to be issued here. Ignore them
+find . -name ".svn" -exec rm -rf {} \;
+popd
+
+cd build/dist
+pwd
+tar cvfz ../../$TARDIR/discovery$DISCOVERSION-client.tar.gz discovery$DISCOVERSION-client
+zip -r ../../$TARDIR/discovery$DISCOVERSION-client.zip discovery$DISCOVERSION-client
+
+echo You can find your tarball in $TARDIR/discovery$DISCOVERSION-client.tar.gz

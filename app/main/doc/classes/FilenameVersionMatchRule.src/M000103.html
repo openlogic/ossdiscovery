@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>match? (FilenameVersionMatchRule)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/matchrules/filename_version_match_rule.rb, line 46</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">match?</span>(<span class="ruby-identifier">actual_filepath</span>)
+    <span class="ruby-ivar">@match_attempts</span> = <span class="ruby-ivar">@match_attempts</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+    <span class="ruby-identifier">val</span> = <span class="ruby-keyword kw">false</span>    
+    <span class="ruby-identifier">match_val</span> = <span class="ruby-constant">FilenameVersionMatchRule</span>.<span class="ruby-identifier">match?</span>(<span class="ruby-ivar">@defined_filename</span>, <span class="ruby-identifier">actual_filepath</span>)
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">match_val</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span>) <span class="ruby-keyword kw">then</span>
+      <span class="ruby-identifier">val</span> = <span class="ruby-keyword kw">true</span>
+      <span class="ruby-identifier">match_set</span> = <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>
+      <span class="ruby-keyword kw">if</span> (<span class="ruby-ivar">@matched_against</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">actual_filepath</span>))) <span class="ruby-keyword kw">then</span>
+        <span class="ruby-identifier">match_set</span> = <span class="ruby-ivar">@matched_against</span>[<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">actual_filepath</span>)]
+        <span class="ruby-ivar">@@log</span>.<span class="ruby-identifier">debug</span>(<span class="ruby-value str">'FilenameVersionMatchRule'</span>) {<span class="ruby-node">&quot;Multiple versions of the same project likely exist in the same directory. MatchRule name: '#{@name}', version: '#{@version}', defined filename: '#{@defined_filename}', defined_regexp: '#{@defined_regexp}'&quot;</span>}
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">match_set</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">match_val</span>[<span class="ruby-value">1</span>]
+      <span class="ruby-ivar">@matched_against</span>[<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">actual_filepath</span>)] = <span class="ruby-identifier">match_set</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">val</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
