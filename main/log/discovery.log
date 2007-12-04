@@ -3077,3 +3077,81 @@ I, [2007-12-04T14:35:12.769259 #18287]  INFO -- ScanRulesReader: Reading rules f
 I, [2007-12-04T14:35:28.314799 #18287]  INFO -- TclongDiscoverItSpeed1: It took '18.982918' seconds to walk the files and do the matches for '1030' projects.
 I, [2007-12-04T14:35:28.675316 #18287]  INFO -- TclongDiscoverItSpeed1: It took '0.360377' seconds for 'rule_engine.scan_complete' to run.
 I, [2007-12-04T14:35:28.707192 #18287]  INFO -- TclongDiscoverItSpeed1: It took '0.024281' seconds to assert various projects were found.
+W, [2007-12-04T14:56:26.331533 #18994]  WARN -- ScanRulesReader: No scan rules xml files found in directory: '/home/bnoll/projects/openlogic/ossdiscovery/app/main/lib/rules/drop_ins'
+W, [2007-12-04T14:56:28.798670 #19001]  WARN -- ScanRulesReader: No scan rules xml files found in directory: '/home/bnoll/projects/openlogic/ossdiscovery/app/main/lib/rules/drop_ins'
+I, [2007-12-04T14:56:28.853950 #18978]  INFO -- ScanRulesReader: Reading rules file: '/home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/rules/test_dir_00_valid_original/scan-rules.xml'
+I, [2007-12-04T14:56:28.918664 #18978]  INFO -- ScanRulesReader: Reading rules file: '/home/bnoll/projects/openlogic/ossdiscovery/app/main/lib/rules/openlogic/project-rules-mvngen.xml'
+I, [2007-12-04T14:56:32.469248 #18978]  INFO -- ScanRulesReader: Reading rules file: '/home/bnoll/projects/openlogic/ossdiscovery/app/main/lib/rules/openlogic/project-rules.xml'
+W, [2007-12-04T14:56:34.414931 #18978]  WARN -- ScanRulesReader: No scan rules xml files found in directory: '/home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/rules/test_dir_03_empty'
+I, [2007-12-04T14:56:34.415692 #18978]  INFO -- ScanRulesReader: Reading rules file: '/home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/rules/test_dir_05_valid/scan-rules-02.xml'
+I, [2007-12-04T14:56:34.421112 #18978]  INFO -- ScanRulesReader: Reading rules file: '/home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/rules/test_dir_05_valid/scan-rules-01.xml'
+I, [2007-12-04T14:56:34.428952 #18978]  INFO -- ScanRulesReader: Reading rules file: '/home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/rules/test_dir_04_duplicate_project_elements/scan-rules-01.xml'
+I, [2007-12-04T14:56:34.443894 #18978]  INFO -- ScanRulesReader: Reading rules file: '/home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/rules/test_dir_04_duplicate_project_elements/scan-rules-02.xml'
+I, [2007-12-04T14:56:34.459818 #18978]  INFO -- ScanRulesReader: Reading rules file: '/home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/rules/test_validate_dir_06_valid/scan-rules.xml'
+I, [2007-12-04T14:56:34.499186 #18978]  INFO -- ScanRulesReader: Reading rules file: '/home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/rules/test_validate_dir_07_invalid/eval_expression_missing/scan-rules.xml'
+I, [2007-12-04T14:56:34.504188 #18978]  INFO -- ScanRulesReader: Reading rules file: '/home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/rules/test_validate_dir_07_invalid/eval_expression_typo/scan-rules.xml'
+I, [2007-12-04T14:56:34.511110 #18978]  INFO -- ScanRulesReader: Reading rules file: '/home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/rules/test_validate_dir_07_invalid/result_expression_missing/scan-rules.xml'
+I, [2007-12-04T14:56:34.519222 #18978]  INFO -- ScanRulesReader: Reading rules file: '/home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/rules/test_validate_dir_07_invalid/result_expression_typo/scan-rules.xml'
+I, [2007-12-04T14:56:34.659102 #18978]  INFO -- ScanRulesUpdater: Backing up the local scan rules dir (/home/bnoll/projects/openlogic/ossdiscovery/app/test/dir_to_backup) with extension '_20071204_1456.bak'
+I, [2007-12-04T14:56:34.721670 #18978]  INFO -- ScanRulesUpdater: Rolling back the scan rules update. Rolling back to the rules in '/home/bnoll/projects/openlogic/ossdiscovery/app/test/backed_up_dir'
+I, [2007-12-04T14:56:34.852049 #19008]  INFO -- ScanRulesReader: Reading rules file: '/home/bnoll/projects/openlogic/ossdiscovery/app/main/lib/rules/openlogic/project-rules-mvngen.xml'
+I, [2007-12-04T14:56:38.004952 #19008]  INFO -- ScanRulesReader: Reading rules file: '/home/bnoll/projects/openlogic/ossdiscovery/app/main/lib/rules/openlogic/project-rules.xml'
+W, [2007-12-04T14:56:39.445852 #19008]  WARN -- ScanRulesReader: No scan rules xml files found in directory: '/home/bnoll/projects/openlogic/ossdiscovery/app/main/lib/rules/drop_ins'
+I, [2007-12-04T14:56:39.843577 #19015]  INFO -- ScanRulesReader: Reading rules file: '/home/bnoll/projects/openlogic/ossdiscovery/app/main/lib/rules/openlogic/project-rules-mvngen.xml'
+I, [2007-12-04T14:56:42.978458 #19015]  INFO -- ScanRulesReader: Reading rules file: '/home/bnoll/projects/openlogic/ossdiscovery/app/main/lib/rules/openlogic/project-rules.xml'
+W, [2007-12-04T14:56:44.395846 #19015]  WARN -- ScanRulesReader: No scan rules xml files found in directory: '/home/bnoll/projects/openlogic/ossdiscovery/app/main/lib/rules/drop_ins'
+I, [2007-12-04T14:56:44.762479 #19022]  INFO -- ScanRulesReader: Reading rules file: '/home/bnoll/projects/openlogic/ossdiscovery/app/main/lib/rules/openlogic/project-rules-mvngen.xml'
+I, [2007-12-04T14:56:47.927443 #19022]  INFO -- ScanRulesReader: Reading rules file: '/home/bnoll/projects/openlogic/ossdiscovery/app/main/lib/rules/openlogic/project-rules.xml'
+W, [2007-12-04T14:56:49.327474 #19022]  WARN -- ScanRulesReader: No scan rules xml files found in directory: '/home/bnoll/projects/openlogic/ossdiscovery/app/main/lib/rules/drop_ins'
+I, [2007-12-04T14:56:49.546080 #19022]  INFO -- Walker: 
+-------------
+resolving symlink: /home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/content-cg/symlink-tests/ignore_these/symlinkto-tmpdir
+I, [2007-12-04T14:56:49.546618 #19022]  INFO -- Walker: realpath: /tmp
+
+I, [2007-12-04T14:56:49.547841 #19022]  INFO -- Walker: 
+-------------
+resolving symlink: /home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/content-cg/symlink-tests/ignore_these/symlinkto-parent
+I, [2007-12-04T14:56:49.548547 #19022]  INFO -- Walker: realpath: /home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/content-cg/symlink-tests
+
+I, [2007-12-04T14:56:49.551252 #19022]  INFO -- Walker: 
+-------------
+resolving symlink: /home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/content-cg/symlink-tests/ignore_these/symlinkto-tmpdir
+W, [2007-12-04T14:56:49.551320 #19022]  WARN -- Walker: detected circular link /home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/content-cg/symlink-tests/ignore_these/symlinkto-tmpdir
+I, [2007-12-04T14:56:49.551510 #19022]  INFO -- Walker: 
+-------------
+resolving symlink: /home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/content-cg/symlink-tests/ignore_these/symlinkto-parent
+W, [2007-12-04T14:56:49.551589 #19022]  WARN -- Walker: detected circular link /home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/content-cg/symlink-tests/ignore_these/symlinkto-parent
+I, [2007-12-04T14:56:49.552674 #19022]  INFO -- Walker: 
+-------------
+resolving symlink: /home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/content-cg/symlink-tests/ignore_these/symlnkto-file
+I, [2007-12-04T14:56:49.553305 #19022]  INFO -- Walker: realpath: /home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/content-cg/symlink-tests/ignore_these/aFile
+
+I, [2007-12-04T14:56:49.554341 #19022]  INFO -- Walker: 
+-------------
+resolving symlink: /home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/content-cg/symlink-tests/ignore_these/link-to-a-link
+I, [2007-12-04T14:56:49.555157 #19022]  INFO -- Walker: realpath: /home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/content-cg/symlink-tests/ignore_these/aFile
+
+I, [2007-12-04T14:56:49.556384 #19022]  INFO -- Walker: 
+-------------
+resolving symlink: /home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/content-cg/symlink-tests/ignore_these/setup-circular-link/setup-circular-link
+I, [2007-12-04T14:56:49.557050 #19022]  INFO -- Walker: realpath: /home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/content-cg/symlink-tests/ignore_these/setup-circular-link
+
+I, [2007-12-04T14:56:49.557276 #19022]  INFO -- Walker: 
+-------------
+resolving symlink: /home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/content-cg/symlink-tests/ignore_these/setup-circular-link/setup-circular-link
+W, [2007-12-04T14:56:49.557328 #19022]  WARN -- Walker: detected circular link /home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/content-cg/symlink-tests/ignore_these/setup-circular-link/setup-circular-link
+I, [2007-12-04T14:56:49.558824 #19022]  INFO -- Walker: 
+-------------
+resolving symlink: /home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/content-cg/symlink-tests/ignore_these/symlnkto-file
+W, [2007-12-04T14:56:49.558885 #19022]  WARN -- Walker: detected circular link /home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/content-cg/symlink-tests/ignore_these/symlnkto-file
+I, [2007-12-04T14:56:49.559025 #19022]  INFO -- Walker: 
+-------------
+resolving symlink: /home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/content-cg/symlink-tests/ignore_these/link-to-a-link
+W, [2007-12-04T14:56:49.559072 #19022]  WARN -- Walker: detected circular link /home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/content-cg/symlink-tests/ignore_these/link-to-a-link
+I, [2007-12-04T14:56:49.559418 #19022]  INFO -- Walker: 
+-------------
+resolving symlink: /home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/content-cg/symlink-tests/ignore_these/setup-circular-link/setup-circular-link
+W, [2007-12-04T14:56:49.559467 #19022]  WARN -- Walker: detected circular link /home/bnoll/projects/openlogic/ossdiscovery/app/test/resources/content-cg/symlink-tests/ignore_these/setup-circular-link/setup-circular-link
+I, [2007-12-04T14:56:49.754190 #19029]  INFO -- ScanRulesReader: Reading rules file: '/home/bnoll/projects/openlogic/ossdiscovery/app/main/lib/rules/openlogic/project-rules-mvngen.xml'
+I, [2007-12-04T14:56:52.888564 #19029]  INFO -- ScanRulesReader: Reading rules file: '/home/bnoll/projects/openlogic/ossdiscovery/app/main/lib/rules/openlogic/project-rules.xml'
+W, [2007-12-04T14:56:54.299114 #19029]  WARN -- ScanRulesReader: No scan rules xml files found in directory: '/home/bnoll/projects/openlogic/ossdiscovery/app/main/lib/rules/drop_ins'
