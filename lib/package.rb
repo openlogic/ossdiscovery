@@ -27,6 +27,15 @@
 
 # --------------------------------------------------------------------------------------------------
 #
+=begin rdoc
+  This class essentially represents a simple, flattened rendition of what packages were discovered 
+  by the tool.  In addition to package names, versions and locations where they were found are 
+  encapsulated here.  The class doesn't come into play until the scan itself is complete, and the
+  process is on the stage of rolling up and analyzing results.
+
+  There are also a few class methods that are used by the RuleAnalyzer to help roll up the results 
+  of MatchRule states.  Namely, create_instances and make_packages_with_bad_unknowns_removed.
+=end 
 
 require 'set'
 
@@ -118,23 +127,23 @@ class Package
     return valid_packages
   end
   
-  def Package.create_instances(locations, project)
+  def Package.create_instances(locations, project_rule)
     
     instances = Array.new
     
-    locations.each { |location|
+    locations.each do |location|
 
       version_set = Set.new
-      project.rulesets.each { |ruleset|
-        ruleset.match_rules.each { |match_rule|
+      project_rule.rulesets.each do |ruleset|
+        ruleset.match_rules.each do |match_rule|
           found_versions = match_rule.get_found_versions(location)
-          found_versions.each { |version|
-          if (version == nil || version == "") then
-            version = VERSION_UNKNOWN
-          end
-          version_set << version
-          }
-        }
+          found_versions.each do |version|
+            if (version == nil || version == "") then
+              version = VERSION_UNKNOWN
+            end
+            version_set << version
+          end # of found_versions.each
+        end
         
         # Essentially, here's what we're saying.
         # - If "unknown" was the only hit for a given location, report that.
@@ -145,17 +154,17 @@ class Package
         if (version_set.size > 1) then
           version_set.delete_if() {|version| version == VERSION_UNKNOWN}
         end
-      }
-      version_set.each { |version|
+      end # of project_rule.rulesets.each
+      version_set.each do |version|
           package = Package.new
-          package.name = project.name
+          package.name = project_rule.name
           package.found_at = location
           # Doing this gsub because we ran into a scenario when using a hex binary match where the version looked like this: 2^@.^@3
           package.version = version.gsub("\0", "")
           
           instances << package
-      }
-    }
+      end # of version_set.each
+    end # of locations.each
     
     return instances
     
