@@ -12,3 +12,4 @@ this project's source code depending on what they're interested in doing.
   and test resources, check out the 'app' directory.
 
 * If you want everything, simply check out the trunk.
+
