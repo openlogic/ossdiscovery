@@ -20,10 +20,12 @@
 # You should have received a copy of the GNU Affero General Public License along with this program.  
 # If not, see http://www.gnu.org/licenses/
 #  
-# You can learn more about OSSDiscovery or contact the team at www.ossdiscovery.com.
+# You can learn more about OSSDiscovery, report bugs and get the latest versions at www.ossdiscovery.org.
+# You can contact the OSS Discovery team at info@ossdiscovery.org.
 # You can contact OpenLogic at info@openlogic.com.
-#
-#--------------------------------------------------------------------------------------------------
+
+
+# --------------------------------------------------------------------------------------------------
 #
 # discovery.rb is the main CLI framework.  It's purpose is to:
 #
@@ -61,7 +63,7 @@ require 'scan_rules_updater'
 @basedir = File.expand_path(File.dirname(__FILE__))
 @config = 'conf/config.rb'
 @copyright = "Copyright (C) 2007-2008 OpenLogic, Inc.  All Rights Reserved."
-@discovery_version = "2.0-alpha"
+@discovery_version = "2.0-alpha-1"
 @discovery_name = "discovery"
 @discovery_license = "TBD"
 @discovery_license_shortname = "TBD"  # GPLv3, BSD, Apache 2, whatever

@@ -20,10 +20,13 @@
 # You should have received a copy of the GNU Affero General Public License along with this program.  
 # If not, see http://www.gnu.org/licenses
 #  
-# You can learn more about OSSDiscovery or contact the team at www.ossdiscovery.com.
+# You can learn more about OSSDiscovery, report bugs and get the latest versions at www.ossdiscovery.org.
+# You can contact the OSS Discovery team at info@ossdiscovery.org.
 # You can contact OpenLogic at info@openlogic.com.
+
+
+# --------------------------------------------------------------------------------------------------
 #
-#--------------------------------------------------------------------------------------------------
 
 $:.unshift File.join(File.dirname(__FILE__), '..')
 require 'matchrules/filename_match_rule'
