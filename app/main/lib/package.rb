@@ -132,7 +132,7 @@ class Package
           if (version == nil || version == "") then
             version = VERSION_UNKNOWN
           end
-            version_set << version
+          version_set << version
           }
         }
         
@@ -150,7 +150,8 @@ class Package
           package = Package.new
           package.name = project.name
           package.found_at = location
-          package.version = version
+          # Doing this gsub because we ran into a scenario when using a hex binary match where the version looked like this: 2^@.^@3
+          package.version = version.gsub("\0", "")
           
           instances << package
       }
