@@ -186,7 +186,7 @@ class TclongDiscoverItSpeed1 < Test::Unit::TestCase
    
     assert_was_found_in_locations("openoffice", "2.2.0", "content-cg/openoffice/linux/2.2.0", packages)
     # this is a binary that has some double byte regexp's in order to find the version
-    assert_was_found_in_locations("openoffice", "2\000.\0003", "content-cg/openoffice/windows/2.3", packages)
+    assert_was_found_in_locations("openoffice", "2.3", "content-cg/openoffice/windows/2.3", packages)
 
     assert_was_not_found_in("openssh", "unknown", "content-cg/openssl/decoy", packages)   
                         
