@@ -2,6 +2,7 @@ require 'pp'
 require 'test/unit'
 $:.unshift File.join(File.dirname(__FILE__), "..", "main", "lib")
 
+require 'match_rule_set'
 require 'package'
 require 'project_rule'
 require File.join(File.dirname(__FILE__), 'test_helper')
@@ -133,4 +134,75 @@ class TcPackage < Test::Unit::TestCase
     end
   end
   
+  def test_create_instances
+    # This test does not exercise every possible permutation, simply a smoke test of the method really.
+    # Feel free to add to it if the method under test here ever shows a problem.
+    
+    pr = ProjectRule.new('foo')
+    rs1 = MatchRuleSet.new('rs1')
+    rs2 = MatchRuleSet.new('rs2')
+    pr.rulesets << rs1 << rs2
+    
+    mr1 = MockMatchRule.new
+    mr1.set_found_versions({ "/home/me/project" => "1.0", "/home/you/project" => "2.0" })
+    
+    mr2 = MockMatchRule.new
+    # the 'unknown' version should get ignored since there is a known version ('1.0' from above) in the same directory
+    # 'nil' amounts to the same thing as 'uknown', so it gets treated the same way
+    mr2.set_found_versions({ "/home/me/project" => "unknown", "/home/you/project" => nil })
+    
+    mr3 = MockMatchRule.new
+    # this hash is the same as the first, essentially we're testing that '1.0' doesn't get reported as installed twice in the same directory... same for '2.0'
+    mr3.set_found_versions({ "/home/me/project" => "1.0", "/home/you/project" => "2.0" })
+    
+    mr4 = MockMatchRule.new
+    # each of these should be reported as installed in their respective dirs because the versions are unique
+    mr4.set_found_versions({ "/home/me/project" => "1.9", "/home/you/project" => "2.9" })
+    
+    mr5 = MockMatchRule.new
+    # this should be reported since no other known version is reported as installed in that directory
+    mr5.set_found_versions({ "/home/we/project" => "unknown" })
+    
+    # It shouldn't matter which MatchRule goes into which MatchRuleSet with respect to what this method does, associating them arbitrarily.
+    rs1.match_rules << mr1 << mr2 
+    rs2.match_rules << mr3 << mr4 << mr5
+    
+    loc1 = "/home/me/project"
+    loc2 = "/home/you/project"
+    loc3 = "/home/we/project"
+    locations = Set.new << loc1 << loc2 << loc3
+    
+    packages = Package.create_instances(locations, pr)
+    
+    assert_equal(5, packages.size)
+    packages.each do |pkg|
+      if (pkg.found_at == loc1) then
+        assert(pkg.version == '1.0' || pkg.version == '1.9')
+      elsif (pkg.found_at == loc2) then
+        assert(pkg.version == '2.0' || pkg.version == '2.9')
+      elsif (pkg.found_at == loc3) then
+        assert('unknown', pkg.version)
+      else
+        fail "One of the packages unexpectedly had a 'found_at' location of: '#{pkg.found_at}'"
+      end
+    end # of packages.each
+    
+  end
+  
+end
+
+class MockMatchRule
+  def set_found_versions(location_to_version_hash)
+    @location_to_version_hash = location_to_version_hash
+  end
+  
+  def get_found_versions(location)
+    versions = Set.new
+    @location_to_version_hash.each_pair do |key, value|
+      if (key == location) then
+        versions << value
+      end
+    end
+    return versions
+  end
 end
