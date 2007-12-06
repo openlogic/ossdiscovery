@@ -12,7 +12,7 @@ The intended audience for this README is a developer on this project.
     tree and give you an indication that discovery is finding packages
 
 - Testing
-==========
+===========
 - Getting the tests
   
   Obviously, this is a critical step, because you're not gonna be running any 
