@@ -29,7 +29,6 @@ class TcExpressions < Test::Unit::TestCase
   so it's critical to make sure the string substitutions were done correctly
 =end
   def test_expression_translation
-assert false
      name_value_pairs = { "httpd" => true, "htpasswd" => true, "executables" => true, "versionstring" => true }
      test_expression = "(httpd AND htpasswd) OR (executables AND versionstring)"
      
