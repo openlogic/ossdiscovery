@@ -1,28 +1,13 @@
 ================================================================================
 The intended audience for this README is a developer on this project.
 ================================================================================
-- CLI 
-  - help - to get the basic CLI help, from the project root directory run:
-	ruby lib/discovery.rb --help
-	
-   - first smoke test
-	ruby lib/discovery.rb --path ./
 
-    this will dump a list of control-group content found in the development
-    tree and give you an indication that discovery is finding packages
-
-- Testing
-===========
-- Getting the tests
+Source Code Structure
+======================
+The source code is organized like this:
   
-  Obviously, this is a critical step, because you're not gonna be running any 
-  tests if you don't have them on disk in the first place.  Before we go much 
-  further, a bit of an explanation is required.
-  
-  The source code is organized like this:
-  
-  http://{svn-url-to-code}/trunk/main
-  http://{svn-url-to-code}/trunk/test
+  http://ossdiscovery.opensource.collab.net/svn/ossdiscovery/trunk/app/main
+  http://ossdiscovery.opensource.collab.net/svn/ossdiscovery/trunk/app/test
   
   This has been done for a reason.  The reason is, down in the test directory 
   (specifically the 'test/resources' directory and all sub-directories of that)
@@ -35,15 +20,32 @@ The intended audience for this README is a developer on this project.
   and a day for all of the many megs worth of stuff that comes down in the test 
   directory.
   
-  So, if you're a person who is simply interested in checking out the main, you 
-  would check out:
+  So, if you're a person who is simply interested in checking out the main 
+  source that executes at runtime, you would check out:
   
-  - http://{svn-url-to-code}/trunk/main
+  - http://ossdiscovery.opensource.collab.net/svn/ossdiscovery/trunk/app/main
   
   If you're a person who is interested in checking out the entire source tree... 
   tests, test resources and all, you would check out:
   
-  - http://{svn-url-to-code}/trunk
+  - http://ossdiscovery.opensource.collab.net/svn/ossdiscovery/trunk/app
+
+
+- CLI 
+======
+  - help - to get the basic CLI help, from the project main directory run:
+	ruby lib/discovery.rb --help
+	
+   - first smoke test
+	ruby lib/discovery.rb --path ./
+
+    this will dump a list of control-group content found in the development
+    tree and give you an indication that discovery is finding packages
+
+- Testing
+===========
+- Make sure you're actually checking the tests out as per the instructions in 
+  the 'Source Code Organization' section above.
   
 - Setting up so tests can be run properly:
   - Currently, you must run the following series of commands to set up your 
