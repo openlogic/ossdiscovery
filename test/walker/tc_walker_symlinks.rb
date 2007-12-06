@@ -1,6 +1,9 @@
 require 'test/unit'
 
 class TcWalkingSymLinks < Test::Unit::TestCase
+  
+  DISCOVERY_RB = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'main', 'lib', 'discovery.rb')) unless defined? DISCOVERY_RB
+  SYMLINK_TESTS_DIR = File.expand_path(File.join(File.dirname(__FILE__), '..', 'resources', 'content-cg', 'symlink-tests')) unless defined? SYMLINK_TESTS_DIR
 
 =begin rdoc
   Note that before you can run the symlink test, you need to run resources/content-cg/symlink-tests/run-me.sh.  That
@@ -21,7 +24,7 @@ class TcWalkingSymLinks < Test::Unit::TestCase
     
     if ( !(RUBY_PLATFORM =~ /mswin/) )  # don't run symlink tests on a windows platform
       
-      test = `ruby lib/discovery.rb --path ../test/resources/content-cg/symlink-tests`
+      test = `ruby #{DISCOVERY_RB} --path #{SYMLINK_TESTS_DIR}`
     
       if ( test.match('not followed.*?: 0') == nil )
         fail "Symlinks were not followed and should have been OR symlink-tests directory has not be set up.  Run run-me.sh in content-cg/symlinks-tests"        
@@ -37,7 +40,7 @@ class TcWalkingSymLinks < Test::Unit::TestCase
     
     if ( !(RUBY_PLATFORM =~ /mswin/) )  # don't run symlink tests on a windows platform
 
-       test = `ruby lib/discovery.rb --path ../test/resources/content-cg/symlink-tests --nofollow`
+       test = `ruby #{DISCOVERY_RB} --path #{SYMLINK_TESTS_DIR} --nofollow`
 
        if ( test.match('not followed.*?: 5') == nil )
          fail "Symlinks were not pruned OR symlink-tests directory has not be set up.  Run run-me.sh in content-cg/symlinks-tests"        
