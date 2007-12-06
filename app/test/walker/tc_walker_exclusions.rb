@@ -1,6 +1,9 @@
 require 'test/unit'
 
 class TcWalkerExclusions < Test::Unit::TestCase
+  
+  DISCOVERY_RB = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'main', 'lib', 'discovery.rb')) unless defined? DISCOVERY_RB
+  HIDDEN_TESTS_DIR = File.expand_path(File.join(File.dirname(__FILE__), '..', 'resources', 'content-cg', 'hidden-tests')) unless defined? HIDDEN_TESTS_DIR
 
 =begin rdoc
   Note that before you can run the hidden test, you need to run resources/content-cg/hidden-tests/run-me.sh.  That
@@ -22,7 +25,7 @@ class TcWalkerExclusions < Test::Unit::TestCase
     
     if ( !(RUBY_PLATFORM =~ /mswin/) && !(RUBY_PLATFORM =~/cygwin/) )  # don't run hidden tests on a windows platform
       
-      test = `ruby lib/discovery.rb --path ../test/resources/content-cg/hidden-tests --list-excluded`
+      test = `ruby #{DISCOVERY_RB} --path #{HIDDEN_TESTS_DIR} --list-excluded`
       # printf(" test content: %s\n", test )
     
       # resources/content-cg/hidden-tests contains some . files that represent hidden files and directories on linux/solaris
