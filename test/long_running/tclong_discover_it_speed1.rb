@@ -294,6 +294,10 @@ class TclongDiscoverItSpeed1 < Test::Unit::TestCase
 end
 
 class MockWalker
+  attr_accessor :file_ct, :dir_ct, :sym_link_ct, :bad_link_ct, :permission_denied_ct, :foi_ct, :not_found_ct
+  attr_accessor :follow_symlinks, :symlink_depth, :not_followed_ct, :show_every, :show_verbose, :show_progress
+  attr_accessor :list_exclusions, :list_files, :show_permission_denied
+  
   def subscribe(arg1)
     
   end

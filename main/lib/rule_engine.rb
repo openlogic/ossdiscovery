@@ -112,39 +112,43 @@ class RuleEngine
         has_md5_match_occurred = false
         match_or_not = false
         ruleset.match_rules.each do | match_rule |
-          if (match_or_not && ruleset.is_result_expression_or_all) then
-            # an optimization, if the rule is a bunch of OR's, we know one true will be enough to make the whole thing true, so there's no point in calling match? again
-            break
-          else
-            if (digest_of_found_file == nil && match_rule.type == MatchRule::TYPE_MD5) then
-              # an optimization - only compute the digest once for any given FOI
-              digest_of_found_file = MD5MatchRule.get_digest_for(location + "/" + filename)
-            end
-            if (binary_content_of_found_file == nil && match_rule.type == MatchRule::TYPE_BINARY) then
-              # an optimization - only read the binary content once for any given FOI
-              binary_content_of_found_file = BinaryMatchRule.get_binary_content_for(location + "/" + filename)
-            end
-            begin
-              if (has_md5_match_occurred && match_rule.type == MatchRule::TYPE_MD5) then
-                # an optimization, don't call 'match_rule.match?', it's not necessary
-                next
+          begin
+              if (match_or_not && ruleset.is_result_expression_or_all) then
+                # an optimization, if the rule is a bunch of OR's, we know one true will be enough to make the whole thing true, so there's no point in calling match? again
+                break
               else
-                if (match_rule.type == MatchRule::TYPE_MD5) then
-                  match_or_not = match_rule.match?(location + "/" + filename, digest_of_found_file)
-                  has_md5_match_occurred = match_or_not ? true : false
-                elsif (match_rule.type == MatchRule::TYPE_BINARY) then
-                  match_or_not = match_rule.match?(location + "/" + filename, binary_content_of_found_file)
-                else
-                  match_or_not = match_rule.match?(location + "/" + filename)
+                if (digest_of_found_file == nil && match_rule.type == MatchRule::TYPE_MD5) then
+                  # an optimization - only compute the digest once for any given FOI
+                  digest_of_found_file = MD5MatchRule.get_digest_for(location + "/" + filename)
                 end
-                # For debugging purposes
-                if (produce_match_audit_records && match_or_not)
-                  @audit_records << MatchAuditRecord.new(project_rule.name, ruleset.name, match_rule.name, location + "/" + filename, match_rule.get_latest_matchval)
+                if (binary_content_of_found_file == nil && match_rule.type == MatchRule::TYPE_BINARY) then
+                  # an optimization - only read the binary content once for any given FOI
+                  binary_content_of_found_file = BinaryMatchRule.get_binary_content_for(location + "/" + filename)
                 end
-              end
-            rescue 
-              $stderr.printf("\nMatch exception (#{$!.inspect}) with %s/%s project_rule: %s, ruleset: %s, matchrule: %s\n", location, filename, project_rule.name, ruleset.name, match_rule.name )
+                begin
+                  if (has_md5_match_occurred && match_rule.type == MatchRule::TYPE_MD5) then
+                    # an optimization, don't call 'match_rule.match?', it's not necessary
+                    next
+                  else
+                    if (match_rule.type == MatchRule::TYPE_MD5) then
+                      match_or_not = match_rule.match?(location + "/" + filename, digest_of_found_file)
+                      has_md5_match_occurred = match_or_not ? true : false
+                    elsif (match_rule.type == MatchRule::TYPE_BINARY) then
+                      match_or_not = match_rule.match?(location + "/" + filename, binary_content_of_found_file)
+                    else
+                      match_or_not = match_rule.match?(location + "/" + filename)
+                    end
+                    # For debugging purposes
+                    if (produce_match_audit_records && match_or_not)
+                      @audit_records << MatchAuditRecord.new(project_rule.name, ruleset.name, match_rule.name, location + "/" + filename, match_rule.get_latest_matchval)
+                    end
+                  end
+                rescue 
+                  $stderr.printf("\nMatch exception (#{$!.inspect}) with %s/%s project_rule: %s, ruleset: %s, matchrule: %s\n", location, filename, project_rule.name, ruleset.name, match_rule.name )
+                end
             end
+          rescue Errno::EACCES, Errno::EPERM
+            # TODO @walker.permission_denied_ct += 1
           end
         end # of ruleset.match_rules.each
       end # of project_rule.rulesets.each
