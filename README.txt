@@ -63,8 +63,10 @@ The source code is organized like this:
     - cd test/resources/content-cg/hidden-tests
     - ./run-me.sh
     - cd -
-    - ruby test/ts_test_all.rb
-      -> all tests should pass now
+    - ruby test/ts_test_ci.rb
+      -> all tests should pass now 
+         ('ci' stands for continuous integration, the suite run by the 
+          CruiseControl.rb server)
 
 - Creating tests:
   - All test cases (The term 'test' and 'test case' mean the same thing as used 
