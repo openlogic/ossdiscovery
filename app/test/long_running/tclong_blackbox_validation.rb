@@ -42,7 +42,7 @@ class TclongBlackboxValidation < Test::Unit::TestCase
     assert(!output.include?('Unsupported option'), "There was a problem with the command (#{cmd}), because the help text was returned.")    
     assert(!output.include?('decoy'), "The test was testing that content that should not be discovered (content living somewhere underneath a 'decoy' directory) is actually NOT being discovered.  Some of the 'decoy' stuff must've been discovered.")
     
-    # Asserting that the portions of the baseline results file and the results file created from performing the above discovery run are the same
+    # Asserting that the portions of the baseline results file and the results file created from performing the above discovery run that should be the same are the same.
     lines_test_file = Array.new
     start_adding_lines = false
     File.open(@results_file) do |test_file|
