@@ -34,14 +34,38 @@
 #   c) kick off the scan
 #   d) produce the reports
 #
-# Every single property from the config.yml file is loaded as an instance variable of self.
+# Every property from the config.yml file is loaded as an instance variable of global self.
 # This is done so that this file can have default values for all of these properties, and then 
 # change them if necessary based on a cli option that was specified.  So, if a default value in 
 # the config.yml file is ever modified, this file will receive that modified value by default.  
 # The same will happen if a new value is ever added to the config.yml.
 #
-#  
-
+# Quick and dirty code architecture discussion:  
+#    1) A Walker is a class which traverses the disk looking for files that match a given set of 
+#       of regular expressions
+#       a) The Walker derives the list of file matches it should be looking for from the RuleEngine
+#    2) The RuleEngine is initialized through reading the set of project rules xml files found in
+#       the lib/rules directory and subdirectories.  A project rule and its match rules defines 
+#       filename regular expressions which could indicate a project is installed
+#    3) The Walker looks for any file which matches one of rule's "files of interest" (FOI)
+#       a) A file of interest is really a regular expression that could match any number of possible
+#          files the rule could apply to.
+#       b) You can see the list of patterns that make up the "files of interest" by running:
+#            ./discovery --list-foi
+#    4) When the Walker finds a matching file, it calls the RuleEngine with the found file
+#    5) The RuleEngine will evaluate the file and apply any rule which matches that filename
+#       a) There are currently 4 types of match rules depending upon the rule writer's judgement for
+#          the best way to detect the project's key files.
+#    6) The RuleEngine will track the match state for each of the project rules and match rules
+#    7) After the Walker has completed the disk traverse, the RuleEngine contains the match states
+#       of everything found
+#    8) The Discovery framework then dumps a list of the match states to the console in a sorted order
+#       a) optionally, the results will be delivered to an open source census server for inclusion in
+#          the open source census.
+#
+# For more details on how the project rules work, please see the "Rule Writing for Discovery" document
+# on the project web site:  http://www.ossdiscovery.org
+#
 
 $:.unshift File.join(File.dirname(__FILE__))
 
@@ -57,8 +81,6 @@ require 'scan_rules_updater'
 
 #--------------- global defaults ---------------------------------------------
 # maintain these in alphabetical order, please
-
-# relative paths are relative to the main/ruby directory
 
 @basedir = File.expand_path(File.dirname(__FILE__))
 @config = 'conf/config.rb'
