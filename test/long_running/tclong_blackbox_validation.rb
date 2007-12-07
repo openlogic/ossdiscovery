@@ -23,6 +23,7 @@ class TclongBlackboxValidation < Test::Unit::TestCase
   
   def setup
     @results_file = File.expand_path(File.join(File.dirname(__FILE__), "#{ScanRulesUpdater.get_YYYYMMDD_HHMM_str}_scan_results.txt"))
+    @baseline_file = File.expand_path(File.join(File.dirname(__FILE__), '..', 'resources', 'blackbox_validation_baseline_scan_results.txt'))
   end
   
   def teardown
@@ -41,6 +42,38 @@ class TclongBlackboxValidation < Test::Unit::TestCase
     assert(!output.include?('Unsupported option'), "There was a problem with the command (#{cmd}), because the help text was returned.")    
     assert(!output.include?('decoy'), "The test was testing that content that should not be discovered (content living somewhere underneath a 'decoy' directory) is actually NOT being discovered.  Some of the 'decoy' stuff must've been discovered.")
     
+    # Asserting that the portions of the baseline results file and the results file created from performing the above discovery run are the same
+    lines_test_file = Array.new
+    start_adding_lines = false
+    File.open(@results_file) do |test_file|
+      while line = test_file.gets
+        if (start_adding_lines) then
+          lines_test_file << line
+        elsif (line.include?("package,version"))
+          start_adding_lines = true
+          next
+        end
+      end # of while
+    end # of File.open
+    
+    lines_baseline_file = Array.new
+    start_adding_lines = false
+    File.open(@baseline_file) do |test_file|
+      while line = test_file.gets
+        if (start_adding_lines) then
+          lines_baseline_file << line
+        elsif (line.include?("package,version"))
+          start_adding_lines = true
+          next
+        end
+      end # of while
+    end # of File.open
+    
+    lines_test_file.sort!
+    lines_baseline_file.sort!
+    0.upto(lines_baseline_file.size - 1) do |i|
+      assert_equal(lines_baseline_file[i], lines_test_file[i])
+    end # of 0.upto
     
   end
 
