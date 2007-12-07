@@ -139,7 +139,7 @@ class RuleEngine
                 end
                 # For debugging purposes
                 if (produce_match_audit_records && match_or_not)
-                  @audit_records << MatchAuditRecord.new(project_rule.name, ruleset.name, match_rule.name, location + "/" + filename)
+                  @audit_records << MatchAuditRecord.new(project_rule.name, ruleset.name, match_rule.name, location + "/" + filename, match_rule.get_latest_matchval)
                 end
               end
             rescue 
