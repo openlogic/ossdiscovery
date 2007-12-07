@@ -31,7 +31,7 @@
 
 =begin rdoc
   All real MatchRule implementations will extend this class, as this class 
-  itself is nearly worthless.  As of now, there are only two hard rules for 
+  itself is nearly worthless.  As of now, there are only a few hard rules for 
   MatchRule implementations, they must respond to the following method calls:
   
   1) create(attributes) - Factory method that accepts an 'attributes' Hash 
@@ -84,6 +84,13 @@ class MatchRule
       val = true
     end
     return val
+  end
+  
+=begin rdoc
+  the last value (version) that came out of a successful (true) match? call
+=end   
+  def get_latest_matchval()
+    return @latest_match_val
   end
 
 end

@@ -58,6 +58,7 @@ class FilenameVersionMatchRule < FilenameMatchRule
         @@log.debug('FilenameVersionMatchRule') {"Multiple versions of the same project likely exist in the same directory. MatchRule name: '#{@name}', version: '#{@version}', defined filename: '#{@defined_filename}', defined_regexp: '#{@defined_regexp}'"}
       end
       match_set << match_val[1]
+      @latest_match_val = match_val[1]
       @matched_against[File.dirname(actual_filepath)] = match_set
     end
     

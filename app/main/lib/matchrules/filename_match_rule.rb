@@ -29,6 +29,7 @@
 #
 
 $:.unshift File.join(File.dirname(__FILE__), '..')
+require 'package'
 require 'matchrules/match_rule'
 require File.join(File.dirname(__FILE__), '..', 'conf', 'config')
 
@@ -58,6 +59,11 @@ class FilenameMatchRule < MatchRule
     
     if (val) then
       @matched_against[File.dirname(actual_filepath)] = actual_filepath
+      if (@version == nil || @version == "") then
+        @latest_match_val = Package::VERSION_UNKNOWN
+      else
+        @latest_match_val = @version
+      end
     end
     
     return val

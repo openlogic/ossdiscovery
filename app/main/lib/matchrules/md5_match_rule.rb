@@ -73,6 +73,7 @@ class MD5MatchRule < FilenameMatchRule
     
     if (match_val) then
       @matched_against[File.dirname(actual_filepath)] = actual_filepath
+      @latest_match_val = @version
     end
     
     return match_val
