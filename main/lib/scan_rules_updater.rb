@@ -308,6 +308,7 @@ class ScanRulesUpdater
   end
   
   def ScanRulesUpdater.get_YYYYMMDD_HHMM_str(time=Time.new)
+    # TODO findme: move this method to a utils class
     str = "#{time.year}"
     
     month = "#{time.month}"
