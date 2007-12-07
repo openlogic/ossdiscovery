@@ -65,8 +65,8 @@ require 'scan_rules_updater'
 @copyright = "Copyright (C) 2007-2008 OpenLogic, Inc.  All Rights Reserved."
 @discovery_version = "2.0-alpha-1"
 @discovery_name = "discovery"
-@discovery_license = "TBD"
-@discovery_license_shortname = "TBD"  # GPLv3, BSD, Apache 2, whatever
+@discovery_license = "GNU Affero General Public License version 3"
+@discovery_license_shortname = "Affero GPLv3" 
 @distro = "Unknown: Unrecognized"
 @inclusion_filters = Hash.new
 @dir_exclusion_filters = Hash.new
