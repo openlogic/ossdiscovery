@@ -84,7 +84,7 @@ require 'scan_rules_updater'
 
 @basedir = File.expand_path(File.dirname(__FILE__))
 @config = 'conf/config.rb'
-@copyright = "Copyright (C) 2007-2008 OpenLogic, Inc.  All Rights Reserved."
+@copyright = "Copyright (C) 2007 OpenLogic, Inc.  All Rights Reserved."
 @discovery_version = "2.0-alpha-1"
 @discovery_name = "discovery"
 @discovery_license = "GNU Affero General Public License version 3"
