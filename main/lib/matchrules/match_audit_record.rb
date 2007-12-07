@@ -29,17 +29,18 @@
 #
 
 class MatchAuditRecord
-  attr_accessor :project_rule_name, :match_rule_set_name, :match_rule_name, :foi_that_matched
+  attr_accessor :project_rule_name, :match_rule_set_name, :match_rule_name, :foi_that_matched, :version
   
-  def initialize(project_rule_name, match_rule_set_name, match_rule_name, foi_that_matched)
+  def initialize(project_rule_name, match_rule_set_name, match_rule_name, foi_that_matched, version)
     @project_rule_name = project_rule_name
     @match_rule_set_name = match_rule_set_name
     @match_rule_name = match_rule_name
     @foi_that_matched = foi_that_matched
+    @version = version
   end
   
   def to_s
-    return "ProjectRule:#{@project_rule_name},MatchRuleSet:#{@match_rule_set_name},MatchRule:#{@match_rule_name},matched on:#{@foi_that_matched}"
+    return "ProjectRule:#{@project_rule_name},MatchRuleSet:#{@match_rule_set_name},MatchRule:#{@match_rule_name},Version:#{@version},matched on:#{@foi_that_matched}"
   end
   
 end
