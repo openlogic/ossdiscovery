@@ -162,7 +162,7 @@ class RuleEngine
 =end 
   def scan_complete()
     @analysis_start = Time.new    
-    @all_packages = RuleAnalyzer.analyze_matches(@project_rules)
+    @all_packages = RuleAnalyzer.aggregate_matches(@project_rules)
     @analysis_stop = Time.new  
     @analysis_elapsed = @analysis_stop - @analysis_start
     return @all_packages 

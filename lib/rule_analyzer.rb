@@ -39,9 +39,18 @@ require 'package'
   meaningful, reportable information.
 =end
 class RuleAnalyzer
-  
-  def RuleAnalyzer.analyze_matches(project_rules)
-    # Some comments regarding the allpackages Set
+
+=begin rdoc
+  The intended caller of this method is the RuleEngine.  This method is to be called when the scan 
+  of all files of interest has been completed.  At this time, all MatchRule states (reachable by 
+  navigating down in the ProjectRule hierarchy) will have been built up, so that this method can 
+  evaluate them (or pass certain evaluation responsibilities off to other classes).  The end result 
+  of calling this method is that it returns an aggregated, readable list of Package objects that can 
+  be used to report the actual information a user of this tool would care about... namely what do I 
+  have installed and where is it installed.
+=end
+  def RuleAnalyzer.aggregate_matches(project_rules)
+    # Some comments regarding the allpackages_with_unknowns Set
     # This Enumerable is a Set because we need to ensure that the contents of it (all found packages) are unique.
     # You may be thinking now, how would they ever not be unique?  Glad you asked... here's an example:
     # - I have one handwritten dom4j rule, and one dom4j rule that was generated based off of a maven repo.
@@ -59,8 +68,9 @@ class RuleAnalyzer
     end # of project_rules.each
     
     # We have to go through a similar step here since we allow multiple 'project-rule' definitions.  
-    # All unneccesary 'unkown' version identifications will have been removed with the context of one 
-    # 'project-rule' definition above.  But we could still have something like the following:
+    # All unneccesary 'unkown' version identifications will have been removed within the context of one 
+    # 'project-rule' definition above (specifically, this occurs in the bowels of the 'build_packages' method).  
+    # But we could still have something like the following:
     #
     # <project-rule for 'spring' defined in rules-file-A.xml
     # <project-rule for 'spring' defined in rules-file-B.xml

@@ -127,6 +127,20 @@ class Package
     return valid_packages
   end
   
+=begin rdoc
+  Return an Array of Package instances.  For all given locations (directories), and one given 
+  ProjectRule, take the informational state of the ProjectRule hierarchy (the real info is found 
+  by calling the 'get_found_versions' method on various MatchRule objects).  This method has an 
+  internal client, so it is safe to assume that all the given 'locations' are actually locations 
+  where something has been found, as opposed to some arbitrary list of directories on the machine.
+
+  A specific point about what this method does with 'unknown' versions:
+    - If "unknown" was the only hit for a given location, report that.
+    - If we hit on "unknown" and some actual version, the "unknown" probably 
+      only exists as kruft left around from an AND of two match rules (One that 
+      could get us part of the way there, telling us the package existed, but not 
+      knowing which version, and one that finished the job by telling us the version as well.)  
+=end 
   def Package.create_instances(locations, project_rule)
     
     instances = Array.new
@@ -145,12 +159,7 @@ class Package
           end # of found_versions.each
         end
         
-        # Essentially, here's what we're saying.
-        # - If "unknown" was the only hit for a given location, report that.
-        # - If we hit on "unknown" and some actual version, the "unknown" probably 
-        #   only exists as kruft left around from an AND of two match rules (One that 
-        #   could get us part of the way there, telling us the package existed, but not 
-        #   knowing which version, and won that finished the job by telling us the version as well.)
+        # See the note in this method's rdoc about 'unknown' versions for an explanation of what's going on here.
         if (version_set.size > 1) then
           version_set.delete_if() {|version| version == VERSION_UNKNOWN}
         end
