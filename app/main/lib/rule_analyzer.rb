@@ -32,6 +32,12 @@ require 'set'
 
 require 'package'
 
+=begin rdoc
+  This is the class that is responsible for taking lists of raw ProjectRule 
+  hierarchies (... -> MatchRuleSet -> MatchRule) and crunching through all of 
+  the state held in these granular object hierarchies, in order to produce more 
+  meaningful, reportable information.
+=end
 class RuleAnalyzer
   
   def RuleAnalyzer.analyze_matches(project_rules)
