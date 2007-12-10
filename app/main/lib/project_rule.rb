@@ -77,7 +77,9 @@ class ProjectRule
   end
 
 =begin rdoc
-  Returns a Set of Package objects
+  Returns a Set of Package objects.  These Package objects are the resulting 
+  aggregation of the state of all MatchRule instances underneath this object in 
+  it's hierarchy.
 =end
   def build_packages()
     results = Array.new
