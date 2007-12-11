@@ -245,13 +245,6 @@
       <match-rule name='geotools_jar' type='filenameVersion' filename='^geotools-.*?([0-9].*?).jar$' />
     </match-rules>
   </project-rule>
-  <project-rule name='geronimo' from='wild' os='all' >
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression='geronimo_fv' speed='1' />
-    <match-rules name='geronimo_fv' >
-      <match-rule name='geronimo_jar' type='filenameVersion' filename='^geronimo-.*?([0-9].*?).jar$' />
-    </match-rules>
-  </project-rule>
   <project-rule name='grails' from='wild' os='all' >
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression='grails_fv' speed='1' />
@@ -2073,13 +2066,6 @@
       <match-rule name='genjar_jar' type='filenameVersion' filename='^genjar-.*?([0-9].*?).jar$' />
     </match-rules>
   </project-rule>
-  <project-rule name='geronimo-spec' from='wild' os='all' >
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression='geronimo-spec_fv' speed='1'/>
-    <match-rules name='geronimo-spec_fv' >
-      <match-rule name='geronimo-spec_jar' type='filenameVersion' filename='^geronimo-spec-.*?([0-9].*?).jar$' />
-    </match-rules>
-  </project-rule>
   <project-rule name='gnu-regexp' from='wild' os='all' >
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression='gnu-regexp_fv' speed='1'/>
@@ -3275,13 +3261,6 @@
     <eval expression='xsdlib_fv' speed='1'/>
     <match-rules name='xsdlib_fv' >
       <match-rule name='xsdlib_jar' type='filenameVersion' filename='^xsdlib-.*?([0-9].*?).jar$' />
-    </match-rules>
-  </project-rule>
-  <project-rule name='geronimo' from='wild' os='all' >
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression='geronimo_fv' speed='1'/>
-    <match-rules name='geronimo_fv' >
-      <match-rule name='geronimo_jar' type='filenameVersion' filename='^geronimo-.*?([0-9].*?).jar$' />
     </match-rules>
   </project-rule>
   <project-rule name='jrms' from='wild' os='all' >
@@ -5102,146 +5081,6 @@
     <eval expression='schema_fv' speed='1'/>
     <match-rules name='schema_fv' >
       <match-rule name='schema_jar' type='filenameVersion' filename='^schema-.*?([0-9].*?).jar$' />
-    </match-rules>
-  </project-rule>
-  <project-rule name='geronimo-activation_1.0.2_spec' from='wild' os='all' >
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression='geronimo-activation_1.0.2_spec_fv' speed='1'/>
-    <match-rules name='geronimo-activation_1.0.2_spec_fv' >
-      <match-rule name='geronimo-activation_1.0.2_spec_jar' type='filenameVersion' filename='^geronimo-activation_1.0.2_spec-.*?([0-9].*?).jar$' />
-    </match-rules>
-  </project-rule>
-  <project-rule name='geronimo-annotation_1.0_spec' from='wild' os='all' >
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression='geronimo-annotation_1.0_spec_fv' speed='1'/>
-    <match-rules name='geronimo-annotation_1.0_spec_fv' >
-      <match-rule name='geronimo-annotation_1.0_spec_jar' type='filenameVersion' filename='^geronimo-annotation_1.0_spec-.*?([0-9].*?).jar$' />
-    </match-rules>
-  </project-rule>
-  <project-rule name='geronimo-commonj_1.1_spec' from='wild' os='all' >
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression='geronimo-commonj_1.1_spec_fv' speed='1'/>
-    <match-rules name='geronimo-commonj_1.1_spec_fv' >
-      <match-rule name='geronimo-commonj_1.1_spec_jar' type='filenameVersion' filename='^geronimo-commonj_1.1_spec-.*?([0-9].*?).jar$' />
-    </match-rules>
-  </project-rule>
-  <project-rule name='geronimo-corba_2.3_spec' from='wild' os='all' >
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression='geronimo-corba_2.3_spec_fv' speed='1'/>
-    <match-rules name='geronimo-corba_2.3_spec_fv' >
-      <match-rule name='geronimo-corba_2.3_spec_jar' type='filenameVersion' filename='^geronimo-corba_2.3_spec-.*?([0-9].*?).jar$' />
-    </match-rules>
-  </project-rule>
-  <project-rule name='geronimo-corba_3.0_spec' from='wild' os='all' >
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression='geronimo-corba_3.0_spec_fv' speed='1'/>
-    <match-rules name='geronimo-corba_3.0_spec_fv' >
-      <match-rule name='geronimo-corba_3.0_spec_jar' type='filenameVersion' filename='^geronimo-corba_3.0_spec-.*?([0-9].*?).jar$' />
-    </match-rules>
-  </project-rule>
-  <project-rule name='geronimo-ejb_2.1_spec' from='wild' os='all' >
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression='geronimo-ejb_2.1_spec_fv' speed='1'/>
-    <match-rules name='geronimo-ejb_2.1_spec_fv' >
-      <match-rule name='geronimo-ejb_2.1_spec_jar' type='filenameVersion' filename='^geronimo-ejb_2.1_spec-.*?([0-9].*?).jar$' />
-    </match-rules>
-  </project-rule>
-  <project-rule name='geronimo-j2ee-connector_1.5_spec' from='wild' os='all' >
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression='geronimo-j2ee-connector_1.5_spec_fv' speed='1'/>
-    <match-rules name='geronimo-j2ee-connector_1.5_spec_fv' >
-      <match-rule name='geronimo-j2ee-connector_1.5_spec_jar' type='filenameVersion' filename='^geronimo-j2ee-connector_1.5_spec-.*?([0-9].*?).jar$' />
-    </match-rules>
-  </project-rule>
-  <project-rule name='geronimo-j2ee-deployment_1.1_spec' from='wild' os='all' >
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression='geronimo-j2ee-deployment_1.1_spec_fv' speed='1'/>
-    <match-rules name='geronimo-j2ee-deployment_1.1_spec_fv' >
-      <match-rule name='geronimo-j2ee-deployment_1.1_spec_jar' type='filenameVersion' filename='^geronimo-j2ee-deployment_1.1_spec-.*?([0-9].*?).jar$' />
-    </match-rules>
-  </project-rule>
-  <project-rule name='geronimo-j2ee-jacc_1.0_spec' from='wild' os='all' >
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression='geronimo-j2ee-jacc_1.0_spec_fv' speed='1'/>
-    <match-rules name='geronimo-j2ee-jacc_1.0_spec_fv' >
-      <match-rule name='geronimo-j2ee-jacc_1.0_spec_jar' type='filenameVersion' filename='^geronimo-j2ee-jacc_1.0_spec-.*?([0-9].*?).jar$' />
-    </match-rules>
-  </project-rule>
-  <project-rule name='geronimo-j2ee-management_1.0_spec' from='wild' os='all' >
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression='geronimo-j2ee-management_1.0_spec_fv' speed='1'/>
-    <match-rules name='geronimo-j2ee-management_1.0_spec_fv' >
-      <match-rule name='geronimo-j2ee-management_1.0_spec_jar' type='filenameVersion' filename='^geronimo-j2ee-management_1.0_spec-.*?([0-9].*?).jar$' />
-    </match-rules>
-  </project-rule>
-  <project-rule name='geronimo-j2ee_1.4_spec' from='wild' os='all' >
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression='geronimo-j2ee_1.4_spec_fv' speed='1'/>
-    <match-rules name='geronimo-j2ee_1.4_spec_fv' >
-      <match-rule name='geronimo-j2ee_1.4_spec_jar' type='filenameVersion' filename='^geronimo-j2ee_1.4_spec-.*?([0-9].*?).jar$' />
-    </match-rules>
-  </project-rule>
-  <project-rule name='geronimo-javamail_1.3.1_spec' from='wild' os='all' >
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression='geronimo-javamail_1.3.1_spec_fv' speed='1'/>
-    <match-rules name='geronimo-javamail_1.3.1_spec_fv' >
-      <match-rule name='geronimo-javamail_1.3.1_spec_jar' type='filenameVersion' filename='^geronimo-javamail_1.3.1_spec-.*?([0-9].*?).jar$' />
-    </match-rules>
-  </project-rule>
-  <project-rule name='geronimo-jaxr_1.0_spec' from='wild' os='all' >
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression='geronimo-jaxr_1.0_spec_fv' speed='1'/>
-    <match-rules name='geronimo-jaxr_1.0_spec_fv' >
-      <match-rule name='geronimo-jaxr_1.0_spec_jar' type='filenameVersion' filename='^geronimo-jaxr_1.0_spec-.*?([0-9].*?).jar$' />
-    </match-rules>
-  </project-rule>
-  <project-rule name='geronimo-jaxrpc_1.1_spec' from='wild' os='all' >
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression='geronimo-jaxrpc_1.1_spec_fv' speed='1'/>
-    <match-rules name='geronimo-jaxrpc_1.1_spec_fv' >
-      <match-rule name='geronimo-jaxrpc_1.1_spec_jar' type='filenameVersion' filename='^geronimo-jaxrpc_1.1_spec-.*?([0-9].*?).jar$' />
-    </match-rules>
-  </project-rule>
-  <project-rule name='geronimo-jms_1.1_spec' from='wild' os='all' >
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression='geronimo-jms_1.1_spec_fv' speed='1'/>
-    <match-rules name='geronimo-jms_1.1_spec_fv' >
-      <match-rule name='geronimo-jms_1.1_spec_jar' type='filenameVersion' filename='^geronimo-jms_1.1_spec-.*?([0-9].*?).jar$' />
-    </match-rules>
-  </project-rule>
-  <project-rule name='geronimo-jsp_2.0_spec' from='wild' os='all' >
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression='geronimo-jsp_2.0_spec_fv' speed='1'/>
-    <match-rules name='geronimo-jsp_2.0_spec_fv' >
-      <match-rule name='geronimo-jsp_2.0_spec_jar' type='filenameVersion' filename='^geronimo-jsp_2.0_spec-.*?([0-9].*?).jar$' />
-    </match-rules>
-  </project-rule>
-  <project-rule name='geronimo-jta_1.0.1b_spec' from='wild' os='all' >
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression='geronimo-jta_1.0.1b_spec_fv' speed='1'/>
-    <match-rules name='geronimo-jta_1.0.1b_spec_fv' >
-      <match-rule name='geronimo-jta_1.0.1B_spec_jar' type='filenameVersion' filename='^geronimo-jta_1.0.1B_spec-.*?([0-9].*?).jar$' />
-    </match-rules>
-  </project-rule>
-  <project-rule name='geronimo-qname_1.1_spec' from='wild' os='all' >
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression='geronimo-qname_1.1_spec_fv' speed='1'/>
-    <match-rules name='geronimo-qname_1.1_spec_fv' >
-      <match-rule name='geronimo-qname_1.1_spec_jar' type='filenameVersion' filename='^geronimo-qname_1.1_spec-.*?([0-9].*?).jar$' />
-    </match-rules>
-  </project-rule>
-  <project-rule name='geronimo-saaj_1.1_spec' from='wild' os='all' >
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression='geronimo-saaj_1.1_spec_fv' speed='1'/>
-    <match-rules name='geronimo-saaj_1.1_spec_fv' >
-      <match-rule name='geronimo-saaj_1.1_spec_jar' type='filenameVersion' filename='^geronimo-saaj_1.1_spec-.*?([0-9].*?).jar$' />
-    </match-rules>
-  </project-rule>
-  <project-rule name='geronimo-servlet_2.4_spec' from='wild' os='all' >
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression='geronimo-servlet_2.4_spec_fv' speed='1'/>
-    <match-rules name='geronimo-servlet_2.4_spec_fv' >
-      <match-rule name='geronimo-servlet_2.4_spec_jar' type='filenameVersion' filename='^geronimo-servlet_2.4_spec-.*?([0-9].*?).jar$' />
     </match-rules>
   </project-rule>
   <project-rule name='jackrabbit' from='wild' os='all' >
