@@ -24,35 +24,57 @@
 # You can contact OpenLogic at info@openlogic.com.
 #
 #--------------------------------------------------------------------------------------------------
+# 
+# The properties defined in this file, can, for the most part, be organized into some kind of 
+# topical group.  'General' is the catch all group for properties that don't really lend themselves
+# to being organized any better than that.  The 'General' group appears first, and after that all
+# of the remaining properties are organized alphabetically by their group.  This 'group' has no 
+# bearing whatsoever on how the properties get used, it just serves as a way to keep the list of
+# properties in this file in some sane, organized manner.
+
+
+################################################################################
+##### General properties
 
 #--------------------------------------------------------------------------------------
 # for enterprise wide deployments and scans, it's useful to report scans with a company
 # name so that scan results can be aggregated and enteprise-wide statistics are possible
 #
 # by default this is "anonymous"
-
 company_name: anonymous
-
-#--------------------------------------------------------------------------------------
-# machine_id needs to be universally unique and static
-# this will be changed by the system from "default" unless overridden here by a
-# different value.  If you choose to override it, insure that it's unique for each
-# machine on which a scan is run if the results are to be submitted
-
-machine_id: default
-
 
 #--------------------------------------------------------------------------------------
 # what directory to walk if no other directories are specified in the inclusion filter
 # if --path command line parameter is given, that path will override this one
 # if no --path is given and there are no filters in the inclusion_filter list, then
 # this path will be used to scan
-
 directory_to_scan: /
 
 #--------------------------------------------------------------------------------------
 # which default filter set to use
 generic_filters: /filters/filters-list.rb
+
+#--------------------------------------------------------------------------------------
+# machine_id needs to be universally unique and static
+# this will be changed by the system from "default" unless overridden here by a
+# different value.  If you choose to override it, insure that it's unique for each
+# machine on which a scan is run if the results are to be submitted
+machine_id: default
+
+#--------------------------------------------------------------------------------------
+# show permission denied directories or files
+show_permission_denied: false
+
+#--------------------------------------------------------------------------------------
+# decide whether to scan symlink'd files and directories 
+# by default it's true because symlinks are so commonly used
+follow_symlinks: true
+# maximum number of indirections to follow through symlinks
+symlink_depth: 5
+
+
+################################################################################
+##### Logging properties
 
 # Arg that will be passed to Logger.new().  From the rdoc: This is a filename (String) or IO object (typically STDOUT, STDERR, or an open file).
 log_device: <% File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'log', 'discovery.log')) %> 
@@ -61,16 +83,24 @@ log_device: <% File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'l
 # productions runs, it shouldn't give you too much output, but you also won't miss importatnt warnings.
 log_level: <% Logger::INFO %>
 
+
+################################################################################
+##### Debugging/Developer-oriented properties
+
 # Set this property to true if you'd like an auditable list of all the files of interested that triggered successful 
 # matches to be printed out.  If it is set to true, this will be printed to the value specified in the 'results' property.
 produce_match_audit_records: false
+
+
+################################################################################
+##### Output properties
 
 #--------------------------------------------------------------------------------------
 # where the results should go by default, both of these may be overridden by command
 # line options.
 
-# human readable
-results: STDOUT
+# whether to include location (paths) in the machine scan results file.
+include_paths: false
 
 # machine readable results file
 machine_results: scan_results.txt
@@ -78,8 +108,24 @@ machine_results: scan_results.txt
 # whether or not to show the machine scan results after the scan is complete
 preview_results: false
 
-# whether to include location (paths) in the machine scan results file.
-include_paths: false
+# human readable
+results: STDOUT
+
+
+################################################################################
+##### Rules properties
+
+#--------------------------------------------------------------------------------------
+# where to pick up the default scan rules
+rules_openlogic: <% File.expand_path(File.join(File.dirname(__FILE__), '..', 'rules', 'openlogic')) %>
+rules_drop_ins: <% File.expand_path(File.join(File.dirname(__FILE__), '..', 'rules', 'drop_ins')) %>
+rules_dirs: <% ['rules_openlogic', 'rules_drop_ins'] %>
+# If you only want to run the tool with your custom written rules, you would put them in the 'drop_ins' dir and change the previous line to:
+#   rules_dirs: <% ['rules_drop_ins'] %>
+
+
+################################################################################
+##### Server properties
 
 #--------------------------------------------------------------------------------------
 # these items describe where and how scan results are sent
@@ -119,28 +165,5 @@ proxy_port: nil # 4545 # 3128
 proxy_user: nil # 
 proxy_password: nil #
 
-
-#--------------------------------------------------------------------------------------
-# where to pick up the default scan rules
-rules_openlogic: <% File.expand_path(File.join(File.dirname(__FILE__), '..', 'rules', 'openlogic')) %>
-rules_drop_ins: <% File.expand_path(File.join(File.dirname(__FILE__), '..', 'rules', 'drop_ins')) %>
-rules_dirs: <% ['rules_openlogic', 'rules_drop_ins'] %>
-# If you only want to run the tool with your custom written rules, you would put them in the 'drop_ins' dir and change the previous line to:
-#   rules_dirs: <% ['rules_drop_ins'] %>
-
-
-#--------------------------------------------------------------------------------------
-# show permission denied directories or files
-show_permission_denied: false
-
 update_rules: false
 update_rules_and_do_scan: false
-
-
-#--------------------------------------------------------------------------------------
-# decide whether to scan symlink'd files and directories 
-# by default it's true because symlinks are so commonly used
-follow_symlinks: true
-# maximum number of indirections to follow through symlinks
-symlink_depth: 5
-
