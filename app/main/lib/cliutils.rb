@@ -180,7 +180,12 @@ def report( packages )
     end # of packages.each
   end
   
-  if (io != STDOUT) then io.close end
+  if (io != STDOUT)  
+    io.close 
+    # now echo final results to console also
+    result_txt = File.open(@results,"r").read
+    puts result_txt
+  end
   
 end
 
