@@ -85,7 +85,7 @@ require 'scan_rules_updater'
 @basedir = File.expand_path(File.dirname(__FILE__))
 @config = 'conf/config.rb'
 @copyright = "Copyright (C) 2007 OpenLogic, Inc."
-@discovery_version = "2.0-alpha-1"
+@discovery_version = "2.0-alpha-2"
 @discovery_name = "discovery"
 @discovery_license = "GNU Affero General Public License version 3"
 @discovery_license_shortname = "Affero GPLv3" 
@@ -156,6 +156,7 @@ def execute()
   # in the process of constructing the object, the rule engine
   # will register with the walker and set up the list of files of interest
   # after this object is created, the machine is ready to scan
+  puts "Reading project rules....\n"
   @rule_engine = RuleEngine.new(  @rules_dirs, @walker, SPEEDHINT )
 #  @rule_engine = RuleEngine.new(  @rules_dirs, @walker, @speedhint ) - future, whenever 'speedhint' gets added back to config.yml
 
@@ -173,6 +174,7 @@ def execute()
   
   # This is the main call to start scanning a machine
   @directory_to_scan = File.expand_path(@directory_to_scan)
+  puts "Scanning #{@directory_to_scan}\n"
   @walker.walk_dir( @directory_to_scan )
 
   # mark the end of a scan
