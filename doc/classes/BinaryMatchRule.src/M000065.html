@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>get_match_value (BinaryMatchRule)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/matchrules/binary_match_rule.rb, line 84</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-constant">BinaryMatchRule</span>.<span class="ruby-identifier">get_match_value</span>(<span class="ruby-identifier">defined_filename</span>, <span class="ruby-identifier">defined_regexp</span>, <span class="ruby-identifier">actual_filepath</span>, <span class="ruby-identifier">actual_filepath_binary_content</span>=<span class="ruby-keyword kw">nil</span>)
+    <span class="ruby-identifier">match_value</span> = <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-identifier">binary_content</span> = <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-constant">FilenameMatchRule</span>.<span class="ruby-identifier">match?</span>(<span class="ruby-identifier">defined_filename</span>, <span class="ruby-identifier">actual_filepath</span>))
+      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">actual_filepath_binary_content</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>) <span class="ruby-keyword kw">then</span>
+        <span class="ruby-identifier">binary_content</span> = <span class="ruby-identifier">get_binary_content_for</span>(<span class="ruby-identifier">actual_filepath</span>)
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">binary_content</span> = <span class="ruby-identifier">actual_filepath_binary_content</span>
+      <span class="ruby-keyword kw">end</span>
+      
+      <span class="ruby-keyword kw">begin</span>
+        <span class="ruby-identifier">match_value</span> = <span class="ruby-identifier">binary_content</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">defined_regexp</span>)
+      <span class="ruby-keyword kw">rescue</span>
+        <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;\nregular expression match error:\n%s in match rule: %s\n&quot;</span>, <span class="ruby-identifier">$!</span>, <span class="ruby-identifier">name</span> )
+        <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;defined_filename: %s, defined_regexp: %s, actual_filepath: %s\n&quot;</span>, <span class="ruby-identifier">defined_filename</span>, <span class="ruby-identifier">defined_regexp</span>, <span class="ruby-identifier">actual_filepath</span> )
+        <span class="ruby-identifier">raise</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">match_value</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

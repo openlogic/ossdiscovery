@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>get_location_to_rulesets_hash (ProjectRule)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/project_rule.rb, line 125</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_location_to_rulesets_hash</span>()
+    <span class="ruby-identifier">all_possible_locations</span> = <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>
+    
+    <span class="ruby-comment cmt"># (key = ruleset name) =&gt; (value = Set of locations that evaluated to true for the ruleset)    </span>
+    <span class="ruby-identifier">ruleset_to_locations</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+    
+    <span class="ruby-ivar">@rulesets</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">ruleset</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">locs</span> = <span class="ruby-identifier">ruleset</span>.<span class="ruby-identifier">evaluate</span>
+      <span class="ruby-identifier">all_possible_locations</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">locs</span>)
+      <span class="ruby-identifier">ruleset_to_locations</span>[<span class="ruby-identifier">ruleset</span>.<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">locs</span>
+    }
+    
+    <span class="ruby-comment cmt"># the Hash that will be returned</span>
+    <span class="ruby-identifier">location_to_rulesets</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+    
+    <span class="ruby-identifier">all_possible_locations</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">location</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">ruleset_names</span> = <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>
+      <span class="ruby-identifier">ruleset_to_locations</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">ruleset</span>, <span class="ruby-identifier">location_set</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">location_set</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">location</span>)) <span class="ruby-keyword kw">then</span>
+          <span class="ruby-identifier">ruleset_names</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">ruleset</span>
+        <span class="ruby-keyword kw">end</span>
+      }
+      <span class="ruby-identifier">location_to_rulesets</span>[<span class="ruby-identifier">location</span>] = <span class="ruby-identifier">ruleset_names</span>
+    }
+    
+    <span class="ruby-identifier">location_to_rulesets_outcome_hash</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+    
+    <span class="ruby-identifier">location_to_rulesets</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">location</span>, <span class="ruby-identifier">true_rulesets</span><span class="ruby-operator">|</span> 
+    
+      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">true_rulesets</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">true_rulesets</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>) <span class="ruby-keyword kw">then</span>
+        <span class="ruby-ivar">@rulesets</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">rs</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">location_to_rulesets_outcome_hash</span>[<span class="ruby-identifier">location</span>] =  <span class="ruby-constant">Hash</span>[<span class="ruby-identifier">rs</span>.<span class="ruby-identifier">name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>]
+        }
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">rsname_to_boolean_hash</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+        <span class="ruby-ivar">@rulesets</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">rs</span><span class="ruby-operator">|</span>
+          <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">true_rulesets</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">rs</span>.<span class="ruby-identifier">name</span>)) <span class="ruby-keyword kw">then</span>
+            <span class="ruby-identifier">rsname_to_boolean_hash</span>[<span class="ruby-identifier">rs</span>.<span class="ruby-identifier">name</span>] = <span class="ruby-keyword kw">true</span>
+          <span class="ruby-keyword kw">else</span>
+            <span class="ruby-identifier">rsname_to_boolean_hash</span>[<span class="ruby-identifier">rs</span>.<span class="ruby-identifier">name</span>] = <span class="ruby-keyword kw">false</span>
+          <span class="ruby-keyword kw">end</span>
+        }
+        <span class="ruby-identifier">location_to_rulesets_outcome_hash</span>[<span class="ruby-identifier">location</span>] =  <span class="ruby-identifier">rsname_to_boolean_hash</span>
+      <span class="ruby-keyword kw">end</span>
+    }
+    
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">location_to_rulesets_outcome_hash</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

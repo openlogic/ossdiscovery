@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: RuleAnalyzer</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">RuleAnalyzer</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/rule_analyzer_rb.html">
+                lib/rule_analyzer.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+This is the class that is responsible for taking lists of raw <a
+href="ProjectRule.html">ProjectRule</a> hierarchies (&#8230; -&gt; <a
+href="MatchRuleSet.html">MatchRuleSet</a> -&gt; <a
+href="MatchRule.html">MatchRule</a>) and crunching through all of the state
+held in these granular object hierarchies, in order to produce more
+meaningful, reportable information.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000085">aggregate_matches</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000085" class="method-detail">
+        <a name="M000085"></a>
+
+        <div class="method-heading">
+          <a href="RuleAnalyzer.src/M000085.html" target="Code" class="method-signature"
+            onclick="popupCode('RuleAnalyzer.src/M000085.html');return false;">
+          <span class="method-name">aggregate_matches</span><span class="method-args">(project_rules)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+The intended caller of this method is the <a
+href="RuleEngine.html">RuleEngine</a>. This method is to be called when the
+scan of all files of interest has been completed. At this time, all <a
+href="MatchRule.html">MatchRule</a> states (reachable by navigating down in
+the <a href="ProjectRule.html">ProjectRule</a> hierarchy) will have been
+built up, so that this method can evaluate them (or pass certain evaluation
+responsibilities off to other classes). The end result of calling this
+method is that it returns an aggregated, readable list of <a
+href="Package.html">Package</a> objects that can be used to report the
+actual information a user of this tool would care about&#8230; namely what
+do I have installed and where is it installed.
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

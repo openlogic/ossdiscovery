@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/scan_rules_updater.rb, line 299</span>
+  <pre><span class="ruby-comment cmt"># File lib/scan_rules_updater.rb, line 302</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-constant">ScanRulesUpdater</span>.<span class="ruby-identifier">scrub_url_path</span>(<span class="ruby-identifier">url_path</span>)
     <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">url_path</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;/&quot;</span>) <span class="ruby-keyword kw">then</span>
       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">url_path</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-identifier">url_path</span>.<span class="ruby-identifier">size</span>]

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>get_match_rule_class_name (ScanRulesReader)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/scan_rules_reader.rb, line 288</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-constant">ScanRulesReader</span>.<span class="ruby-identifier">get_match_rule_class_name</span>(<span class="ruby-identifier">match_rule_type_str</span>)
+    <span class="ruby-identifier">c1</span> = <span class="ruby-identifier">match_rule_type_str</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">0</span>].<span class="ruby-identifier">capitalize</span>
+    <span class="ruby-identifier">the_rest</span> = <span class="ruby-identifier">match_rule_type_str</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-identifier">match_rule_type_str</span>.<span class="ruby-identifier">length</span>]
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">c1</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">the_rest</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;MatchRule&quot;</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>walk_dir (Walker)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/walker.rb, line 158</span>
+   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">walk_dir</span>( <span class="ruby-identifier">fileordir</span> )
+     
+    <span class="ruby-comment cmt"># crude progress indicator</span>
+
+    <span class="ruby-keyword kw">if</span> ( <span class="ruby-ivar">@show_progress</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@file_ct</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span> ) 
+      <span class="ruby-identifier">q</span>,<span class="ruby-identifier">r</span> = <span class="ruby-ivar">@file_ct</span>.<span class="ruby-identifier">divmod</span>( <span class="ruby-ivar">@show_every</span> )
+      <span class="ruby-keyword kw">if</span> ( <span class="ruby-identifier">r</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> )
+        <span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;.&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-keyword kw">if</span> ( <span class="ruby-ivar">@show_verbose</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@file_ct</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span> ) 
+      <span class="ruby-identifier">q</span>,<span class="ruby-identifier">r</span> = <span class="ruby-ivar">@file_ct</span>.<span class="ruby-identifier">divmod</span>( <span class="ruby-ivar">@show_every</span> )
+      <span class="ruby-keyword kw">if</span> ( <span class="ruby-identifier">r</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> )
+        <span class="ruby-identifier">progress_report</span>()
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>    
+
+    <span class="ruby-comment cmt"># we have a file or directory.  before we process it further we need to see if it</span>
+    <span class="ruby-comment cmt"># is of interest to us or if it matches a filter that indicates it should be excluded</span>
+    <span class="ruby-comment cmt">#</span>
+    <span class="ruby-comment cmt"># this is a major part of the optimized scan because there's no sense in applying rules,</span>
+    <span class="ruby-comment cmt"># getting MD5s or anything else on a file that is not of interest</span>
+    
+    <span class="ruby-ivar">@dir_exclusions</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">filter</span> <span class="ruby-operator">|</span> 
+
+       <span class="ruby-keyword kw">if</span> ( <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">fileordir</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">fileordir</span>.<span class="ruby-identifier">match</span>( <span class="ruby-identifier">filter</span> ) <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span> )   <span class="ruby-comment cmt"># found a directory exclusion</span>
+          <span class="ruby-keyword kw">if</span> ( <span class="ruby-ivar">@list_exclusions</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">$DEBUG</span> )
+            <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;'%s' is excluded by: %s directory filter\n&quot;</span>, <span class="ruby-identifier">fileordir</span>, <span class="ruby-identifier">filter</span> )
+          <span class="ruby-keyword kw">end</span>
+          <span class="ruby-comment cmt">#  blow out of here if this file matches an exclusion condition, </span>
+          <span class="ruby-comment cmt">#  false because this is a directory which needs to be pruned</span>
+          <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>  
+        <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-ivar">@file_exclusions</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">filter</span> <span class="ruby-operator">|</span> 
+
+        <span class="ruby-keyword kw">if</span> ( <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>( <span class="ruby-identifier">fileordir</span> ).<span class="ruby-identifier">match</span>( <span class="ruby-identifier">filter</span> ) <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span> )   <span class="ruby-comment cmt"># found an exclusion</span>
+          <span class="ruby-keyword kw">if</span> ( <span class="ruby-ivar">@list_exclusions</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">$DEBUG</span> )
+            <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;'%s' is excluded by: %s file filter\n&quot;</span>, <span class="ruby-identifier">fileordir</span>, <span class="ruby-identifier">filter</span> )
+          <span class="ruby-keyword kw">end</span>
+          <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>  <span class="ruby-comment cmt"># blow out of here if this file matches an exclusion condition, true because this is a file and got walked</span>
+        <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-comment cmt"># --list-files flag implementation</span>
+    <span class="ruby-comment cmt"># will show only files that made it through the exclusion filters</span>
+
+    <span class="ruby-keyword kw">if</span> ( <span class="ruby-ivar">@list_files</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">$DEBUG</span> )
+      <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;%s\n&quot;</span>, <span class="ruby-identifier">fileordir</span> )
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-identifier">resolved</span> = <span class="ruby-keyword kw">true</span>
+    <span class="ruby-identifier">symlink</span> = <span class="ruby-keyword kw">false</span>
+
+    <span class="ruby-keyword kw">begin</span>
+      
+      <span class="ruby-keyword kw">if</span>( <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">fileordir</span>) )
+        <span class="ruby-ivar">@file_ct</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+
+        <span class="ruby-keyword kw">if</span> ( <span class="ruby-constant">File</span>.<span class="ruby-identifier">symlink?</span>(<span class="ruby-identifier">fileordir</span>) )
+          <span class="ruby-keyword kw">if</span> ( <span class="ruby-ivar">@follow_symlinks</span> )
+            <span class="ruby-identifier">resolved</span>, <span class="ruby-identifier">fileordir</span> = <span class="ruby-identifier">resolve_symlink</span>( <span class="ruby-identifier">fileordir</span> )
+          <span class="ruby-keyword kw">else</span>
+            <span class="ruby-identifier">resolved</span> = <span class="ruby-keyword kw">false</span>
+            <span class="ruby-ivar">@sym_link_ct</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+            <span class="ruby-ivar">@not_followed_ct</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+       
+        <span class="ruby-comment cmt"># see if this entry is resolvable and matches anything anyone's looking for </span>
+        <span class="ruby-keyword kw">if</span> ( <span class="ruby-identifier">resolved</span> )        
+          <span class="ruby-identifier">name_match</span>( <span class="ruby-identifier">fileordir</span> )
+        <span class="ruby-keyword kw">end</span>
+        
+      <span class="ruby-keyword kw">elsif</span>( <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">fileordir</span>) )
+
+        <span class="ruby-ivar">@dir_ct</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+        
+        <span class="ruby-comment cmt"># list the contents of this directory (the pwd) and recursively call walkdir</span>
+        <span class="ruby-comment cmt"># if it's not empty</span>
+
+        <span class="ruby-keyword kw">begin</span> 
+          <span class="ruby-keyword kw">if</span> ( <span class="ruby-constant">File</span>.<span class="ruby-identifier">lstat</span>(<span class="ruby-identifier">fileordir</span>).<span class="ruby-identifier">symlink?</span> )
+          
+            <span class="ruby-keyword kw">if</span> ( <span class="ruby-ivar">@follow_symlinks</span> )
+              <span class="ruby-comment cmt"># need to resolve the symlink</span>
+              <span class="ruby-identifier">resolved</span>, <span class="ruby-identifier">fileordir</span> = <span class="ruby-identifier">resolve_symlink</span>( <span class="ruby-identifier">fileordir</span> )
+              <span class="ruby-comment cmt"># @@log.info(&quot;Walker&quot;) {&quot;resolved: &quot; + resolved.to_s + &quot; fileordir: &quot; + fileordir }</span>
+            <span class="ruby-keyword kw">else</span>
+              <span class="ruby-identifier">resolved</span> = <span class="ruby-keyword kw">false</span>
+              <span class="ruby-ivar">@sym_link_ct</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+              <span class="ruby-ivar">@not_followed_ct</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>            
+            <span class="ruby-keyword kw">end</span>
+          
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span> 
+          <span class="ruby-comment cmt"># the only times we've seen this hit are when a symlink is completely orphaned =&gt; points to nothing</span>
+          <span class="ruby-comment cmt"># this has only occurred on a symlink found in /lost+found on Solaris.  otherwise, there's no way</span>
+          <span class="ruby-comment cmt"># to make a symlink like this using ln.</span>
+          <span class="ruby-ivar">@not_followed_ct</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+          <span class="ruby-ivar">@bad_link_ct</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>    
+          <span class="ruby-ivar">@@log</span>.<span class="ruby-identifier">info</span>(<span class="ruby-value str">&quot;Walker&quot;</span>) {<span class="ruby-node">&quot;WARNING: Bad lstat on symlink check - #{fileordir} - likely an orphaned symlink&quot;</span>}
+          <span class="ruby-identifier">resolved</span> = <span class="ruby-keyword kw">false</span>
+        <span class="ruby-keyword kw">end</span>
+        
+        <span class="ruby-keyword kw">if</span> ( <span class="ruby-identifier">resolved</span> ) 
+          
+          <span class="ruby-comment cmt"># printf(&quot;fileordir resolved: #{fileordir}\n&quot;)</span>
+          
+          <span class="ruby-identifier">pwd</span> = <span class="ruby-identifier">fileordir</span>
+
+          <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">foreach</span>(<span class="ruby-identifier">fileordir</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">direntry</span> <span class="ruby-operator">|</span> 
+
+              <span class="ruby-comment cmt"># recurse into this directory if it's not current or parent directories</span>
+              <span class="ruby-keyword kw">if</span> ( <span class="ruby-identifier">direntry</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;.&quot;</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">direntry</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;..&quot;</span> ) 
+                <span class="ruby-identifier">direntry</span> = (<span class="ruby-identifier">pwd</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'/'</span> <span class="ruby-operator">?</span> <span class="ruby-node">&quot;/#{direntry}&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-node">&quot;#{pwd}/#{direntry}&quot;</span> )
+                
+                <span class="ruby-comment cmt"># @@log.info(&quot;Walker&quot;) { &quot;pwd: #{pwd} direntry: #{direntry}&quot; }                </span>
+
+                <span class="ruby-comment cmt"># check to see if we need to prune a directory</span>
+                <span class="ruby-keyword kw">if</span> ( <span class="ruby-operator">!</span><span class="ruby-identifier">walk_dir</span>( <span class="ruby-identifier">direntry</span> ) )
+                    <span class="ruby-keyword kw">if</span> ( <span class="ruby-ivar">@list_exclusions</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">$DEBUG</span> )
+                      <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;'%s' pruned\n&quot;</span>, <span class="ruby-identifier">direntry</span> )
+                    <span class="ruby-keyword kw">end</span>
+                <span class="ruby-keyword kw">end</span>
+              <span class="ruby-keyword kw">end</span> 
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-keyword kw">end</span>
+  
+    <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EACCES</span>, <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EPERM</span>
+      
+      <span class="ruby-keyword kw">if</span> ( <span class="ruby-ivar">@show_permission_denied</span> )
+        <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;permission denied: %s\n&quot;</span>, <span class="ruby-identifier">fileordir</span>)
+      <span class="ruby-keyword kw">end</span>
+      
+      <span class="ruby-ivar">@permission_denied_ct</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+      
+    <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>, <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOTDIR</span>
+      <span class="ruby-comment cmt"># it may seem odd that a file that was scanned would end up not found, but it's possible that </span>
+      <span class="ruby-comment cmt"># a file existed and in the moments between when it was encountered and when it was scanned, was removed or moved.</span>
+      <span class="ruby-ivar">@not_found_ct</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+      
+    <span class="ruby-keyword kw">end</span>
+  
+    <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>create_instances (Package)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/package.rb, line 144</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Package</span>.<span class="ruby-identifier">create_instances</span>(<span class="ruby-identifier">locations</span>, <span class="ruby-identifier">project_rule</span>)
+    
+    <span class="ruby-identifier">instances</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
+    
+    <span class="ruby-identifier">locations</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">location</span><span class="ruby-operator">|</span>
+
+      <span class="ruby-identifier">version_set</span> = <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>
+      <span class="ruby-identifier">project_rule</span>.<span class="ruby-identifier">rulesets</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ruleset</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">ruleset</span>.<span class="ruby-identifier">match_rules</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">match_rule</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">found_versions</span> = <span class="ruby-identifier">match_rule</span>.<span class="ruby-identifier">get_found_versions</span>(<span class="ruby-identifier">location</span>)
+          <span class="ruby-identifier">found_versions</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">version</span><span class="ruby-operator">|</span>
+            <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">version</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">version</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;&quot;</span>) <span class="ruby-keyword kw">then</span>
+              <span class="ruby-identifier">version</span> = <span class="ruby-constant">VERSION_UNKNOWN</span>
+            <span class="ruby-keyword kw">end</span>
+            <span class="ruby-identifier">version_set</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">version</span>
+          <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># of found_versions.each</span>
+        <span class="ruby-keyword kw">end</span>
+        
+        <span class="ruby-comment cmt"># See the note in this method's rdoc about 'unknown' versions for an explanation of what's going on here.</span>
+        <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">version_set</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>) <span class="ruby-keyword kw">then</span>
+          <span class="ruby-identifier">version_set</span>.<span class="ruby-identifier">delete_if</span>() {<span class="ruby-operator">|</span><span class="ruby-identifier">version</span><span class="ruby-operator">|</span> <span class="ruby-identifier">version</span> <span class="ruby-operator">==</span> <span class="ruby-constant">VERSION_UNKNOWN</span>}
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># of project_rule.rulesets.each</span>
+      <span class="ruby-identifier">version_set</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">version</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">package</span> = <span class="ruby-constant">Package</span>.<span class="ruby-identifier">new</span>
+          <span class="ruby-identifier">package</span>.<span class="ruby-identifier">name</span> = <span class="ruby-identifier">project_rule</span>.<span class="ruby-identifier">name</span>
+          <span class="ruby-identifier">package</span>.<span class="ruby-identifier">found_at</span> = <span class="ruby-identifier">location</span>
+          <span class="ruby-comment cmt"># Doing this gsub because we ran into a scenario when using a hex binary match where the version looked like this: 2^@.^@3</span>
+          <span class="ruby-identifier">package</span>.<span class="ruby-identifier">version</span> = <span class="ruby-identifier">version</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">&quot;\0&quot;</span>, <span class="ruby-value str">&quot;&quot;</span>)
+          
+          <span class="ruby-identifier">instances</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">package</span>
+      <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># of version_set.each</span>
+    <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># of locations.each</span>
+    
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">instances</span>
+    
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
