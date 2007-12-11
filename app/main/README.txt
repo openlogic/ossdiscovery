@@ -121,8 +121,9 @@ The source code is organized like this:
 	- filters-list.rb pulls in the generic inclusion and exclusion filters
 	  To Add a New Filter
 	     1) write the filter using an existing example and place the filter .rb file in the filters directory
-	     2) Add the require of the filter .rb file to either the generic-inclusions.rb or generic-exclusions.rb
-		      file to pull it in.
+	     2) Add the require of the filter .rb file to the generic-exclusions.rb file to pull it in.
+    - For linux users who would like to not scan anything in their /media directory add the no-media.rb require
+      to the generic-exlusions.rb file.  We may add a "no media" flag to the CLI options in the future.
 
 LEGAL NOTICE
 -------------
