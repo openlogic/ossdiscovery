@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>evaluate (ProjectRule)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/project_rule.rb, line 96</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">evaluate</span>()
+    
+    <span class="ruby-identifier">location_to_rulesets_outcome_hash</span> = <span class="ruby-identifier">get_location_to_rulesets_hash</span>
+    
+    <span class="ruby-identifier">results</span> = <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>
+    
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">location_to_rulesets_outcome_hash</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">location_to_rulesets_outcome_hash</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>) <span class="ruby-keyword kw">then</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">results</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-identifier">location_to_rulesets_outcome_hash</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">location</span>, <span class="ruby-identifier">ruleset_hash</span><span class="ruby-operator">|</span> 
+      <span class="ruby-identifier">name_value_pairs</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+      <span class="ruby-identifier">ruleset_hash</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">rs_name</span>, <span class="ruby-identifier">boolean_val</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">name_value_pairs</span>[<span class="ruby-identifier">rs_name</span>] = <span class="ruby-identifier">boolean_val</span>
+      }
+      <span class="ruby-identifier">e</span> = <span class="ruby-constant">BooleanExpression</span>.<span class="ruby-identifier">new</span>
+      <span class="ruby-identifier">val</span> = <span class="ruby-identifier">e</span>.<span class="ruby-identifier">evaluate</span>(<span class="ruby-ivar">@eval_rule</span>.<span class="ruby-identifier">expression</span>, <span class="ruby-identifier">name_value_pairs</span>)
+      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">val</span>) <span class="ruby-keyword kw">then</span>
+        <span class="ruby-identifier">results</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">location</span>
+      <span class="ruby-keyword kw">end</span>
+    }
+    
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">results</span>;
+
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

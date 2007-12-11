@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/scan_rules_updater.rb, line 189</span>
+  <pre><span class="ruby-comment cmt"># File lib/scan_rules_updater.rb, line 192</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">http_get_rules_files_to_download</span>(<span class="ruby-identifier">rules_files_url_path</span>)
     <span class="ruby-identifier">rules_files_url_path</span> = <span class="ruby-constant">ScanRulesUpdater</span>.<span class="ruby-identifier">scrub_url_path</span>(<span class="ruby-identifier">rules_files_url_path</span>)
     <span class="ruby-identifier">res</span> = <span class="ruby-identifier">http_get_file</span>(<span class="ruby-ivar">@base_url</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">rules_files_url_path</span> )

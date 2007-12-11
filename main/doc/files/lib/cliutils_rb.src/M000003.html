@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>report (lib/cliutils.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/cliutils.rb, line 123</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">report</span>( <span class="ruby-identifier">packages</span> )
+  <span class="ruby-identifier">io</span> = <span class="ruby-keyword kw">nil</span>
+  <span class="ruby-keyword kw">if</span> (<span class="ruby-ivar">@results</span> <span class="ruby-operator">==</span> <span class="ruby-constant">STDOUT</span>) <span class="ruby-keyword kw">then</span>
+    <span class="ruby-identifier">io</span> = <span class="ruby-constant">STDOUT</span>
+  <span class="ruby-keyword kw">else</span> 
+    <span class="ruby-identifier">io</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@results</span>, <span class="ruby-value str">&quot;w&quot;</span>)
+  <span class="ruby-keyword kw">end</span>
+
+  <span class="ruby-identifier">scan_ftime</span> = <span class="ruby-ivar">@endtime</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@starttime</span>  <span class="ruby-comment cmt"># seconds</span>
+  <span class="ruby-identifier">scan_hours</span> = (<span class="ruby-identifier">scan_ftime</span><span class="ruby-operator">/</span><span class="ruby-value">3600</span>).<span class="ruby-identifier">to_i</span>
+  <span class="ruby-identifier">scan_min</span> = ((<span class="ruby-identifier">scan_ftime</span> <span class="ruby-operator">-</span>  (<span class="ruby-identifier">scan_hours</span><span class="ruby-operator">*</span><span class="ruby-value">3600</span>))<span class="ruby-operator">/</span><span class="ruby-value">60</span>).<span class="ruby-identifier">to_i</span>
+  <span class="ruby-identifier">scan_sec</span> = <span class="ruby-identifier">scan_ftime</span> <span class="ruby-operator">-</span> (<span class="ruby-identifier">scan_hours</span><span class="ruby-operator">*</span><span class="ruby-value">3600</span>) <span class="ruby-operator">-</span> (<span class="ruby-identifier">scan_min</span><span class="ruby-operator">*</span><span class="ruby-value">60</span>)
+
+  <span class="ruby-comment cmt"># pull the stats from the walker for a simple report</span>
+
+  <span class="ruby-identifier">printf</span>(<span class="ruby-identifier">io</span>, <span class="ruby-value str">&quot;directories walked    : %d\n&quot;</span>, <span class="ruby-ivar">@walker</span>.<span class="ruby-identifier">dir_ct</span> )
+  <span class="ruby-identifier">printf</span>(<span class="ruby-identifier">io</span>, <span class="ruby-value str">&quot;files encountered     : %d\n&quot;</span>, <span class="ruby-ivar">@walker</span>.<span class="ruby-identifier">file_ct</span> )
+  <span class="ruby-identifier">printf</span>(<span class="ruby-identifier">io</span>, <span class="ruby-value str">&quot;symlinks found        : %d\n&quot;</span>, <span class="ruby-ivar">@walker</span>.<span class="ruby-identifier">sym_link_ct</span> )
+  <span class="ruby-identifier">printf</span>(<span class="ruby-identifier">io</span>, <span class="ruby-value str">&quot;symlinks not followed : %d\n&quot;</span>, <span class="ruby-ivar">@walker</span>.<span class="ruby-identifier">not_followed_ct</span> )  
+  <span class="ruby-identifier">printf</span>(<span class="ruby-identifier">io</span>, <span class="ruby-value str">&quot;bad symlinks found    : %d\n&quot;</span>, <span class="ruby-ivar">@walker</span>.<span class="ruby-identifier">bad_link_ct</span> )
+  <span class="ruby-identifier">printf</span>(<span class="ruby-identifier">io</span>, <span class="ruby-value str">&quot;permission denied     : %d\n&quot;</span>, <span class="ruby-ivar">@walker</span>.<span class="ruby-identifier">permission_denied_ct</span> )
+  <span class="ruby-identifier">printf</span>(<span class="ruby-identifier">io</span>, <span class="ruby-value str">&quot;files of interest     : %d\n&quot;</span>, <span class="ruby-ivar">@walker</span>.<span class="ruby-identifier">foi_ct</span> )
+  <span class="ruby-identifier">printf</span>(<span class="ruby-identifier">io</span>, <span class="ruby-value str">&quot;start time            : %s\n&quot;</span>, <span class="ruby-ivar">@starttime</span>.<span class="ruby-identifier">asctime</span> )
+  <span class="ruby-identifier">printf</span>(<span class="ruby-identifier">io</span>, <span class="ruby-value str">&quot;end time              : %s\n&quot;</span>, <span class="ruby-ivar">@endtime</span>.<span class="ruby-identifier">asctime</span> )
+  <span class="ruby-identifier">printf</span>(<span class="ruby-identifier">io</span>, <span class="ruby-value str">&quot;scan time             : %02d:%02d:%02d (hh:mm:ss)\n&quot;</span>, <span class="ruby-identifier">scan_hours</span>, <span class="ruby-identifier">scan_min</span>, <span class="ruby-identifier">scan_sec</span> )
+  <span class="ruby-identifier">printf</span>(<span class="ruby-identifier">io</span>, <span class="ruby-value str">&quot;distro                : %s\n&quot;</span>, <span class="ruby-ivar">@distro</span> )
+  <span class="ruby-identifier">printf</span>(<span class="ruby-identifier">io</span>, <span class="ruby-value str">&quot;kernel                : %s\n&quot;</span>, <span class="ruby-ivar">@kernel</span> )
+  <span class="ruby-identifier">printf</span>(<span class="ruby-identifier">io</span>, <span class="ruby-value str">&quot;machine id            : %s\n&quot;</span>, <span class="ruby-ivar">@machine_id</span> )
+  <span class="ruby-identifier">printf</span>(<span class="ruby-identifier">io</span>, <span class="ruby-value str">&quot;&quot;</span>)
+  <span class="ruby-identifier">printf</span>(<span class="ruby-identifier">io</span>, <span class="ruby-value str">&quot;packages found        : %d\n&quot;</span>, <span class="ruby-identifier">packages</span>.<span class="ruby-identifier">length</span> )
+  
+  <span class="ruby-keyword kw">if</span> ( <span class="ruby-identifier">packages</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> )
+    <span class="ruby-comment cmt"># Format the output by making sure the columns are lined up so it's easier to read.</span>
+    <span class="ruby-identifier">longest_name</span> = <span class="ruby-value">0</span>
+    <span class="ruby-identifier">longest_version</span> = <span class="ruby-value">0</span>
+    
+    <span class="ruby-identifier">packages</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">package</span><span class="ruby-operator">|</span> 
+      <span class="ruby-identifier">longest_name</span> = <span class="ruby-identifier">package</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">length</span> <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">package</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">longest_name</span>)
+      <span class="ruby-identifier">longest_version</span> = <span class="ruby-identifier">package</span>.<span class="ruby-identifier">version</span>.<span class="ruby-identifier">length</span> <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">package</span>.<span class="ruby-identifier">version</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">longest_version</span>)
+    <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># of packages.each</span>
+    
+    <span class="ruby-identifier">pad_name</span> = <span class="ruby-value str">&quot;&quot;</span>
+    <span class="ruby-identifier">pad_version</span> = <span class="ruby-value str">&quot;&quot;</span>
+    
+    <span class="ruby-value">1</span>.<span class="ruby-identifier">upto</span>(<span class="ruby-identifier">longest_name</span> <span class="ruby-operator">-</span> <span class="ruby-value str">&quot;Package Name&quot;</span>.<span class="ruby-identifier">length</span>) {<span class="ruby-identifier">pad_name</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot; &quot;</span>}
+    <span class="ruby-value">1</span>.<span class="ruby-identifier">upto</span>(<span class="ruby-identifier">longest_version</span> <span class="ruby-operator">-</span> <span class="ruby-value str">&quot;Version&quot;</span>.<span class="ruby-identifier">length</span>) {<span class="ruby-identifier">pad_version</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot; &quot;</span>}
+    <span class="ruby-identifier">printf</span>(<span class="ruby-identifier">io</span>, <span class="ruby-node">&quot;Package Name#{pad_name} Version#{pad_version} Location\n&quot;</span>)
+    <span class="ruby-identifier">printf</span>(<span class="ruby-identifier">io</span>, <span class="ruby-node">&quot;============#{pad_name} =======#{pad_version} ========\n&quot;</span>)
+    
+    <span class="ruby-identifier">packages</span>.<span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">sort!</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">package</span> <span class="ruby-operator">|</span>
+      <span class="ruby-identifier">pad_name</span> = <span class="ruby-value str">&quot;&quot;</span>
+      <span class="ruby-identifier">pad_version</span> = <span class="ruby-value str">&quot;&quot;</span>
+      
+      <span class="ruby-value">1</span>.<span class="ruby-identifier">upto</span>(<span class="ruby-identifier">longest_name</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">package</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">length</span>) {<span class="ruby-identifier">pad_name</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot; &quot;</span>}
+      <span class="ruby-value">1</span>.<span class="ruby-identifier">upto</span>(<span class="ruby-identifier">longest_version</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">package</span>.<span class="ruby-identifier">version</span>.<span class="ruby-identifier">length</span>) {<span class="ruby-identifier">pad_version</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot; &quot;</span>}
+      
+      <span class="ruby-identifier">printf</span>(<span class="ruby-identifier">io</span>, <span class="ruby-node">&quot;#{package.name + pad_name} #{package.version + pad_version} #{package.found_at}\n&quot;</span>)
+    <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># of packages.each</span>
+  <span class="ruby-keyword kw">end</span>
+  
+  <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">io</span> <span class="ruby-operator">!=</span> <span class="ruby-constant">STDOUT</span>)  
+    <span class="ruby-identifier">io</span>.<span class="ruby-identifier">close</span> 
+    <span class="ruby-comment cmt"># now echo final results to console also</span>
+    <span class="ruby-identifier">result_txt</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-ivar">@results</span>,<span class="ruby-value str">&quot;r&quot;</span>).<span class="ruby-identifier">read</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-identifier">result_txt</span>
+  <span class="ruby-keyword kw">end</span>
+  
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>get_ruleset_match_locations (MatchRuleSet)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/match_rule_set.rb, line 107</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_ruleset_match_locations</span>
+    
+    <span class="ruby-comment cmt"># Hash (match_rule -&gt; matched_against)</span>
+    <span class="ruby-identifier">match_rules_hash</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+
+    <span class="ruby-identifier">most_matched_hash</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+    
+    <span class="ruby-ivar">@match_rules</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">mr</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">match_rules_hash</span>[<span class="ruby-identifier">mr</span>] = <span class="ruby-identifier">mr</span>.<span class="ruby-identifier">matched_against</span>
+      <span class="ruby-identifier">most_matched_hash</span> = <span class="ruby-identifier">most_matched_hash</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">mr</span>.<span class="ruby-identifier">matched_against</span>)
+    }
+    
+    <span class="ruby-comment cmt"># Setting up an Array of 'most_matched_dirs'. This is simply the keys from the 'most_matched_hash'</span>
+    <span class="ruby-identifier">most_matched_dirs</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-identifier">most_matched_hash</span>.<span class="ruby-identifier">each_key</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">dirs</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">most_matched_dirs</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">dirs</span>
+    }
+    
+    <span class="ruby-identifier">match_rules_keys</span> = <span class="ruby-identifier">match_rules_hash</span>.<span class="ruby-identifier">keys</span>
+    
+    <span class="ruby-comment cmt"># 'location_to_defined_filename_outcome' is what will be returned by this method</span>
+    <span class="ruby-identifier">location_to_defined_filename_outcome</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-value">0</span>.<span class="ruby-identifier">upto</span>(<span class="ruby-identifier">most_matched_dirs</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">defined_filename_outcome</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+      <span class="ruby-identifier">match_rules_keys</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">match_rules_key</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">val</span> = <span class="ruby-identifier">match_rules_hash</span>[<span class="ruby-identifier">match_rules_key</span>].<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">most_matched_dirs</span>[<span class="ruby-identifier">i</span>])
+        <span class="ruby-identifier">defined_filename_outcome</span>[<span class="ruby-identifier">match_rules_key</span>] = <span class="ruby-identifier">val</span>
+      }
+      <span class="ruby-identifier">location_to_defined_filename_outcome</span>[<span class="ruby-identifier">most_matched_dirs</span>[<span class="ruby-identifier">i</span>]] = <span class="ruby-identifier">defined_filename_outcome</span>
+    }
+    
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">location_to_defined_filename_outcome</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

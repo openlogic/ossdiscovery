@@ -32,7 +32,7 @@
 
 
 DISCOVERSION=2
-MINOR=alpha-1
+MINOR=alpha-2
 DISTDIR=build/dist/discovery$DISCOVERSION-client
 TARDIR=build/bundle/discovery$DISCOVERSION-client
 

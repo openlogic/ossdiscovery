@@ -10,8 +10,9 @@
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/scan_rules_updater.rb, line 307</span>
+  <pre><span class="ruby-comment cmt"># File lib/scan_rules_updater.rb, line 310</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-constant">ScanRulesUpdater</span>.<span class="ruby-identifier">get_YYYYMMDD_HHMM_str</span>(<span class="ruby-identifier">time</span>=<span class="ruby-constant">Time</span>.<span class="ruby-identifier">new</span>)
+    <span class="ruby-comment cmt"># TODO findme: move this method to a utils class</span>
     <span class="ruby-identifier">str</span> = <span class="ruby-node">&quot;#{time.year}&quot;</span>
     
     <span class="ruby-identifier">month</span> = <span class="ruby-node">&quot;#{time.month}&quot;</span>

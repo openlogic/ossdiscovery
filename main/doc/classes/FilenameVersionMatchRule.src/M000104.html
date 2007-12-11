@@ -5,21 +5,18 @@
 
 <html>
 <head>
-  <title>get_found_versions (FilenameVersionMatchRule)</title>
+  <title>new (FilenameVersionMatchRule)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/matchrules/filename_version_match_rule.rb, line 69</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_found_versions</span>(<span class="ruby-identifier">location</span>)
-    <span class="ruby-identifier">versions</span> = <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>
-    <span class="ruby-identifier">match_set</span> = <span class="ruby-ivar">@matched_against</span>[<span class="ruby-identifier">location</span>]
-    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">match_set</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span>) <span class="ruby-keyword kw">then</span>
-      <span class="ruby-identifier">match_set</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">match_val</span><span class="ruby-operator">|</span>
-        <span class="ruby-identifier">versions</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">match_val</span>
-      }
-    <span class="ruby-keyword kw">end</span>
-    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">versions</span>
+  <pre><span class="ruby-comment cmt"># File lib/matchrules/filename_version_match_rule.rb, line 41</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">defined_filename</span>)
+    <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">defined_filename</span>)
+    <span class="ruby-ivar">@type</span> = <span class="ruby-constant">MatchRule</span><span class="ruby-operator">::</span><span class="ruby-constant">TYPE_FILENAME_VERSION</span>
+    
+    <span class="ruby-comment cmt"># This is a Hash (location (a fully qualified directory) -&gt; set of versions found in that directory)</span>
+    <span class="ruby-ivar">@matched_against</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>
