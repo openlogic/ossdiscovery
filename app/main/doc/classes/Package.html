@@ -86,12 +86,12 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000084">&lt;=&gt;</a>&nbsp;&nbsp;
-      <a href="#M000086">==</a>&nbsp;&nbsp;
-      <a href="#M000089">create_instances</a>&nbsp;&nbsp;
-      <a href="#M000085">eql?</a>&nbsp;&nbsp;
-      <a href="#M000087">hash</a>&nbsp;&nbsp;
-      <a href="#M000088">make_packages_with_bad_unknowns_removed</a>&nbsp;&nbsp;
+      <a href="#M000086">&lt;=&gt;</a>&nbsp;&nbsp;
+      <a href="#M000088">==</a>&nbsp;&nbsp;
+      <a href="#M000091">create_instances</a>&nbsp;&nbsp;
+      <a href="#M000087">eql?</a>&nbsp;&nbsp;
+      <a href="#M000089">hash</a>&nbsp;&nbsp;
+      <a href="#M000090">make_packages_with_bad_unknowns_removed</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -149,26 +149,48 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000089" class="method-detail">
-        <a name="M000089"></a>
+      <div id="method-M000091" class="method-detail">
+        <a name="M000091"></a>
 
         <div class="method-heading">
-          <a href="Package.src/M000089.html" target="Code" class="method-signature"
-            onclick="popupCode('Package.src/M000089.html');return false;">
-          <span class="method-name">create_instances</span><span class="method-args">(locations, project)</span>
+          <a href="Package.src/M000091.html" target="Code" class="method-signature"
+            onclick="popupCode('Package.src/M000091.html');return false;">
+          <span class="method-name">create_instances</span><span class="method-args">(locations, project_rule)</span>
           </a>
         </div>
       
         <div class="method-description">
+          <p>
+Return an Array of <a href="Package.html">Package</a> instances. For all
+given locations (directories), and one given <a
+href="ProjectRule.html">ProjectRule</a>, take the informational state of
+the <a href="ProjectRule.html">ProjectRule</a> hierarchy (the real info is
+found by calling the &#8216;get_found_versions&#8217; method on various <a
+href="MatchRule.html">MatchRule</a> objects). This method has an internal
+client, so it is safe to assume that all the given &#8216;locations&#8217;
+are actually locations where something has been found, as opposed to some
+arbitrary list of directories on the machine.
+</p>
+<p>
+A specific point about what this method does with &#8216;unknown&#8217;
+versions:
+</p>
+<pre>
+  - If &quot;unknown&quot; was the only hit for a given location, report that.
+  - If we hit on &quot;unknown&quot; and some actual version, the &quot;unknown&quot; probably
+    only exists as kruft left around from an AND of two match rules (One that
+    could get us part of the way there, telling us the package existed, but not
+    knowing which version, and one that finished the job by telling us the version as well.)
+</pre>
         </div>
       </div>
 
-      <div id="method-M000088" class="method-detail">
-        <a name="M000088"></a>
+      <div id="method-M000090" class="method-detail">
+        <a name="M000090"></a>
 
         <div class="method-heading">
-          <a href="Package.src/M000088.html" target="Code" class="method-signature"
-            onclick="popupCode('Package.src/M000088.html');return false;">
+          <a href="Package.src/M000090.html" target="Code" class="method-signature"
+            onclick="popupCode('Package.src/M000090.html');return false;">
           <span class="method-name">make_packages_with_bad_unknowns_removed</span><span class="method-args">(packages, project)</span>
           </a>
         </div>
@@ -179,12 +201,12 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000084" class="method-detail">
-        <a name="M000084"></a>
+      <div id="method-M000086" class="method-detail">
+        <a name="M000086"></a>
 
         <div class="method-heading">
-          <a href="Package.src/M000084.html" target="Code" class="method-signature"
-            onclick="popupCode('Package.src/M000084.html');return false;">
+          <a href="Package.src/M000086.html" target="Code" class="method-signature"
+            onclick="popupCode('Package.src/M000086.html');return false;">
           <span class="method-name">&lt;=&gt;</span><span class="method-args">(other)</span>
           </a>
         </div>
@@ -198,27 +220,13 @@ It looks more like a mouth to me, so I&#8216;m calling it the
         </div>
       </div>
 
-      <div id="method-M000086" class="method-detail">
-        <a name="M000086"></a>
+      <div id="method-M000088" class="method-detail">
+        <a name="M000088"></a>
 
         <div class="method-heading">
-          <a href="Package.src/M000086.html" target="Code" class="method-signature"
-            onclick="popupCode('Package.src/M000086.html');return false;">
+          <a href="Package.src/M000088.html" target="Code" class="method-signature"
+            onclick="popupCode('Package.src/M000088.html');return false;">
           <span class="method-name">==</span><span class="method-args">(other)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-        </div>
-      </div>
-
-      <div id="method-M000085" class="method-detail">
-        <a name="M000085"></a>
-
-        <div class="method-heading">
-          <a href="Package.src/M000085.html" target="Code" class="method-signature"
-            onclick="popupCode('Package.src/M000085.html');return false;">
-          <span class="method-name">eql?</span><span class="method-args">(other)</span>
           </a>
         </div>
       
@@ -232,6 +240,20 @@ It looks more like a mouth to me, so I&#8216;m calling it the
         <div class="method-heading">
           <a href="Package.src/M000087.html" target="Code" class="method-signature"
             onclick="popupCode('Package.src/M000087.html');return false;">
+          <span class="method-name">eql?</span><span class="method-args">(other)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000089" class="method-detail">
+        <a name="M000089"></a>
+
+        <div class="method-heading">
+          <a href="Package.src/M000089.html" target="Code" class="method-signature"
+            onclick="popupCode('Package.src/M000089.html');return false;">
           <span class="method-name">hash</span><span class="method-args">()</span>
           </a>
         </div>

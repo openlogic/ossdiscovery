@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>rollback_update (ScanRulesUpdater)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/scan_rules_updater.rb, line 347</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-constant">ScanRulesUpdater</span>.<span class="ruby-identifier">rollback_update</span>(<span class="ruby-identifier">dir_with_rollback_content</span>, <span class="ruby-identifier">rules_dir</span>=<span class="ruby-keyword kw">nil</span>)
+    <span class="ruby-ivar">@@log</span>.<span class="ruby-identifier">info</span>(<span class="ruby-value str">&quot;ScanRulesUpdater&quot;</span>) {<span class="ruby-node">&quot;Rolling back the scan rules update. Rolling back to the rules in '#{dir_with_rollback_content}'&quot;</span>}
+    
+    <span class="ruby-identifier">unfinished_update_dir</span> = <span class="ruby-value str">&quot;&quot;</span>
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">rules_dir</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>) <span class="ruby-keyword kw">then</span> <span class="ruby-comment cmt"># the production case</span>
+      <span class="ruby-identifier">unfinished_update_dir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">dir_with_rollback_content</span>), <span class="ruby-value str">&quot;openlogic&quot;</span>)
+    <span class="ruby-keyword kw">else</span> <span class="ruby-comment cmt"># the test case</span>
+      <span class="ruby-identifier">unfinished_update_dir</span> = <span class="ruby-identifier">rules_dir</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-identifier">unfinished_update_dir_new_name</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">dir_with_rollback_content</span>), <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">dir_with_rollback_content</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;.failed-update&quot;</span>)
+    <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mv</span>(<span class="ruby-identifier">unfinished_update_dir</span>, <span class="ruby-identifier">unfinished_update_dir_new_name</span>)
+    <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mv</span>(<span class="ruby-identifier">dir_with_rollback_content</span>, <span class="ruby-identifier">unfinished_update_dir</span>)
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">unfinished_update_dir</span> <span class="ruby-comment cmt"># not currently used for anything, but more explicit than returning whatever FileUtils.mv returns</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

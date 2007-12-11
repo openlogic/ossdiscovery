@@ -5,21 +5,18 @@
 
 <html>
 <head>
-  <title>match? (MD5MatchRule)</title>
+  <title>get_found_versions (MD5MatchRule)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/matchrules/md5_match_rule.rb, line 100</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-constant">MD5MatchRule</span>.<span class="ruby-identifier">match?</span>(<span class="ruby-identifier">defined_filename</span>, <span class="ruby-identifier">defined_digest</span>, <span class="ruby-identifier">actual_filepath</span>, <span class="ruby-identifier">actual_digest</span>)
-    <span class="ruby-identifier">val</span> = <span class="ruby-keyword kw">false</span>
-    <span class="ruby-identifier">filename_match</span> = <span class="ruby-constant">FilenameMatchRule</span>.<span class="ruby-identifier">match?</span>(<span class="ruby-identifier">defined_filename</span>, <span class="ruby-identifier">actual_filepath</span>)
-    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">filename_match</span>) <span class="ruby-keyword kw">then</span>
-      <span class="ruby-identifier">val</span> = (<span class="ruby-identifier">defined_digest</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">actual_digest</span>)
-    <span class="ruby-keyword kw">else</span>
-      <span class="ruby-identifier">val</span> = <span class="ruby-keyword kw">false</span>
+  <pre><span class="ruby-comment cmt"># File lib/matchrules/md5_match_rule.rb, line 92</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_found_versions</span>(<span class="ruby-identifier">location</span>)
+    <span class="ruby-identifier">versions</span> = <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-ivar">@matched_against</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">location</span>)) <span class="ruby-keyword kw">then</span>
+      <span class="ruby-identifier">versions</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@version</span>
     <span class="ruby-keyword kw">end</span>
-    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">val</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">versions</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

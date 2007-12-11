@@ -5,27 +5,21 @@
 
 <html>
 <head>
-  <title>match? (MD5MatchRule)</title>
+  <title>new (MD5MatchRule)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/matchrules/md5_match_rule.rb, line 60</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">match?</span>(<span class="ruby-identifier">actual_filepath</span>, <span class="ruby-identifier">actual_filepath_digest</span>=<span class="ruby-keyword kw">nil</span>)
-    <span class="ruby-ivar">@match_attempts</span> = <span class="ruby-ivar">@match_attempts</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
-    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">actual_filepath_digest</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>) <span class="ruby-keyword kw">then</span>
-      <span class="ruby-identifier">actual_digest</span> = <span class="ruby-constant">MD5MatchRule</span>.<span class="ruby-identifier">get_digest_for</span>(<span class="ruby-identifier">actual_filepath</span>)
-    <span class="ruby-keyword kw">else</span>
-      <span class="ruby-identifier">actual_digest</span> = <span class="ruby-identifier">actual_filepath_digest</span>
-    <span class="ruby-keyword kw">end</span>
+  <pre><span class="ruby-comment cmt"># File lib/matchrules/md5_match_rule.rb, line 40</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">defined_filename</span>, <span class="ruby-identifier">defined_digest</span>, <span class="ruby-identifier">version</span>=<span class="ruby-value str">&quot;&quot;</span>)
+    <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">defined_filename</span>)
+    <span class="ruby-ivar">@type</span> = <span class="ruby-constant">MatchRule</span><span class="ruby-operator">::</span><span class="ruby-constant">TYPE_MD5</span>
     
-    <span class="ruby-identifier">match_val</span> = <span class="ruby-constant">MD5MatchRule</span>.<span class="ruby-identifier">match?</span>(<span class="ruby-ivar">@defined_filename</span>, <span class="ruby-ivar">@defined_digest</span>, <span class="ruby-identifier">actual_filepath</span>, <span class="ruby-identifier">actual_digest</span>)
+    <span class="ruby-ivar">@defined_digest</span> = <span class="ruby-identifier">defined_digest</span>
+    <span class="ruby-ivar">@version</span> = <span class="ruby-identifier">version</span>
     
-    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">match_val</span>) <span class="ruby-keyword kw">then</span>
-      <span class="ruby-ivar">@matched_against</span>[<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">actual_filepath</span>)] = <span class="ruby-identifier">actual_filepath</span>
-    <span class="ruby-keyword kw">end</span>
-    
-    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">match_val</span>
+    <span class="ruby-comment cmt"># This is a Hash (location (a fully qualified directory) -&gt; set of versions found in that directory)</span>
+    <span class="ruby-ivar">@matched_against</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>
