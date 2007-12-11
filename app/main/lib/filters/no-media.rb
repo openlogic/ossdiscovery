@@ -1,4 +1,4 @@
-# no-system.rb
+# no-media.rb
 #
 # LEGAL NOTICE
 # -------------
