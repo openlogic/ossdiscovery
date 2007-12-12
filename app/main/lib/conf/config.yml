@@ -26,7 +26,7 @@
 #--------------------------------------------------------------------------------------------------
 # 
 # The properties defined in this file, can, for the most part, be organized into some kind of 
-# topical group.  'General' is the catch all group for properties that don't really lend themselves
+# topical group.  'General' is the catch-all group for properties that don't really lend themselves
 # to being organized any better than that.  The 'General' group appears first, and after that all
 # of the remaining properties are organized alphabetically by their group.  This 'group' has no 
 # bearing whatsoever on how the properties get used, it just serves as a way to keep the list of
@@ -44,6 +44,13 @@
 company_name: anonymous
 
 #--------------------------------------------------------------------------------------
+# machine_id needs to be universally unique and static
+# this will be changed by the system from "default" unless overridden here by a
+# different value.  If you choose to override it, insure that it's unique for each
+# machine on which a scan is run if the results are to be submitted
+machine_id: default
+
+#--------------------------------------------------------------------------------------
 # what directory to walk if no other directories are specified in the inclusion filter
 # if --path command line parameter is given, that path will override this one
 # if no --path is given and there are no filters in the inclusion_filter list, then
@@ -55,13 +62,6 @@ directory_to_scan: /
 generic_filters: /filters/filters-list.rb
 
 #--------------------------------------------------------------------------------------
-# machine_id needs to be universally unique and static
-# this will be changed by the system from "default" unless overridden here by a
-# different value.  If you choose to override it, insure that it's unique for each
-# machine on which a scan is run if the results are to be submitted
-machine_id: default
-
-#--------------------------------------------------------------------------------------
 # show permission denied directories or files
 show_permission_denied: false
 
@@ -71,6 +71,19 @@ show_permission_denied: false
 follow_symlinks: true
 # maximum number of indirections to follow through symlinks
 symlink_depth: 5
+
+#--------------------------------------------------------------------------------------
+# When a scan is performed on a production machine, the person performing the scan does 
+# not want the scanner to take all system resources. Below are the parameters that will 
+# throttle the max amount of system resources that the scanner will consume.
+#
+# Every x number of files, pause for y number of seconds. 
+throttle_number_of_files: 300
+throttle_seconds_to_pause: 2.5
+# The defaults are 300 and 2 respectively. Here's how these defaults were arrived at.
+# A sample scan on my machine ran in 15 minutes, and showed 451499 total files encountered.
+# The above defaults add just over an hour of wait time which is roughly 4x the original 
+# throttling-disabled run time; a few of us decided 4x sounded good enough for a default on irc.
 
 
 ################################################################################
