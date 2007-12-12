@@ -151,6 +151,9 @@ def execute()
   @walker.show_verbose = @show_verbose  
   @walker.symlink_depth = @symlink_depth
   @walker.follow_symlinks = @follow_symlinks
+  @walker.throttling_enabled = @throttling_enabled
+  @walker.throttle_number_of_files = @throttle_number_of_files
+  @walker.throttle_seconds_to_pause = @throttle_seconds_to_pause
   
   # create the applications RuleEngine instance
   # in the process of constructing the object, the rule engine
@@ -242,6 +245,7 @@ options = GetoptLong.new(
   [ "--progress", "-x", GetoptLong::OPTIONAL_ARGUMENT ],       # show a progress indication every X files scanned
   [ "--preview-results","-R", GetoptLong::OPTIONAL_ARGUMENT ], # the existence of this flag will cause discovery to print to stdout the machine results file when scan is completed 
   # future [ "--speed", "-s", GetoptLong::REQUIRED_ARGUMENT ], # speed hint - how much analysis to do, which rules to use
+  [ "--throttle", "-T", GetoptLong::NO_ARGUMENT ],             # enable production throttling (by default it is disabled)
   [ "--update-rules", "-r", GetoptLong::OPTIONAL_ARGUMENT ],   # get update scan rules, and optionally perform the scan after getting them
   [ "--verbose", "-b", GetoptLong::OPTIONAL_ARGUMENT ],        # be verbose while scanning - every X files scanned  
   [ "--version", "-v", GetoptLong::OPTIONAL_ARGUMENT ]         # print version, then exit
@@ -421,6 +425,9 @@ begin
     
     when "--preview-results"
       @preview_results = true
+      
+    when "--throttle"
+      @throttling_enabled = true
       
     when "--update-rules"
       if (arg == nil || arg == "") then
