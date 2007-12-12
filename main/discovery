@@ -1,5 +1,4 @@
 #!/bin/bash
-# This script starts the swing client
 
 # Get the fully qualified path to the script
 case $0 in
