@@ -100,8 +100,8 @@ def help()
   printf("in the directory from which the scan was invoked.\n")
 
   printf("\n\nExamples:\n")
-  printf("./discovery --path /home/lcox --results /tmp/myscan.txt\n")
-  printf("   scans the directory /home/lcox and places the results file in the /tmp directory with a filename of myscan.txt\n")
+  printf("./discovery --path /home/lcox --machine-results /tmp/myscan_machine_results.txt --human-results /tmp/myscan_human_results.txt\n")
+  printf("   scans the directory /home/lcox and places the results files in the /tmp directory.\n")
 
   printf("\n%s\n", version() )    
   printf("%s\n", @copyright )
