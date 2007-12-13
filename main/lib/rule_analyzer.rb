@@ -92,4 +92,29 @@ class RuleAnalyzer
     
     return allpackages
   end
+  
+  def RuleAnalyzer.analyze_audit_records(records)
+    file_to_versions_list = Hash.new
+    records.each do |r|
+      if (file_to_versions_list.has_key?(r.foi_that_matched)) then
+        if (r.version != 'unknown') then
+          file_to_versions_list[r.foi_that_matched] = file_to_versions_list[r.foi_that_matched] << r.version
+        end
+      else
+        if (r.version != 'unknown') then
+          file_to_versions_list[r.foi_that_matched] = Set.new << r.version
+        end
+      end
+    end # of records.each 
+    
+    file_to_multiple_versions = Hash.new
+    file_to_versions_list.each_pair do |key, val|
+      if (val.size > 1) then
+        file_to_multiple_versions[key] = val
+      end
+    end # of file_to_versions_list.each_pair
+    
+    return file_to_multiple_versions
+  end
+  
 end
