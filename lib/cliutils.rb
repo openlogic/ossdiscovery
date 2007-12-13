@@ -206,7 +206,10 @@ def report_audit_records( records )
   r_strings = Array.new
   records.each {|r| r_strings << r.to_s}
   r_strings.sort!
-  
+  printf(io, "##### Audit Info ###############################################################\n")
+  audit_info = RuleAnalyzer.analyze_audit_records(records)
+  audit_info.each_pair {|file, versions| printf(io, "Unique file (#{file}) produced multiple version matches: #{versions.inspect}\n")}
+  printf(io, "##### Raw Audit Data ###########################################################\n")
   r_strings.each {|r| printf(io, r.to_s + "\n")}
   
   if (io != STDOUT) then io.close end
