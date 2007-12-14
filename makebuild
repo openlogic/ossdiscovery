@@ -32,7 +32,7 @@
 
 
 DISCOVERSION=2
-MINOR=alpha-2
+MINOR=alpha-3
 DISTDIR=build/dist/discovery$DISCOVERSION-client
 TARDIR=build/bundle/discovery$DISCOVERSION-client
 
@@ -65,4 +65,4 @@ pwd
 tar cvfz ../../$TARDIR/discovery$DISCOVERSION-client.$MINOR.tar.gz discovery$DISCOVERSION-client
 zip -r ../../$TARDIR/discovery$DISCOVERSION-client.$MINOR.zip discovery$DISCOVERSION-client
 
-echo You can find your tarball in $TARDIR/discovery$DISCOVERSION-client.$MINOR.tar.gz
+echo You can find your zip and tar archives in $TARDIR/discovery$DISCOVERSION-client.$MINOR.tar.gz
