@@ -428,6 +428,7 @@ begin
       
     when "--throttle"
       @throttling_enabled = true
+      @@log.info('Discovery') {'Throttling has been enabled.'}
       
     when "--update-rules"
       if (arg == nil || arg == "") then
