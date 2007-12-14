@@ -155,6 +155,24 @@
       <match-rule name="bashbinary" type="binary" filename="^bash$" regexp="Bash version (.*?) release GNU" />
     </match-rules>
   </project-rule>
+
+  <project-rule name="busybox" from="wild" os="all">
+    <description>Finds busybox executables</description>
+    <eval expression="busybox_version" speed='1'  />
+   
+    <match-rules name="busybox_version">
+      <match-rule name="busybox_v" type="binary" filename="^busybox$" regexp="BusyBox v([0-9]\.[0-9]\.[0-9])" />
+    </match-rules>
+  </project-rule>  
+
+  <project-rule name="bash" from="wild" os="all">
+    <description>Scans bash binary files for version string information</description>
+    <eval expression="bashbin" speed='1'  />
+    
+    <match-rules name="bashbin">
+      <match-rule name="bashbinary" type="binary" filename="^bash$" regexp="Bash version (.*?) release GNU" />
+    </match-rules>
+  </project-rule>
   
   <project-rule name="commons-attributes" from="wild" os="all">
     <description>Finds versions using MD5's.</description>
