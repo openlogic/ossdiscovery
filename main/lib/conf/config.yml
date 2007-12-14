@@ -102,7 +102,7 @@ log_level: <% Logger::INFO %>
 
 # Set this property to true if you'd like an auditable list of all the files of interested that triggered successful 
 # matches to be printed out.  If it is set to true, this will be printed to the value specified in the 'results' property.
-produce_match_audit_records: true 
+produce_match_audit_records: false
 
 
 ################################################################################
