@@ -2,23 +2,23 @@ type:summary
 scanner:discovery v2.0-alpha-3-in-progress
 company:anonymous
 machine:383477c03cd29c2d8a7bb2b0a8f5d6ee
-directories:377
-files:379
+directories:379
+files:380
 symlinks:5
 denied:0
-foi:243
-start: 1197646751
-end: 1197646924
-totaltime:173.168155
-found:211
+foi:244
+start: 1197653628
+end: 1197653751
+totaltime:123.211707
+found:212
 distro:Mac OS X: Darwin 8.11.0 RELEASE_PPC Power Macintosh powerpc
 kernel:8.11.0 Darwin
 rbplat:powerpc-darwin8.10.0
 package,version,location
 roller,2.3.1-rc2
-jboss,4.0.3SP1
 apache,2.2.2
 apache,2.2.4
+jboss,4.0.3SP1
 maven,2.0-alpha-2
 mysql,5.0.45
 perl,5.8.5
@@ -49,13 +49,13 @@ velocity,1.3.1-rc2
 hibernate,3.2.2.ga
 hibernate,3.2.1.ga
 hibernate,3.2.4.ga
-firefox,2.0.0.1
 firefox,1.5.0.4
+firefox,2.0.0.1
 apache,2.0.58
 apache,2.0.59
 openoffice,2.3
-php,5.2.4
 php,4.4.7
+php,5.2.4
 ant,1.5.3-1
 tomcat,3.3.2
 postgresql,8.1.3
@@ -66,6 +66,7 @@ openoffice,2.2.0
 subversion,1.4.3
 postgresql,8.1.4
 perl,5.8.8
+busybox,1.4.2
 apache,2.2.4
 xalan,2.7.0
 subversion,1.4.3
@@ -143,8 +144,8 @@ log4j,1.3alpha-8
 rife-continuations,0.0.1
 rife-continuations,0.0.2
 vim,7.1
-dom4j,1.6.1
 dom4j,1.5.2
+dom4j,1.6.1
 log4j,1.0.4
 maven,2.0.7
 maven,1.0.1
@@ -169,8 +170,8 @@ spring,1.2.2
 softeu,1.1
 opennms,20031201-173122
 poi,2.0-final-20040126
-poi,2.5-final-20040302
 poi,1.8.0-dev-20020919
+poi,2.5-final-20040302
 coconut,5.0-alpha-1
 tomcat,5.5.25
 tomcat,4.1.34
@@ -190,11 +191,11 @@ openssl,0.9.8
 apache,2.0.55
 apache,1.3.34
 vim,7.0
-poi,3.0.1-FINAL-20070705
 poi,2.5.1-final-20040804
+poi,3.0.1-FINAL-20070705
 perl,5.8.8
-openssl,0.9.7g
 openssl,0.9.8a
+openssl,0.9.7g
 rife-continuations,0.0.2
 quickserver,1.4.5
 velocity,1.0b1
