@@ -65,6 +65,7 @@ class Walker
   attr_accessor :file_ct, :dir_ct, :sym_link_ct, :bad_link_ct, :permission_denied_ct, :foi_ct, :not_found_ct
   attr_accessor :follow_symlinks, :symlink_depth, :not_followed_ct, :show_every, :show_verbose, :show_progress, :throttling_enabled, :throttle_number_of_files, :throttle_seconds_to_pause
   attr_accessor :list_exclusions, :list_files, :show_permission_denied
+  attr_reader :total_seconds_paused_for_throttling
 
   # criteria[:] 
   # is a hash of filenames or regular expressions that can match a filename.
@@ -107,6 +108,7 @@ class Walker
     @show_permission_denied = false
     @show_verbose = false
     @throttling_enabled = false
+    @total_seconds_paused_for_throttling = 0
     
     @criteria = Hash.new
     @dir_exclusions = Array.new   # the directory basenames to filter out
@@ -179,6 +181,7 @@ class Walker
       q,r = @file_ct.divmod(@throttle_number_of_files)
       if (r == 0) then
         Kernel.sleep(@throttle_seconds_to_pause)
+        @total_seconds_paused_for_throttling = @total_seconds_paused_for_throttling + @throttle_seconds_to_pause
       end      
     end
 
@@ -326,7 +329,7 @@ class Walker
 
   def resolve_symlink( fileordir )
   
-    @@log.info("Walker") {"\n-------------\nresolving symlink: #{fileordir}"}
+    @@log.debug("Walker") {"\n-------------\nresolving symlink: #{fileordir}"}
     
     if ( @@symlink_cache[fileordir] != nil )
       # then we've seen this sym link before and we have just detected a circular
