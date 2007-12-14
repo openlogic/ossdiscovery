@@ -129,6 +129,7 @@ class TclongDiscoverItSpeed1 < Test::Unit::TestCase
         
     assert_was_found_in_locations("hamcrest", "1.1", "content-cg/hamcrest", packages)
     
+    assert_was_not_found_in("hibernate", "3", "content-cg/hibernate/3.0.5", packages)
     assert_was_found_in_locations("hibernate", "3.0.5", "content-cg/hibernate/3.0.5", packages )
     assert_was_found_in_locations("hibernate", "3.1.3", "content-cg/hibernate/3.1.3", packages )
     assert_was_found_in_locations("hibernate", "3.2.1.ga", "content-cg/hibernate/3.2.1.ga", packages )
