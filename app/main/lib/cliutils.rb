@@ -136,6 +136,13 @@ def report( packages )
   scan_sec = scan_ftime - (scan_hours*3600) - (scan_min*60)
 
   # pull the stats from the walker for a simple report
+  
+  throttling_enabled_or_disabled = nil
+  if (@walker.throttling_enabled) then
+    throttling_enabled_or_disabled = 'enabled'
+  else
+    throttling_enabled_or_disabled = 'disabled'
+  end
 
   printf(io, "directories walked    : %d\n", @walker.dir_ct )
   printf(io, "files encountered     : %d\n", @walker.file_ct )
@@ -152,6 +159,7 @@ def report( packages )
   printf(io, "machine id            : %s\n", @machine_id )
   printf(io, "")
   printf(io, "packages found        : %d\n", packages.length )
+  printf(io, "throttling            : #{throttling_enabled_or_disabled} (total seconds paused: #{@walker.total_seconds_paused_for_throttling})\n" )
   
   if ( packages.length > 0 )
     # Format the output by making sure the columns are lined up so it's easier to read.

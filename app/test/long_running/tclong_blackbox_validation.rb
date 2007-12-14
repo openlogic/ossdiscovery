@@ -24,13 +24,10 @@ class TclongBlackboxValidation < Test::Unit::TestCase
   def setup
     @results_file = File.expand_path(File.join(File.dirname(__FILE__), "#{ScanRulesUpdater.get_YYYYMMDD_HHMM_str}_scan_results.txt"))
     @baseline_file = File.expand_path(File.join(File.dirname(__FILE__), '..', 'resources', 'blackbox_validation_baseline_scan_results.txt'))
-    
-    @results_file_throttled = File.expand_path(File.join(File.dirname(__FILE__), "#{ScanRulesUpdater.get_YYYYMMDD_HHMM_str}_scan_results_throttled.txt"))
   end
   
   def teardown
     File.delete(@results_file)
-    File.delete(@results_file_throttled)
   end
 
   def test_discovery
@@ -84,34 +81,36 @@ class TclongBlackboxValidation < Test::Unit::TestCase
     # Testing that throttling is working (doing this here so we don't have to 
     # take the time to do another full discovery run elsewhere)    
     #####
-    totaltime_default = 0    
-    File.open(@results_file) do |test_file|
-      while line = test_file.gets
-        if (line.include?("totaltime:")) then
-          totaltime_default = line.sub("\n", "")[("totaltime:".length)..(line.length - 2)].to_f
-          break
-        end
-      end # of while
-    end # of File.open
+    
+    # This value can be one of two things:
+    #   1) disabled (total seconds paused: 0)
+    #   or
+    #   2) enabled (total seconds paused: X)
+    disabled_str = 'disabled'
+    throttling_val_default = output.match(/^throttling\s+:\s+(.*)$/)[1]
+    if (throttling_val_default[0..(disabled_str.size - 1)] != disabled_str) then
+      fail("Throttling should be disabled by default.")
+    else
+      throttling_time_default = throttling_val_default.match(/^disabled\s+\(total seconds paused:\s+(.*)\)$/)[1]
+      assert_equal(0, throttling_time_default.to_i, "When throttling is disabled (it is by default), then the scan should not have paused at all (zero seconds). Instead, the scan paused for '#{throttling_time_default}' seconds.")
+    end
     
     t11 = Time.new
     @@log.info('TclongBlackboxValidation') {"Performing a throttled scan... #{t1}"}
-    cmd = "ruby #{DISCOVERY_RB} --path #{DIR_TO_DISCOVER} --machine-results #{@results_file_throttled} --throttle"
+    cmd = "ruby #{DISCOVERY_RB} --path #{DIR_TO_DISCOVER} --throttle"
     output = `#{cmd}`
     t22 = Time.new
     @@log.info('TclongBlackboxValidation') {"It took '#{(t22-t11).to_s}' seconds to run the throttled scan."}
     
-    totaltime_throttled = 0
-    File.open(@results_file_throttled) do |test_file|
-      while line = test_file.gets
-        if (line.include?("totaltime:")) then
-          totaltime_throttled = line.sub("\n", "")[("totaltime:".length)..(line.length - 2)].to_f
-          break
-        end
-      end # of while
-    end # of File.open
+    enabled_str = 'enabled'
+    throttling_val_throttled = output.match(/^throttling\s+:\s+(.*)$/)[1]
+    if (throttling_val_throttled[0..(enabled_str.size - 1)] != enabled_str) then
+      fail("Throttling should've been disabled since the '--throttle' cli option was passed in.")
+    else
+      throttling_time_throttled = throttling_val_throttled.match(/^enabled\s+\(total seconds paused:\s+(.*)\)$/)[1]
+      assert(throttling_time_throttled.to_f > 0, "When throttling is enabled, then the scan should not have paused for some amount of time greater than zero seconds. The pause time reported was '#{throttling_time_throttled}'.")
+    end
     
-    assert(totaltime_default < totaltime_throttled, "The throttled run (totaltime:#{totaltime_throttled}) should have taken longer than the default (throttling disabled) run (totaltime:#{totaltime_default}).")
   end
 
 end
