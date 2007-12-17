@@ -61,6 +61,8 @@ require 'matchrules/md5_match_rule'
 
 class RuleEngine
   
+  @@log = Config.log
+  
   attr_reader :project_rules, :speed, :analysis_elapsed, :audit_records
 
   @scan_rules_dir = nil
@@ -148,7 +150,7 @@ class RuleEngine
                 end
             end
           rescue Errno::EACCES, Errno::EPERM
-            # TODO @walker.permission_denied_ct += 1
+            @@log.error('RuleEngine') {"Expected all files with permissions issues to have been filtered out already. #{$!.inspect}"}
           end
         end # of ruleset.match_rules.each
       end # of project_rule.rulesets.each

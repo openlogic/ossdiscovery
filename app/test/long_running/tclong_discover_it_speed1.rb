@@ -29,8 +29,11 @@ class TclongDiscoverItSpeed1 < Test::Unit::TestCase
     dir = File.dirname(dir)
     files = TestHelper.find_all_files(File.expand_path(dir))
     files.each { |file|
-      # printf("%s\n",File.basename(file) )
-      re.found_file(File.dirname(file), File.basename(file), nil)
+      # doing this if check to prevent a bunch of error messages from being printed to the log in the 
+      # RuleEngine since the Walker is responsible for handling permissions issues in a real live run
+      if (!file.include?('permission-tests')) then
+        re.found_file(File.dirname(file), File.basename(file), nil)
+      end
     }
     t2 = Time.new
     @@log.info('TclongDiscoverItSpeed1') {"It took '#{(t2-t1).to_s}' seconds to walk the files and do the matches for '#{re.project_rules.size}' projects."}
