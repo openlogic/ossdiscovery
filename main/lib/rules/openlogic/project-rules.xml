@@ -1091,6 +1091,17 @@
       <match-rule name='11-dom4j-1.6.1.tar.gz-dom4j-1.6.1.jar' type='MD5' md5sum='4d8f51d3fe3900efc6e395be48030d6d' filename='^dom4j.*jar$' version='1.6.1' />
     </match-rules>
   </project-rule>
+  
+  <project-rule name="drupal" from="wild" os="all">
+    <description>Finds version of Drupal from system module PHP source</description>
+    <eval expression="files" speed='1' />
+    
+    <match-rules name="files">
+      <result expression="OR-ALL"/>
+      <match-rule name="sysmod" type="binary" filename="^system\.module$" regexp="define\(\'VERSION\'.*?\'(.*?)\'\)" />
+    </match-rules>
+    
+  </project-rule>  
 
   <project-rule name="eclipse" from="wild" os="all">
     <eval expression="fileversions" speed='1' />
