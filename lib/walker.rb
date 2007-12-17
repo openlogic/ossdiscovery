@@ -61,6 +61,8 @@ require File.join(File.dirname(__FILE__), 'conf', 'config')
 =end
 
 class Walker
+  
+  @@log = Config.log
 
   attr_accessor :file_ct, :dir_ct, :sym_link_ct, :bad_link_ct, :permission_denied_ct, :foi_ct, :not_found_ct
   attr_accessor :follow_symlinks, :symlink_depth, :not_followed_ct, :show_every, :show_verbose, :show_progress, :throttling_enabled, :throttle_number_of_files, :throttle_seconds_to_pause
@@ -159,9 +161,7 @@ class Walker
 =end
 
    def walk_dir( fileordir )
-     
     # crude progress indicator
-
     if ( @show_progress && @file_ct != 0 ) 
       q,r = @file_ct.divmod( @show_every )
       if ( r == 0 )
@@ -211,7 +211,7 @@ class Walker
           end
           return true  # blow out of here if this file matches an exclusion condition, true because this is a file and got walked
         end
-    end
+      end
     
     # --list-files flag implementation
     # will show only files that made it through the exclusion filters
@@ -226,96 +226,116 @@ class Walker
     begin
       
       if( File.file?(fileordir) )
-        @file_ct += 1
+        if (File.readable?(fileordir)) then
+          @file_ct += 1
 
-        if ( File.symlink?(fileordir) )
-          if ( @follow_symlinks )
-            resolved, fileordir = resolve_symlink( fileordir )
-          else
-            resolved = false
-            @sym_link_ct += 1
-            @not_followed_ct += 1
-          end
-        end
-       
-        # see if this entry is resolvable and matches anything anyone's looking for 
-        if ( resolved )        
-          name_match( fileordir )
-        end
-        
-      elsif( File.directory?(fileordir) )
-
-        @dir_ct += 1
-        
-        # list the contents of this directory (the pwd) and recursively call walkdir
-        # if it's not empty
-
-        begin 
-          if ( File.lstat(fileordir).symlink? )
-          
+          if ( File.symlink?(fileordir) )
             if ( @follow_symlinks )
-              # need to resolve the symlink
               resolved, fileordir = resolve_symlink( fileordir )
-              # @@log.info("Walker") {"resolved: " + resolved.to_s + " fileordir: " + fileordir }
             else
               resolved = false
               @sym_link_ct += 1
-              @not_followed_ct += 1            
+              @not_followed_ct += 1
             end
-          
           end
-        rescue Exception 
-          # the only times we've seen this hit are when a symlink is completely orphaned => points to nothing
-          # this has only occurred on a symlink found in /lost+found on Solaris.  otherwise, there's no way
-          # to make a symlink like this using ln.
-          @not_followed_ct += 1
-          @bad_link_ct += 1    
-          @@log.info("Walker") {"WARNING: Bad lstat on symlink check - #{fileordir} - likely an orphaned symlink"}
-          resolved = false
+         
+          # see if this entry is resolvable and matches anything anyone's looking for 
+          if ( resolved )        
+            name_match( fileordir )
+          end
+        else # the file was not readable
+          increment_permission_denied_ct(fileordir)
+          return false
+        end # of if (File.readable?
+        
+        
+      elsif( File.directory?(fileordir) )
+        have_perms_for_dir = true
+        pwd = Dir.pwd
+        begin
+          Dir.chdir(fileordir)
+          Dir.chdir(pwd)
+        rescue Errno::EACCES, Errno::EPERM
+          have_perms_for_dir = false
         end
         
-        if ( resolved ) 
-          
-          # printf("fileordir resolved: #{fileordir}\n")
-          
-          pwd = fileordir
-
-          Dir.foreach(fileordir) do | direntry | 
-
-              # recurse into this directory if it's not current or parent directories
-              if ( direntry != "." && direntry != ".." ) 
-                direntry = (pwd == '/' ? "/#{direntry}" : "#{pwd}/#{direntry}" )
-                
-                # @@log.info("Walker") { "pwd: #{pwd} direntry: #{direntry}" }                
-
-                # check to see if we need to prune a directory
-                if ( !walk_dir( direntry ) )
-                    if ( @list_exclusions || $DEBUG )
-                      printf("'%s' pruned\n", direntry )
-                    end
-                end
-              end 
+        if (have_perms_for_dir) then          
+          @dir_ct += 1
+        
+          # list the contents of this directory (the pwd) and recursively call walkdir
+          # if it's not empty
+  
+          begin 
+            if ( File.lstat(fileordir).symlink? )
+            
+              if ( @follow_symlinks )
+                # need to resolve the symlink
+                resolved, fileordir = resolve_symlink( fileordir )
+                # @@log.info("Walker") {"resolved: " + resolved.to_s + " fileordir: " + fileordir }
+              else
+                resolved = false
+                @sym_link_ct += 1
+                @not_followed_ct += 1            
+              end
+            
+            end
+          rescue Exception 
+            # the only times we've seen this hit are when a symlink is completely orphaned => points to nothing
+            # this has only occurred on a symlink found in /lost+found on Solaris.  otherwise, there's no way
+            # to make a symlink like this using ln.
+            @not_followed_ct += 1
+            @bad_link_ct += 1    
+            @@log.info("Walker") {"WARNING: Bad lstat on symlink check - #{fileordir} - likely an orphaned symlink"}
+            resolved = false
           end
-        end
-
-      end
+          
+          if ( resolved ) 
+            
+            # printf("fileordir resolved: #{fileordir}\n")
+            
+            pwd = fileordir
+  
+            Dir.foreach(fileordir) do | direntry | 
+  
+                # recurse into this directory if it's not current or parent directories
+                if ( direntry != "." && direntry != ".." ) 
+                  direntry = (pwd == '/' ? "/#{direntry}" : "#{pwd}/#{direntry}" )
+                  
+                  # @@log.info("Walker") { "pwd: #{pwd} direntry: #{direntry}" }                
+  
+                  # check to see if we need to prune a directory
+                  if ( !walk_dir( direntry ) )
+                      if ( @list_exclusions || $DEBUG )
+                        printf("'%s' pruned\n", direntry )
+                      end
+                  end
+                end 
+            end
+          end
+          return true
+        else # the file was not readable
+          increment_permission_denied_ct(fileordir)
+          return false
+        end # of if (File.readable?(fileordir))        
+      end # of if (File.readable?(fileordir))
   
     rescue Errno::EACCES, Errno::EPERM
-      
-      if ( @show_permission_denied )
-        printf("permission denied: %s\n", fileordir)
-      end
-      
-      @permission_denied_ct += 1
-      
+      increment_permission_denied_ct(fileordir)
+      return false
     rescue Errno::ENOENT, Errno::ENOTDIR
       # it may seem odd that a file that was scanned would end up not found, but it's possible that 
       # a file existed and in the moments between when it was encountered and when it was scanned, was removed or moved.
       @not_found_ct += 1
-      
+      return false
     end
   
-    return true
+  end
+  
+  def increment_permission_denied_ct(fileordir)
+    @permission_denied_ct += 1
+    if ( @show_permission_denied )
+      printf("permission denied: %s\n", fileordir)
+    end
   end
   
 =begin rdoc
@@ -378,7 +398,6 @@ class Walker
 =end
 
   def notify_subscribers( subscribers, location, filename, rule_used )
-    
     subscribers.each{ | subscriber |
       subscriber.found_file( location, filename, rule_used )
     }
