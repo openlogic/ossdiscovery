@@ -20,14 +20,19 @@ class TclongPermissions < Test::Unit::TestCase
   
   def test_permission_count
     whoami_result = `whoami`
-    if (whoami_result.include?('root')) then
+    if (RUBY_PLATFORM =~ /mswin/) then
       assert true
-      @@log.warn('TclongPermissions'){'Unable to test the permissions functionality because this process is being run by the root user, which has permissions to everything.'}
+      @@log.warn('TclongPermissions'){'TODO: Not testing permissions on windows systems.'}
     else
-      cmd = "ruby #{DISCOVERY_RB} --path #{PERMISSIONS_DIR_TO_DISCOVER}"
-      output = `#{cmd}`
-      pd_val = output.match(/^permission denied\s+:\s+(.*).*$/)[1]
-      assert_equal(2, pd_val.to_i, "Expected to be denied permission to two items (one directory and one file) in the '#{PERMISSIONS_DIR_TO_DISCOVER}' directory.")
+      if (whoami_result.include?('root')) then
+        assert true
+        @@log.warn('TclongPermissions'){'Unable to test the permissions functionality because this process is being run by the root user, which has permissions to everything.'}
+      else
+        cmd = "ruby #{DISCOVERY_RB} --path #{PERMISSIONS_DIR_TO_DISCOVER}"
+        output = `#{cmd}`
+        pd_val = output.match(/^permission denied\s+:\s+(.*).*$/)[1]
+        assert_equal(2, pd_val.to_i, "Expected to be denied permission to two items (one directory and one file) in the '#{PERMISSIONS_DIR_TO_DISCOVER}' directory.")
+      end
     end
   end
 
