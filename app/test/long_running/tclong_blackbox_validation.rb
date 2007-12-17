@@ -3,18 +3,9 @@ require 'test/unit'
 
 # main source tree requires
 $:.unshift File.join(File.dirname(__FILE__), '..', '..', 'main', 'lib')
-require 'expression'
-require 'rule_engine'
-require 'scan_rules_updater'
 require 'conf/config'
 
-# test source tree requires
-require File.join(File.dirname(__FILE__), '..', 'test_helper')
-require File.join(File.dirname(__FILE__), 'discovery_assertions')
-
-
 class TclongBlackboxValidation < Test::Unit::TestCase
-  include DiscoveryAssertions
   
   @@log = Config.log
   
@@ -27,14 +18,16 @@ class TclongBlackboxValidation < Test::Unit::TestCase
   end
   
   def teardown
-    File.delete(@results_file)
+    if (File.exist?(@results_file)) then
+      File.delete(@results_file)
+    end
   end
 
   def test_discovery
     t1 = Time.new
     @@log.info('TclongBlackboxValidation') {"Performing a default scan... #{t1}"}
     cmd = "ruby #{DISCOVERY_RB} --path #{DIR_TO_DISCOVER} --machine-results #{@results_file}"
-    output = `#{cmd}`    
+    output = `#{cmd}`
     t2 = Time.new
     @@log.info('TclongBlackboxValidation') {"It took '#{(t2-t1).to_s}' seconds to run the default scan."}
     
@@ -112,5 +105,5 @@ class TclongBlackboxValidation < Test::Unit::TestCase
     end
     
   end
-
+  
 end
