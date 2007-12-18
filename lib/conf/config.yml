@@ -63,7 +63,7 @@ generic_filters: /filters/filters-list.rb
 
 #--------------------------------------------------------------------------------------
 # show permission denied directories or files
-show_permission_denied: true 
+show_permission_denied: false
 
 #--------------------------------------------------------------------------------------
 # decide whether to scan symlink'd files and directories 
