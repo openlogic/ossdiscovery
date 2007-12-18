@@ -245,6 +245,7 @@ options = GetoptLong.new(
   [ "--path", "-p", GetoptLong::REQUIRED_ARGUMENT ],           # scan explicit path
   [ "--progress", "-x", GetoptLong::OPTIONAL_ARGUMENT ],       # show a progress indication every X files scanned
   [ "--preview-results","-R", GetoptLong::OPTIONAL_ARGUMENT ], # the existence of this flag will cause discovery to print to stdout the machine results file when scan is completed 
+  [ "--production-scan","-P", GetoptLong::NO_ARGUMENT ],       # This flag identifies the scan you run as a scan of a production machine in the results.
   # future [ "--speed", "-s", GetoptLong::REQUIRED_ARGUMENT ], # speed hint - how much analysis to do, which rules to use
   [ "--throttle", "-T", GetoptLong::NO_ARGUMENT ],             # enable production throttling (by default it is disabled)
   [ "--update-rules", "-r", GetoptLong::OPTIONAL_ARGUMENT ],   # get update scan rules, and optionally perform the scan after getting them
@@ -434,6 +435,10 @@ begin
     
     when "--preview-results"
       @preview_results = true
+    
+    when "--production-scan"
+      @production_scan = true
+      @@log.info('Discovery') {'This scan will be identified as a production scan.'}
       
     when "--throttle"
       @throttling_enabled = true
