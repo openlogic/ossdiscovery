@@ -31,6 +31,7 @@
 #
 
 require 'net/http'
+require 'find'
 
 begin
   # not all ruby installs and builds contain openssl, so degrade
@@ -64,6 +65,7 @@ def help()
   # please maintain this list in alphabetical order
   printf("\nOptions are not order dependent and may be one or more of:\n")
   printf("--conf,           -c the absolute or relative path and filename of the configuration file to use for the scan\n")
+  printf("--deliver-batch   -D the absolute or relative path to a directory contain one or more scan results files to deliver\n")
   printf("--deliver-results -d existence says 'yes' deliver results to server. Server destination is configured in %s\n", @config )
   printf("                     optionally --deliver-results can take a parameter which is a path to an existing scan results file to deliver\n")
   printf("--help,           -h print this help message\n")
@@ -454,6 +456,43 @@ def deliver_results( result_file )
     
   printf("Result: %s\n", response["disco"] )
   
+end
+
+
+=begin rdoc
+  given a directory of scan results, pick off scans and deliver them
+=end
+
+def deliver_batch( result_directory )
+
+  Find.find( result_directory ) do | results_fname |
+
+    # printf("results fname: #{results_fname}\n")
+
+    begin
+        case
+          when File.file?( results_fname )
+
+             # do some basic validation test by spot checking for a couple of fields that are
+             # expected to be in a valid results file
+             results_content = File.new( results_fname, "r" ).read 
+
+             if ( results_content.match('^type:summary') == nil ||
+                  results_content.match('^denied:') == nil||
+                  results_content.match('^foi:') == nil  ||
+                  results_content.match('^distro:') == nil 
+                )
+               next
+             end
+
+             printf("sending #{results_fname}\n")
+             deliver_results( results_fname ) 
+        end
+     rescue Errno::EACCES, Errno::EPERM
+        puts "Cannot access #{results_fname}\n" 
+     end
+  end
+
 end
 
 =begin rdoc
