@@ -85,7 +85,7 @@ require 'scan_rules_updater'
 @basedir = File.expand_path(File.dirname(__FILE__))
 @config = 'conf/config.rb'
 @copyright = "Copyright (C) 2007 OpenLogic, Inc."
-@discovery_version = "2.0-alpha-3"
+@discovery_version = "2.0-alpha-4"
 @discovery_name = "discovery"
 @discovery_license = "GNU Affero General Public License version 3"
 @discovery_license_shortname = "Affero GPLv3" 
@@ -228,6 +228,7 @@ options = GetoptLong.new(
   # please maintain these in alphabetical order
   [ "--conf", "-c", GetoptLong::REQUIRED_ARGUMENT ],           # specific conf file
   [ "--deliver-results", "-d", GetoptLong::OPTIONAL_ARGUMENT ],# existence says 'yes' deliver results to server, followed by a filename sends that file to the server  
+  [ "--deliver-batch", "-D", GetoptLong::REQUIRED_ARGUMENT ],  # argument points to a directory of scan results files to submit
   [ "--help", "-h", GetoptLong::NO_ARGUMENT ],                 # get help, then exit
   [ "--human-results","-u", GetoptLong::REQUIRED_ARGUMENT ],   # path to results file
   [ "--list-os","-o", GetoptLong::NO_ARGUMENT ],               # returns the same os string that will be reported with machine scan results
@@ -283,6 +284,14 @@ begin
         exit 1
       end
   
+    when "--deliver-batch"
+      if ( !File.directory?(arg) )
+        printf("#{arg} does not exist, please recheck the directory name\n")
+        exit 1
+      end
+
+      deliver_batch( arg )
+      exit 0
   
     # existence says 'yes' deliver the machine readable results to the server
     # optional arg will either immediately deliver results if the file already exists
