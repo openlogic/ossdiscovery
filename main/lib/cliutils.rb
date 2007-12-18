@@ -82,7 +82,8 @@ def help()
   printf("--list-tag,       -t print the machine ID (tag) that will be reported with scan results\n")
   printf("--machine-results,-m the absolute or relative path and filename for the machine readable results files.\n" )
   printf("--nofollow,       -N don't follow symlinks, default is: %s, follow symlinks\n", @follow_symlinks ? "Yes" : "No" )
-  printf("--preview-results,-R this flag will dump the machine results file to the console when the scan is complete\n")
+  printf("--preview-results,-R This flag will dump the machine results file to the console when the scan is complete.\n")
+  printf("--production-scan,-P This flag identifies the scan you run as a scan of a production machine in the results.\n")
   printf("--progress,       -x show progress indicator every X number of files scanned - X given by the parameter to --progress\n")
   printf("--path,           -p the absolute or relative path of the directory to scan, the default is %s\n", @directory_to_scan )
   # future printf("--speed,          -s a value of 1,2, or 3 which is a hint to the rule engine for how precise to be.\n")
@@ -162,6 +163,8 @@ def report( packages )
   printf(io, "")
   printf(io, "packages found        : %d\n", packages.length )
   printf(io, "throttling            : #{throttling_enabled_or_disabled} (total seconds paused: #{@walker.total_seconds_paused_for_throttling})\n" )
+  @production_scan = false unless @production_scan == true
+  printf(io, "production scan       : %s\n",  @production_scan)
   
   if ( packages.length > 0 )
     # Format the output by making sure the columns are lined up so it's easier to read.
@@ -255,6 +258,8 @@ def machine_report( packages )
   printf(io, "distro:%s\n", @distro )  
   printf(io, "kernel:%s\n", @kernel ) 
   printf(io, "rbplat:%s\n", RUBY_PLATFORM )
+  @production_scan = false unless @production_scan == true
+  printf(io, "production_scan:%s\n",  @production_scan)
     
   if ( packages.length > 0 )
     printf(io, "package,version,location\n")

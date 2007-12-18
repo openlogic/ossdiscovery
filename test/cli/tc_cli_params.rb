@@ -69,6 +69,19 @@ class TcCLI < Test::Unit::TestCase
       assert(true, "TcCliParams#test_list_projects passed")
     end
   end
+  
+  def test_cli_production_scan
+    nothing_to_discover_dir = File.expand_path(File.join(File.dirname(__FILE__), '..', 'resources', 'rules'))
+    
+    output_default = `ruby #{DISCOVERY_RB} --path #{nothing_to_discover_dir}`
+    default_scan_val = output_default.match(/^production scan\s+:\s+(.*).*$/)[1]
+    assert_equal('false', default_scan_val, "The default production scan value is expected to be 'false'")
+    
+    output_production = `ruby #{DISCOVERY_RB} --path #{nothing_to_discover_dir} --production-scan`
+    prod_scan_val = output_production.match(/^production scan\s+:\s+(.*).*$/)[1]
+    assert_equal('true', prod_scan_val, "The production scan value was expected to be 'true' because the '--production-scan' cli arg was passed in.")
+    
+  end
    
   
 end
