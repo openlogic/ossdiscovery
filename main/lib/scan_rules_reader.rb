@@ -66,8 +66,7 @@ class ScanRulesReader
   rule sets that apply at that speed factor, so we can derive what rulesets we need to pull in.
 
   Returns a Set of ProjectRule objects
-=end  
-
+=end
   def ScanRulesReader.setup_project_rules(scan_rules_dirs, speed=1)
     projects = Array.new
     
