@@ -1,0 +1,33 @@
+<project-rules>
+	
+	<project-rule name="openssl" from="wild" os="all" >
+		<eval expression="filematch AND version" speed="2" confidence="100" />
+		
+		<match-rules name="filematch">
+			<match-rule name="libfile" type="filename" filename="^libssl.so\.(.+?)$" />
+		</match-rules>
+		
+		<match-rules name="version">
+			<result expression="OR-ALL" />
+
+			<match-rule name="exe" type="binary" filename="^openssl.exe" regexp="OpenSSL ([0-9]\.[0-9]+\.[0-9][a-z]) "/>
+			<match-rule name="bin" type="binary" filename="^openssl$" regexp="OpenSSL ([0-9]\.[0-9]+\.[0-9][a-z]) "/>
+			<match-rule name="lib091" type="binary" filename="^libssl.so.0.9.1$" regexp="OpenSSL ([0-9]\.[0-9]+\.[0-9][a-z]?) " />
+			<match-rule name="lib092" type="binary" filename="^libssl.so.0.9.2$" regexp="OpenSSL ([0-9]\.[0-9]+\.[0-9][a-z]?) " />
+			<match-rule name="lib093" type="binary" filename="^libssl.so.0.9.3$" regexp="OpenSSL ([0-9]\.[0-9]+\.[0-9][a-z]?) " />
+			<match-rule name="lib094" type="binary" filename="^libssl.so.0.9.4$" regexp="OpenSSL ([0-9]\.[0-9]+\.[0-9][a-z]?) " />
+			<match-rule name="lib095" type="binary" filename="^libssl.so.0.9.5$" regexp="OpenSSL ([0-9]\.[0-9]+\.[0-9][a-z]?) " />
+			<match-rule name="lib096" type="binary" filename="^libssl.so.0.9.6$" regexp="OpenSSL ([0-9]\.[0-9]+\.[0-9][a-z]?) " />
+			<match-rule name="lib097" type="binary" filename="^libssl.so.0.9.7$" regexp="OpenSSL ([0-9]\.[0-9]+\.[0-9][a-z]?) " />
+			<match-rule name="lib098" type="binary" filename="^libssl.so.0.9.8$" regexp="OpenSSL ([0-9]\.[0-9]+\.[0-9][a-z]?) " />
+      <!-- 
+      ##########################################################################
+        Here's the invalid part.  There should only be able to be one match-rule 
+        named 'lib3', not two of them.
+      ##########################################################################
+      -->
+	      <match-rule name="lib3" type="binary" filename="^libssl[0-9].so$" regexp="OpenSSL ([0-9]\.[0-9]+\.[0-9][a-z]?) " />			
+          <match-rule name="lib3" type="binary" filename="^libssl[0-9].so$" regexp="OpenSSL ([0-9]\.[0-9]+\.[0-9][a-z]?) " />			
+		</match-rules>
+	</project-rule>
+</project-rules>
