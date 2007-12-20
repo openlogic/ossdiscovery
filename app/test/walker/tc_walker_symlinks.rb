@@ -6,7 +6,7 @@ class TcWalkingSymLinks < Test::Unit::TestCase
   SYMLINK_TESTS_DIR = File.expand_path(File.join(File.dirname(__FILE__), '..', 'resources', 'symlink-tests')) unless defined? SYMLINK_TESTS_DIR
 
 =begin rdoc
-  Note that before you can run the symlink test, you need to run resources/content-cg/symlink-tests/run-me.sh.  That
+  Note that before you can run the symlink test, you need to run resources/symlink-tests/run-me.sh.  That
   script will set up the symlink files and directories needed for this test to work correctly.
 =end  
   def setup
@@ -27,7 +27,7 @@ class TcWalkingSymLinks < Test::Unit::TestCase
       test = `ruby #{DISCOVERY_RB} --path #{SYMLINK_TESTS_DIR}`
     
       if ( test.match('not followed.*?: 0') == nil )
-        fail "Symlinks were not followed and should have been OR symlink-tests directory has not be set up.  Run run-me.sh in content-cg/symlinks-tests"        
+        fail "Symlinks were not followed and should have been OR symlink-tests directory has not be set up.  Run run-me.sh in symlinks-tests"        
       end
     end
 
@@ -43,7 +43,7 @@ class TcWalkingSymLinks < Test::Unit::TestCase
        test = `ruby #{DISCOVERY_RB} --path #{SYMLINK_TESTS_DIR} --nofollow`
 
        if ( test.match('not followed.*?: 5') == nil )
-         fail "Symlinks were not pruned OR symlink-tests directory has not be set up.  Run run-me.sh in content-cg/symlinks-tests"        
+         fail "Symlinks were not pruned OR symlink-tests directory has not be set up.  Run run-me.sh in symlinks-tests"        
        end
      end
   end
