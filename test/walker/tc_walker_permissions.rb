@@ -1,7 +1,12 @@
 # ruby requires
 require 'test/unit'
 
+$:.unshift File.join(File.dirname(__FILE__), '..', '..', 'main', 'lib')
+require 'conf/config'
+
 class TcWalkerPermissions < Test::Unit::TestCase
+
+  @@log = Config.log
 
   DISCOVERY_RB = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'main', 'lib', 'discovery.rb')) unless defined? DISCOVERY_RB
   PERMISSIONS_DIR_TO_DISCOVER = File.expand_path(File.join(File.dirname(__FILE__), '..', 'resources', 'permission-tests')) unless defined? PERMISSIONS_DIR_TO_DISCOVER
