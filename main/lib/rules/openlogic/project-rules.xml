@@ -1734,6 +1734,24 @@
       <match-rule name="roller-2.3.1-rc2-gz" type="MD5" version="2.3.1-rc2" filename="^roller.*jar$" md5sum="a2a68f16d0875d972dfecd26f8bc1e92" />      
 		</match-rules>
 	</project-rule>
+  
+  <project-rule name="sakai" from="wild" os="all">
+    <description>Finds versions using MD5's or filenames.</description>
+    <eval expression="fileversion or md5" speed='1' />
+    
+    <match-rules name="fileversion">
+      <result expression="jar"/>
+      <match-rule name="jar" type="filenameVersion" filename="^sakai-dav-server-[^\d]*(.*)\.jar$"/>
+    </match-rules>
+    
+    <match-rules name="md5">
+      <result expression="OR-ALL"/>
+      <!-- The following MD5's are the same for jars found out of both gzips and zips. -->
+      <match-rule name='sakai-bin_2-2-3-sakai-dav-server-2.2.3.jar' type='MD5' md5sum='2d1e784da083971211378fb0817e2602' filename='^sakai-dav-server.*jar$' version='2.2.3' /> <!-- extracted/sakai-bin_2-2-3.tar.gz.extracted/server/lib/sakai-dav-server-2.2.3.jar -->
+      <match-rule name='sakai-bin_2-3-2-sakai-dav-server-2.3.2.jar' type='MD5' md5sum='6063da8366f728b19089b5ee2132a7ef' filename='^sakai-dav-server.*jar$' version='2.3.2' /> <!-- extracted/sakai-bin_2-3-2.tar.gz.extracted/server/lib/sakai-dav-server-2.3.2.jar -->
+      <match-rule name='sakai-bin_2-4-1-sakai-dav-server-2.4.1.jar' type='MD5' md5sum='a3b2526cf93dc64fd3e1b9f8e91f0639' filename='^sakai-dav-server.*jar$' version='2.4.1' /> <!-- extracted/sakai-bin_2-4-1.tar.gz.extracted/server/lib/sakai-dav-server-2.4.1.jar -->
+    </match-rules>
+  </project-rule>
 	
 	<project-rule name="spring" from="wild" os="all" >
 
