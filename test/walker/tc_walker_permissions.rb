@@ -18,11 +18,11 @@ class TcWalkerPermissions < Test::Unit::TestCase
   end
   
   def test_permission_count
-    whoami_result = `whoami`
     if (RUBY_PLATFORM =~ /mswin/) then
       assert true
       @@log.warn('TcWalkerPermissions'){'TODO: Not testing permissions on windows systems.'}
     else
+      whoami_result = `whoami`
       if (whoami_result.include?('root')) then
         assert true
         @@log.warn('TcWalkerPermissions'){'Unable to test the permissions functionality because this process is being run by the root user, which has permissions to everything.'}
