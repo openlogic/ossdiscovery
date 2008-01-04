@@ -269,7 +269,7 @@ def machine_report( packages )
     printf(io, "package,version,location\n")
     packages.each do | package |
     
-      # split the version string and dump each one on a new line so the columns are nicely lined up regardless of hte number of versions
+      # split the version string and dump each one on a new line so the columns are nicely lined up regardless of the number of versions
       @versions = package.version.split(",")
       @versions.sort!
       @versions.each do | version |
@@ -860,17 +860,23 @@ def get_solaris_version_str()
       if ( File.exists?(distrofile) )
         File.open(distrofile, "r" ) do | file | 
           file.each do | line |
-          distro_bits = line.strip!
-          if ( distro_bits == nil )
-            distro_bits = line
-          end
+            distro_bits = line.strip!
+            if ( distro_bits == nil )
+              distro_bits = line
+              
+              # typical solaris distro line:
+              # "                        Solaris 9 9/05 s9s_u8wos_05 SPARC".split(" ")
+              # => ["Solaris", "9", "9/05", "s9s_u8wos_05", "SPARC"]
+              
+              parts = distro_bits.split(" ")
+              @os_architecture = parts[4]   # i386, x86_64, sparc, etc
+              @os_version = parts[1]        # 5.04, 10.4, etc            
+            end
           
-          @os = "solaris"                # distro major name "ubuntu"
-          @os_family = "solaris"         # linux, windows, etc
-          @os_architecture = "Unknown"   # i386, x86_64, sparc, etc
-          @os_version = "Unknown"        # 5.04, 10.4, etc
+            @os = "solaris"                # distro major name "ubuntu"
+            @os_family = "solaris"         # linux, windows, etc
           
-          return "Solaris: #{distro_bits}" 
+            return "Solaris: #{distro_bits}" 
           end 
         end
       end
