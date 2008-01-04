@@ -255,11 +255,11 @@ def machine_report( packages )
   printf(io, "end: %s\n", @endtime.to_i )
   printf(io, "totaltime:%s\n", @endtime - @starttime )
   printf(io, "found:%d\n", packages.length )
-  printf(io, "distro:%s\n", @distro )           # similar to the full release string  
-  printf(io, "osfamily:%s\n", @os_family )      # windows, linux, solaris, mac
-  printf(io, "os:%s\n", @os )                   # xp, ubuntu, redhat
-  printf(io, "osversion:%s\n", @os_version )    # sp3, 7.04, 5
-  printf(io, "architecture:%s\n", @architecture ) # x86_64, i386, PPC,
+  printf(io, "distro:%s\n", @distro )                # similar to the full release string  
+  printf(io, "osfamily:%s\n", @os_family )           # windows, linux, solaris, mac
+  printf(io, "os:%s\n", @os )                        # xp, ubuntu, redhat
+  printf(io, "osversion:%s\n", @os_version )         # sp3, 7.04, 5
+  printf(io, "architecture:%s\n", @os_architecture ) # x86_64, i386, PPC,
   printf(io, "kernel:%s\n", @kernel ) 
   printf(io, "rbplat:%s\n", RUBY_PLATFORM )
   @production_scan = false unless @production_scan == true
