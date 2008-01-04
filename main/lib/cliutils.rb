@@ -862,16 +862,16 @@ def get_solaris_version_str()
           file.each do | line |
             distro_bits = line.strip!
             if ( distro_bits == nil )
-              distro_bits = line
-              
-              # typical solaris distro line:
-              # "                        Solaris 9 9/05 s9s_u8wos_05 SPARC".split(" ")
-              # => ["Solaris", "9", "9/05", "s9s_u8wos_05", "SPARC"]
-              
-              parts = distro_bits.split(" ")
-              @os_architecture = parts[4]   # i386, x86_64, sparc, etc
-              @os_version = parts[1]        # 5.04, 10.4, etc            
+              distro_bits = line     
             end
+            
+            # typical solaris distro line:
+            # "                        Solaris 9 9/05 s9s_u8wos_05 SPARC".split(" ")
+            # => ["Solaris", "9", "9/05", "s9s_u8wos_05", "SPARC"]
+
+            parts = distro_bits.split(" ")
+            @os_architecture = parts[4]   # i386, x86_64, sparc, etc
+            @os_version = parts[1]        # 5.04, 10.4, etc
           
             @os = "solaris"                # distro major name "ubuntu"
             @os_family = "solaris"         # linux, windows, etc
