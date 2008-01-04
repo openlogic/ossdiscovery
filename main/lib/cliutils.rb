@@ -255,7 +255,11 @@ def machine_report( packages )
   printf(io, "end: %s\n", @endtime.to_i )
   printf(io, "totaltime:%s\n", @endtime - @starttime )
   printf(io, "found:%d\n", packages.length )
-  printf(io, "distro:%s\n", @distro )  
+  printf(io, "distro:%s\n", @distro )           # similar to the full release string  
+  printf(io, "osfamily:%s\n", @os_family )      # windows, linux, solaris, mac
+  printf(io, "os:%s\n", @os )                   # xp, ubuntu, redhat
+  printf(io, "osversion:%s\n", @os_version )    # sp3, 7.04, 5
+  printf(io, "architecture:%s\n", @architecture ) # x86_64, i386, PPC,
   printf(io, "kernel:%s\n", @kernel ) 
   printf(io, "rbplat:%s\n", RUBY_PLATFORM )
   @production_scan = false unless @production_scan == true
@@ -638,8 +642,10 @@ end
 =end
 
 def get_os_version_str()
-   
-  case major_platform()
+  
+  mplat = major_platform()
+  
+  case mplat
   when "linux"
     return get_linux_version_str()
   when "windows"
@@ -650,9 +656,13 @@ def get_os_version_str()
     return get_solaris_version_str()
   when "cygwin"
     return get_cygwin_version_str()
+    
+  # new platform cases go here
+  
   else
     return "Unknown: Unrecognized"
   end
+
   
 end
 
@@ -669,25 +679,31 @@ def get_windows_version_str()
   #
   # need to find out systemroot, drive, etc before going after prodspec.ini file.
   # some admins put system on drives other than C:
-   
-    [ENV['HOMEDRIVE'],"C","D","Z"].each do | drivespec |
-      
-     @prodspec_fn = "#{drivespec}:/windows/system32/prodspec.ini"
+
      
-     if ( File.exists?(@prodspec_fn) )
-        content = File.new(@prodspec_fn, "r").read
-        
-        # Product=Windows XP Professional
-        # Version=5.0
-        # Localization=English  
-        # ServicePackNumber=0
-        
-        product = content.match("Product=(.*?)$")[1]
+  [ENV['HOMEDRIVE'],"C","D","Z"].each do | drivespec |
+    
+   @prodspec_fn = "#{drivespec}:/windows/system32/prodspec.ini"
+   
+   if ( File.exists?(@prodspec_fn) )
+      content = File.new(@prodspec_fn, "r").read
+      
+      # Product=Windows XP Professional
+      # Version=5.0
+      # Localization=English  
+      # ServicePackNumber=0
+      
+      product = content.match("Product=(.*?)$")[1]
 
-        return "Windows: #{product}"
+      @os = product
+      @os_family = "windows"
+      @os_architecture = "TODO"
+      @os_version = content.match("Version=(.*?)$")[1]
+      
+      return "Windows: #{product}"
 
-     end # if
-    end # do
+   end # if
+  end # do
 
   return "win-TODO"
 end
@@ -700,8 +716,16 @@ def get_cygwin_version_str()
   
   uname = `uname -a`
   
+  # sample output from cygwin uname
+  # CYGWIN_NT-5.2 landon-ebd16czu 1.5.25(0.156/4/2) 2007-12-14 19:21 i686 Cygwin
+  
   # don't take hostname and build date
   parts = uname.split(" ")
+  
+  @os = "cygwin"                # distro major name "ubuntu"
+  @os_family = "cygwin"         # linux, windows, etc
+  @os_architecture = parts[5]   # i386, x86_64, sparc, etc
+  @os_version = parts[2]        # 5.04, 10.4, etc
   
   return "Cygwin: #{parts[0]} #{parts[2]} #{parts[5]} #{parts[6]}"
 end
@@ -765,6 +789,12 @@ def get_linux_version_str()
           if ( distro_bits == nil )
             distro_bits = line
           end
+          
+          @os = "TODO"
+          @os_family = "linux"
+          @os_architecture = "TODO"
+          @os_version = "TODO"
+          
           return "#{distroname}: #{distro_bits}" 
         end  # line
       end # file
@@ -834,6 +864,12 @@ def get_solaris_version_str()
           if ( distro_bits == nil )
             distro_bits = line
           end
+          
+          @os = "solaris"                # distro major name "ubuntu"
+          @os_family = "solaris"         # linux, windows, etc
+          @os_architecture = "Unknown"   # i386, x86_64, sparc, etc
+          @os_version = "Unknown"        # 5.04, 10.4, etc
+          
           return "Solaris: #{distro_bits}" 
           end 
         end
@@ -850,6 +886,8 @@ def get_macosx_version_str()
   # example uname string: 
   # for PPC mac: 
   # Darwin whitecloud 8.10.0 Darwin Kernel Version 8.10.0: Wed May 23 16:50:59 PDT 2007; root:xnu-792.21.3~1/RELEASE_PPC Power Macintosh powerpc
+  # for Intel mac:
+  # Darwin cooper.local 9.1.0 Darwin Kernel Version 9.1.0: Wed Oct 31 17:46:22 PDT 2007; root:xnu-1228.0.2~1/RELEASE_I386 i386
   
   uname_content = `uname -a`
   parts = uname_content.split(" ")
@@ -857,8 +895,14 @@ def get_macosx_version_str()
   kernel = parts[2]
   parts = uname_content.split("/")
   release = parts[1]
+  archparts = release.split(" ")
   
   release.strip != nil ? release.strip! : release;
+  
+  @os = os                          # distro major name "ubuntu"
+  @os_family = "macosx"             # linux, windows, etc
+  @os_architecture = archparts[1]   # i386, x86_64, sparc, etc
+  @os_version = kernel              # 5.04, 10.4, etc
     
   return "Mac OS X: #{os} #{kernel} #{release}"
 end
