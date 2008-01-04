@@ -99,6 +99,12 @@ require 'scan_rules_updater'
 @list_files = false
 @list_foi = false
 @list_exclusions = false
+
+@os = "Unknown"                # distro major name "ubuntu"
+@os_family = "Unknown"         # linux, windows, etc
+@os_architecture = "Unknown"   # i386, x86_64, sparc, etc
+@os_version = "Unknown"        # 5.04, 10.4, etc
+
 @show_every = 1000
 @show_progress = false
 @show_verbose = false
