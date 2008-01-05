@@ -79,6 +79,7 @@ require 'cliutils.rb'
 require 'rule_engine.rb'
 require 'scan_rules_updater'
 
+
 #--------------- global defaults ---------------------------------------------
 # maintain these in alphabetical order, please
 
@@ -121,6 +122,19 @@ SPEEDHINT = 1 unless defined?(SPEEDHINT)
 require "#{@basedir}/#{@config}"
 
 require "#{@basedir}/#{Config.prop(:generic_filters)}"
+
+# Load any plugins, meaning any file named 'init.rb' found somewhere
+# under the 'plugins' directory.
+def load_plugins
+  # load any plugins
+  puts "Loading plugins..."
+  plugin_files = File.join(File.dirname(__FILE__), "plugins", "**", "init.rb")
+  Dir.glob(plugin_files) { |path| require path }
+  puts "...done loading plugins."
+  puts
+end
+
+load_plugins if Config.prop(:load_plugins)
 
 =begin rdoc
  This is the main executive controller of discovery
@@ -275,10 +289,10 @@ begin
     self.instance_variable_set("@" + key.to_s, value)
   }
 
+  @distro = get_os_version_str
   # generate a unique and static machine id
-  @machine_id, @kernel = make_machine_id()
+  @machine_id = make_machine_id
 
-  @distro = get_os_version_str()
   
   options.each do | opt, arg |
     case opt
@@ -526,26 +540,33 @@ if (@update_rules) then
 end
 
 # execute a scan
-execute()
+execute
 
 # scan is complete, do a simple report based projects evaluated by the rule engine - this 'report' method is in cliutils.rb
-packages = @rule_engine.scan_complete()
+@packages = @rule_engine.scan_complete
 
-# human readable report
-report( packages )
+def make_reports
+  # human readable report
+  report @packages
 
-if (@produce_match_audit_records) then
-  report_audit_records(@rule_engine.audit_records)
+  if @produce_match_audit_records
+    report_audit_records @rule_engine.audit_records
+  end
+
+  # deal with machine reports and sending results if allowed
+  machine_report(@machine_results, @packages, version, @machine_id,
+                 @walker.dir_ct, @walker.file_ct, @walker.sym_link_ct,
+		 @walker.permission_denied_ct, @walker.foi_ct,
+		 @starttime, @endtime, @distro, @os_family, @os,
+		 @osversion, @os_architecture, @kernel, @production_scan,
+		 @include_paths, @preview_results)
 end
 
-# deal with machine reports and sending results if allowed
-machine_report( packages )
+make_reports
 
-if ( @send_results )
-  printf("Posting results to: %s ...please wait\n", @destination_server_url )
-  deliver_results( @machine_results )
-
+if @send_results
+  deliver_results @machine_results
 end
 
-printf("Scan complete\n")
+puts "Scan complete"
 exit 0
