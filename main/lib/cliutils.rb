@@ -790,10 +790,15 @@ def get_linux_version_str()
             distro_bits = line
           end
           
-          @os = "TODO"
+          # @os = distro_bits   # this will have more than we want but there is no standard first line that can be parsed
+          @os = distroname      # less specific, but distro string returned will have more specifics
+          
           @os_family = "linux"
-          @os_architecture = "TODO"
-          @os_version = "TODO"
+          
+          platform = RUBY_PLATFORM 
+          # ie: "x86_64-linux"
+          
+          @os_architecture = platform.split("-")[0]
           
           return "#{distroname}: #{distro_bits}" 
         end  # line
@@ -813,14 +818,18 @@ def get_linux_version_str()
     if ( (distroname = content.match("^DISTRIB_ID=(.*?)$")[1]) == nil )
       distroname = "Unknown"
     end
-    
+
     if ( (version = content.match("^DISTRIB_RELEASE=(.*?)$")[1]) == nil )
       version = "Unknown"
     end
     
+    @os_version = version
+    
     if ( (codename = content.match("^DISTRIB_CODENAME=(.*?)$")[1]) == nil )
       codename = "Unknown"
     end
+    
+    @os = "#{distroname} #{codname}"
     
     if ( (description = content.match("^DISTRIB_DESCRIPTION=(.*?)$")[1]) == nil )
       description = "Unknown"
