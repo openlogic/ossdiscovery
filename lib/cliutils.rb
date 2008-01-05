@@ -501,7 +501,7 @@ def make_machine_id
                              # if using JRuby
     make_simple_machine_id   
   else  # every other platform including cygwin supports uname -a
-    make_uname_based_machine_id
+    make_uname_based_machine_id( platform )
   end
 end
 
@@ -519,7 +519,7 @@ def make_simple_machine_id
   @machine_id = Digest::MD5.hexdigest(hostname + ipaddr + @distro)
 end
 
-def make_uname_based_machine_id
+def make_uname_based_machine_id( platform )
   #-------------- the uname method --------------------------------------------------------------------
   # this assumes all other platforms support uname -a
   # this also assumes that if a machine upgrades its OS or changes its hostname it essentially becomes
