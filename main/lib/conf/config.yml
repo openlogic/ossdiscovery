@@ -37,18 +37,10 @@
 ##### General properties
 
 #--------------------------------------------------------------------------------------
-# for enterprise wide deployments and scans, it's useful to report scans with a company
-# name so that scan results can be aggregated and enteprise-wide statistics are possible
-#
-# by default this is "anonymous"
-company_name: anonymous
-
-#--------------------------------------------------------------------------------------
-# machine_id needs to be universally unique and static
-# this will be changed by the system from "default" unless overridden here by a
-# different value.  If you choose to override it, insure that it's unique for each
-# machine on which a scan is run if the results are to be submitted
-machine_id: default
+# Set to true to allow plugins found in the 'plugins' directory to be loaded.
+# For example, Open Source Census integration is provided as a plugin, and 
+# therefore is only available if the following value is 'true'.
+load_plugins: true
 
 #--------------------------------------------------------------------------------------
 # what directory to walk if no other directories are specified in the inclusion filter
@@ -143,18 +135,13 @@ rules_dirs: <% ['rules_openlogic', 'rules_drop_ins'] %>
 #--------------------------------------------------------------------------------------
 # these items describe where and how scan results are sent
 # 
-
 send_results: false                                             # default to not send, can be overridden on command line
 
 # TODO - IMPORTANT: This Default/Standard URL needs to point to OpenLogic's Disco 2 server when this goes to production
 
 # Note that destination_server_url and server_base_url can neither be localhost urls if proxying is being 
 # used or tested.  You can't proxy a localhost URL.
-
 destination_server_url: http://localhost:3000/scans/scanpost   # change to OL disco production server
-# destination_server_url: http://192.168.10.133:3000/scans/scanpost   # linux development server, "smoker"
-# destination_server_url: https://192.168.10.211/cgi-bin/scanpost.rb   # linux integration test server with HTTPS
-# destination_server_url: http://192.168.10.211/cgi-bin/scanpost.rb    # linux integration test server with HTTP
 
 # Configurable options for scan rules updating.  TODO findme: clean this up, combining where possible with the 'destination_server_url' 
 # for delivering results above. Note: On hold until the server-side of things has been firmed up.
