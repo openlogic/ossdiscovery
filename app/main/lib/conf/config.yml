@@ -43,6 +43,14 @@
 load_plugins: true
 
 #--------------------------------------------------------------------------------------
+# for enterprise wide deployments and scans, it's useful to report scans with a company
+# name so that scan results can be aggregated and enteprise-wide statistics are possible
+#
+# by default this is "anonymous"
+company_name: anonymous
+
+
+#--------------------------------------------------------------------------------------
 # what directory to walk if no other directories are specified in the inclusion filter
 # if --path command line parameter is given, that path will override this one
 # if no --path is given and there are no filters in the inclusion_filter list, then
