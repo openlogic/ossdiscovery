@@ -829,7 +829,7 @@ def get_linux_version_str()
       codename = "Unknown"
     end
     
-    @os = "#{distroname} #{codname}"
+    @os = "#{distroname} #{codename}"
     
     if ( (description = content.match("^DISTRIB_DESCRIPTION=(.*?)$")[1]) == nil )
       description = "Unknown"
