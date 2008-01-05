@@ -32,6 +32,7 @@
 
 require 'net/http'
 require 'find'
+require 'erb'
 
 begin
   # not all ruby installs and builds contain openssl, so degrade
@@ -117,7 +118,7 @@ end
     returns a standard version string to use throughout discovery    
 =end
 
-def version()
+def version
   return @discovery_name + " v" + @discovery_version
 end
 
@@ -168,30 +169,19 @@ def report( packages )
   
   if ( packages.length > 0 )
     # Format the output by making sure the columns are lined up so it's easier to read.
-    longest_name = 0
-    longest_version = 0
+    longest_name = "Package Name".length
+    longest_version = "Version".length
     
     packages.each do |package| 
       longest_name = package.name.length if (package.name.length > longest_name)
       longest_version = package.version.length if (package.version.length > longest_version)
     end # of packages.each
     
-    pad_name = ""
-    pad_version = ""
-    
-    1.upto(longest_name - "Package Name".length) {pad_name << " "}
-    1.upto(longest_version - "Version".length) {pad_version << " "}
-    printf(io, "Package Name#{pad_name} Version#{pad_version} Location\n")
-    printf(io, "============#{pad_name} =======#{pad_version} ========\n")
+    printf(io, %{#{"Package Name".ljust(longest_name)} #{"Version".ljust(longest_version)} Location\n})
+    printf(io, %{#{"============".ljust(longest_name)} #{"=======".ljust(longest_version)} ========\n})
     
     packages.to_a.sort!.each do | package |
-      pad_name = ""
-      pad_version = ""
-      
-      1.upto(longest_name - package.name.length) {pad_name << " "}
-      1.upto(longest_version - package.version.length) {pad_version << " "}
-      
-      printf(io, "#{package.name + pad_name} #{package.version + pad_version} #{package.found_at}\n")
+      printf(io, "#{package.name.ljust(longest_name)} #{package.version.ljust(longest_version)} #{package.found_at}\n")
     end # of packages.each
   end
   
@@ -231,70 +221,63 @@ end
 =begin rdoc
   this method will generate a report format suitable for posting to the discovery server
 =end
-
-def machine_report( packages )
+def machine_report(destination, packages, client_version, machine_id,
+                   directory_count, file_count, sym_link_count,
+                   permission_denied_count, files_of_interest_count,
+                   start_time, end_time, distro, os_family, os,
+		   os_version, machine_architecture, kernel, production_scan,
+                   include_paths, preview_results)
   io = nil
-  if (@machine_results == STDOUT) then
+  if (destination == STDOUT) then
     io = STDOUT
   else 
-    io = File.new(@machine_results, "w")
+    io = File.new(destination, "w")
   end
 
-  # pull the stats from the walker for a simple report
+  production_scan = false unless production_scan == true
 
-  printf(io, "type:summary\n")
-  printf(io, "scanner:%s\n", version() )
-  printf(io, "company:%s\n", @company_name )
-  printf(io, "machine:%s\n", @machine_id )
-  printf(io, "directories:%d\n", @walker.dir_ct )
-  printf(io, "files:%d\n", @walker.file_ct )
-  printf(io, "symlinks:%d\n", @walker.sym_link_ct )
-  printf(io, "denied:%d\n", @walker.permission_denied_ct )
-  printf(io, "foi:%d\n", @walker.foi_ct )
-  printf(io, "start: %s\n", @starttime.to_i )
-  printf(io, "end: %s\n", @endtime.to_i )
-  printf(io, "totaltime:%s\n", @endtime - @starttime )
-  printf(io, "found:%d\n", packages.length )
-  printf(io, "distro:%s\n", @distro )                # similar to the full release string  
-  printf(io, "osfamily:%s\n", @os_family )           # windows, linux, solaris, mac
-  printf(io, "os:%s\n", @os )                        # xp, ubuntu, redhat
-  printf(io, "osversion:%s\n", @os_version )         # sp3, 7.04, 5
-  printf(io, "architecture:%s\n", @os_architecture ) # x86_64, i386, PPC,
-  printf(io, "kernel:%s\n", @kernel ) 
-  printf(io, "rbplat:%s\n", RUBY_PLATFORM )
-  @production_scan = false unless @production_scan == true
-  printf(io, "production_scan:%s\n",  @production_scan)
+  template = %{
+    type:                 summary
+    scanner:              <%= client_version %>
+    machine:              <%= machine_id %>
+    directories:          <%= directory_count %>
+    files:                <%= file_count %>
+    symlinks:             <%= sym_link_count %>
+    denied:               <%= permission_denied_count %>
+    foi:                  <%= files_of_interest_count %>
+    start:                <%= start_time.to_i %>
+    end:                  <%= end_time.to_i %>
+    totaltime:            <%= end_time - start_time %>
+    found:                <%= packages.length %>
+    distro:               <%= distro %>
+    os_family:            <%= os_family %>
+    os:                   <%= os %>
+    os_version:           <%= os_version %>
+    machine_architecture: <%= machine_architecture %>
+    kernel:               <%= kernel %>
+    rbplat:               <%= RUBY_PLATFORM %>
+    production_scan:      <%= production_scan %>
+    % if packages.length > 0
+    package,version<%= include_paths ? ",location" : "" %>
+    %   packages.sort.each do |package|
+    %     package.version.split(",").sort.each do |version|
+    %       version.gsub!(" ", "")
+    %       version.tr!("\0", "")
+            <%= package.name %>,<%= version %><%= include_paths ? ("," + package.found_at) : "" %>
+    %     end
+    %   end
+    % end
+  }
+
+  # strip off leading whitespace when rendering the template
+  printf(io, ERB.new(template.gsub(/^\s+/, ""), 0, "%").result(binding))
     
-  if ( packages.length > 0 )
-    printf(io, "package,version,location\n")
-    packages.each do | package |
-    
-      # split the version string and dump each one on a new line so the columns are nicely lined up regardless of the number of versions
-      @versions = package.version.split(",")
-      @versions.sort!
-      @versions.each do | version |
-        
-        version.gsub!(" ","")
-        # strip out any null characters that could be in there from a double-byte match rule
-        version.tr!("\0","")
-
-        if ( @include_paths )
-          printf(io, "%s,%s,%s\n", package.name, version, package.found_at )  
-        else
-          printf(io, "%s,%s\n", package.name, version )            
-        end
-      end
-    end
+  io.close unless io == STDOUT
+  
+  if preview_results && io != STDOUT
+    printf("\nThese are the actual machine scan results from the file, %s, that would be delivered by --deliver-results option\n", destination)
+    puts File.new(destination).read
   end
-  
-  if (io != STDOUT) then io.close end
-  
-  if ( @preview_results )
-    printf("\nThese are the actual machine scan results from the file, %s, that would be delivered by --deliver-results option\n", @machine_results )
-    results = File.new( @machine_results ).read
-    puts results
-  end
-  
 end
 
 =begin rdoc
@@ -373,7 +356,7 @@ end
 =end
 
 def deliver_results( result_file )
-
+  printf("Posting results to: %s ...please wait\n", @destination_server_url )
   results = File.new( result_file ).read
   
   begin
@@ -507,119 +490,109 @@ end
 =begin rdoc
   this code is responsible for generating a unique and static machine id
 =end
-
-def make_machine_id()
-
-  # if someone has overridden the machine id in the configuration.rb file and/or 
-  # changed the current value of the machine id to anything besides "default", then
-  # assume they know what they're doing and use it instead of making one
-  
+def make_machine_id
   # for non-windows machines, everything else is u*ix like and should support uname
   
-  platform = major_platform()
+  platform = major_platform
   
   case platform
   when "windows", "java"     # java is what's reported if running under JRuby, 
                              # so use the simplest possible machine id regardless of "real" platform
                              # if using JRuby
-    
-    hostname = Socket.gethostname
-
-    ipaddr = IPSocket.getaddress( hostname )  
-    
-    if ( @machine_id == "default")
-      @machine_id = Digest::MD5.hexdigest( hostname + ipaddr + @company_name )
-    # else use the one that was set in config.yml
-    end
-    
-    # TODO - if we support JRuby at some point, we need to fix this so the "real" platform is determined
-    # through JRuby/java and if linux or other unix, find the real kernel version
-    @kernel = RUBY_PLATFORM
-        
+    make_simple_machine_id   
   else  # every other platform including cygwin supports uname -a
-    
-    #-------------- the uname method --------------------------------------------------------------------
-    # this assumes all other platforms support uname -a
-    # this also assumes that if a machine upgrades its OS or changes its hostname it essentially becomes
-    # a different machine and will be considered different for scanning purposes
-
-    hostname = Socket.gethostname
-    mac = ""
-
-    # try to find some other reasonably static info about the machine
-    if ( platform == "linux" || platform == "macosx" )
-      ifconfig = `/sbin/ifconfig`
-
-      if ( platform == "linux" )  # get the fully qualified hostname with domain if it's available
-        hostname = `hostname -f 2>&1`
-    
-        if ( hostname.match('Unknown host') != nil )
-          # we found some versions of ubuntu which would report Unknown host on a hostname -f but the 
-          # one-word hostname (not fully qualified) for the `hostname`, so gracefully degrade if this
-          # condition exists on the users' box.
-          hostname = `hostname 2>&1`
-        end
-      end
-    elsif ( platform == "solaris" )
-      # on solaris, if you ifconfig -a as a normal user you can't get the MAC address, only hostname
-      # solaris, ifconfig with no -a will dump, so must have -a
-  
-      ifconfig = `/sbin/ifconfig -a`
-      hostname = `hostname`
-    end
-  
-    # see if the mac address is in the output...if so, use it, otherwise, mangle the output of ifconfig.
-    # Yes, this can cause the machine id to change if the machine is on DHCP and the lease expires
-    # or if the machine is carried around and constantly rescanned, but short of using the machine's hostname 
-    # exclusively (which can also change), have to find a combination of items which help define the uniqueness of a box
-    #
-    # The only other known unique ID is from a pentium processor (and not all pentiums), but that instruction was removed
-    # due to privacy concerns.  So, the fact is, we don't care about the true unchangeable identity of the machine
-    # and you'd freak if we did.  So, just obfuscate some of the basic, relatively static parameters of a machine
-    # that help identify it in standard ways such as the address, mac address, hostname and attempt to be unique
-    # in their own domains.
-
-    # these are two forms of ifconfig output for showing mac, 'HWaddr' and 'ether'
-    if ( ifconfig != nil && 
-        ((matchdata = ifconfig.match( '(HWaddr) ([0-9:A-F].*?)+$')) != nil || 
-         (matchdata = ifconfig.match( '(ether) ([0-9:A-F].*?)+$' )) != nil) )
-
-      # load the found mac address
-      mac = matchdata[2]
-
-    elsif( ifconfig != nil )
-
-      # substitute an MD5 related to the output of ifconfig instead of mac if it can't be found
-      # so just load the variable up with the content of ifconfig
-      mac = ifconfig
-
-    else
-      mac = "unknown"
-    end
-
-    mac = Digest::MD5.hexdigest( mac )  # obfuscate the mac address or ifconfig output
-
-    @uname = `uname -a`
-    @uname_parts = @uname.split(" ")
-    @kernel = sprintf( "%s %s", @uname_parts[2], @uname_parts[3] )
-
-    # typical output from uname -a 
-    #   Linux smoker 2.6.16.21-0.8-smp #1 SMP Mon Jul 3 18:25:39 UTC 2006 x86_64 x86_64 x86_64 GNU/Linux
-
-    # obfuscate the entire blob of info we gather into a single, 32 byte MD5 sum   
-    # if any single one of these items changes over time, the machine ID will change.  This is a known
-    # limitation.  If you want to control your machine ID according to your own unique scheme, override
-    # it in the configuration.rb file on a machine by machine basis.
-
-    if ( @machine_id == "default" )
-      @machine_id = Digest::MD5.hexdigest( hostname + mac + @uname + @company_name + @distro )
-      # else use the one set in config.yml
-    end
+    make_uname_based_machine_id
   end
-
-  return @machine_id, @kernel  
 end
 
+=begin rdoc
+  return a hashed machine id composed of only hostname, IP address, and distro string
+=end
+def make_simple_machine_id
+  # TODO - if we support JRuby at some point, we need to fix this so the "real" platform is determined
+  # through JRuby/java and if linux or other unix, find the real kernel version
+  @kernel = RUBY_PLATFORM
+
+  hostname = Socket.gethostname
+  ipaddr = IPSocket.getaddress(hostname)
+  
+  @machine_id = Digest::MD5.hexdigest(hostname + ipaddr + @distro)
+end
+
+def make_uname_based_machine_id
+  #-------------- the uname method --------------------------------------------------------------------
+  # this assumes all other platforms support uname -a
+  # this also assumes that if a machine upgrades its OS or changes its hostname it essentially becomes
+  # a different machine and will be considered different for scanning purposes
+
+  hostname = Socket.gethostname
+  mac = ""
+
+  # try to find some other reasonably static info about the machine
+  if ( platform == "linux" || platform == "macosx" )
+    ifconfig = `/sbin/ifconfig`
+
+    if ( platform == "linux" )  # get the fully qualified hostname with domain if it's available
+      hostname = `hostname -f 2>&1`
+  
+      if ( hostname.match('Unknown host') != nil )
+        # we found some versions of ubuntu which would report Unknown host on a hostname -f but the 
+        # one-word hostname (not fully qualified) for the `hostname`, so gracefully degrade if this
+        # condition exists on the users' box.
+        hostname = `hostname 2>&1`
+      end
+    end
+  elsif ( platform == "solaris" )
+    # on solaris, if you ifconfig -a as a normal user you can't get the MAC address, only hostname
+    # solaris, ifconfig with no -a will dump, so must have -a
+
+    ifconfig = `/sbin/ifconfig -a`
+    hostname = `hostname`
+  end
+
+  # see if the mac address is in the output...if so, use it, otherwise, mangle the output of ifconfig.
+  # Yes, this can cause the machine id to change if the machine is on DHCP and the lease expires
+  # or if the machine is carried around and constantly rescanned, but short of using the machine's hostname 
+  # exclusively (which can also change), have to find a combination of items which help define the uniqueness of a box
+  #
+  # The only other known unique ID is from a pentium processor (and not all pentiums), but that instruction was removed
+  # due to privacy concerns.  So, the fact is, we don't care about the true unchangeable identity of the machine
+  # and you'd freak if we did.  So, just obfuscate some of the basic, relatively static parameters of a machine
+  # that help identify it in standard ways such as the address, mac address, hostname and attempt to be unique
+  # in their own domains.
+
+  # these are two forms of ifconfig output for showing mac, 'HWaddr' and 'ether'
+  if ( ifconfig != nil && 
+      ((matchdata = ifconfig.match( '(HWaddr) ([0-9:A-F].*?)+$')) != nil || 
+       (matchdata = ifconfig.match( '(ether) ([0-9:A-F].*?)+$' )) != nil) )
+
+    # load the found mac address
+    mac = matchdata[2]
+
+  elsif( ifconfig != nil )
+
+    # substitute an MD5 related to the output of ifconfig instead of mac if it can't be found
+    # so just load the variable up with the content of ifconfig
+    mac = ifconfig
+
+  else
+    mac = "unknown"
+  end
+
+  mac = Digest::MD5.hexdigest( mac )  # obfuscate the mac address or ifconfig output
+
+  @uname = `uname -a`
+  @uname_parts = @uname.split(" ")
+  @kernel = sprintf( "%s %s", @uname_parts[2], @uname_parts[3] )
+
+  # typical output from uname -a 
+  #   Linux smoker 2.6.16.21-0.8-smp #1 SMP Mon Jul 3 18:25:39 UTC 2006 x86_64 x86_64 x86_64 GNU/Linux
+
+  # obfuscate the entire blob of info we gather into a single, 32 byte MD5 sum   
+  # if any single one of these items changes over time, the machine ID will change.  This is a known
+  # limitation.
+  @machine_id = Digest::MD5.hexdigest( hostname + mac + @uname + @company_name + @distro )
+end
 
 =begin rdoc
   return an os name, version string
@@ -641,29 +614,25 @@ end
     
 =end
 
-def get_os_version_str()
-  
-  mplat = major_platform()
-  
-  case mplat
+def get_os_version_str
+   
+  case major_platform
   when "linux"
-    return get_linux_version_str()
+    return get_linux_version_str
   when "windows"
-    return get_windows_version_str()
+    return get_windows_version_str
   when "macosx"
-    return get_macosx_version_str()
+    return get_macosx_version_str
   when "solaris"
-    return get_solaris_version_str()
+    return get_solaris_version_str
   when "cygwin"
-    return get_cygwin_version_str()
+    return get_cygwin_version_str
     
   # new platform cases go here
   
   else
     return "Unknown: Unrecognized"
   end
-
-  
 end
 
 =begin rdoc
@@ -671,7 +640,7 @@ end
 
 =end
 
-def get_windows_version_str()
+def get_windows_version_str
   # the windows file:
   # %systemroot%\system32\prodspec.ini
   # contains the warning to not change the contents, so should be pretty stable
@@ -712,7 +681,7 @@ end
   return the string containing the cygwin version info
 =end
 
-def get_cygwin_version_str()
+def get_cygwin_version_str
   
   uname = `uname -a`
   
@@ -738,7 +707,7 @@ end
 =end
 
 
-def get_linux_version_str()
+def get_linux_version_str
 
     @linux_distros = { 
 
@@ -857,7 +826,7 @@ end
   Solaris 9 9/05 s9s_u8wos_05 SPARC
 =end
 
-def get_solaris_version_str()
+def get_solaris_version_str
     # you can find the solaris OS version in /etc/release
   
     # /etc/release is a typical Solaris release file
@@ -896,7 +865,7 @@ end
   return the string containing the macosx version
 =end
 
-def get_macosx_version_str()
+def get_macosx_version_str
   # since there's only one distro of mac os x, Darwin, just assume that "distro" plus get the kernel version and return it
   # example uname string: 
   # for PPC mac: 

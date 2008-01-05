@@ -59,12 +59,12 @@ class TcConfig < Test::Unit::TestCase
   
   def test_prop
     # a valid key argument (valid means that you'll actually see it in the config.yml file)
-    val = Config.prop(:company_name)
-    assert_equal('anonymous', val)
+    val = Config.prop(:load_plugins)
+    assert_equal(true, val)
     
     # another valid key argument (a simple 'to_sym' is being done)
-    val = Config.prop('company_name')
-    assert_equal('anonymous', val)
+    val = Config.prop('load_plugins')
+    assert_equal(true, val)
     
     # an invalid key argument
     assert_raise RuntimeError do
