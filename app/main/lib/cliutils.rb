@@ -779,6 +779,8 @@ def get_linux_version_str()
       "/etc/yellowdog-release" => "Yellow Dog"
     }
 
+  @os_family = "linux"
+          
   @linux_distros.each do | distrofile, distroname |
     
     if ( File.exist?(distrofile))
@@ -792,8 +794,6 @@ def get_linux_version_str()
           
           # @os = distro_bits   # this will have more than we want but there is no standard first line that can be parsed
           @os = distroname      # less specific, but distro string returned will have more specifics
-          
-          @os_family = "linux"
           
           platform = RUBY_PLATFORM 
           # ie: "x86_64-linux"
