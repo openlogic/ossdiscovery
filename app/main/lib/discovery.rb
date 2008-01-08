@@ -126,12 +126,8 @@ require "#{@basedir}/#{Config.prop(:generic_filters)}"
 # Load any plugins, meaning any file named 'init.rb' found somewhere
 # under the 'plugins' directory.
 def load_plugins
-  # load any plugins
-  puts "Loading plugins..."
   plugin_files = File.join(File.dirname(__FILE__), "plugins", "**", "init.rb")
   Dir.glob(plugin_files) { |path| require path }
-  puts "...done loading plugins."
-  puts
 end
 
 load_plugins if Config.prop(:load_plugins)
