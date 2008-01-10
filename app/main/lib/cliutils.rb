@@ -768,7 +768,13 @@ def get_linux_version_str
           # ie: "x86_64-linux"
           
           @os_architecture = platform.split("-")[0]
-          
+         
+          # for release files which match fedora-like strings:
+          #  "Fedora release 8 (Werewolf)" 
+          if( distro_bits.match('release (.*?) ')[1] != nil ) 
+             @os_version = distro_bits.match('release (.*?) ')[1] 
+          end
+
           return "#{distroname}: #{distro_bits}" 
         end  # line
       end # file
