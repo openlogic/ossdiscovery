@@ -749,6 +749,8 @@ def get_linux_version_str
     }
 
   @os_family = "linux"
+  platform = RUBY_PLATFORM
+  @os_architecture = platform.split("-")[0]
           
   @linux_distros.each do | distrofile, distroname |
     
@@ -758,8 +760,6 @@ def get_linux_version_str
 
       distro_bits = content[0].strip == nil ? content[0] : content[0].strip
       @os = distroname
-      platform = RUBY_PLATFORM
-      @os_architecture = platform.split("-")[0]
 
       # for release files which match fedora-like strings:
       #  "Fedora release 8 (Werewolf)" 
