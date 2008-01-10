@@ -554,7 +554,7 @@ def make_reports
                  @walker.dir_ct, @walker.file_ct, @walker.sym_link_ct,
 		 @walker.permission_denied_ct, @walker.foi_ct,
 		 @starttime, @endtime, @distro, @os_family, @os,
-		 @osversion, @os_architecture, @kernel, @production_scan,
+		 @os_version, @os_architecture, @kernel, @production_scan,
 		 @include_paths, @preview_results)
 end
 
