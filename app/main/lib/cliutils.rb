@@ -45,6 +45,13 @@ rescue LoadError => e
   NO_SSL = true
 end
 
+begin
+    require 'win32/registry'
+    NOT_WINDOWS=false
+rescue LoadError => e
+    NOT_WINDOWS=true
+end
+
 require 'digest/md5' 
 
 #--------------------------------------------------------------------------------------
@@ -649,6 +656,12 @@ def get_windows_version_str
   # need to find out systemroot, drive, etc before going after prodspec.ini file.
   # some admins put system on drives other than C:
 
+  @os_architecture = "TODO"
+
+  Win32::Registry::HKEY_LOCAL_MACHINE.open('HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0') do |reg|
+    reg_typ, reg_val = reg.read('')
+    @os_architecture = reg_val
+  end
      
   [ENV['HOMEDRIVE'],"C","D","Z"].each do | drivespec |
     
@@ -666,7 +679,6 @@ def get_windows_version_str
 
       @os = product
       @os_family = "windows"
-      @os_architecture = "TODO"
       @os_version = content.match("Version=(.*?)$")[1]
       
       return "Windows: #{product}"
