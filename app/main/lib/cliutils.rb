@@ -658,8 +658,8 @@ def get_windows_version_str
 
   @os_architecture = "TODO"
 
-  Win32::Registry::HKEY_LOCAL_MACHINE.open('HKEY_LOCAL_MACHINE\HARDWARE\DESCRIPTION\System\CentralProcessor\0') do |reg|
-    reg_typ, reg_val = reg.read('')
+  Win32::Registry::HKEY_LOCAL_MACHINE.open('HARDWARE\DESCRIPTION\System\CentralProcessor\0') do |reg|
+    reg_typ, reg_val = reg.read('ProcessorNameString')
     @os_architecture = reg_val
   end
      
