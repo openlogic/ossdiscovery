@@ -165,15 +165,6 @@
     </match-rules>
   </project-rule>  
 
-  <project-rule name="bash" from="wild" os="all">
-    <description>Scans bash binary files for version string information</description>
-    <eval expression="bashbin" speed='1'  />
-    
-    <match-rules name="bashbin">
-      <match-rule name="bashbinary" type="binary" filename="^bash$" regexp="Bash version (.*?) release GNU" />
-    </match-rules>
-  </project-rule>
-  
   <project-rule name="commons-attributes" from="wild" os="all">
     <description>Finds versions using MD5's.</description>
     <eval expression="md5 OR fileversion OR file" speed='1' />
