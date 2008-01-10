@@ -225,7 +225,7 @@ def machine_report(destination, packages, client_version, machine_id,
                    directory_count, file_count, sym_link_count,
                    permission_denied_count, files_of_interest_count,
                    start_time, end_time, distro, os_family, os,
-		   os_version, machine_architecture, kernel, production_scan,
+       os_version, machine_architecture, kernel, production_scan,
                    include_paths, preview_results)
   io = nil
   if (destination == STDOUT) then
@@ -753,31 +753,30 @@ def get_linux_version_str
   @linux_distros.each do | distrofile, distroname |
     
     if ( File.exist?(distrofile))
-      #puts "Found distro file: #{distrofile}\n"
-      File.open(distrofile, "r" ) do | file | 
-	      file.each do | line |
-          distro_bits = line.strip!
-          if ( distro_bits == nil )
-            distro_bits = line
-          end
-          
-          # @os = distro_bits   # this will have more than we want but there is no standard first line that can be parsed
-          @os = distroname      # less specific, but distro string returned will have more specifics
-          
-          platform = RUBY_PLATFORM 
-          # ie: "x86_64-linux"
-          
-          @os_architecture = platform.split("-")[0]
-         
-          # for release files which match fedora-like strings:
-          #  "Fedora release 8 (Werewolf)" 
-          if( distro_bits.match('release (.*?) ')[1] != nil ) 
-             @os_version = distro_bits.match('release (.*?) ')[1] 
-          end
 
-          return "#{distroname}: #{distro_bits}" 
-        end  # line
-      end # file
+      content = File.new(distrofile, "r").readlines
+
+      distro_bits = content[0].strip == nil ? content[0] : content[0].strip
+      @os = distroname
+      platform = RUBY_PLATFORM
+      @os_architecture = platform.split("-")[0]
+
+      # for release files which match fedora-like strings:
+      #  "Fedora release 8 (Werewolf)" 
+      if( distro_bits.match('release (.*?) ') != nil ) 
+         @os_version = distro_bits.match('release (.*?) ')[1] 
+      end
+
+      content.each do | line |
+
+        if( line.match('^VERSION = (.*?)$') != nil ) 
+          @os_version = line.match('^VERSION = (.*?)$')[1] 
+        end
+
+      end
+
+      return "#{distroname}: #{distro_bits}" 
+
     end # exists
   end # distros
   
@@ -808,7 +807,7 @@ def get_linux_version_str
     
     if ( (description = content.match("^DISTRIB_DESCRIPTION=(.*?)$")[1]) == nil )
       description = "Unknown"
-	
+  
     end
 
     # strip quotes from description                
