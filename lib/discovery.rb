@@ -274,10 +274,9 @@ options = GetoptLong.new(
 
 
 
-begin
-  # What's going on here?  Glad you asked.
-  # 
-  # Every single property from the config.yml file is loaded as an instance variable of self.
+# begin
+   
+  # Every property from the config.yml file is loaded as an instance variable of self.
   # This is done so that this file can have default values for all of these properties, and then 
   # change them if necessary based on a cli option that was specified.
   configs = Config.configs  
@@ -288,7 +287,6 @@ begin
   @distro = get_os_version_str
   # generate a unique and static machine id
   @machine_id = make_machine_id
-
   
   options.each do | opt, arg |
     case opt
@@ -369,6 +367,7 @@ begin
          end
          exit 0
        end
+
     when "--list-os"
       printf("%s, kernel: %s\n", get_os_version_str(), @kernel )
       exit 0
@@ -486,12 +485,15 @@ begin
       exit 0
     end   # case
   end # options do
-rescue
-  printf("Unsupported option. Please review the list of supported options and usage:\n")
-  @@log.error('Discovery') {"Unsupported option. Please review the list of supported options and usage: #{$!}"}
-  help()
-  exit 1
-end
+
+# rescue Exception => e
+#   printf("Unsupported option. Please review the list of supported options and usage:\n")
+#   @@log.error('Discovery') {"Unsupported option. Please review the list of supported options and usage: #{$!}"}
+#   @@log.error('Discovery') {"#{e.message}\n#{e.backtrace}"}
+#   puts "#{e.message}\n#{e.backtrace}"
+#   help()
+#   exit 1
+# end
 
 # interpret any leftover arguments as the override path
 if ( ARGV.size > 0 )
