@@ -155,7 +155,7 @@ def report( packages )
     throttling_enabled_or_disabled = 'disabled'
   end
 
-  printf(io, "directories walked    : %d\n", @walker.dir_ct )
+  printf(io, "\ndirectories walked    : %d\n", @walker.dir_ct )
   printf(io, "files encountered     : %d\n", @walker.file_ct )
   printf(io, "symlinks found        : %d\n", @walker.sym_link_ct )
   printf(io, "symlinks not followed : %d\n", @walker.not_followed_ct )  
