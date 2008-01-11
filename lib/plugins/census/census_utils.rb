@@ -71,8 +71,8 @@ module CensusUtils
       kernel:                  <%= kernel %>
       ruby_platform:           <%= RUBY_PLATFORM %>
       production_scan:         <%= production_scan %>
-      % if packages.length > 0
       package,version
+      % if packages.length > 0
       %   packages.sort.each do |package|
       %     package.version.split(",").sort.each do |version|
       %       version.gsub!(" ", "")
