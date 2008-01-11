@@ -264,8 +264,8 @@ def machine_report(destination, packages, client_version, machine_id,
     kernel:               <%= kernel %>
     rbplat:               <%= RUBY_PLATFORM %>
     production_scan:      <%= production_scan %>
-    % if packages.length > 0
     package,version<%= include_paths ? ",location" : "" %>
+    % if packages.length > 0
     %   packages.sort.each do |package|
     %     package.version.split(",").sort.each do |version|
     %       version.gsub!(" ", "")
