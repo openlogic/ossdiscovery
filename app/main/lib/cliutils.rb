@@ -233,7 +233,7 @@ def machine_report(destination, packages, client_version, machine_id,
                    permission_denied_count, files_of_interest_count,
                    start_time, end_time, distro, os_family, os,
        os_version, machine_architecture, kernel, production_scan,
-                   include_paths, preview_results)
+                   include_paths, preview_results, group_code )
   io = nil
   if (destination == STDOUT) then
     io = STDOUT
@@ -264,6 +264,7 @@ def machine_report(destination, packages, client_version, machine_id,
     kernel:               <%= kernel %>
     rbplat:               <%= RUBY_PLATFORM %>
     production_scan:      <%= production_scan %>
+    group_pass:           <%= group_code %>
     package,version<%= include_paths ? ",location" : "" %>
     % if packages.length > 0
     %   packages.sort.each do |package|

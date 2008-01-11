@@ -554,10 +554,10 @@ def make_reports
   # deal with machine reports and sending results if allowed
   machine_report(@machine_results, @packages, version, @machine_id,
                  @walker.dir_ct, @walker.file_ct, @walker.sym_link_ct,
-		 @walker.permission_denied_ct, @walker.foi_ct,
-		 @starttime, @endtime, @distro, @os_family, @os,
-		 @os_version, @os_architecture, @kernel, @production_scan,
-		 @include_paths, @preview_results)
+                 @walker.permission_denied_ct, @walker.foi_ct,
+                 @starttime, @endtime, @distro, @os_family, @os,
+                 @os_version, @os_architecture, @kernel, @production_scan,
+                 @include_paths, @preview_results, "Client-TODO" )
 end
 
 make_reports
