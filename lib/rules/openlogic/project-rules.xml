@@ -25,7 +25,7 @@
 
 -->
 
-<project-rules universal-version='uv'>
+<project-rules universal-version="uv">
 	
 	<project-rule name="apache" from="wild" os="linux,sunos-5.10,sunos-5.9,sunos-5.8,macosx">
 		
