@@ -90,10 +90,11 @@ require 'scan_rules_updater'
 @discovery_name = "discovery"
 @discovery_license = "GNU Affero General Public License version 3"
 @discovery_license_shortname = "Affero GPLv3" 
-@distro = "Unknown: Unrecognized"
-@inclusion_filters = Hash.new
 @dir_exclusion_filters = Hash.new
+@distro = "Unknown: Unrecognized"
 @file_exclusion_filters = Hash.new
+@group_code = ""
+@inclusion_filters = Hash.new
 @@log = Config.prop(:log)
 
 # walker configuration parameter defaults
@@ -246,6 +247,7 @@ options = GetoptLong.new(
   [ "--deliver-results", "-d", GetoptLong::OPTIONAL_ARGUMENT ],# existence says 'yes' deliver results to server, followed by a filename sends that file to the server  
   [ "--deliver-batch", "-D", GetoptLong::REQUIRED_ARGUMENT ],  # argument points to a directory of scan results files to submit
   [ "--help", "-h", GetoptLong::NO_ARGUMENT ],                 # get help, then exit
+  [ "--group-code","-G", GetoptLong::REQUIRED_ARGUMENT ],      # token representing the group passcode
   [ "--human-results","-u", GetoptLong::REQUIRED_ARGUMENT ],   # path to results file
   [ "--list-os","-o", GetoptLong::NO_ARGUMENT ],               # returns the same os string that will be reported with machine scan results
   [ "--list-excluded", "-e", GetoptLong::NO_ARGUMENT],         # show excluded filenames during scan
@@ -367,6 +369,11 @@ options = GetoptLong.new(
          end
          exit 0
        end
+
+    when "--group-code"
+        @group_code = arg
+        # TODO - validation of group passcode format
+
 
     when "--list-os"
       printf("%s, kernel: %s\n", get_os_version_str(), @kernel )
@@ -557,7 +564,7 @@ def make_reports
                  @walker.permission_denied_ct, @walker.foi_ct,
                  @starttime, @endtime, @distro, @os_family, @os,
                  @os_version, @os_architecture, @kernel, @production_scan,
-                 @include_paths, @preview_results, "Client-TODO" )
+                 @include_paths, @preview_results, @group_code )
 end
 
 make_reports
