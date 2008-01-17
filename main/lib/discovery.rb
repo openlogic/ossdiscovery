@@ -145,6 +145,9 @@ def execute()
 
   # mark the beginning of a scan
   @starttime = Time.new
+  
+  @universal_rules_md5 = ScanRulesReader.generate_aggregate_md5(File.dirname(@rules_openlogic))
+  @universal_rules_version = ScanRulesReader.get_universal_rules_version()
 
   # create the application's Walker instance - @list_files is boolean for whether to dump files as encountered
   @walker = Walker::new( )
@@ -558,13 +561,17 @@ def make_reports
     report_audit_records @rule_engine.audit_records
   end
 
-  # deal with machine reports and sending results if allowed
-  machine_report(@machine_results, @packages, version, @machine_id,
+  # machine_report method is no longer defined in cliutils.rb -- see the 'TODO technical debt' in census_utils.rb
+  if (Object.respond_to?(:machine_report, true)) then
+    # deal with machine reports and sending results if allowed
+    machine_report(@machine_results, @packages, version, @machine_id,
                  @walker.dir_ct, @walker.file_ct, @walker.sym_link_ct,
                  @walker.permission_denied_ct, @walker.foi_ct,
                  @starttime, @endtime, @distro, @os_family, @os,
                  @os_version, @os_architecture, @kernel, @production_scan,
-                 @include_paths, @preview_results, @group_passcode )
+                 @include_paths, @preview_results, @group_passcode,
+                 @universal_rules_md5, @universal_rules_version)
+  end
 end
 
 make_reports
