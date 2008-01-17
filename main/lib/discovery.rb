@@ -93,7 +93,7 @@ require 'scan_rules_updater'
 @dir_exclusion_filters = Hash.new
 @distro = "Unknown: Unrecognized"
 @file_exclusion_filters = Hash.new
-@group_code = ""
+@group_passcode = ""
 @inclusion_filters = Hash.new
 @@log = Config.prop(:log)
 
@@ -247,7 +247,7 @@ options = GetoptLong.new(
   [ "--deliver-results", "-d", GetoptLong::OPTIONAL_ARGUMENT ],# existence says 'yes' deliver results to server, followed by a filename sends that file to the server  
   [ "--deliver-batch", "-D", GetoptLong::REQUIRED_ARGUMENT ],  # argument points to a directory of scan results files to submit
   [ "--help", "-h", GetoptLong::NO_ARGUMENT ],                 # get help, then exit
-  [ "--group-code","-G", GetoptLong::REQUIRED_ARGUMENT ],      # token representing the group passcode
+  [ "--group-passcode","-G", GetoptLong::REQUIRED_ARGUMENT ],  # token representing the group passcode
   [ "--human-results","-u", GetoptLong::REQUIRED_ARGUMENT ],   # path to results file
   [ "--list-os","-o", GetoptLong::NO_ARGUMENT ],               # returns the same os string that will be reported with machine scan results
   [ "--list-excluded", "-e", GetoptLong::NO_ARGUMENT],         # show excluded filenames during scan
@@ -370,8 +370,8 @@ options = GetoptLong.new(
          exit 0
        end
 
-    when "--group-code"
-        @group_code = arg
+    when "--group-passcode"
+        @group_passcode = arg
         # TODO - validation of group passcode format
 
 
@@ -564,7 +564,7 @@ def make_reports
                  @walker.permission_denied_ct, @walker.foi_ct,
                  @starttime, @endtime, @distro, @os_family, @os,
                  @os_version, @os_architecture, @kernel, @production_scan,
-                 @include_paths, @preview_results, @group_code )
+                 @include_paths, @preview_results, @group_passcode )
 end
 
 make_reports

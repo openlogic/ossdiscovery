@@ -64,8 +64,8 @@ module CensusUtils
                      directory_count, file_count, sym_link_count,
                      permission_denied_count, files_of_interest_count,
                      start_time, end_time, distro, os_family, os,
-		     os_version, machine_architecture, kernel, 
-		     production_scan, include_paths, preview_results, group_code )
+                     os_version, machine_architecture, kernel, 
+                     production_scan, include_paths, preview_results, group_passcode )
     io = nil
     if (destination == STDOUT) then
       io = STDOUT
@@ -98,7 +98,7 @@ module CensusUtils
       kernel:                  <%= kernel %>
       ruby_platform:           <%= RUBY_PLATFORM %>
       production_scan:         <%= production_scan %>
-      group_code:              <%= group_code %>
+      group_code:              <%= group_passcode %>
       package,version
       % if packages.length > 0
       %   packages.sort.each do |package|
