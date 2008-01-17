@@ -2,6 +2,8 @@ require 'test/unit'
 $:.unshift File.join(File.dirname(__FILE__), "..", "main", "lib")
 require 'scan_rules_reader'
 
+require 'digest/md5' 
+
 class TcScanRulesReader < Test::Unit::TestCase
   
   def setup
@@ -124,6 +126,7 @@ class TcScanRulesReader < Test::Unit::TestCase
     end
   end
   
+  # commented out because we decided to allow this
 #  def test_validate_expressions_multiple_match_rules_with_same_name
 #    assert_raise RuntimeError do
 #      rulesfiledir = File.dirname(File.new(File.dirname(__FILE__) + '/resources/rules/test_validate_dir_07_invalid/multiple_match_rules_with_same_name/scan-rules.xml', "r").path)
@@ -131,5 +134,32 @@ class TcScanRulesReader < Test::Unit::TestCase
 #      val = ScanRulesReader.validate_expressions(projects)
 #    end
 #  end
+
+  def test_generate_aggregate_md5
+    test_dir = File.expand_path(File.join(File.dirname(__FILE__), 'resources', 'aggregate_md5_resources'))
+    assert(File.directory?(test_dir))
+    files = ScanRulesReader.find_all_scanrules_files(test_dir).to_a.sort
+    md5s = Array.new
+    files.each do |f|
+      file = File.new( f )
+      file.binmode
+      md5_val = Digest::MD5.hexdigest( file.read )
+      md5s << md5_val
+    end # of files.each
+    
+    concatted_md5_str = ""
+    md5s.each do |md5|
+      concatted_md5_str << md5
+    end # of md5s.each
+    
+    expected = Digest::MD5.hexdigest(concatted_md5_str)    
+    actual = ScanRulesReader.generate_aggregate_md5(test_dir)    
+    assert_equal(expected, actual)
+  end
+
+  def test_get_universal_rules_version
+    urv = ScanRulesReader.get_universal_rules_version
+    assert(!urv.nil? && urv != "")
+  end
   
 end

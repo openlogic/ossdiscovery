@@ -386,4 +386,43 @@ class ScanRulesReader
     dupes.each {|dupe| puts dupe}
   end # of the method
   
+  def self.generate_aggregate_md5(dir_with_rules_files)
+    files = ScanRulesReader.find_all_scanrules_files(dir_with_rules_files).to_a.sort
+    md5s = Array.new
+    files.each do |f|
+      file = File.new( f )
+      file.binmode
+      md5_val = Digest::MD5.hexdigest( file.read )
+      md5s << md5_val
+    end # of files.each
+    
+    concatted_md5_str = ""
+    md5s.each do |md5|
+      concatted_md5_str << md5
+    end # of md5s.each
+    
+    aggregate_md5_val = Digest::MD5.hexdigest(concatted_md5_str)
+    return aggregate_md5_val
+  end
+  
+  def self.get_universal_rules_version()
+    openlogic_rules_dir = Config.prop(:rules_openlogic)
+    rules_files = ScanRulesReader.find_all_scanrules_files(openlogic_rules_dir)
+    
+    universal_versions = Set.new
+    
+    rules_files.each do |rules_file|
+      file = File.new(rules_file)
+      xml = Document.new(file)
+      root = xml.root
+      universal_versions << root.attributes['universal-version']
+    end # of rules_files.each
+    
+    if (universal_versions.size != 1) then
+      raise "Expected there to be exactly one universal version for all rules files. Instead there were #{universal_versions.size} (#{universal_versions.to_a.inspect})."
+    end
+  
+    return universal_versions.to_a[0]
+  end
+  
 end
