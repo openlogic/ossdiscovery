@@ -78,7 +78,7 @@ def help()
   printf("                     optionally --deliver-results can take a parameter which is a path to an existing scan results file to deliver\n")
   printf("--help,           -h print this help message\n")
   printf("--human-results,  -u the absolute or relative path and filename for the human readable results files.  The default is %s\n", "STDOUT" )
-  printf("--group-code,     -G the token representing the group passcode received at census registration time\n")
+  printf("--group-passcode, -G the token representing the group passcode received at census registration time\n")
   printf("--inc-path,       -I include the path/location of detected package in machine scan results\n")  
   printf("--list-excluded,  -e during a scan, print a list of files that are excluded and the filter that excluded each\n")
   printf("--list-files,     -f during a scan, print a list of all files that matched a rule or other criteria\n")
@@ -234,7 +234,7 @@ def machine_report(destination, packages, client_version, machine_id,
                    permission_denied_count, files_of_interest_count,
                    start_time, end_time, distro, os_family, os,
        os_version, machine_architecture, kernel, production_scan,
-                   include_paths, preview_results, group_code )
+                   include_paths, preview_results, group_passcode )
   io = nil
   if (destination == STDOUT) then
     io = STDOUT
@@ -265,7 +265,7 @@ def machine_report(destination, packages, client_version, machine_id,
     kernel:               <%= kernel %>
     rbplat:               <%= RUBY_PLATFORM %>
     production_scan:      <%= production_scan %>
-    group_pass:           <%= group_code %>
+    group_code:           <%= group_passcode %>
     package,version<%= include_paths ? ",location" : "" %>
     % if packages.length > 0
     %   packages.sort.each do |package|
