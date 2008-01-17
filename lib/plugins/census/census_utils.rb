@@ -64,8 +64,9 @@ module CensusUtils
                      directory_count, file_count, sym_link_count,
                      permission_denied_count, files_of_interest_count,
                      start_time, end_time, distro, os_family, os,
-                     os_version, machine_architecture, kernel, 
-                     production_scan, include_paths, preview_results, group_passcode )
+		                 os_version, machine_architecture, kernel, 
+		                 production_scan, include_paths, preview_results, group_passcode,
+                     universal_rules_md5, universal_rules_version)
     io = nil
     if (destination == STDOUT) then
       io = STDOUT
@@ -99,6 +100,8 @@ module CensusUtils
       ruby_platform:           <%= RUBY_PLATFORM %>
       production_scan:         <%= production_scan %>
       group_code:              <%= group_passcode %>
+      universal_rules_md5:     <%= universal_rules_md5 %>
+      universal_rules_version: <%= universal_rules_version %>
       package,version
       % if packages.length > 0
       %   packages.sort.each do |package|
@@ -145,6 +148,9 @@ module CensusUtils
 
 end
 
+# TODO technical debt - opening Object like this feels wrong
+# The proper solution to this would be to ensure that the methods that are being overridden via the mixin are defined in a Class or Module.
+
 # We have to open class Object here because the method we
 # want to alias is defined outside of any class or module and
 # is therefore automatically defined on class Object.
@@ -157,10 +163,6 @@ class Object
     CensusUtils.add_check_digits(orig_make_machine_id(*args))
   end
     
-  # change the make_machine_id method to return a machine id
-  # with check digits added to prevent accidental and some
-  # malicious tampering.
-  alias_method :orig_machine_report, :machine_report
   def machine_report(*args)
     CensusUtils.machine_report(*args)
   end
