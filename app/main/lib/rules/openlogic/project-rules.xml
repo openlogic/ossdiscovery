@@ -24,7 +24,7 @@
 
 -->
 
-<project-rules universal-version="20080117-131416">
+<project-rules universal-version="20080118-103201">
 	
 	<project-rule name="apache" from="wild" os="linux,sunos-5.10,sunos-5.9,sunos-5.8,macosx">
 		
