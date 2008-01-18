@@ -1232,8 +1232,8 @@
     </match-rules>
   </project-rule>
 
-  <project-rules>
 	<project-rule name="imagemagick" from="wild" os="all">
+    <description>Looks for imagemagick static and dynamic library files</description>
 	  <eval expression="lib" speed='1'  />
 		<match-rules name="lib">
 			<result expression="libmagick OR libmagick_a OR libwand" />
@@ -1242,7 +1242,6 @@
 			<match-rule name="libwand" type="binary" filename="libWand\.a" regexp='\/ImageMagick-(.*?)\/' />
 		</match-rules>
 	</project-rule>
-  </project-rules>
 
   <project-rule name='jboss' from='wild' os='all' >
     <description>Uses md5 digests to find versions gte 3.0.5 and lte 5.0.0.Beta2</description>
