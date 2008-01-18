@@ -1,7 +1,6 @@
 <!-- project-rules.xml
 
  LEGAL NOTICE
- -------------
  
  OSS Discovery is a tool that finds installed open source software.
     Copyright (C) 2007 OpenLogic, Inc.
@@ -1232,6 +1231,18 @@
       <match-rule name='112-hibernate-3.2.5.ga.tar.gz-hibernate3.jar'    type='MD5' md5sum='6b3a5efd05bbb7f13b4dc1b8ba987fcc' filename='^hibernate.*jar$' version='3.2.5.ga' />
     </match-rules>
   </project-rule>
+
+  <project-rules>
+	<project-rule name="imagemagick" from="wild" os="all">
+	  <eval expression="lib" speed='1'  />
+		<match-rules name="lib">
+			<result expression="libmagick OR libmagick_a OR libwand" />
+			<match-rule name="libmagick" type="binary" filename="libMagick.so.*?$" regexp='\/ImageMagick-(.*?)\/' />
+			<match-rule name="libmagick_a" type="binary" filename="libMagick\.a" regexp='\/ImageMagick-(.*?)\/' />
+			<match-rule name="libwand" type="binary" filename="libWand\.a" regexp='\/ImageMagick-(.*?)\/' />
+		</match-rules>
+	</project-rule>
+  </project-rules>
 
   <project-rule name='jboss' from='wild' os='all' >
     <description>Uses md5 digests to find versions gte 3.0.5 and lte 5.0.0.Beta2</description>
