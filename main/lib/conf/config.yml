@@ -167,3 +167,23 @@ proxy_password: nil #
 
 update_rules: false
 update_rules_and_do_scan: false
+
+# geography - used when user wants to submit an anonymous scan to the census
+# geography is the minimal data required for the submission
+#   geography should be one of the following values:
+# 
+#  This value can be overwridden on the command line with the --geography
+#
+#  1 | United States | 
+#  2 | Canada        | 
+#  3 | South America | 
+#  4 | Europe        | 
+#  5 | Japan         | 
+#  6 | India         | 
+#  7 | Australia     | 
+#  8 | China         | 
+#  9 | Other         | 
+#100 | Undefined     |
+
+geography: 100 
+

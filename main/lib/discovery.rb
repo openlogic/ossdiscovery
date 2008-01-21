@@ -250,6 +250,7 @@ options = GetoptLong.new(
   [ "--deliver-results", "-d", GetoptLong::OPTIONAL_ARGUMENT ],# existence says 'yes' deliver results to server, followed by a filename sends that file to the server  
   [ "--deliver-batch", "-D", GetoptLong::REQUIRED_ARGUMENT ],  # argument points to a directory of scan results files to submit
   [ "--help", "-h", GetoptLong::NO_ARGUMENT ],                 # get help, then exit
+  [ "--geography", "-Y", GetoptLong::REQUIRED_ARGUMENT ],      # geography code 
   [ "--group-passcode","-G", GetoptLong::REQUIRED_ARGUMENT ],  # token representing the group passcode
   [ "--human-results","-u", GetoptLong::REQUIRED_ARGUMENT ],   # path to results file
   [ "--list-os","-o", GetoptLong::NO_ARGUMENT ],               # returns the same os string that will be reported with machine scan results
@@ -321,7 +322,22 @@ options = GetoptLong.new(
   
     when "--deliver-results"  
       @send_results = true
-  
+
+      # if deliverying anonymous results (no group passcode), then the geography option is required
+
+      if ( (@group_passcode == "") && (@geography == 100 || (@geography.to_i < 1 || @geography.to_i > 9)) )
+        printf("\nScan not completed\n")
+        printf("\nWhen delivering anonymous results to the OSSCensus server, the geography must be defined\n")
+        printf("  use --geography to specify the geography code or \n")
+        printf("  modify the geography property in the config.yml file\n")
+        printf("  Geography codes for the --geography option are:\n")
+        printf( show_geographies() )
+        printf("\n  --geography is an order dependent parameter and must be used before the --deliver-results parameter\n")
+        printf("If you are registered with the OSSCensus site and have a group passcode or token, you should set that \n")
+        printf("on the command line or add it to your config.yml file.\n")
+        exit 1
+      end
+
       if ( arg != nil && arg != "" )
         # results file was given, see if it exists.
         # if it exists, post it immediately, exit once the status code is received from the server
@@ -345,6 +361,7 @@ options = GetoptLong.new(
         puts "ERROR: Unable to access file: '#{@machine_results}'"
         exit 1
       end    
+
 
     when "--help"
       help()
@@ -373,10 +390,12 @@ options = GetoptLong.new(
          exit 0
        end
 
+    when "--geography"
+       @geography = arg
+
     when "--group-passcode"
         @group_passcode = arg
         # TODO - validation of group passcode format
-
 
     when "--list-os"
       printf("%s, kernel: %s\n", get_os_version_str(), @kernel )
@@ -570,7 +589,7 @@ def make_reports
                  @starttime, @endtime, @distro, @os_family, @os,
                  @os_version, @os_architecture, @kernel, @production_scan,
                  @include_paths, @preview_results, @group_passcode,
-                 @universal_rules_md5, @universal_rules_version)
+                 @universal_rules_md5, @universal_rules_version, @geography )
   end
 end
 
