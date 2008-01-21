@@ -78,6 +78,9 @@ def help()
   printf("                     optionally --deliver-results can take a parameter which is a path to an existing scan results file to deliver\n")
   printf("--help,           -h print this help message\n")
   printf("--human-results,  -u the absolute or relative path and filename for the human readable results files.  The default is %s\n", "STDOUT" )
+  printf("--geography,      -Y geography code, if the scan is submitted to census server as an anonymous scan, 
+  this overrides value in the config.yml file.  This is an exception to order dependences and must occur before 
+  --deliver-results on the command line\n" )
   printf("--group-passcode, -G the token representing the group passcode received at census registration time\n")
   printf("--inc-path,       -I include the path/location of detected package in machine scan results\n")  
   printf("--list-excluded,  -e during a scan, print a list of files that are excluded and the filter that excluded each\n")
@@ -114,6 +117,10 @@ def help()
   printf("\n\nExamples:\n")
   printf("./discovery --path /home/lcox --machine-results /tmp/myscan_machine_results.txt --human-results /tmp/myscan_human_results.txt\n")
   printf("   scans the directory /home/lcox and places the results files in the /tmp directory.\n")
+
+  printf("\n\n")
+  printf("Reference for geography codes used with --geography command line option or the geography config.yml property\n")
+  printf( show_geographies() )
 
   printf("\n%s\n", version() )    
   printf("%s\n", @copyright )
@@ -845,4 +852,18 @@ def get_macosx_version_str
   @os_version = kernel              # 5.04, 10.4, etc
     
   return "Mac OS X: #{os} #{kernel} #{release}"
+end
+
+def show_geographies()
+
+"  1 | United States 
+  2 | Canada          
+  3 | South America   
+  4 | Europe          
+  5 | Japan           
+  6 | India           
+  7 | Australia       
+  8 | China           
+  9 | Other          
+"
 end
