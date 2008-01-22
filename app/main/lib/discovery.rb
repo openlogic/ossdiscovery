@@ -323,8 +323,29 @@ options = GetoptLong.new(
     when "--deliver-results"  
       @send_results = true
 
-      # if deliverying anonymous results (no group passcode), then the geography option is required
 
+      if ( arg != nil && arg != "" )
+        # results file was given, see if it exists.
+        # if it exists, post it immediately, exit once the status code is received from the server
+        # if it does not exist, scan the machine normally except use the given filename as the
+        # the results file to post when the scan is complete
+
+        if ( File.exists?(arg) )
+          printf("Immediately delivering the results file: #{arg} ...\n")
+
+          # don't need to enforce geography check on cli because by delivering files, that geography would
+          # have already been validated.  Also, if the scan_results geography is invalid, the server
+          # will reject the scan
+
+          deliver_results( arg )
+          exit 0
+        else
+          @machine_results = arg
+          # proceed with the scan using new given filename as the machine results file
+        end
+      end
+
+      # if deliverying anonymous results (no group passcode), then the geography option is required
       if ( (@group_passcode == "") && (@geography == 100 || (@geography.to_i < 1 || @geography.to_i > 9)) )
         printf("\nScan not completed\n")
         printf("\nWhen delivering anonymous results to the OSSCensus server, the geography must be defined\n")
@@ -336,23 +357,6 @@ options = GetoptLong.new(
         printf("If you are registered with the OSSCensus site and have a group passcode or token, you should set that \n")
         printf("on the command line or add it to your config.yml file.\n")
         exit 1
-      end
-
-      if ( arg != nil && arg != "" )
-        # results file was given, see if it exists.
-        # if it exists, post it immediately, exit once the status code is received from the server
-        # if it does not exist, scan the machine normally except use the given filename as the
-        # the results file to post when the scan is complete
-
-        if ( File.exists?(arg) )
-          printf("Immediately delivering the results file: #{arg} ...\n")
-          deliver_results( arg )
-          exit 0
-        else
-          @machine_results = arg
-          # proceed with the scan using new given filename as the machine results file
-        end
-
       end
   
       begin
