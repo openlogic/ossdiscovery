@@ -295,6 +295,7 @@ options = GetoptLong.new(
   @machine_id = make_machine_id
   
   options.each do | opt, arg |
+
     case opt
 
     when "--conf"
@@ -322,7 +323,6 @@ options = GetoptLong.new(
   
     when "--deliver-results"  
       @send_results = true
-
 
       if ( arg != nil && arg != "" )
         # results file was given, see if it exists.
@@ -357,6 +357,10 @@ options = GetoptLong.new(
         printf("If you are registered with the OSSCensus site and have a group passcode or token, you should set that \n")
         printf("on the command line or add it to your config.yml file.\n")
         exit 1
+      elsif ( @group_passcode != "" && @geography.to_i == 100 )
+        # default the geography to "" if group passcode is supplied but geography was not overridden
+        # geography will be associated on the server side using the group-passcode
+        @geography = ""
       end
   
       begin
@@ -365,7 +369,6 @@ options = GetoptLong.new(
         puts "ERROR: Unable to access file: '#{@machine_results}'"
         exit 1
       end    
-
 
     when "--help"
       help()
@@ -396,6 +399,12 @@ options = GetoptLong.new(
 
     when "--geography"
        @geography = arg
+
+       if ( @geography.to_i < 1 || @geography.to_i > 9 )
+          printf("Invalid geography #{@geography}\n")
+          printf(show_geographies())
+          exit 1
+       end
 
     when "--group-passcode"
         @group_passcode = arg
