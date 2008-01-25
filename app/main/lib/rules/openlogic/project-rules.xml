@@ -1986,6 +1986,41 @@
       <match-rule name="tobago-md5-12" type="MD5" md5sum="5bf0e002b07aab7d3f946de4f7867a32" filename="^tobago.*jar$" version="1.0.13"/>
     </match-rules>
   </project-rule>
+  <project-rule name="myfaces-trinidad" from="wild" os="all">
+    <description>Apache Myfaces Trinadad</description>
+    <eval expression="trinidad-filename or trinidad-md5" speed="1"/>
+    <match-rules name="trinidad-filename">
+      <result expression="OR-ALL"/>
+<!-- explicit jar -->
+      <match-rule name="trinidad-filename-1" type="filename" filename="^trinidad\.jar$"/>
+<!-- filename version match -->
+      <match-rule name="trinidad-filename-2" type="filenameVersion" filename="^trinidad-api-([0-9].*?)\.jar$"/>
+      <match-rule name="trinidad-filename-3" type="filenameVersion" filename="^trinidad-impl-([0-9].*?)\.jar$"/>
+    </match-rules>
+    <match-rules name="trinidad-md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="trinidad-md5-0" type="MD5" md5sum="34bbe4314f83237dce82084eb8c16ced" filename="^trinidad.*jar$" version="1.0.1-api"/>
+      <match-rule name="trinidad-md5-1" type="MD5" md5sum="0b3330fc17fdcd84c19fcda75f9ee6c1" filename="^trinidad.*jar$" version="1.0.2-api"/>
+      <match-rule name="trinidad-md5-2" type="MD5" md5sum="3aa83914e7b7f3412d84fa3e54e010a4" filename="^trinidad.*jar$" version="1.0.3-api"/>
+      <match-rule name="trinidad-md5-3" type="MD5" md5sum="cd8f51d468835d5d099c4cf4b899d7ce" filename="^trinidad.*jar$" version="1.0.4-api"/>
+      <match-rule name="trinidad-md5-4" type="MD5" md5sum="806dc42d22dcad3b49526235829d2fb2" filename="^trinidad.*jar$" version="1.0.5-api"/>
+      <match-rule name="trinidad-md5-5" type="MD5" md5sum="d684e4a21a38de3e6438be63e3a2083c" filename="^trinidad.*jar$" version="1.2.1-api"/>
+      <match-rule name="trinidad-md5-6" type="MD5" md5sum="4e247a06edd7cc03158088c729aa1ce5" filename="^trinidad.*jar$" version="1.2.2-api"/>
+      <match-rule name="trinidad-md5-7" type="MD5" md5sum="9502179090ed2596a33baae1f5b65d40" filename="^trinidad.*jar$" version="1.2.3-api"/>
+      <match-rule name="trinidad-md5-8" type="MD5" md5sum="835efd4cade62c57732975b5459f3871" filename="^trinidad.*jar$" version="1.2.4-api"/>
+      <match-rule name="trinidad-md5-9" type="MD5" md5sum="3c472504897a83c8fae1fae40e5a5efa" filename="^trinidad.*jar$" version="1.2.5-api"/>
+      <match-rule name="trinidad-md5-10" type="MD5" md5sum="add5def2d5b706baf9ca0b4e5fd26547" filename="^trinidad.*jar$" version="1.0.1-impl"/>
+      <match-rule name="trinidad-md5-11" type="MD5" md5sum="90ee1293f430f68ae372ece29ac85bf5" filename="^trinidad.*jar$" version="1.0.2-impl"/>
+      <match-rule name="trinidad-md5-12" type="MD5" md5sum="a460e78be1966a83de7f023d05fa9676" filename="^trinidad.*jar$" version="1.0.3-impl"/>
+      <match-rule name="trinidad-md5-13" type="MD5" md5sum="0f773b161b7df554f505049882ed946e" filename="^trinidad.*jar$" version="1.0.4-impl"/>
+      <match-rule name="trinidad-md5-14" type="MD5" md5sum="a905ce0ce6aae272728bcf6469984924" filename="^trinidad.*jar$" version="1.0.5-impl"/>
+      <match-rule name="trinidad-md5-15" type="MD5" md5sum="ec23e26f040caa3f917ae28920901b22" filename="^trinidad.*jar$" version="1.2.1-impl"/>
+      <match-rule name="trinidad-md5-16" type="MD5" md5sum="b27f95ed20307d944bfcc4e884ef5e14" filename="^trinidad.*jar$" version="1.2.2-impl"/>
+      <match-rule name="trinidad-md5-17" type="MD5" md5sum="35a859d062faab9c855e1667355554ec" filename="^trinidad.*jar$" version="1.2.3-impl"/>
+      <match-rule name="trinidad-md5-18" type="MD5" md5sum="a7587cd892548817cbb02165ba22890d" filename="^trinidad.*jar$" version="1.2.4-impl"/>
+      <match-rule name="trinidad-md5-19" type="MD5" md5sum="986aaa6bafeb7bb9ec2bc1205cb02c51" filename="^trinidad.*jar$" version="1.2.5-impl"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="mysql" from="wild" os="all">
     <eval expression="version" speed="1"/>
     <match-rules name="version">
