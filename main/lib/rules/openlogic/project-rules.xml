@@ -1371,6 +1371,36 @@
       <match-rule name="ff1or2xexe" type="binary" filename="^firefox.exe$" regexp="([1-2]\.[0-5]\.([0-9]{1,2}\.*{0,1}){0,2})\000{1,10}Firefox"/>
     </match-rules>
   </project-rule>
+  <project-rule name="fop" from="wild" os="all">
+<!-- Apache FOP, License: ALv2, http://xmlgraphics.apache.org/fop/ -->
+    <description>Finds versions using MD5's.</description>
+    <eval expression="md5 or fileversion or file" speed="1"/>
+    <match-rules name="file">
+      <result expression="jar"/>
+      <match-rule name="jar" type="filename" filename="^fop.*jar$"/>
+    </match-rules>
+    <match-rules name="fileversion">
+      <result expression="jar"/>
+      <match-rule name="jar" type="filenameVersion" filename="^fop-[^\d]*(.*)\.jar$"/>
+    </match-rules>
+    <match-rules name="md5">
+      <result expression="OR-ALL"/>
+<!-- The following MD5's are the same for jars found out of both gzips and zips. -->
+      <match-rule name="0.20.3" type="MD5" version="0.20.3" filename="^fop.*jar$" md5sum="64a6faf2b5c5561a7a7e3ee1cf204812"/>
+      <match-rule name="0.20.4" type="MD5" version="0.20.4" filename="^fop.*jar$" md5sum="73696075d0fec03edc2c4295f196c7a2"/>
+      <match-rule name="0.20.5" type="MD5" version="0.20.5" filename="^fop.*jar$" md5sum="df8a4379606d17b7c671b0364b76882c"/>
+      <match-rule name="0.90alpha1-jdk14" type="MD5" version="0.90alpha1" filename="^fop.*jar$" md5sum="f505c3b96e7e7497c5e023da5c38f278"/>
+      <match-rule name="0.90alpha1-jdk13" type="MD5" version="0.90alpha1" filename="^fop.*jar$" md5sum="b85c0cd1c5fdafd6e8ddcca655772739"/>
+      <match-rule name="0.91beta-jdk14" type="MD5" version="0.91beta" filename="^fop.*jar$" md5sum="bbb00d870eada68a27cbe5071a4a3d00"/>
+      <match-rule name="0.91beta-jdk13" type="MD5" version="0.91beta" filename="^fop.*jar$" md5sum="6e4142046e851fb87c54f558e298b02e"/>
+      <match-rule name="0.92beta-jdk14" type="MD5" version="0.92beta" filename="^fop.*jar$" md5sum="fa3a37a4d6188a6be02c96a9024ceda8"/>
+      <match-rule name="0.92beta-jdk13" type="MD5" version="0.92beta" filename="^fop.*jar$" md5sum="08977589f0932bef8098b51246c3d7bb"/>
+      <match-rule name="0.93-jdk14" type="MD5" version="0.93" filename="^fop.*jar$" md5sum="57d23f3dd5075ff6773013322a9aafd5"/>
+      <match-rule name="0.93-jdk13" type="MD5" version="0.93" filename="^fop.*jar$" md5sum="09db20b3d88cce8b931c3ffc07a2cbb0"/>
+      <match-rule name="0.94-jdk14" type="MD5" version="0.94" filename="^fop.*jar$" md5sum="79bc0d4f812d194ca439e566181a1719"/>
+      <match-rule name="0.94-jdk13" type="MD5" version="0.94" filename="^fop.*jar$" md5sum="39fe324af351960aca85e23afd90838a"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="gcc" from="wild" os="all">
     <eval expression="version or gccfile" speed="1"/>
     <match-rules name="gccfile">
@@ -1889,36 +1919,33 @@
       <match-rule name="mcube_match-rule" type="filename" filename="^mcube.*"/>
     </match-rules>
   </project-rule>
-    <project-rule name="myfaces-tobago" from="wild" os="all">
-        <description>Apache Myfaces Tobago</description>
-        <eval expression="tobago-filename or tobago-md5" speed='1'  />
-
-        <match-rules name="tobago-filename">
-            <result expression="OR-ALL" />
-            <!-- explicit tobago.jar -->
-            <match-rule name="tobago-filename-1" type="filename" filename="^tobago\.jar$" />
-            <!-- filename version match -->
-            <match-rule name="tobago-filename-2" type="filenameVersion" filename="^tobago-core-([0-9].*?)\.jar$" />
-        </match-rules>
-
-        <match-rules name="tobago-md5">
-            <result expression="OR-ALL" />
-            <match-rule name='tobago-md5-0'     type='MD5' md5sum='5e49d5e86c90be11dae8a1895de834b3' filename='^tobago.*jar$' version='1.0.7' />
-            <match-rule name='tobago-md5-1'     type='MD5' md5sum='b9db2b906a78b30e1b502a34fa3acd6e' filename='^tobago.*jar$' version='1.0.8-jdk14retro' />
-            <match-rule name='tobago-md5-2'     type='MD5' md5sum='55d92320690b27661ccac9d873145206' filename='^tobago.*jar$' version='1.0.8' />
-            <match-rule name='tobago-md5-3'     type='MD5' md5sum='66efc5792e6a56deb23436367696aa14' filename='^tobago.*jar$' version='1.0.9-jdk14retro' />
-            <match-rule name='tobago-md5-4'     type='MD5' md5sum='f73c2c1f6772296afc0c8c4adb92b6a9' filename='^tobago.*jar$' version='1.0.9' />
-            <match-rule name='tobago-md5-5'     type='MD5' md5sum='4938fd6ee71a59abd02c10a1db23833b' filename='^tobago.*jar$' version='1.0.10-jdk14retro' />
-            <match-rule name='tobago-md5-6'     type='MD5' md5sum='b05d11f0fce083151e08279904aabdca' filename='^tobago.*jar$' version='1.0.10' />
-            <match-rule name='tobago-md5-7'     type='MD5' md5sum='22d1ea7f2d92d1a7eb71d1134ac4518c' filename='^tobago.*jar$' version='1.0.11-jdk14retro' />
-            <match-rule name='tobago-md5-8'     type='MD5' md5sum='f11f6aec8622c1de1102ca291724badf' filename='^tobago.*jar$' version='1.0.11' />
-            <match-rule name='tobago-md5-9'     type='MD5' md5sum='cd7902fab69ffe91d4ce1808a7d0b5d5' filename='^tobago.*jar$' version='1.0.12-jdk14retro' />
-            <match-rule name='tobago-md5-10'     type='MD5' md5sum='a502f62673b8b78aadb3a99e9702d9fd' filename='^tobago.*jar$' version='1.0.12' />
-            <match-rule name='tobago-md5-11'     type='MD5' md5sum='9b866c5c01c552de278b30d3c627a827' filename='^tobago.*jar$' version='1.0.13-jdk14retro' />
-            <match-rule name='tobago-md5-12'     type='MD5' md5sum='5bf0e002b07aab7d3f946de4f7867a32' filename='^tobago.*jar$' version='1.0.13' />
-        </match-rules>
-
-    </project-rule>
+  <project-rule name="myfaces-tobago" from="wild" os="all">
+    <description>Apache Myfaces Tobago</description>
+    <eval expression="tobago-filename or tobago-md5" speed="1"/>
+    <match-rules name="tobago-filename">
+      <result expression="OR-ALL"/>
+<!-- explicit tobago.jar -->
+      <match-rule name="tobago-filename-1" type="filename" filename="^tobago\.jar$"/>
+<!-- filename version match -->
+      <match-rule name="tobago-filename-2" type="filenameVersion" filename="^tobago-core-([0-9].*?)\.jar$"/>
+    </match-rules>
+    <match-rules name="tobago-md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="tobago-md5-0" type="MD5" md5sum="5e49d5e86c90be11dae8a1895de834b3" filename="^tobago.*jar$" version="1.0.7"/>
+      <match-rule name="tobago-md5-1" type="MD5" md5sum="b9db2b906a78b30e1b502a34fa3acd6e" filename="^tobago.*jar$" version="1.0.8-jdk14retro"/>
+      <match-rule name="tobago-md5-2" type="MD5" md5sum="55d92320690b27661ccac9d873145206" filename="^tobago.*jar$" version="1.0.8"/>
+      <match-rule name="tobago-md5-3" type="MD5" md5sum="66efc5792e6a56deb23436367696aa14" filename="^tobago.*jar$" version="1.0.9-jdk14retro"/>
+      <match-rule name="tobago-md5-4" type="MD5" md5sum="f73c2c1f6772296afc0c8c4adb92b6a9" filename="^tobago.*jar$" version="1.0.9"/>
+      <match-rule name="tobago-md5-5" type="MD5" md5sum="4938fd6ee71a59abd02c10a1db23833b" filename="^tobago.*jar$" version="1.0.10-jdk14retro"/>
+      <match-rule name="tobago-md5-6" type="MD5" md5sum="b05d11f0fce083151e08279904aabdca" filename="^tobago.*jar$" version="1.0.10"/>
+      <match-rule name="tobago-md5-7" type="MD5" md5sum="22d1ea7f2d92d1a7eb71d1134ac4518c" filename="^tobago.*jar$" version="1.0.11-jdk14retro"/>
+      <match-rule name="tobago-md5-8" type="MD5" md5sum="f11f6aec8622c1de1102ca291724badf" filename="^tobago.*jar$" version="1.0.11"/>
+      <match-rule name="tobago-md5-9" type="MD5" md5sum="cd7902fab69ffe91d4ce1808a7d0b5d5" filename="^tobago.*jar$" version="1.0.12-jdk14retro"/>
+      <match-rule name="tobago-md5-10" type="MD5" md5sum="a502f62673b8b78aadb3a99e9702d9fd" filename="^tobago.*jar$" version="1.0.12"/>
+      <match-rule name="tobago-md5-11" type="MD5" md5sum="9b866c5c01c552de278b30d3c627a827" filename="^tobago.*jar$" version="1.0.13-jdk14retro"/>
+      <match-rule name="tobago-md5-12" type="MD5" md5sum="5bf0e002b07aab7d3f946de4f7867a32" filename="^tobago.*jar$" version="1.0.13"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="mysql" from="wild" os="all">
     <eval expression="version" speed="1"/>
     <match-rules name="version">
