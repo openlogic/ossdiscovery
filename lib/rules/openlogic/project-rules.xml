@@ -1919,6 +1919,46 @@
       <match-rule name="mcube_match-rule" type="filename" filename="^mcube.*"/>
     </match-rules>
   </project-rule>
+  <project-rule name="myfaces" from="wild" os="all">
+    <description>Assumes jars start with 'myfaces' and uses md5 digests to find versions gte 0.1.2 and lte 1.1.1</description>
+<!-- GS This rule catches all "old" myfaces releases before the switch to maven at apache.org (includes sourceforge) -->
+    <eval expression="myfaces_filename or myfaces_md5" speed="1"/>
+    <match-rules name="myfaces_filename">
+      <result expression="OR-ALL"/>
+<!-- explicit ant.jar -->
+      <match-rule name="myfaces" type="filename" filename="^myfaces\.jar$"/>
+<!-- filename version match -->
+      <match-rule name="myfacesver" type="filenameVersion" filename="^myfaces-([0-9].*?)\.jar$"/>
+    </match-rules>
+    <match-rules name="myfaces_md5">
+      <result expression="OR-ALL"/>
+<!-- because so many people rename their myfaces.jar to myfaces-somethingelse.jar, make the filename match relatively liberal -->
+      <match-rule name="1-apache-myfaces-0.1.2-bin.zip-myfaces.jar" type="MD5" md5sum="ec9673f752b216062e0b9379f94fdfca" filename="^myfaces.*jar$" version="0.1.2"/>
+      <match-rule name="2-apache-myfaces-0.1.3-bin.zip-myfaces.jar" type="MD5" md5sum="a3868d5f2f1eb4e6dba6ae6c0caff910" filename="^myfaces.*jar$" version="0.1.3"/>
+      <match-rule name="3-apache-myfaces-0.3.0-bin.zip-myfaces.jar" type="MD5" md5sum="7fd3b8b92855ae96f428f3bb1e2922c8" filename="^myfaces.*jar$" version="0.3.0"/>
+      <match-rule name="4-apache-myfaces-0.3.1-bin.zip-myfaces.jar" type="MD5" md5sum="daae2b102eb811c5e1ec8f7f8c7d18d2" filename="^myfaces.*jar$" version="0.3.1"/>
+      <match-rule name="5-apache-myfaces-0.3.2-bin.zip-myfaces.jar" type="MD5" md5sum="16c93f2e2a804882d9ef8a9f4b52281a" filename="^myfaces.*jar$" version="0.3.2"/>
+      <match-rule name="6-apache-myfaces-0.4.0-bin.zip-myfaces.jar" type="MD5" md5sum="a5fd0965e7232e28630b94d32a4d744f" filename="^myfaces.*jar$" version="0.4.0"/>
+      <match-rule name="7-apache-myfaces-0.4.1-bin.zip-myfaces.jar" type="MD5" md5sum="d5884e5e302d67eb6fdc09ec90fface5" filename="^myfaces.*jar$" version="0.4.1"/>
+      <match-rule name="8-apache-myfaces-0.4.2-bin.zip-myfaces.jar" type="MD5" md5sum="168d871a2a9601a387d9b292163e44a5" filename="^myfaces.*jar$" version="0.4.2"/>
+      <match-rule name="9-apache-myfaces-0.4.3-bin.zip-myfaces.jar" type="MD5" md5sum="2e7fb7a568a4c7576ccd6d5adf4b39d9" filename="^myfaces.*jar$" version="0.4.3"/>
+      <match-rule name="10-apache-myfaces-0.4.4-bin.zip-myfaces.jar" type="MD5" md5sum="80fa0782cf0f666aaafc29a15030c732" filename="^myfaces.*jar$" version="0.4.4"/>
+      <match-rule name="11-apache-myfaces-0.9.0-bin.zip-myfaces.jar" type="MD5" md5sum="31968600c8c446afb133720dd2dbb4c7" filename="^myfaces.*jar$" version="0.9.0"/>
+      <match-rule name="12-apache-myfaces-0.9.1-bin.zip-myfaces.jar" type="MD5" md5sum="bfff5390d7842a2bfb4e1348b98cb32e" filename="^myfaces.*jar$" version="0.9.1"/>
+      <match-rule name="13-apache-myfaces-1.0.0-bin.zip-myfaces.jar" type="MD5" md5sum="82a165d9d8966bd4fe33d4f16a65e29f" filename="^myfaces.*jar$" version="1.0.0"/>
+      <match-rule name="14-apache-myfaces-1.0.1-bin.zip-myfaces.jar" type="MD5" md5sum="47e90fa9e99c4883a453de633b32ae81" filename="^myfaces.*jar$" version="1.0.1"/>
+      <match-rule name="15-apache-myfaces-1.0.2-bin.zip-myfaces.jar" type="MD5" md5sum="c04eaf9546dda3daaa103be380c3f962" filename="^myfaces.*jar$" version="1.0.2"/>
+      <match-rule name="16-apache-myfaces-1.0.3-bin.zip-myfaces.jar" type="MD5" md5sum="90c1dbcb183d520257af66c5125930ea" filename="^myfaces.*jar$" version="1.0.3"/>
+      <match-rule name="17-apache-myfaces-1.0.4-bin.zip-myfaces.jar" type="MD5" md5sum="611862ef2ad56af0c5b45c66d8f2ac17" filename="^myfaces.*jar$" version="1.0.4"/>
+      <match-rule name="18-apache-myfaces-1.0.5-bin.zip-myfaces.jar" type="MD5" md5sum="2f2eba51fc989d1fe319323aff0d1752" filename="^myfaces.*jar$" version="1.0.5"/>
+      <match-rule name="19-apache-myfaces-1.0.6-bin.zip-myfaces.jar" type="MD5" md5sum="8be881fb1c16687632f6aed2199f23c5" filename="^myfaces.*jar$" version="1.0.6"/>
+      <match-rule name="20-apache-myfaces-1.0.7-bin.zip-myfaces.jar" type="MD5" md5sum="7447bf8e36143c64d18c46dfac2342ae" filename="^myfaces.*jar$" version="1.0.7"/>
+<!-- Note: there is no 1.0.8. This happened due to the move from soureceforge to the ASF -->
+      <match-rule name="21-apache-myfaces-1.0.9-bin.zip-myfaces.jar" type="MD5" md5sum="f65d0405ae4689cf651b8add90ba642a" filename="^myfaces.*jar$" version="1.0.9"/>
+      <match-rule name="22-apache-myfaces-1.1.0-bin.zip-myfaces.jar" type="MD5" md5sum="2dbc6935d841ee8c3e82b9d1caa59120" filename="^myfaces.*jar$" version="1.1.0"/>
+      <match-rule name="23-apache-myfaces-1.1.1-bin.zip-myfaces.jar" type="MD5" md5sum="ac6324e128d2b56df2f1a68b61ed7ce5" filename="^myfaces.*jar$" version="1.1.1"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="myfaces-tobago" from="wild" os="all">
     <description>Apache Myfaces Tobago</description>
     <eval expression="tobago-filename or tobago-md5" speed="1"/>
