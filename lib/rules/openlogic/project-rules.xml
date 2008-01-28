@@ -1676,6 +1676,56 @@
       <match-rule name="29-jgroups-all-2.6.1.jar" type="MD5" md5sum="ff2494f3e5e7df95382c847e5b0338bb" filename="^jgroups-all\.jar$" version="2.6.1"/>
     </match-rules>
   </project-rule>
+  <project-rule name="jibx" from="wild" os="all">
+    <description>Assumes jars start with 'jibx' and uses md5 digests to find versions</description>
+    <eval expression="jibx_filename or jibx_md5" speed="1"/>
+    <match-rules name="jibx_filename">
+      <result expression="OR-ALL"/>
+<!-- filename version match -->
+      <match-rule name="jibx-bind-ver" type="filenameVersion" filename="^jibx-bind-([0-9].*?)\.jar$"/>
+      <match-rule name="jibx-extras-ver" type="filenameVersion" filename="^jibx-extras-([0-9].*?)\.jar$"/>
+      <match-rule name="jibx-run-ver" type="filenameVersion" filename="^jibx-run-([0-9].*?)\.jar$"/>
+    </match-rules>
+    <match-rules name="jibx_md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="1-jibx-bind-1.0.jar" type="MD5" md5sum="2a4cf289018fcde4589506dd043bc0cf" filename="^jibx-bind\.jar$" version="1.0"/>
+      <match-rule name="2-jibx-extras-1.0.jar" type="MD5" md5sum="18b43adf339ccb8d37a0e8c56df02869" filename="^jibx-extras\.jar$" version="1.0"/>
+      <match-rule name="3-jibx-run-1.0.jar" type="MD5" md5sum="24bccab97b333f40f2cb0f47490fe377" filename="^jibx-run\.jar$" version="1.0"/>
+      <match-rule name="4-jibx-bind-1.0.1.jar" type="MD5" md5sum="7b4b041b4ef83e28c0dab8c08bdf3ed0" filename="^jibx-bind\.jar$" version="1.0.1"/>
+      <match-rule name="5-jibx-extras-1.0.1.jar" type="MD5" md5sum="93404e0fdfbca7a974b1fa54c737b822" filename="^jibx-extras\.jar$" version="1.0.1"/>
+      <match-rule name="6-jibx-run-1.0.1.jar" type="MD5" md5sum="6fc0b5d80c3780a0325e535e154141a0" filename="^jibx-run\.jar$" version="1.0.1"/>
+      <match-rule name="7-jibx-bind-1.0.2.jar" type="MD5" md5sum="27b66f12adeb74373e45d06f75dfad45" filename="^jibx-bind\.jar$" version="1.0.2"/>
+      <match-rule name="8-jibx-extras-1.0.2.jar" type="MD5" md5sum="bd88f184232961a5792f76c61eaac904" filename="^jibx-extras\.jar$" version="1.0.2"/>
+      <match-rule name="9-jibx-run-1.0.2.jar" type="MD5" md5sum="379a653fc4113fb6f3ec56caae7b43a2" filename="^jibx-run\.jar$" version="1.0.2"/>
+      <match-rule name="10-jibx-bind-1.1.jar" type="MD5" md5sum="cb1dddbb48da23ee669675bdd831c217" filename="^jibx-bind\.jar$" version="1.1"/>
+      <match-rule name="11-jibx-extras-1.1.jar" type="MD5" md5sum="5d3ed157cda1fd67eace7cbeb8351334" filename="^jibx-extras\.jar$" version="1.1"/>
+      <match-rule name="12-jibx-run-1.1.jar" type="MD5" md5sum="3b4eeb67477505e362f1c194cfd0cf22" filename="^jibx-run\.jar$" version="1.1"/>
+      <match-rule name="13-jibx-bind-1.1.3.jar" type="MD5" md5sum="47fd4749029ca2fe7f41ea5e8e8e637a" filename="^jibx-bind\.jar$" version="1.1.3"/>
+      <match-rule name="14-jibx-extras-1.1.3.jar" type="MD5" md5sum="24f4670f8c811897c0fff56180f3f666" filename="^jibx-extras\.jar$" version="1.1.3"/>
+      <match-rule name="15-jibx-run-1.1.3.jar" type="MD5" md5sum="b31370313aa8977b97ad193201526f7c" filename="^jibx-run\.jar$" version="1.1.3"/>
+      <match-rule name="16-jibx-bind-1.1.5.jar" type="MD5" md5sum="8746a3d177e2242fbcbce27da7d19e05" filename="^jibx-bind\.jar$" version="1.1.5"/>
+      <match-rule name="17-jibx-extras-1.1.5.jar" type="MD5" md5sum="ebd59a3dd3b8433edf768ee841e72805" filename="^jibx-extras\.jar$" version="1.1.5"/>
+      <match-rule name="18-jibx-run-1.1.5.jar" type="MD5" md5sum="e0472be392078ba3288fe3a3b6cea3ae" filename="^jibx-run\.jar$" version="1.1.5"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="jikes" from="wild" os="all">
+    <eval expression="jikes_filename or jikes_bin" speed="1"/>
+    <match-rules name="jikes_filename">
+      <result expression="OR-ALL"/>
+<!-- filename version match -->
+      <match-rule name="jikes_exe" type="filenameVersion" filename="^jikes-([0-9].*?)\.exe$"/>
+<!-- this rule will match jikes-1.22 but will also match jikes-1.22.exe and give you 1.22.exe -->
+<!-- match-rule name="jikes" type="filenameVersion" filename="^jikes-([0-9].*?)$" / -->
+    </match-rules>
+    <match-rules name="jikes_bin">
+      <result expression="OR-ALL"/>
+      <match-rule name="1-jikes" type="binary" filename="jikes" regexp="Jikes Compiler - Version ([\d\w].*)\s-.*$"/>
+      <match-rule name="2-jikese" type="binary" filename="jikes.*\.exe" regexp="Jikes Compiler - Version ([\d\w].*)\s-.*$"/>
+      <match-rule name="3-jikes" type="binary" filename="jikes-.*" regexp="Jikes Compiler - Version ([\d\w].*)\s-.*$"/>
+      <match-rule name="4-jikes" type="binary" filename="jikes.*\.exe" regexp="^Version ([\d\w].*)\s[\d].*$"/>
+      <match-rule name="5-jikes" type="binary" filename="jikes-.*" regexp="^Version ([\d\w].*)\s[\d].*$"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="junit" from="wild" os="all">
     <eval expression="junit_md5 or justfilenames" speed="1"/>
     <match-rules name="justfilenames">
