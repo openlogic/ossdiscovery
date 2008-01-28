@@ -2410,6 +2410,30 @@
       <match-rule name="tb1or2xexe" type="binary" filename="^thunderbird.exe$" regexp="([1-2]\.[0-9]\.([0-9]{1,2}\.*{0,1}){0,2})\000{1,10}Thunderbird"/>
     </match-rules>
   </project-rule>
+  <project-rule name="tomahawk" from="wild" os="all">
+    <description>Apache Myfaces Tobago</description>
+    <eval expression="tomahawk-filename or tomahawk-md5" speed="1"/>
+
+    <match-rules name="tomahawk-filename">
+      <result expression="OR-ALL"/>
+      <!-- explicit jar -->
+      <match-rule name="tomahawk-filename-1" type="filename" filename="^tomahawk\.jar$"/>
+      <!-- filename version match -->
+      <match-rule name="tomahawk-filename-2" type="filenameVersion" filename="^tomahawk-([0-9].*?)\.jar$"/>
+    </match-rules>
+
+    <match-rules name="tomahawk-md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="tomahawk-md5-0" type="MD5" md5sum="8f8caa70d56a8d694f87979ee854cecf" filename="^tomahawk.*jar$" version="1.1.0"/>
+      <match-rule name="tomahawk-md5-1" type="MD5" md5sum="93714cd0bc82e53c136569e8c7cb6f97" filename="^tomahawk.*jar$" version="1.1.1"/>
+      <match-rule name="tomahawk-md5-2" type="MD5" md5sum="f573a571cf50fc95f621c457e4e90e35" filename="^tomahawk.*jar$" version="1.1.2"/>
+	    <match-rule name="tomahawk-md5-3" type="MD5" md5sum="7b6678df4a758340be5ca4ae462d3dee" filename="^tomahawk.*jar$" version="1.1.3"/>
+	    <!-- NB: no 1.1.4 was released ! -->
+      <match-rule name="tomahawk-md5-4" type="MD5" md5sum="5b3d62619e0b11744a21441ca248fd21" filename="^tomahawk.*jar$" version="1.1.5"/>
+      <match-rule name="tomahawk-md5-5" type="MD5" md5sum="5f10277481dc8a9a735cb2b215c57871" filename="^tomahawk.*jar$" version="1.1.6"/>
+    </match-rules>
+
+  </project-rule>
   <project-rule name="tomcat" from="wild" os="all">
     <eval expression="tomcatversions or (tomcatfiles1 or tomcatfiles2)" speed="1"/>
     <match-rules name="tomcatfiles1">
