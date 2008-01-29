@@ -1016,7 +1016,7 @@
       <match-rule name="eclipsetidy_ver" type="binary" filename="^feature.xml$" regexp="eclipsetidy.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
-  <project-rule name="eclipseplugin-tools" from="wild" os="all">
+  <project-rule name="eclipseplugin-eclipse_tools" from="wild" os="all">
     <description/>
     <eval expression="tools_version or tools_all" speed="1"/>
     <match-rules name="tools_version">
@@ -1032,7 +1032,7 @@
       <match-rule name="gef_ver" type="filenameVersion" filename="^org.eclipse.gef_(3.1.0).jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="eclipseplugin-graysky-logwatcher" from="wild" os="all">
+  <project-rule name="eclipseplugin-grayskylogwatcher" from="wild" os="all">
     <description/>
     <eval expression="graysky-logwatcher_version" speed="1"/>
     <match-rules name="graysky-logwatcher_version">
@@ -1040,7 +1040,7 @@
       <match-rule name="graysky-logwatcher_ver" type="binary" filename="^feature.xml$" regexp="graysky.logwatcher.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
-  <project-rule name="eclipseplugin-hibernate-tools" from="wild" os="all">
+  <project-rule name="eclipseplugin-hibernatetools" from="wild" os="all">
     <description/>
     <eval expression="hibernate_version" speed="1"/>
     <match-rules name="hibernate_version">
@@ -1096,7 +1096,7 @@
       <match-rule name="xsd_ver" type="binary" filename="^feature.xml$" regexp="xsd.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
-  <project-rule name="eclipseplugin-jboss-aop" from="wild" os="all">
+  <project-rule name="eclipseplugin-jbossaop" from="wild" os="all">
     <description/>
     <eval expression="aop_version" speed="1"/>
     <match-rules name="aop_version">
@@ -1104,7 +1104,7 @@
       <match-rule name="aop_ver" type="binary" filename="^feature.xml$" regexp="jdt.aop.*?.*?label.*?.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
-  <project-rule name="eclipseplugin-jboss-ide" from="wild" os="all">
+  <project-rule name="eclipseplugin-jbosside" from="wild" os="all">
     <description/>
     <eval expression="jboss.ide_version" speed="1"/>
     <match-rules name="jboss.ide_version">
@@ -1112,7 +1112,7 @@
       <match-rule name="jboss.ide_ver" type="binary" filename="^feature.xml$" regexp="jboss.ide.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
-  <project-rule name="eclipseplugin-jboss-ide-ejb3-aop" from="wild" os="all">
+  <project-rule name="eclipseplugin-jbossideejb3aop" from="wild" os="all">
     <description/>
     <eval expression="jboss.ejb3-aop_version" speed="1"/>
     <match-rules name="jboss.ejb3-aop_version">
@@ -1160,7 +1160,7 @@
       <match-rule name="pde_ver" type="binary" filename="^feature.xml$" regexp="pde.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
-  <project-rule name="eclipseplugin-quantumDB" from="wild" os="all">
+  <project-rule name="eclipseplugin-quantum" from="wild" os="all">
     <description/>
     <eval expression="quantum_version" speed="1"/>
     <match-rules name="quantum_version">
@@ -1242,7 +1242,7 @@
       <match-rule name="uml2_ver" type="binary" filename="^feature.xml$" regexp="uml2.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
-  <project-rule name="eclipseplugin-visual-editor" from="wild" os="all">
+  <project-rule name="eclipseplugin-visualeditor" from="wild" os="all">
     <description/>
     <eval expression="ve_version" speed="1"/>
     <match-rules name="ve_version">
@@ -1266,7 +1266,7 @@
       <match-rule name="wtp-web_ver" type="binary" filename="^feature.xml$" regexp="wtp.web.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
-  <project-rule name="eclipseplugin-web-tools-platform" from="wild" os="all">
+  <project-rule name="eclipseplugin-wtp" from="wild" os="all">
     <description/>
     <eval expression="wtp_version" speed="1"/>
     <match-rules name="wtp_version">
@@ -1514,7 +1514,7 @@
       <match-rule name="hib_annot-3.3.0" type="MD5" md5sum="de740335083745b06fefdd10093f6a21" filename="^hibernate-annotations.jar$" version="3.3.0"/>
     </match-rules>
   </project-rule>
-  <project-rule name="hibernate_entitymanager" from="wild" os="all">
+  <project-rule name="hibernate-entitymanager" from="wild" os="all">
     <description>rules for hibernate_entitymanager 3.2.0 thru 3.3.1 date created : 01/21/2008 dpm</description>
     <eval expression="hib_entman_filename or hib_entman_md5" speed="1"/>
     <match-rules name="hib_entman_filename">
@@ -1528,7 +1528,7 @@
       <match-rule name="hib_entman-3.3.1" type="MD5" md5sum="f5a1889990b41165bf30c1d6248cf152" filename="^hibernate-entitymanager.jar$" version="3.3.1"/>
     </match-rules>
   </project-rule>
-  <project-rule name="html_parser" from="wild" os="all">
+  <project-rule name="htmlparser" from="wild" os="all">
     <description>rules for html_parser date created : 01/21/2008 dpm</description>
     <eval expression="htmlparser_filename or htmlparser_md5" speed="1"/>
     <match-rules name="htmlparser_filename">
