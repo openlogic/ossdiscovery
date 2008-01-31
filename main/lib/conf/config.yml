@@ -123,8 +123,12 @@ results: STDOUT
 
 #--------------------------------------------------------------------------------------
 # where to pick up the default scan rules
-rules_openlogic: <% File.join('lib', 'rules', 'openlogic') %>
-rules_drop_ins: <% File.join('lib', 'rules', 'drop_ins') %>
+rules_openlogic: <% File.expand_path(File.join(File.dirname(__FILE__), '..', 'rules', 'openlogic')) %>
+rules_drop_ins: <% File.expand_path(File.join(File.dirname(__FILE__), '..', 'rules', 'drop_ins')) %>
+
+# rules_openlogic: <% File.join('lib', 'rules', 'openlogic') %>
+# rules_drop_ins: <% File.join('lib', 'rules', 'drop_ins') %>
+
 rules_dirs: <% ['rules_openlogic', 'rules_drop_ins'] %>
 # If you only want to run the tool with your custom written rules, you would put them in the 'drop_ins' dir and change the previous line to:
 #   rules_dirs: <% ['rules_drop_ins'] %>
