@@ -82,7 +82,7 @@ throttle_seconds_to_pause: 2.5
 ##### Logging properties
 
 # Arg that will be passed to Logger.new().  From the rdoc: This is a filename (String) or IO object (typically STDOUT, STDERR, or an open file).
-log_device: <% File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'log', 'discovery.log')) %> 
+log_device: <% File.join('log', 'discovery.log') %> 
 
 # Valid options are: FATAL, ERROR, WARN, INFO, DEBUG - 'WARN' is the recommended setting for 
 # productions runs, it shouldn't give you too much output, but you also won't miss importatnt warnings.
@@ -122,8 +122,8 @@ results: STDOUT
 
 #--------------------------------------------------------------------------------------
 # where to pick up the default scan rules
-rules_openlogic: <% File.expand_path(File.join(File.dirname(__FILE__), '..', 'rules', 'openlogic')) %>
-rules_drop_ins: <% File.expand_path(File.join(File.dirname(__FILE__), '..', 'rules', 'drop_ins')) %>
+rules_openlogic: <% File.join('lib', 'rules', 'openlogic') %>
+rules_drop_ins: <% File.join('lib', 'rules', 'drop_ins') %>
 rules_dirs: <% ['rules_openlogic', 'rules_drop_ins'] %>
 # If you only want to run the tool with your custom written rules, you would put them in the 'drop_ins' dir and change the previous line to:
 #   rules_dirs: <% ['rules_drop_ins'] %>
@@ -141,7 +141,7 @@ send_results: false                                             # default to not
 
 # Note that destination_server_url and server_base_url can neither be localhost urls if proxying is being 
 # used or tested.  You can't proxy a localhost URL.
-destination_server_url: http://localhost:3000/scans/scanpost   # change to OL disco production server
+destination_server_url: https://localhost:3000/scans/scanpost   # change to OL disco production server
 
 # Configurable options for scan rules updating.  TODO findme: clean this up, combining where possible with the 'destination_server_url' 
 # for delivering results above. Note: On hold until the server-side of things has been firmed up.
