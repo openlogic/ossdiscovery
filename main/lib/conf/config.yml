@@ -82,7 +82,8 @@ throttle_seconds_to_pause: 2.5
 ##### Logging properties
 
 # Arg that will be passed to Logger.new().  From the rdoc: This is a filename (String) or IO object (typically STDOUT, STDERR, or an open file).
-log_device: <% File.join('log', 'discovery.log') %> 
+# log_device: <% File.join('log', 'discovery.log') %> 
+log_device: <% File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'log', 'discovery.log')) %>
 
 # Valid options are: FATAL, ERROR, WARN, INFO, DEBUG - 'WARN' is the recommended setting for 
 # productions runs, it shouldn't give you too much output, but you also won't miss importatnt warnings.
@@ -187,3 +188,5 @@ update_rules_and_do_scan: false
 
 geography: 100 
 
+# group passcode
+group_passcode: 
