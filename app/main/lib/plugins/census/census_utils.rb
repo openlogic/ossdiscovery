@@ -26,23 +26,50 @@
 #--------------------------------------------------------------------------------------------------
 
 require 'erb'
-require 'openssl'
 require 'digest/md5'
 
 module CensusUtils
         
+  # figure out if SHA256 is available through either the 
+  # Ruby 'openssl' module or through Java via JRuby
+  begin
+    # if we're running under JRuby, we can still make SHA256 work
+    require 'java'
+    JAVA_SHA256_AVAILABLE = true
+  rescue LoadError
+    JAVA_SHA256_AVAILABLE = false
+  end
+
+  # if we're using Java, the Ruby version of SHA256 
+  # supplied through OpenSSL won't work, so don't try to use it
+  if JAVA_SHA256_AVAILABLE
+    RUBY_SHA256_AVAILABLE = false
+  else
+    begin
+      # not all ruby installs and builds contain openssl, so degrade
+      # gracefully if it can't be pulled in.
+      require 'openssl'
+      RUBY_SHA256_AVAILABLE = true
+    rescue LoadError => e
+      RUBY_SHA256_AVAILABLE = false
+    end
+  end
+
+  # we can use SHA256 if it's available through either Ruby or Java
+  SHA256_AVAILABLE = RUBY_SHA256_AVAILABLE || JAVA_SHA256_AVAILABLE
+
   # get the openlogic rules file checksum once as it won't
   # change during a run (after any rule updates)
   def openlogic_rules_file_checksum  
     @@openlogic_rules_file_checksum ||= add_check_digits(Digest::MD5.hexdigest(
         File.new(File.join(File.dirname(__FILE__), "..", "..", 
-                 "rules", "openlogic", "project-rules.xml")).read))
+	    "rules", "openlogic", "project-rules.xml")).read))
   end
 
 
 =begin rdoc
   Implement ISO 7064 mod(97,10) check digits to prevent accidental and some
-  malicious tampering with the machine uuid that will be sent to the OSS Census
+  malicious tampering with data that will be sent to the OSS Census
   collection site.
 =end
   def add_check_digits(hex_str)
@@ -72,6 +99,16 @@ module CensusUtils
       io = STDOUT
     else 
       io = File.new(destination, "w")
+    end
+
+    # if SHA256 isn't available, we can't submit to the Census server 
+    # because the results would be rejected as invalid
+    unless SHA256_AVAILABLE
+      message = "Can't submit scan results to secure server #{@destination_server_url} because we can't find OpenSSL and we're not running in JRuby"
+      puts(message) unless io == STDOUT
+      printf(message, io)
+      io.close unless io == STDOUT
+      return
     end
 
     production_scan = false unless production_scan == true
@@ -129,10 +166,21 @@ module CensusUtils
     # Note that this mechanism can provide only minor defense against a
     # motivated attacker seeking to skew the results of the census.
     checksum = CensusUtils.openlogic_rules_file_checksum
-    hmac = OpenSSL::HMAC.new(checksum + CENSUS_PLUGIN_VERSION_KEY, OpenSSL::Digest::SHA256.new)
-    hmac.update(text)
+    secret = checksum + CENSUS_PLUGIN_VERSION_KEY
+    if RUBY_SHA256_AVAILABLE
+      hmac = OpenSSL::HMAC.new(secret, OpenSSL::Digest::SHA256.new)
+      hmac.update(text)
+      mac = hmac.to_s
+    else # Java
+      algorithm = "HmacSHA256"
+      key_spec = javax.crypto.spec.SecretKeySpec.new(java.lang.String.new(secret).get_bytes, algorithm)
+      hmac = javax.crypto.Mac.get_instance(algorithm)
+      hmac.init(key_spec)
+      raw_mac = hmac.do_final(java.lang.String.new(text).get_bytes)
+      mac = hexify(raw_mac)
+    end
 
-    printf(io, "integrity_check: #{add_check_digits(hmac.to_s)}\n")
+    printf(io, "integrity_check: #{add_check_digits(mac)}\n")
     printf(io, text + "\n")
     
     io.close unless io == STDOUT
@@ -143,7 +191,17 @@ module CensusUtils
     end
   end
 
+  # turn a raw array of bytes into a hex string
+  def hexify(bytes)
+    sb = java.lang.StringBuffer.new
+    bytes.each do |it|
+      sb.append(java.lang.Integer.to_hex_string(0x00ff & it).rjust(2, "0"))
+    end
+    sb.to_string
+  end
+
   module_function :add_check_digits
+  module_function :hexify
   module_function :machine_report
   module_function :openlogic_rules_file_checksum
 

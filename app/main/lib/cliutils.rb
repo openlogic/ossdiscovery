@@ -35,21 +35,37 @@ require 'find'
 require 'erb'
 
 begin
-  # not all ruby installs and builds contain openssl, so degrade
-  # gracefully if https can't be pulled in.
-  require 'net/https'
-  NO_SSL = false
-rescue LoadError => e
-  # bail on using any HTTPS delivery mechanisms since the client machine
-  # doesn't have the prerequisite software
-  NO_SSL = true
+  # if we're running under JRuby, we can still make HTTPS work
+  require 'java'
+  JAVA_HTTPS_AVAILABLE = true
+rescue LoadError
+  JAVA_HTTPS_AVAILABLE = false
 end
+
+# if we're using Java, the Ruby version of HTTPS 
+# supplied through OpenSSL won't work, so don't try to use it
+if JAVA_HTTPS_AVAILABLE
+  RUBY_HTTPS_AVAILABLE = false
+else
+  begin
+    # not all ruby installs and builds contain openssl, so degrade
+    # gracefully if https can't be pulled in.
+    require 'net/https'
+    RUBY_HTTPS_AVAILABLE = true
+  rescue LoadError => e
+    RUBY_HTTPS_AVAILABLE = false
+  end
+end
+
+
+# we can use HTTPS if it's available through either Ruby or Java
+HTTPS_AVAILABLE = RUBY_HTTPS_AVAILABLE || JAVA_HTTPS_AVAILABLE
 
 begin
     require 'win32/registry'
-    NOT_WINDOWS=false
-rescue LoadError => e
-    NOT_WINDOWS=true
+    NOT_WINDOWS = false
+rescue LoadError
+    NOT_WINDOWS = true
 end
 
 require 'digest/md5' 
@@ -57,7 +73,7 @@ require 'digest/md5'
 #--------------------------------------------------------------------------------------
 # this will suppress Ruby warnings on machines that have world writable directories.
 # common on Solaris machines we've seen
-$VERBOSE=nil  
+$VERBOSE = nil
 
 
 #----------------------------------------- CLI help methods -------------------------------------------------
@@ -163,7 +179,8 @@ def report( packages )
     throttling_enabled_or_disabled = 'disabled'
   end
 
-  printf(io, "\ndirectories walked    : %d\n", @walker.dir_ct )
+  printf(io, "\n")
+  printf(io, "directories walked    : %d\n", @walker.dir_ct )
   printf(io, "files encountered     : %d\n", @walker.file_ct )
   printf(io, "symlinks found        : %d\n", @walker.sym_link_ct )
   printf(io, "symlinks not followed : %d\n", @walker.not_followed_ct )  
@@ -231,6 +248,69 @@ def report_audit_records( records )
   r_strings.each {|r| printf(io, r.to_s + "\n")}
   
   if (io != STDOUT) then io.close end
+end
+
+=begin rdoc
+  this method will generate a report format suitable for posting to the discovery server
+=end
+def machine_report(destination, packages, client_version, machine_id,
+                   directory_count, file_count, sym_link_count,
+                   permission_denied_count, files_of_interest_count,
+                   start_time, end_time, distro, os_family, os,
+                   os_version, machine_architecture, kernel, production_scan,
+                   include_paths, preview_results, group_code )
+  io = nil
+  if (destination == STDOUT) then
+    io = STDOUT
+  else 
+    io = File.new(destination, "w")
+  end
+
+  production_scan = false unless production_scan == true
+
+  template = %{
+    type:                 summary
+    scanner:              <%= client_version %>
+    machine:              <%= machine_id %>
+    directories:          <%= directory_count %>
+    files:                <%= file_count %>
+    symlinks:             <%= sym_link_count %>
+    denied:               <%= permission_denied_count %>
+    foi:                  <%= files_of_interest_count %>
+    start:                <%= start_time.to_i %>
+    end:                  <%= end_time.to_i %>
+    totaltime:            <%= end_time - start_time %>
+    found:                <%= packages.length %>
+    distro:               <%= distro %>
+    os_family:            <%= os_family %>
+    os:                   <%= os %>
+    os_version:           <%= os_version %>
+    machine_architecture: <%= machine_architecture %>
+    kernel:               <%= kernel %>
+    rbplat:               <%= RUBY_PLATFORM %>
+    production_scan:      <%= production_scan %>
+    group_pass:           <%= group_code %>
+    package,version<%= include_paths ? ",location" : "" %>
+    % if packages.length > 0
+    %   packages.sort.each do |package|
+    %     package.version.split(",").sort.each do |version|
+    %       version.gsub!(" ", "")
+    %       version.tr!("\0", "")
+            <%= package.name %>,<%= version %><%= include_paths ? ("," + package.found_at) : "" %>
+    %     end
+    %   end
+    % end
+  }
+
+  # strip off leading whitespace when rendering the template
+  printf(io, ERB.new(template.gsub(/^\s+/, ""), 0, "%").result(binding))
+    
+  io.close unless io == STDOUT
+  
+  if preview_results && io != STDOUT
+    printf("\nThese are the actual machine scan results from the file, %s, that would be delivered by --deliver-results option\n", destination)
+    puts File.new(destination).read
+  end
 end
 
 =begin rdoc
@@ -314,14 +394,19 @@ def deliver_results( result_file )
   
   begin
     
-    if ( @destination_server_url.match("^https:") == nil )
-      
-      # if the delivery URL is not HTTPS, use this simple form of posting scan results    
-      # Since Net::HTTP.Proxy returns Net::HTTP itself when proxy_addr is nil, there‘s no need to change code if there‘s proxy or not.
-      response = Net::HTTP.Proxy( @proxy_host, @proxy_port, @proxy_user, @proxy_password ).post_form(URI.parse(@destination_server_url),    
-                                {'scan[scan_results]' => results} )
-                                
-    elsif ( NO_SSL == false )
+    if not @destination_server_url.match("^https:")
+      # The Open Source Census doesn't allow sending via regular HTTP for security reasons
+      if defined?(CENSUS_PLUGIN_VERSION)
+        puts "For security reasons, the Open Source Census requires HTTPS."
+        puts "Please update the value of destination_server_url in conf/config.yml to the proper HTTPS URL."
+        return
+      else
+        # if the delivery URL is not HTTPS, use this simple form of posting scan results    
+        # Since Net::HTTP.Proxy returns Net::HTTP itself when proxy_addr is nil, there‘s no need to change code if there‘s proxy or not.
+        response = Net::HTTP.Proxy( @proxy_host, @proxy_port, @proxy_user, @proxy_password ).post_form(URI.parse(@destination_server_url),    
+                                  {'scan[scan_results]' => results} )
+      end
+    elsif HTTPS_AVAILABLE
       # otherwise, the delivery URL is HTTPS and SSL is available
       
       # TODO - HTTPS will not yet work through a proxy - all HTTPS deliveries must be direct for now
@@ -336,33 +421,54 @@ def deliver_results( result_file )
       port = parts[3]
       path = parts[5]
       
-      if ( protocol != "http" && protocol != "https" )
-        printf("Invalid delivery URL - bad protocol scheme\n")
-      end
-      
-      if ( port == nil )
+      if port == nil
         port = 443
       else
         port = port.to_i
       end
       
-      if ( port <= 0 )
+      if port <= 0
         printf("Invalid delivery URL - bad port number")
         port = 80
       end
       
-      http = Net::HTTP.new(host, port)
-      http.use_ssl = true
-      
-      headers = Hash.new
-      headers["Content-Type"] = "application/x-www-form-urlencoded"
-    
-      response = http.request_post( path, "scan[scan_results]=#{results}", headers)
-      
-    elsif ( @destination_server_url.match("^https:") != nil && NO_SSL )
-      printf("Can't submit scan results to secure server: #{@destination_server_url} because we can't find OpenSSL\n")
-      response = Hash.new
-      response["disco"] = "0, OpenSSL not found"
+      if RUBY_HTTPS_AVAILABLE
+        http = Net::HTTP.new(host, port)
+        http.use_ssl = true
+        headers = { "Content-Type" => "application/x-www-form-urlencoded" }
+        response = http.request_post( path, "scan[scan_results]=#{results}", headers)
+      else # Java
+	# handle a socks proxy - commented out because it's completely untested
+        #props = java.lang.System.properties
+	#props.put("socksProxyHost", @proxy_host)
+	#props.put("socksProxyPort", @proxy_port)
+	#props.put("socksProxyUser", @proxy_user)
+	#props.put("socksProxyPassword", @proxy_password)
+	#System.properties = props
+        connection = java.net.URL.new(@destination_server_url).open_connection
+        connection.do_output = true
+        connection.use_caches = false
+	connection.set_request_property("Content-Type", "application/x-www-form-urlencoded")
+        connection.request_method = "POST"
+	puts "getting output stream on class with name=#{connection.class.name}"
+	begin
+	  connection.connect
+	  puts "SSL version=#{connection.server_certificates[0].version}"
+	  os = connection.output_stream
+	rescue Exception => e
+	  puts "couldn't get output stream because: #{e}"
+	  return
+        end
+	dos = java.io.DataOutputStream.new(os)
+	puts "got it"
+	dos.writeUTF("scan[scan_results]=#{results}")
+	dos.flush
+	dos.close
+	response = { "disco" => connection.get_header_field("disco") }
+      end
+    else 
+      puts("Can't submit scan results to secure server: #{@destination_server_url} because we can't find OpenSSL and we're not running in JRuby")
+      response = { "disco" => "0, OpenSSL not found" }
     end
   
     case response
@@ -378,10 +484,10 @@ def deliver_results( result_file )
       printf("Error result: ")
       response.each { | name, value |
         printf("%s: %s\n", name, value )
-      }
+      } if response
     end
   
-  rescue Errno::ECONNREFUSED
+  rescue Errno::ECONNREFUSED, Errno::EBADF, OpenSSL::SSL::SSLError
     printf("Can't submit scan. The connection was refused when trying to deliver the scan results.\nPlease check your network connection or contact the administrator for the server at: %s\n", @destination_server_url )
     printf("\nYour machine readable results can be found in the file: %s\n", result_file )
     response = Hash.new
