@@ -47,10 +47,7 @@ module Config
   def Config.load()
     raw_configs = YAML::load_file(File.join(File.dirname(__FILE__), 'config.yml'))
     @@configs = Hash.new
-    # This binding allows us to do things like 'File.dirname(__FILE__)' and have that expression be 
-    # evaluated within the context of this Config module.  See the ruby docs for more info.  It 
-    # should be used as the 2nd argument to any 'eval' method call made below.
-    bind_env = binding()
+
     raw_configs.each_pair do |key, value| 
       if (value.class == String && value == "nil") then
         @@configs[key.to_sym] = nil
@@ -59,7 +56,7 @@ module Config
       elsif (value.class == String && value[0..2] == "<% ") then 
         to_eval = value[3..value.length].strip
         to_eval = to_eval[0..(to_eval.length - 3)].strip
-        @@configs[key.to_sym] = eval(to_eval, bind_env)
+        @@configs[key.to_sym] = eval(to_eval)
       else
         @@configs[key.to_sym] = value
       end
@@ -70,6 +67,7 @@ module Config
     rules_dirs.each { |rd| @@configs[:rules_dirs] << @@configs[rd.to_sym] }
     
     # set up a logger and make it available by putting it in the @@configs hash
+    # printf(":log_device -> %s\n", @@configs[:log_device])
     @@configs[:log] = Logger.new(@@configs[:log_device])
     @@configs[:log].level = @@configs[:log_level]
     
