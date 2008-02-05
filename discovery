@@ -72,11 +72,13 @@ done
 
 # Change the current directory to the location of the script
 cd "`dirname "$REALPATH"`"
-DISCOVERY_HOME=`pwd`
+OSSDISCOVERY_HOME=`pwd`
+# export this on a separate line because some versions of bash(solaris) blow when all on one export/define line
+export OSSDISCOVERY_HOME
 
-#echo "%%%% DISCOVERY_HOME= $DISCOVERY_HOME"
+# echo "%%%% OSSDISCOVERY_HOME=$OSSDISCOVERY_HOME"
 
-cd $DISCOVERY_HOME
+cd $OSSDISCOVERY_HOME
 
-ruby $DISCOVERY_HOME/lib/discovery.rb --progress 100 --human-results readable_scanresults.txt $1 $2 $3 $4 $5 $6 $7 $8 $9 
+ruby $OSSDISCOVERY_HOME/lib/discovery.rb --progress 100 --human-results readable_scanresults.txt $1 $2 $3 $4 $5 $6 $7 $8 $9 
 

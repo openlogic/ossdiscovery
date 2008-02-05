@@ -82,8 +82,7 @@ throttle_seconds_to_pause: 2.5
 ##### Logging properties
 
 # Arg that will be passed to Logger.new().  From the rdoc: This is a filename (String) or IO object (typically STDOUT, STDERR, or an open file).
-log_device: <% File.join('log', 'discovery.log') %> 
-# log_device: <% File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'log', 'discovery.log')) %>
+log_device: <% File.expand_path( File.join( ENV['OSSDISCOVERY_HOME'], 'log', 'discovery.log')) %>
 
 # Valid options are: FATAL, ERROR, WARN, INFO, DEBUG - 'WARN' is the recommended setting for 
 # productions runs, it shouldn't give you too much output, but you also won't miss importatnt warnings.
@@ -123,8 +122,8 @@ results: STDOUT
 
 #--------------------------------------------------------------------------------------
 # where to pick up the default scan rules
-rules_openlogic: <% File.expand_path(File.join(File.dirname(__FILE__), 'lib','rules', 'openlogic')) %>
-rules_drop_ins: <% File.expand_path(File.join(File.dirname(__FILE__), 'lib','rules', 'drop_ins')) %>
+rules_openlogic: <% File.expand_path(File.join( ENV['OSSDISCOVERY_HOME'], 'lib','rules', 'openlogic')) %>
+rules_drop_ins: <% File.expand_path(File.join( ENV['OSSDISCOVERY_HOME'], 'lib','rules', 'drop_ins')) %>
 
 rules_dirs: <% ['rules_openlogic', 'rules_drop_ins'] %>
 # If you only want to run the tool with your custom written rules, you would put them in the 'drop_ins' dir and change the previous line to:
@@ -187,7 +186,7 @@ update_rules_and_do_scan: false
 #  9 | Other         | 
 #100 | Undefined     |
 
-geography: 100 
+geography: 55
 
 # group passcode
 group_passcode: 
