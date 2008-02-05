@@ -27,6 +27,7 @@
 
 require 'erb'
 require 'digest/md5'
+require 'digest/sha2'
 
 module CensusUtils
         
@@ -40,8 +41,9 @@ module CensusUtils
     JAVA_SHA256_AVAILABLE = false
   end
 
-  # if we're using Java, the Ruby version of SHA256 
-  # supplied through OpenSSL won't work, so don't try to use it
+  # if we're using Java, use its SHA256.  The pure ruby link or even jruby link with native OpenSSL on 
+  # host machine may not work - 0.9.7 doesn't have SHA256 in it for example.  So, don't rely on native
+  # openssl if this is running under jruby
   if JAVA_SHA256_AVAILABLE
     RUBY_SHA256_AVAILABLE = false
   else

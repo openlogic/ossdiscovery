@@ -255,7 +255,7 @@ class Walker
         begin
           Dir.chdir(fileordir)
           Dir.chdir(pwd)
-        rescue Errno::EACCES, Errno::EPERM
+        rescue Errno::EACCES, Errno::EPERM, Errno::ETIMEDOUT
           have_perms_for_dir = false
         end
         
