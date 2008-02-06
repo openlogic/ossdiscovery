@@ -787,7 +787,7 @@ def get_linux_version_str
       "/etc/cobalt-release" => "Cobalt", 
       "/etc/conectiva-release" => "Conectiva", 
       "/etc/debian_release" => "Debian", 
-      "/etc/debian_version" => "Debian",       
+#       "/etc/debian_version" => "Debian",       
       "/etc/fedora-release" => "Fedora Core", 
       "/etc/gentoo-release" => "Gentoo Linux",
       "/etc/immunix-release" => "Immunix",
