@@ -1549,11 +1549,11 @@
   </project-rule>
   <project-rule name="icefaces" from="wild" os="all">
     <description>rules for icefaces - date created : 02/05/2008 dpm</description>
-    <eval expression="icefaces_filename or icefaces_md5" speed='1'  />
+    <eval expression="icefaces_md5" speed='1'  />
     
     <match-rules name="icefaces_filename">
       <result expression="OR-ALL" />
-      <match-rule name="icefaces" type="filename" filename="^icefaces.jar$" />
+      <match-rule name="icefaces" type="filename" filename="^icefaces.*jar$" />
     </match-rules>
        
     <match-rules name="icefaces_md5">
@@ -1604,6 +1604,43 @@
       <match-rule name="13-ivy-core-1.4.1.jar" type="MD5" md5sum="7c8df16ef4aae79c8b859a393da7f48e" filename="^ivy-core.*jar$" version="1.4.1"/>
     </match-rules>
   </project-rule>
+  <project-rule name="jamon" from="wild" os="all">
+    <description>rules for jamon - date created : 02/05/2008 dpm</description>
+    <eval expression="jamon_filename or jamon_version or jamon_md5" speed='1'  />  
+    <eval expression="jamon_filename or jamon_version" speed='1'  />
+    
+    <match-rules name="jamon_filename">
+      <result expression="OR-ALL" />
+      <match-rule name="jamon1" type="filename" filename="^jamon.jar$" />
+      <match-rule name="jamon2" type="filename" filename="^JAMon.jar$" />
+    </match-rules>
+
+    <match-rules name="jamon_version">
+      <result expression="OR-ALL" />
+      <match-rule name="jamon_ver1" type="filenameVersion" filename="^jamon-([0-9].[0-9])\.jar$" />
+      <match-rule name="jamon_ver2" type="filenameVersion" filename="^JAMon-([0-9].[0-9])\.jar$" />
+    </match-rules>
+      
+    <match-rules name="jamon_md5">
+      <result expression="OR-ALL" />
+      
+      <match-rule name='jamon-1.0' type='MD5' md5sum='432ae3ee188bf4cb9459b2528f5e7d03'  filename="^jamon.jar$" version='1.0' />
+      <match-rule name='jamon-1.01' type='MD5' md5sum='736e7adb0b1d5fdf4c3c2c2d48966b3c'  filename="^jamon.jar$" version='1.01' />
+      <match-rule name='jamon-2.0' type='MD5' md5sum='07791cdc6e7714a9e67e35213513534b'  filename="^jamon.jar$" version='2.0' />
+      <match-rule name='jamon-1.0A' type='MD5' md5sum='432ae3ee188bf4cb9459b2528f5e7d03'  filename="^JAMon.jar$" version='1.0' />
+      <match-rule name='jamon-1.01A' type='MD5' md5sum='736e7adb0b1d5fdf4c3c2c2d48966b3c'  filename="^JAMon.jar$" version='1.01' />
+      <match-rule name='jamon-2.0A' type='MD5' md5sum='07791cdc6e7714a9e67e35213513534b'  filename="^JAMon.jar$" version='2.0' />
+      <match-rule name='jamon-2.1' type='MD5' md5sum='3261054a91a535de7489d28ac39eb181'  filename="^jamon.jar$" version='2.1' />
+      <match-rule name='jamon-2.2' type='MD5' md5sum='5cca673f249edfb4a693a9dc6863f938'  filename="^jamon.jar$" version='2.2' />
+      <match-rule name='jamon-2.3' type='MD5' md5sum='cdb0f301a3910237ef154b8e1ba17193'  filename="^jamon.jar$" version='2.3' />
+      <match-rule name='jamon-2.4' type='MD5' md5sum='94f79a90c48b07197078a21bcca354c2'  filename="^jamon.jar$" version='2.4' />
+      <match-rule name='jamon-2.5' type='MD5' md5sum='ec93811d05ba87e80db3996b28df8117'  filename="^jamon.jar$" version='2.5' />
+      <match-rule name='jamon-2.6' type='MD5' md5sum='ae261d655d46d3d571d9c806bdad0bb4'  filename="^jamon.jar$" version='2.6' />
+      <match-rule name='jamon-2.7' type='MD5' md5sum='e2def5717be33022490d8d11086e48bd'  filename="^jamon.jar$" version='2.7' />
+
+    </match-rules>
+
+  </project-rule> 
   <project-rule name="javacc" from="wild" os="all">
     <description>Finds versions using MD5's.</description>
     <eval expression="md5" speed="1"/>
