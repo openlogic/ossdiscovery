@@ -412,7 +412,7 @@ options = GetoptLong.new(
         # TODO - validation of group passcode format
 
     when "--list-os"
-      printf("%s, kernel: %s\n", get_os_version_str(), @kernel )
+      printf("%s, arch: %s, kernel: %s\n", get_os_version_str(), @os_architecture, @kernel )
       exit 0
       
     when "--list-excluded"

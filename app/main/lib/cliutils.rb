@@ -33,6 +33,7 @@
 require 'net/http'
 require 'find'
 require 'erb'
+require 'rbconfig'
 
 begin
   # if we're running under JRuby, we can still make HTTPS work
@@ -674,6 +675,9 @@ end
 =end
 
 def get_os_version_str
+
+  @os_family = RbConfig::CONFIG['host_os']
+  @os_architecture = RbConfig::CONFIG['host_cpu']
    
   case major_platform
   when "linux"
@@ -783,6 +787,7 @@ def get_linux_version_str
       "/etc/cobalt-release" => "Cobalt", 
       "/etc/conectiva-release" => "Conectiva", 
       "/etc/debian_release" => "Debian", 
+      "/etc/debian_version" => "Debian",       
       "/etc/fedora-release" => "Fedora Core", 
       "/etc/gentoo-release" => "Gentoo Linux",
       "/etc/immunix-release" => "Immunix",
@@ -811,10 +816,8 @@ def get_linux_version_str
       "/etc/va-release" => "VA-Linux/RH-VALE",
       "/etc/yellowdog-release" => "Yellow Dog"
     }
-
-  @os_family = "linux"
+  
   platform = RUBY_PLATFORM
-  @os_architecture = platform.split("-")[0]
           
   @linux_distros.each do | distrofile, distroname |
     
