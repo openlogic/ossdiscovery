@@ -787,7 +787,7 @@ def get_linux_version_str
       "/etc/cobalt-release" => "Cobalt", 
       "/etc/conectiva-release" => "Conectiva", 
       "/etc/debian_release" => "Debian", 
-#       "/etc/debian_version" => "Debian",       
+      "/etc/debian_version" => "Debian",       
       "/etc/fedora-release" => "Fedora Core", 
       "/etc/gentoo-release" => "Gentoo Linux",
       "/etc/immunix-release" => "Immunix",
@@ -823,6 +823,13 @@ def get_linux_version_str
     
     if ( File.exist?(distrofile))
 
+      # this is a special case where we found ubuntu, not debian
+      # debian (etch) has debian_version but no lsb-release file
+      # need to test on other versions of debian to make sure this heuristic works
+      if ( distrofile == "/etc/debian_version" && File.exists?("/etc/lsb-release") )
+        continue
+      end
+ 
       content = File.new(distrofile, "r").readlines
 
       distro_bits = content[0].strip == nil ? content[0] : content[0].strip
