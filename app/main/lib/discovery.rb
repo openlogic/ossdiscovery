@@ -220,6 +220,7 @@ def update_scan_rules()
 end
 
 def validate_directory_to_scan( dir )
+
   @directory_to_scan << File.expand_path( dir )
 
   @directory_to_scan.gsub!('//','/') 
@@ -480,7 +481,7 @@ options = GetoptLong.new(
       if ( !validate_directory_to_scan( arg )  )
          exit 1
       end
-    
+
     when "--progress"
         
       @show_progress = true
@@ -539,7 +540,9 @@ options = GetoptLong.new(
 
 # interpret any leftover arguments as the override path
 if ( ARGV.size > 0 )
-  validate_directory_to_scan( ARGV[0] ) 
+  if ( ARGV[0] != "" )
+    validate_directory_to_scan( ARGV[0] ) 
+  end
 end
 
 #----------------------------- do the business -------------------------------------
