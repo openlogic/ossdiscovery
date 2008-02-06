@@ -827,7 +827,7 @@ def get_linux_version_str
       # debian (etch) has debian_version but no lsb-release file
       # need to test on other versions of debian to make sure this heuristic works
       if ( distrofile == "/etc/debian_version" && File.exists?("/etc/lsb-release") )
-        continue
+        next
       end
  
       content = File.new(distrofile, "r").readlines
