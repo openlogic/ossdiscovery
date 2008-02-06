@@ -1582,6 +1582,18 @@
       <match-rule name="13-ivy-core-1.4.1.jar" type="MD5" md5sum="7c8df16ef4aae79c8b859a393da7f48e" filename="^ivy-core.*jar$" version="1.4.1"/>
     </match-rules>
   </project-rule>
+  <project-rule name="javacc" from="wild" os="all">
+    <description>Finds versions using MD5's.</description>
+    <eval expression="md5" speed="1"/>
+    <match-rules name="md5">
+      <result expression="OR-ALL"/>
+      <!-- The following MD5's are the same for jars found out of both gzips and zips. -->
+      <match-rule name="v2.1"                           type="MD5" md5sum="dacbbf9cd0208182bb9e6a7796c7e588" filename="JavaCC.*class" version="2.1" /> 
+      <match-rule name="1-javacc-3.1.tar.gz-javacc.jar" type="MD5" md5sum="d7e4a8410816715ef94cc13701728127" filename="javacc.*jar" version="3.1" /> 
+      <match-rule name="3-javacc-3.2.tar.gz-javacc.jar" type="MD5" md5sum="b66834483390722545f22ab32d6001a9" filename="javacc.*jar" version="3.2" /> 
+      <match-rule name="5-javacc-4.0.tar.gz-javacc.jar" type="MD5" md5sum="98f9f2361d61f106a2d65e5d302eefbd" filename="javacc.*jar" version="4.0" /> 
+    </match-rules>
+  </project-rule>
   <project-rule name="jboss" from="wild" os="all">
     <description>Uses md5 digests to find versions gte 3.0.5 and lte 5.0.0.Beta2</description>
     <eval expression="jboss_versions or jboss_filename" speed="1"/>
@@ -2949,6 +2961,25 @@
 <!-- xerces/extracted/Xerces-J-bin.2.9.0.zip.extracted/xerces-2_9_0/xercesImpl.jar -->
       <match-rule name="xerces_on_ubuntu_7.0.4_feisty" type="MD5" md5sum="975da361c84693892498d28c81d56099" filename="^xerces.*jar$" version="2.8.1"/>
 <!-- xerces/extracted/Xerces-J-bin.2.8.1.zip.extracted/xerces-2_8_1/xercesImpl.jar -->
+    </match-rules>
+  </project-rule>
+  
+  <project-rule name="xindice" from="wild" os="all">
+    <description>Finds versions using MD5's.</description>
+    <eval expression="md5 or fileversion" speed="1"/>
+    <match-rules name="fileversion">
+      <result expression="jar"/>
+      <match-rule name="jar" type="filenameVersion" filename="^xindice-[^\d]*(.*)\.jar$"/>
+    </match-rules>
+    <match-rules name="md5">
+      <result expression="OR-ALL"/>
+      <!-- The following MD5's are the same for jars found out of both gzips and zips. -->
+      <match-rule name="1-xml-xindice-1.0.tar.gz-xindice.jar"                  type="MD5" md5sum="b22118ec393799c4b16fdfe642ed0d93" filename="xindice.*jar" version="1.0" /> <!-- xml-xindice-1.0.tar.gz.extracted/xml-xindice-1.0/java/lib/xindice.jar -->
+      <match-rule name="3-xml-xindice-1.1-bin.tar.gz-xindice-1.1.jar"          type="MD5" md5sum="4239ab30a73ec78e43fb178cebefed48" filename="xindice.*jar" version="1.1" /> <!-- xindice/extracted/xml-xindice-1.1-bin.tar.gz.extracted/xml-xindice-1.1/xindice-1.1.jar -->
+      <match-rule name="7-xml-xindice-1.1b1-jar.zip-xindice-1.1b1.jar"         type="MD5" md5sum="1bdfaee5c93f687a5a4a92bf64066953" filename="xindice.*jar" version="1.1b1" /> <!-- extracted/xml-xindice-1.1b1-jar.zip.extracted/xindice-1.1b1/dist/xindice-1.1b1.jar -->
+      <match-rule name="8-xml-xindice-1.1b3-jar.tar.gz-xindice-1.1b3.jar"      type="MD5" md5sum="d0a72b648f2aa419267690a9c31bf612" filename="xindice.*jar" version="1.1b3" /> <!-- extracted/xml-xindice-1.1b3-jar.tar.gz.extracted/xindice-1.1b3/dist/xindice-1.1b3.jar -->
+      <match-rule name="10-xml-xindice-1.1b4-jar.tar.gz-xindice-1.1b4.jar"     type="MD5" md5sum="7b6a7f5fc2501f873ddca9ba54cd3d12" filename="xindice.*jar" version="1.1b4" /> <!-- xindice/extracted/xml-xindice-1.1b4-jar.tar.gz.extracted/xindice-1.1b4/xindice-1.1b4.jar -->
+      <match-rule name="12-xml-xindice-1.2m1-bin.tar.gz-xindice-1.2m1.jar"     type="MD5" md5sum="eb463e8284474bd0557b02621e1abf85" filename="xindice.*jar" version="1.2m1" /> <!-- xindice/extracted/xml-xindice-1.2m1-bin.tar.gz.extracted/xml-xindice-1.2m1/xindice-1.2m1.jar -->
     </match-rules>
   </project-rule>
 </project-rules>
