@@ -1547,6 +1547,28 @@
       <match-rule name="htmlparser-1.6" type="MD5" md5sum="1b023d0dd96e641db76f46ddbb19d6ca" filename="^htmlparser.jar$" version="1.6"/>
     </match-rules>
   </project-rule>
+  <project-rule name="icefaces" from="wild" os="all">
+    <description>rules for icefaces - date created : 02/05/2008 dpm</description>
+    <eval expression="icefaces_filename or icefaces_md5" speed='1'  />
+    
+    <match-rules name="icefaces_filename">
+      <result expression="OR-ALL" />
+      <match-rule name="icefaces" type="filename" filename="^icefaces.jar$" />
+    </match-rules>
+       
+    <match-rules name="icefaces_md5">
+      <result expression="OR-ALL" />
+      
+      <match-rule name='icefaces-1.5.0' type='MD5' md5sum='110a0f60b1da6dafef7ef1d0013a3941'  filename="^icefaces.*jar$" version='1.5.0' />
+      <match-rule name='icefaces-1.5.1' type='MD5' md5sum='985f97324fabcb40518da4cf5d2cdb22'  filename="^icefaces.*jar$" version='1.5.1' />
+      <match-rule name='icefaces-1.5.2' type='MD5' md5sum='940548feb45f8dd6f6b791802278f648'  filename="^icefaces.*jar$" version='1.5.2' />
+      <match-rule name='icefaces-1.5.3' type='MD5' md5sum='38b1a484b164fb923c6e444330570862'  filename="^icefaces.*jar$" version='1.5.3' />
+      <match-rule name='icefaces-1.6.0' type='MD5' md5sum='b1ad1c05daa8f96420cbbae9bd201f36'  filename="^icefaces.*jar$" version='1.6.0' />
+      <match-rule name='icefaces-1.6.1' type='MD5' md5sum='4d231432574f6e04b88a5eabbc42e2af'  filename="^icefaces.*jar$" version='1.6.1' />
+      <match-rule name='icefaces-1.6.2' type='MD5' md5sum='507ba65860c0c86bd65fba1fd724b5a0'  filename="^icefaces.*jar$" version='1.6.2' />
+
+    </match-rules>
+  </project-rule> 
   <project-rule name="imagemagick" from="wild" os="all">
     <eval expression="lib" speed="1"/>
     <match-rules name="lib">
