@@ -68,6 +68,7 @@ module Config
     
     # set up a logger and make it available by putting it in the @@configs hash
     # printf(":log_device -> %s\n", @@configs[:log_device])
+    mkdir_p @@configs[:log_device]
     @@configs[:log] = Logger.new(@@configs[:log_device])
     @@configs[:log].level = @@configs[:log_level]
     
