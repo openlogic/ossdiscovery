@@ -6224,14 +6224,6 @@
       <match-rule name="jar" type="filenameVersion" filename="^gj-xml-([0-9].*?).jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="jmonapi" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="jar" type="filenameVersion" filename="^jamon-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="java3d" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="fv2" speed="1"/>
