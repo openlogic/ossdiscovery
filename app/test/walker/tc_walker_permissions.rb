@@ -30,9 +30,13 @@ class TcWalkerPermissions < Test::Unit::TestCase
         cmd = "ruby #{DISCOVERY_RB} --path #{PERMISSIONS_DIR_TO_DISCOVER}"
         output = `#{cmd}`
         pd_val = output.match(/^permission denied\s+:\s+(.*).*$/)[1]
-        assert_equal(2, pd_val.to_i, "Expected to be denied permission to two items (one directory and one file) in the '#{PERMISSIONS_DIR_TO_DISCOVER}' directory.")
-      end
-    end
+        if (RUBY_PLATFORM.to_s.include?('java')) then
+          assert(pd_val.to_i > 0, "Expected to be denied permission to more than zero items in the '#{PERMISSIONS_DIR_TO_DISCOVER}' directory when the RUBY_PLATFORM is java.")
+        else
+          assert_equal(2, pd_val.to_i, "Expected to be denied permission to two items (one directory and one file) in the '#{PERMISSIONS_DIR_TO_DISCOVER}' directory when the RUBY_PLATFORM is not java.")
+        end
+      end # of if (whoami_result.include?('root')) then
+    end # of if (RUBY_PLATFORM =~ /mswin/)
   end
 
 end
