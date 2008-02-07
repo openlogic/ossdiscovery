@@ -68,12 +68,19 @@ module Config
     
     # set up a logger and make it available by putting it in the @@configs hash
     # printf(":log_device -> %s\n", @@configs[:log_device])
-    @@configs[:log] = Logger.new(@@configs[:log_device])
-    @@configs[:log].level = @@configs[:log_level]
+
+    begin
+      @@configs[:log] = Logger.new(@@configs[:log_device])
+      @@configs[:log].level = @@configs[:log_level]
     
-    @@configs[:log].debug('Config') {"raw configuration values: #{raw_configs.inspect}"}
-    @@configs[:log].debug('Config') {"configuration values: #{@@configs.inspect}"}
-    @@configs_loaded = true
+      @@configs[:log].debug('Config') {"raw configuration values: #{raw_configs.inspect}"}
+      @@configs[:log].debug('Config') {"configuration values: #{@@configs.inspect}"}
+      @@configs_loaded = true
+    rescue Errno::EACCES
+      printf("Error: Can't write the log file: %s\nPermission denied\n", @@configs[:log_device] ) 
+      printf("Perhaps you aren't the owner of or write permissions aren't set on the log file or log directory\n")
+      exit 1
+    end
   end
   
   def Config.log
