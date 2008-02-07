@@ -32,6 +32,7 @@ namespace :release do
     task :prepare => "release:jruby:clean" do
       mkdir_p "pkg/#{jruby_package_filename}"
       cp_r "lib", "pkg/#{jruby_package_filename}/lib", :remove_destination=>true
+      cp_r "jruby", "pkg/#{jruby_package_filename}/jruby", :remove_destination=>true
       cp_r "license", "pkg/#{jruby_package_filename}/license", :remove_destination=>true
       cp_r "doc", "pkg/#{jruby_package_filename}/doc", :remove_destination=>true
       cp "README.txt", "pkg/#{jruby_package_filename}/"      

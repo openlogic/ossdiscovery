@@ -2,7 +2,6 @@
 The intended audience for this README is a developer on this project.
 ================================================================================
 
-
 Source Code Structure
 ======================
 The source code is organized like this:
