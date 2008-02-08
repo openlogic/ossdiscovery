@@ -4,11 +4,6 @@ PACKAGE_NAME=ENV["NAME"] || "ossdiscovery"
 PACKAGE_VERSION=ENV["VERSION"] || "2.0b1"
 
 namespace :release do
-  desc "Build the distributable"
-  task :dist => 'ruby:clean' do 
-    mkdir_p 'dist'
-  end
-
   namespace :ruby do 
   
     Rake::PackageTask.new(PACKAGE_NAME, PACKAGE_VERSION) do |p|
