@@ -15,7 +15,6 @@ class TestHelper
     all_files = Set.new
     Find.find(dir) do |path|
       if (File.basename(path) == 'resources') then
-        puts "pruning this directory: '#{path}'"
         # The resources directory contains the symlink test directory which intentionally contains
         # is infinitely recursive circular symlink. If jruby is running this code (as opposed to
         # native ruby) then the process goes out to lunch forever.  In addition to this, the 'resources'
@@ -26,9 +25,8 @@ class TestHelper
         if (File.file?(path) && !path.include?(".svn")) then
           all_files << File.expand_path(path)
         end
-      end
-
+      end # of if (File.basename(path) == 'resources')
+    end # of Find.find(dir)
     return all_files
   end
-
 end
