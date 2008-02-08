@@ -411,6 +411,11 @@ options = GetoptLong.new(
         @group_passcode = arg
         # TODO - validation of group passcode format
 
+	# if geography is undefined and a group_passcode is supplied, geography should be empty
+        if ( @geography.to_i < 1 || @geography.to_i > 9 )
+          @geography = ""  
+        end
+
     when "--list-os"
       printf("%s, arch: %s, kernel: %s\n", get_os_version_str(), @os_architecture, @kernel )
       exit 0
