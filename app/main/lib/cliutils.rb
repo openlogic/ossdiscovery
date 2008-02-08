@@ -396,14 +396,21 @@ def deliver_results( result_file )
   begin
     
     if not @destination_server_url.match("^https:")
+
       # The Open Source Census doesn't allow sending via regular HTTP for security reasons
-      if defined?(CENSUS_PLUGIN_VERSION)
+      if defined?(CENSUS_PLUGIN_VERSION) && (@override_https == nil || @override_https == false)
         puts "For security reasons, the Open Source Census requires HTTPS."
         puts "Please update the value of destination_server_url in conf/config.yml to the proper HTTPS URL."
+
         return
       else
         # if the delivery URL is not HTTPS, use this simple form of posting scan results    
         # Since Net::HTTP.Proxy returns Net::HTTP itself when proxy_addr is nil, there‘s no need to change code if there‘s proxy or not.
+
+        if ( @override_https != nil && @override_https )
+          puts "WARNING:  The HTTPS delivery restriction is currently being overridden for ease-of-test purposes" 
+        end
+
         response = Net::HTTP.Proxy( @proxy_host, @proxy_port, @proxy_user, @proxy_password ).post_form(URI.parse(@destination_server_url),    
                                   {'scan[scan_results]' => results} )
       end
