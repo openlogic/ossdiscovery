@@ -60,9 +60,4 @@ namespace :release do
     desc "Build the distribution files for the all versions of OSS Discovery"
     task :distributions =>["release:ruby:distributions", "release:jruby:distributions"]
   end
-
-  desc "Remove current distributables"
-  task :clean do
-    rm_rf 'dist'
-  end
 end
