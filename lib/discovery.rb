@@ -601,6 +601,10 @@ def make_reports
     report_audit_records @rule_engine.audit_records
   end
 
+  if ( @geography.to_i < 1 || @geography.to_i > 9 )
+     @geography = ""
+  end
+
   # machine_report method is no longer defined in cliutils.rb -- see the 'TODO technical debt' in census_utils.rb
   if (Object.respond_to?(:machine_report, true)) then
     # deal with machine reports and sending results if allowed
