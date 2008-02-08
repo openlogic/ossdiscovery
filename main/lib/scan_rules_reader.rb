@@ -390,8 +390,7 @@ class ScanRulesReader
     files = ScanRulesReader.find_all_scanrules_files(dir_with_rules_files).to_a.sort
     md5s = Array.new
     files.each do |f|
-      file = File.new( f )
-      file.binmode
+      file = File.new( f, "rb" )
       md5_val = Digest::MD5.hexdigest( file.read )
       md5s << md5_val
     end # of files.each
