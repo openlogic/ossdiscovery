@@ -144,6 +144,9 @@ send_results: false                                             # default to not
 # used or tested.  You can't proxy a localhost URL.
 destination_server_url: https://localhost:3000/scans/scanpost   # change to OL disco production server
 
+# WARNING - osscensus production will not accept scans unless this is false
+override_https: true
+
 # Configurable options for scan rules updating.  TODO findme: clean this up, combining where possible with the 'destination_server_url' 
 # for delivering results above. Note: On hold until the server-side of things has been firmed up.
 
