@@ -214,7 +214,11 @@ def report( packages )
     printf(io, %{#{"============".ljust(longest_name)} #{"=======".ljust(longest_version)} ========\n})
     
     packages.to_a.sort!.each do | package |
-      printf(io, "#{package.name.ljust(longest_name)} #{package.version.ljust(longest_version)} #{package.found_at}\n")
+      begin 
+        printf(io, "#{package.name.ljust(longest_name)} #{package.version.ljust(longest_version)} #{package.found_at}\n")
+      rescue Exception => e
+        printf(io, "Possible error in rule: #{package} ... matched version text was likely too large\n")
+      end
     end # of packages.each
   end
   
