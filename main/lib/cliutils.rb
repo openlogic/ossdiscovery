@@ -255,68 +255,6 @@ def report_audit_records( records )
   if (io != STDOUT) then io.close end
 end
 
-=begin rdoc
-  this method will generate a report format suitable for posting to the discovery server
-=end
-def machine_report(destination, packages, client_version, machine_id,
-                   directory_count, file_count, sym_link_count,
-                   permission_denied_count, files_of_interest_count,
-                   start_time, end_time, distro, os_family, os,
-                   os_version, machine_architecture, kernel, production_scan,
-                   include_paths, preview_results, group_code )
-  io = nil
-  if (destination == STDOUT) then
-    io = STDOUT
-  else 
-    io = File.new(destination, "w")
-  end
-
-  production_scan = false unless production_scan == true
-
-  template = %{
-    type:                 summary
-    scanner:              <%= client_version %>
-    machine:              <%= machine_id %>
-    directories:          <%= directory_count %>
-    files:                <%= file_count %>
-    symlinks:             <%= sym_link_count %>
-    denied:               <%= permission_denied_count %>
-    foi:                  <%= files_of_interest_count %>
-    start:                <%= start_time.to_i %>
-    end:                  <%= end_time.to_i %>
-    totaltime:            <%= end_time - start_time %>
-    found:                <%= packages.length %>
-    distro:               <%= distro %>
-    os_family:            <%= os_family %>
-    os:                   <%= os %>
-    os_version:           <%= os_version %>
-    machine_architecture: <%= machine_architecture %>
-    kernel:               <%= kernel %>
-    rbplat:               <%= RUBY_PLATFORM %>
-    production_scan:      <%= production_scan %>
-    group_pass:           <%= group_code %>
-    package,version<%= include_paths ? ",location" : "" %>
-    % if packages.length > 0
-    %   packages.sort.each do |package|
-    %     package.version.split(",").sort.each do |version|
-    %       version.gsub!(" ", "")
-    %       version.tr!("\0", "")
-            <%= package.name %>,<%= version %><%= include_paths ? ("," + package.found_at) : "" %>
-    %     end
-    %   end
-    % end
-  }
-
-  # strip off leading whitespace when rendering the template
-  printf(io, ERB.new(template.gsub(/^\s+/, ""), 0, "%").result(binding))
-    
-  io.close unless io == STDOUT
-  
-  if preview_results && io != STDOUT
-    printf("\nThese are the actual machine scan results from the file, %s, that would be delivered by --deliver-results option\n", destination)
-    puts File.new(destination).read
-  end
-end
 
 =begin rdoc
   returns true or false. if the speed argument is valid, it returns true, otherwise false
