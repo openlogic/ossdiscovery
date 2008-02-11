@@ -1,0 +1,87 @@
+#!/bin/bash
+#
+# discovery
+#
+# LEGAL NOTICE
+# -------------
+# 
+# OSS Discovery is a tool that finds installed open source software.
+#    Copyright (C) 2007 OpenLogic, Inc.
+#  
+# OSS Discovery is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License version 3 as 
+# published by the Free Software Foundation.  
+#  
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License version 3 (discovery2-client/license/OSSDiscoveryLicense.txt) 
+# for more details.
+#  
+# You should have received a copy of the GNU Affero General Public License along with this program.  
+# If not, see http://www.gnu.org/licenses/
+#  
+# You can learn more about OSSDiscovery, report bugs and get the latest versions at www.ossdiscovery.org.
+# You can contact the OSS Discovery team at info@ossdiscovery.org.
+# You can contact OpenLogic at info@openlogic.com.
+
+
+# Get the fully qualified path to the script
+case $0 in
+    /*)
+        SCRIPT="$0"
+        ;;
+    *)
+        PWD=`pwd`
+        SCRIPT="$PWD/$0"
+        ;;
+esac
+
+# Resolve the true real path without any sym links.
+CHANGED=true
+while [ "X$CHANGED" != "X" ]
+do
+    # Change spaces to ":" so the tokens can be parsed.
+    SCRIPT=`echo $SCRIPT | sed -e 's; ;:;g'`
+    # Get the real path to this script, resolving any symbolic links
+    TOKENS=`echo $SCRIPT | sed -e 's;/; ;g'`
+    REALPATH=
+    for C in $TOKENS; do
+        REALPATH="$REALPATH/$C"
+        while [ -h "$REALPATH" ] ; do
+            LS="`ls -ld "$REALPATH"`"
+            LINK="`expr "$LS" : '.*-> \(.*\)$'`"
+            if expr "$LINK" : '/.*' > /dev/null; then
+                REALPATH="$LINK"
+            else
+                REALPATH="`dirname "$REALPATH"`""/$LINK"
+            fi
+        done
+    done
+    # Change ":" chars back to spaces.
+    REALPATH=`echo $REALPATH | sed -e 's;:; ;g'`
+
+    if [ "$REALPATH" = "$SCRIPT" ]
+    then
+        CHANGED=""
+    else
+        SCRIPT="$REALPATH"
+    fi
+done
+
+# Change the current directory to the location of the script
+cd "`dirname "$REALPATH"`"
+OSSDISCOVERY_HOME=`pwd`
+# export this on a separate line because some versions of bash(solaris) blow when all on one export/define line
+export OSSDISCOVERY_HOME
+
+JAVA_HOME=$OSSDISCOVERY_HOME/jre/jre-1.5.0_07-linux-ia32
+export JAVA_HOME
+
+# echo "%%%% OSSDISCOVERY_HOME=$OSSDISCOVERY_HOME"
+
+cd $OSSDISCOVERY_HOME
+
+$OSSDISCOVERY_HOME/jruby/bin/jruby $OSSDISCOVERY_HOME/lib/discovery.rb --progress 100 --human-results readable_scanresults.txt "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
+
