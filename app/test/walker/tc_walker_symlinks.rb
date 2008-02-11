@@ -46,6 +46,13 @@ class TcWalkingSymLinks < Test::Unit::TestCase
          fail "Symlinks were not pruned OR symlink-tests directory has not be set up.  Run run-me.sh in symlinks-tests"        
        end
      end
-  end
+   end
+   
+   def test_presence_of_infinite_recursion_on_circular_link
+     
+     symlinks_dir = File.expand_path(File.join(File.dirname(__FILE__), '..', 'resources', 'symlink-tests', 'ignore_thesexxxxx'))
+     assert(File.exist?(symlinks_dir) && File.directory?(symlinks_dir), "Expected the directory '#{symlinks_dir}' to exist. In order to create it, just run the 'run-me.sh' script located here: '#{File.dirname(symlinks_dir)}'")
+     
+   end
    
 end
