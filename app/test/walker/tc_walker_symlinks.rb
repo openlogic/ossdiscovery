@@ -1,3 +1,4 @@
+require 'find'
 require 'test/unit'
 
 class TcWalkingSymLinks < Test::Unit::TestCase
@@ -50,8 +51,22 @@ class TcWalkingSymLinks < Test::Unit::TestCase
    
    def test_presence_of_infinite_recursion_on_circular_link
      
-     symlinks_dir = File.expand_path(File.join(File.dirname(__FILE__), '..', 'resources', 'symlink-tests', 'ignore_thesexxxxx'))
+     symlinks_dir = File.expand_path(File.join(File.dirname(__FILE__), '..', 'resources', 'symlink-tests', 'ignore_these'))
      assert(File.exist?(symlinks_dir) && File.directory?(symlinks_dir), "Expected the directory '#{symlinks_dir}' to exist. In order to create it, just run the 'run-me.sh' script located here: '#{File.dirname(symlinks_dir)}'")
+     
+     path_count = 0
+     Find.find(symlinks_dir) do |path|
+       path_count = path_count + 1
+       
+       if (path_count > 100) then # at the time this was writte, 11 was the actual number here, but I figured I'd give it a good bit of room to grow
+         puts "########## WARNING WARNING WARNING WARNING WARNING ##################################"
+         puts "This environment recurses infinitely instead of handling circular symlinks correctly."
+         puts "########## WARNING WARNING WARNING WARNING WARNING ##################################"
+         break
+       end
+     end # of Find.find(dir)
+     
+     assert(path_count > 0)
      
    end
    
