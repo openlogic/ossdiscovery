@@ -27,7 +27,6 @@
 
 require 'erb'
 require 'digest/md5'
-require 'digest/sha2'
 
 module CensusUtils
         
@@ -44,6 +43,7 @@ module CensusUtils
   # if we're using Java, use its SHA256.  The pure ruby link or even jruby link with native OpenSSL on 
   # host machine may not work - 0.9.7 doesn't have SHA256 in it for example.  So, don't rely on native
   # openssl if this is running under jruby
+
   if JAVA_SHA256_AVAILABLE
     RUBY_SHA256_AVAILABLE = false
   else
@@ -51,7 +51,11 @@ module CensusUtils
       # not all ruby installs and builds contain openssl, so degrade
       # gracefully if it can't be pulled in.
       require 'openssl'
+
+      # this line will throw an uninitialized constant exception for < 0.9.8 openssl since SHA256 doesn't exist in 0.9.7
+      OpenSSL::Digest::SHA256.new
       RUBY_SHA256_AVAILABLE = true
+
     rescue LoadError => e
       RUBY_SHA256_AVAILABLE = false
     end
@@ -62,11 +66,10 @@ module CensusUtils
 
   # get the openlogic rules file checksum once as it won't
   # change during a run (after any rule updates)
-  def openlogic_rules_file_checksum  
-    @@openlogic_rules_file_checksum ||= add_check_digits(Digest::MD5.hexdigest(
-        File.new(File.join(File.dirname(__FILE__), "..", "..", 
-	    "rules", "openlogic", "project-rules.xml")).read))
-  end
+
+  # def openlogic_rules_file_checksum  
+      # assumes that the top-level app has already initialized the urv md5
+  # end
 
 
 =begin rdoc
@@ -93,8 +96,8 @@ module CensusUtils
                      directory_count, file_count, sym_link_count,
                      permission_denied_count, files_of_interest_count,
                      start_time, end_time, distro, os_family, os,
-		                 os_version, machine_architecture, kernel, 
-		                 production_scan, include_paths, preview_results, group_passcode,
+		     os_version, machine_architecture, kernel, 
+		     production_scan, include_paths, preview_results, group_passcode,
                      universal_rules_md5, universal_rules_version, geography)
     io = nil
     if (destination == STDOUT) then
@@ -119,7 +122,7 @@ module CensusUtils
       report_type:             census
       census_plugin_version:   <%= CENSUS_PLUGIN_VERSION %>
       client_version:          <%= client_version %>
-      rules_file_checksum:     <%= CensusUtils.openlogic_rules_file_checksum %>
+      rules_file_checksum:     <%= universal_rules_md5 %>
       machine_id:              <%= machine_id %>
       directory_count:         <%= directory_count %>
       file_count:              <%= file_count %>
@@ -159,16 +162,32 @@ module CensusUtils
     template = template.gsub(/^\s+/, "").squeeze(" ")
     text = ERB.new(template, 0, "%").result(binding)
 
-    # now create a secure checksum of the results to use as an integrity check
-    # on the server side.  Do this by combining the current OpenLogic rules
-    # file checksum with a constant to create a secret key.  This secret key
-    # is then blended into the results of an SHA256 hash of the file contents
-    # to produce a cryptographically strong hash that we can use on the server
-    # to make sure the file contents have not been tampered with.  
-    # Note that this mechanism can provide only minor defense against a
-    # motivated attacker seeking to skew the results of the census.
-    checksum = CensusUtils.openlogic_rules_file_checksum
-    secret = checksum + CENSUS_PLUGIN_VERSION_KEY
+    # in RodC's code, the above "\n" was being appended after the integrity check which hoses up the server side computation
+
+    printf(io, "integrity_check: #{create_integrity_check(text,universal_rules_md5)}\n")
+    printf(io, text )
+    
+    io.close unless io == STDOUT
+  
+    if preview_results && io != STDOUT
+      printf("\nThese are the actual machine scan results from the file, %s, that would be delivered by --deliver-results option\n", destination)
+      puts File.new(destination).read
+    end
+  end
+
+  # create a secure checksum of the results to use as an integrity check
+  # on the server side.  Do this by combining the current OpenLogic rules
+  # file checksum with a constant to create a secret key.  This secret key
+  # is then blended into the results of an SHA256 hash of the file contents
+  # to produce a cryptographically strong hash that we can use on the server
+  # to make sure the file contents have not been tampered with.  
+  # Note that this mechanism can provide only minor defense against a
+  # motivated attacker seeking to skew the results of the census.
+  
+  def create_integrity_check(text,universal_rules_md5)
+
+    secret = universal_rules_md5 + CENSUS_PLUGIN_VERSION_KEY
+
     if RUBY_SHA256_AVAILABLE
       hmac = OpenSSL::HMAC.new(secret, OpenSSL::Digest::SHA256.new)
       hmac.update(text)
@@ -182,15 +201,14 @@ module CensusUtils
       mac = hexify(raw_mac)
     end
 
-    printf(io, "integrity_check: #{add_check_digits(mac)}\n")
-    printf(io, text + "\n")
-    
-    io.close unless io == STDOUT
-  
-    if preview_results && io != STDOUT
-      printf("\nThese are the actual machine scan results from the file, %s, that would be delivered by --deliver-results option\n", destination)
-      puts File.new(destination).read
-    end
+    # printf("integrity_text size: #{text.size}\n")
+    # printf("mac before adding check digits:\n#{mac}, #{mac.size}\n")
+
+    result = add_check_digits(mac)
+
+    # printf("results: #{result}, #{result.size}\n")
+
+    return result
   end
 
   # turn a raw array of bytes into a hex string
@@ -203,9 +221,10 @@ module CensusUtils
   end
 
   module_function :add_check_digits
+  module_function :create_integrity_check
   module_function :hexify
   module_function :machine_report
-  module_function :openlogic_rules_file_checksum
+  # module_function :openlogic_rules_file_checksum
 
 end
 
