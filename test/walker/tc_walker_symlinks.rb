@@ -67,12 +67,12 @@ class TcWalkingSymLinks < Test::Unit::TestCase
          rescue Exception => e
            fail("This means something bad has happened.  We thought that this infinite recursion problem was limited to when we only ran with JRuby.  If we got an exception when trying to require 'java', I think it means that the parent process was kicked off with native Ruby, not JRuby.\nException = #{e.inspect}")
          end
-         
-         java_version = java.lang.System.get_property("java.version") # same as Java::JavaLang::System.getProperty
-         java_vm_version = java.lang.System.get_property("java.vm.version") 
-         
-         puts "java.version    = '#{java_version}'"
-         puts "java.vm.version = '#{java_vm_version}'"
+         puts "JAVA SYSTEM PROPERTIES"
+         java.lang.System.getProperties().list(java.lang.System.out);
+         # you can get at the individual properties if you want like this...
+         #   java_version = java.lang.System.get_property("java.version") 
+         # which is the same as...
+         #   java_version = Java::JavaLang::System.getProperty
          puts "########## WARNING WARNING WARNING WARNING WARNING ##################################\n"
          break
        end
