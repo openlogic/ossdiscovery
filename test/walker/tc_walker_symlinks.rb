@@ -59,9 +59,21 @@ class TcWalkingSymLinks < Test::Unit::TestCase
        path_count = path_count + 1
        
        if (path_count > 100) then # at the time this was writte, 11 was the actual number here, but I figured I'd give it a good bit of room to grow
-         puts "########## WARNING WARNING WARNING WARNING WARNING ##################################"
+         puts "\n########## WARNING WARNING WARNING WARNING WARNING ##################################"
          puts "This environment recurses infinitely instead of handling circular symlinks correctly."
-         puts "########## WARNING WARNING WARNING WARNING WARNING ##################################"
+         
+         begin
+           require 'java'
+         rescue Exception => e
+           fail("This means something bad has happened.  We thought that this infinite recursion problem was limited to when we only ran with JRuby.  If we got an exception when trying to require 'java', I think it means that the parent process was kicked off with native Ruby, not JRuby.\nException = #{e.inspect}")
+         end
+         
+         java_version = java.lang.System.get_property("java.version") # same as Java::JavaLang::System.getProperty
+         java_vm_version = java.lang.System.get_property("java.vm.version") 
+         
+         puts "java.version    = '#{java_version}'"
+         puts "java.vm.version = '#{java_vm_version}'"
+         puts "########## WARNING WARNING WARNING WARNING WARNING ##################################\n"
          break
        end
      end # of Find.find(dir)
