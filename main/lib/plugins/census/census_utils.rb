@@ -64,13 +64,6 @@ module CensusUtils
   # we can use SHA256 if it's available through either Ruby or Java
   SHA256_AVAILABLE = RUBY_SHA256_AVAILABLE || JAVA_SHA256_AVAILABLE
 
-  # get the openlogic rules file checksum once as it won't
-  # change during a run (after any rule updates)
-
-  # def openlogic_rules_file_checksum  
-      # assumes that the top-level app has already initialized the urv md5
-  # end
-
 
 =begin rdoc
   Implement ISO 7064 mod(97,10) check digits to prevent accidental and some
@@ -122,7 +115,6 @@ module CensusUtils
       report_type:             census
       census_plugin_version:   <%= CENSUS_PLUGIN_VERSION %>
       client_version:          <%= client_version %>
-      rules_file_checksum:     <%= universal_rules_md5 %>
       machine_id:              <%= machine_id %>
       directory_count:         <%= directory_count %>
       file_count:              <%= file_count %>
@@ -224,7 +216,6 @@ module CensusUtils
   module_function :create_integrity_check
   module_function :hexify
   module_function :machine_report
-  # module_function :openlogic_rules_file_checksum
 
 end
 
