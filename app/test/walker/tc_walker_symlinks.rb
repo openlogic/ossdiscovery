@@ -75,7 +75,7 @@ class TcWalkingSymLinks < Test::Unit::TestCase
            # which is the same as...
            #   java_version = Java::JavaLang::System.getProperty
            
-           msg = msg << "\nJAVA VERSION\N" << java.lang.System.get_property("java.vm.version")
+           msg = msg << "\nJAVA VERSION\n" << java.lang.System.get_property("java.vm.version")
            msg = msg << "\n########## WARNING WARNING WARNING WARNING WARNING ##################################\n"
            
            raise msg
