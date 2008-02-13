@@ -34,6 +34,7 @@ require 'net/http'
 require 'find'
 require 'erb'
 require 'rbconfig'
+require 'pp'
 
 begin
   # if we're running under JRuby, we can still make HTTPS work
@@ -206,8 +207,10 @@ def report( packages )
     longest_version = "Version".length
     
     packages.each do |package| 
-      longest_name = package.name.length if (package.name.length > longest_name)
-      longest_version = package.version.length if (package.version.length > longest_version)
+      if ( package.version.length < 25 )
+        longest_name = package.name.length if (package.name.length > longest_name)
+        longest_version = package.version.length if (package.version.length > longest_version)
+      end
     end # of packages.each
     
     printf(io, %{#{"Package Name".ljust(longest_name)} #{"Version".ljust(longest_version)} Location\n})
@@ -215,9 +218,14 @@ def report( packages )
     
     packages.to_a.sort!.each do | package |
       begin 
-        printf(io, "#{package.name.ljust(longest_name)} #{package.version.ljust(longest_version)} #{package.found_at}\n")
+
+        if ( package.version.size > 25 )
+          printf(io, "Possible error in rule: #{package.name} ... matched version text was too large (#{package.version.size} characters)\n")
+        else
+          printf(io, "#{package.name.ljust(longest_name)} #{package.version.ljust(longest_version)} #{package.found_at}\n")
+        end
       rescue Exception => e
-        printf(io, "Possible error in rule: #{package} ... matched version text was likely too large\n")
+        printf(io, "Possible error in rule: #{package.name}\n")
       end
     end # of packages.each
   end

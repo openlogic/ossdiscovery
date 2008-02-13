@@ -157,7 +157,13 @@ module CensusUtils
     # in RodC's code, the above "\n" was being appended after the integrity check which hoses up the server side computation
 
     printf(io, "integrity_check: #{create_integrity_check(text,universal_rules_md5)}\n")
-    printf(io, text )
+
+    # TODO - when a rogue rule runs afoul and matches too much text on a package, it will blow chunks here
+    begin
+      printf(io, text )
+    rescue Exception => e
+      printf(io, "Possible bad rule matching too much text.  Sorry, can't write the machine report\n")
+    end
     
     io.close unless io == STDOUT
   
