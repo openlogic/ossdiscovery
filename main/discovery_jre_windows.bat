@@ -28,8 +28,8 @@ REM You can contact the OSS Discovery team at info@ossdiscovery.org.
 REM You can contact OpenLogic at info@openlogic.com.
 
 set OSSDISCOVERY_HOME=%~dp0%
-set JAVA_HOME=%OSSDISCOVERY_HOME%\jre-1.5.0_07-windows-ia32\
+set JAVA_HOME=%OSSDISCOVERY_HOME%\jre\jre-1.5.0_07-windows-ia32\
 
 cd "%OSSDISCOVERY_HOME%"
-%OSSDISCOVERY_HOME\jruby\bin\jruby.bat %OSSDISCOVERY_HOME%\lib\discovery.rb --progress 100 --human-results readable_scanresults.txt %1 %2 %3 %4 %5 %6
+%OSSDISCOVERY_HOME%\jruby\bin\jruby.bat %OSSDISCOVERY_HOME%\lib\discovery.rb --progress 100 --human-results readable_scanresults.txt %1 %2 %3 %4 %5 %6
 
