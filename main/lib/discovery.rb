@@ -389,11 +389,12 @@ options = GetoptLong.new(
 
        @results = arg
        begin
-         File.open(@results, "w") {|file|}      
+         # Issue 34: only open as append in this test so we do not blow away an existing results file
+         File.open(@results, "a") {|file|}      
        rescue Exception => e
          puts "ERROR: Unable to write to file: '#{@results}'\n"
          if ( !(File.directory?( File.dirname(@results) ) ) )
-           puts"The directory " + File.dirname( @results ) + " does not exist\n"
+           puts "The directory " + File.dirname( @results ) + " does not exist\n"
          end
          exit 0
        end
