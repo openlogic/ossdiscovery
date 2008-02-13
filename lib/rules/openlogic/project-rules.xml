@@ -1575,7 +1575,7 @@
       <result expression="libmagick OR libmagick_a OR libwand"/>
       <match-rule name="libmagick" type="binary" filename="libMagick.so.*?$" regexp="\/ImageMagick-([0-9].*?[0-9])\/"/>
       <match-rule name="libmagick_a" type="binary" filename="libMagick\.a" regexp="\/ImageMagick-([0-9].*?[0-9])\/"/>
-      <match-rule name="libwand" type="binary" filename="libWand\.a" regexp="\/ImageMagick-([0-9].*?[0-9])\/"/>
+      <match-rule name="libwand" type="binary" filename="libWand\.a" regexp="\/ImageMagick-([0-9].*?[0-9])$\/"/>
     </match-rules>
   </project-rule>
   <project-rule name="ivy" from="wild" os="all">
