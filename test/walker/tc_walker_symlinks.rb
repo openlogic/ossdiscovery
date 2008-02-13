@@ -79,7 +79,7 @@ class TcWalkingSymLinks < Test::Unit::TestCase
           msg = msg << "\n########## WARNING WARNING WARNING WARNING WARNING ##################################\n"
            
           raise msg
-        end
+        end # of if (path_count > 100)
       end # of Find.find(dir)
     rescue Exception => e
       puts e.to_s
