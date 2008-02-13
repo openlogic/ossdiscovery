@@ -53,30 +53,37 @@ class TcWalkingSymLinks < Test::Unit::TestCase
      
      symlinks_dir = File.expand_path(File.join(File.dirname(__FILE__), '..', 'resources', 'symlink-tests', 'ignore_these'))
      assert(File.exist?(symlinks_dir) && File.directory?(symlinks_dir), "Expected the directory '#{symlinks_dir}' to exist. In order to create it, just run the 'run-me.sh' script located here: '#{File.dirname(symlinks_dir)}'")
-     
-     path_count = 0
-     Find.find(symlinks_dir) do |path|
-       path_count = path_count + 1
-       
-       if (path_count > 100) then # at the time this was writte, 11 was the actual number here, but I figured I'd give it a good bit of room to grow
-         puts "\n########## WARNING WARNING WARNING WARNING WARNING ##################################"
-         puts "This environment recurses infinitely instead of handling circular symlinks correctly."
+     begin     
+       path_count = 0
+       Find.find(symlinks_dir) do |path|
+         path_count = path_count + 1
          
-         begin
-           require 'java'
-         rescue Exception => e
-           fail("This means something bad has happened.  We thought that this infinite recursion problem was limited to when we only ran with JRuby.  If we got an exception when trying to require 'java', I think it means that the parent process was kicked off with native Ruby, not JRuby.\nException = #{e.inspect}")
+         if (path_count > 100) then # at the time this was writte, 11 was the actual number here, but I figured I'd give it a good bit of room to grow
+           msg = "\n########## WARNING WARNING WARNING WARNING WARNING ##################################"
+           msg = msg << "\nThis environment recurses infinitely instead of handling circular symlinks correctly."
+           
+           begin
+             require 'java'
+           rescue Exception => e
+             fail("This means something bad has happened.  We thought that this infinite recursion problem was limited to when we only ran with JRuby.  If we got an exception when trying to require 'java', I think it means that the parent process was kicked off with native Ruby, not JRuby.\nException = #{e.inspect}")
+           end
+#           msg = msg << "\nJAVA SYSTEM PROPERTIES"
+#           java.lang.System.getProperties().list(java.lang.System.out);
+  
+           # you can get at the individual properties if you want like this...
+           #   java_version = java.lang.System.get_property("java.version") 
+           # which is the same as...
+           #   java_version = Java::JavaLang::System.getProperty
+           
+           msg = msg << "\nJAVA VERSION\N" << java.lang.System.get_property("java.vm.version")
+           msg = msg << "\n########## WARNING WARNING WARNING WARNING WARNING ##################################\n"
+           
+           raise msg
          end
-         puts "JAVA SYSTEM PROPERTIES"
-         java.lang.System.getProperties().list(java.lang.System.out);
-         # you can get at the individual properties if you want like this...
-         #   java_version = java.lang.System.get_property("java.version") 
-         # which is the same as...
-         #   java_version = Java::JavaLang::System.getProperty
-         puts "########## WARNING WARNING WARNING WARNING WARNING ##################################\n"
-         break
-       end
-     end # of Find.find(dir)
+       end # of Find.find(dir)
+     rescue Exception => e
+       puts e.to_s
+     end
      
      assert(path_count > 0)
      
