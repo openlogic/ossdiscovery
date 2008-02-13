@@ -470,7 +470,7 @@ options = GetoptLong.new(
 
        @machine_results = arg
        begin
-         File.open(@machine_results, "w") {|file|}      
+         File.open(@machine_results, "a") {|file|}      
        rescue Exception => e
          puts "ERROR: Unable to write to file: '#{@machine_results}'"
          if ( !(File.directory?( File.dirname(@machine_results) ) ) )
