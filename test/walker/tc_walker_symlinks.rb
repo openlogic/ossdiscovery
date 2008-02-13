@@ -53,15 +53,21 @@ class TcWalkingSymLinks < Test::Unit::TestCase
      
     symlinks_dir = File.expand_path(File.join(File.dirname(__FILE__), '..', 'resources', 'symlink-tests', 'ignore_these', 'setup-circular-link'))
     assert(File.exist?(symlinks_dir) && File.directory?(symlinks_dir), "Expected the directory '#{symlinks_dir}' to exist. In order to create it, just run the 'run-me.sh' script located two levels up from the expected directory.")
+    
+    max_recurse_attempts = 100
+    msg = "\n########## WARNING WARNING WARNING WARNING WARNING ##################################"
+    msg = msg << "\nThis environment recurses more than it needs to when it encounters circular symlinks."
+    print_warning = false
     begin     
       path_count = 0
       Find.find(symlinks_dir) do |path|
         path_count = path_count + 1
         
-        if (path_count > 41) then # 42 is the number of times I saw it try on Ubuntu 7.04 with java 1.5.0_12-b04 before it stopped
-          msg = "\n########## WARNING WARNING WARNING WARNING WARNING ##################################"
-          msg = msg << "\nThis environment recurses more than it needs to when it encounters circular symlinks."
-          
+        if (path_count > 2) then # 42 is the number of times I saw it try on Ubuntu 7.04 with java 1.5.0_12-b04 before it stopped
+          print_warning = true
+        end # of if (path_count >2)
+        
+        if (path_count > max_recurse_attempts) # arbitrarily picked this value, the recursion ought to be done by now
           begin
             require 'java'
           rescue Exception => e
@@ -80,16 +86,29 @@ class TcWalkingSymLinks < Test::Unit::TestCase
            
           raise msg
         end # of if (path_count > 100)
-      
+
 #        puts "#{path_count}: #{path}" 
       
       end # of Find.find(dir)
     rescue Exception => e
-      puts e.to_s
+      # do nothing, let this flow through and print the warning below
     end
      
     assert(path_count > 0)
-     
+    
+    if (print_warning) then
+      begin
+        require 'java'
+      rescue Exception => e
+        fail("This means something bad has happened.  We thought that this infinite recursion problem was limited to when we only ran with JRuby.  If we got an exception when trying to require 'java', I think it means that the parent process was kicked off with native Ruby, not JRuby.\nException = #{e.inspect}")
+      end
+       
+      msg = msg << "\nJAVA VERSION: " << java.lang.System.get_property("java.vm.version")
+      msg = msg << "\nattempted to recurse #{path_count} times (max attempts was set to #{max_recurse_attempts})"
+      msg = msg << "\n########## WARNING WARNING WARNING WARNING WARNING ##################################\n"
+      puts(msg)
+    end # of if (print_warning)
+    
   end
    
 end
