@@ -34,6 +34,7 @@ require 'net/http'
 require 'find'
 require 'erb'
 require 'rbconfig'
+require 'uri'
 require 'pp'
 
 begin
@@ -62,6 +63,8 @@ end
 
 # we can use HTTPS if it's available through either Ruby or Java
 HTTPS_AVAILABLE = RUBY_HTTPS_AVAILABLE || JAVA_HTTPS_AVAILABLE
+
+
 
 begin
     require 'win32/registry'
@@ -346,7 +349,7 @@ def deliver_results( result_file )
   begin
     
     if not @destination_server_url.match("^https:")
-
+      
       # The Open Source Census doesn't allow sending via regular HTTP for security reasons
       if defined?(CENSUS_PLUGIN_VERSION) && (@override_https == nil || @override_https == false)
         puts "For security reasons, the Open Source Census requires HTTPS."
@@ -396,33 +399,29 @@ def deliver_results( result_file )
         headers = { "Content-Type" => "application/x-www-form-urlencoded" }
         response = http.request_post( path, "scan[scan_results]=#{results}", headers)
       else # Java
-	# handle a socks proxy - commented out because it's completely untested
-        #props = java.lang.System.properties
-	#props.put("socksProxyHost", @proxy_host)
-	#props.put("socksProxyPort", @proxy_port)
-	#props.put("socksProxyUser", @proxy_user)
-	#props.put("socksProxyPassword", @proxy_password)
-	#System.properties = props
+        # TODO - HTTPS through a proxy
         connection = java.net.URL.new(@destination_server_url).open_connection
         connection.do_output = true
         connection.use_caches = false
-	connection.set_request_property("Content-Type", "application/x-www-form-urlencoded")
+        connection.set_request_property("Content-Type", "application/x-www-form-urlencoded")
+        connection.set_request_property("Accept","*/*")
         connection.request_method = "POST"
-	puts "getting output stream on class with name=#{connection.class.name}"
-	begin
-	  connection.connect
-	  puts "SSL version=#{connection.server_certificates[0].version}"
-	  os = connection.output_stream
-	rescue Exception => e
-	  puts "couldn't get output stream because: #{e}"
-	  return
+        # puts "getting output stream on class with name=#{connection.class.name}"
+	      begin
+      	  connection.connect
+      	  # puts "SSL version=#{connection.server_certificates[0].version}"
+      	  os = connection.output_stream
+      	rescue Exception => e
+      	  puts "couldn't get output stream because: #{e}"
+      	  return
         end
-	dos = java.io.DataOutputStream.new(os)
-	puts "got it"
-	dos.writeUTF("scan[scan_results]=#{results}")
-	dos.flush
-	dos.close
-	response = { "disco" => connection.get_header_field("disco") }
+  
+	      dos = java.io.DataOutputStream.new(os)
+      	puts "connected to OSSCensus server...\n"
+      	dos.writeBytes("scan[scan_results]=#{results}")
+      	dos.flush
+      	dos.close
+      	response = { "disco" => connection.get_header_field("disco") }
       end
     else 
       puts("Can't submit scan results to secure server: #{@destination_server_url} because we can't find OpenSSL and we're not running in JRuby")
@@ -430,6 +429,9 @@ def deliver_results( result_file )
     end
   
     case response
+    when JAVA_HTTPS_AVAILABLE
+      # let response header tell the story
+      
     when Net::HTTPSuccess
       # format constructed by the discovery server and added to the 'disco' header in the http post response:
       #  100, Scan saved, 16 packages
@@ -669,7 +671,7 @@ def get_windows_version_str
   # need to find out systemroot, drive, etc before going after prodspec.ini file.
   # some admins put system on drives other than C:
 
-  @os_architecture = "TODO"
+  @os_architecture = "unknown"
 
   Win32::Registry::HKEY_LOCAL_MACHINE.open('HARDWARE\DESCRIPTION\System\CentralProcessor\0') do |reg|
     reg_typ, reg_val = reg.read('ProcessorNameString')
@@ -699,7 +701,7 @@ def get_windows_version_str
    end # if
   end # do
 
-  return "win-TODO"
+  return "Unknown"
 end
 
 =begin rdoc
