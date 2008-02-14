@@ -76,7 +76,7 @@ OSSDISCOVERY_HOME=`pwd`
 # export this on a separate line because some versions of bash(solaris) blow when all on one export/define line
 export OSSDISCOVERY_HOME
 
-JAVA_HOME=$OSSDISCOVERY_HOME/jre-1.5.0_10-b03-solaris-sparc32/
+JAVA_HOME=$OSSDISCOVERY_HOME/jre/jre-1.5.0_10-b03-solaris-sparc32/
 export JAVA_HOME
 
 # echo "%%%% OSSDISCOVERY_HOME=$OSSDISCOVERY_HOME"
