@@ -138,11 +138,11 @@ rules_dirs: <% ['rules_openlogic', 'rules_drop_ins'] %>
 # 
 send_results: false                                             # default to not send, can be overridden on command line
 
-# TODO - IMPORTANT: This Default/Standard URL needs to point to OpenLogic's Disco 2 server when this goes to production
-
 # Note that destination_server_url and server_base_url can neither be localhost urls if proxying is being 
 # used or tested.  You can't proxy a localhost URL.
 destination_server_url: https://localhost:3000/scans/scanpost   # change to OL disco production server
+#destination_server_url: https://www.osscensus.org/service/scans/scanpost   # official scan post destination
+
 
 # WARNING - osscensus production will not accept scans unless this is false
 override_https: true
