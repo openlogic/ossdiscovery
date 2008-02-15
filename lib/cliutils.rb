@@ -99,9 +99,9 @@ def help()
   printf("                     optionally --deliver-results can take a parameter which is a path to an existing scan results file to deliver\n")
   printf("--help,           -h print this help message\n")
   printf("--human-results,  -u the absolute or relative path and filename for the human readable results files.  The default is %s\n", "STDOUT" )
-  printf("--geography,      -Y geography code, if the scan is submitted to census server as an anonymous scan, 
-  this overrides value in the config.yml file.  This is an exception to order dependences and must occur before 
-  --deliver-results on the command line\n" )
+  printf("--geography,      -Y geography code, if the scan is submitted to census server as an anonymous scan, this overrides\n" )
+  printf("                     value in the config.yml file.  This is an exception to order dependences and must occur before\n")
+  printf(                      "--deliver-results on the command line\n")
   printf("--group-passcode, -G the token representing the group passcode received at census registration time\n")
   printf("--inc-path,       -I include the path/location of detected package in machine scan results\n")  
   printf("--list-excluded,  -e during a scan, print a list of files that are excluded and the filter that excluded each\n")
