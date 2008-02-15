@@ -251,7 +251,7 @@ def report_audit_records( records )
   if (@results == STDOUT) then
     io = STDOUT
   else 
-    io = File.new(@results, "w")
+    io = File.new(@results, "a")
   end
   
   r_strings = Array.new
