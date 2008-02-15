@@ -79,7 +79,7 @@ module CensusUtils
     raise "add check digits failed" unless result.to_i % 97 == 1
 
     # convert the big long decimal string into a shorter hexadecimal string
-    result.to_i.to_s(16)
+    result.to_i.to_s(16).rjust(34, "0")
   end
 
 =begin rdoc
