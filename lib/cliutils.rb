@@ -122,6 +122,7 @@ def help()
   # future printf("--speed,          -s a value of 1,2, or 3 which is a hint to the rule engine for how precise to be.\n")
   # future printf("                     the lower the number, the faster but less precise the scan will be.\n")
   # future printf("                     The default speed is 2, medium\n")
+  printf("--rule-version,   -V print out rule version info and do nothing else (no scan performed)\n")
   printf("--throttle,       -T Enable throttling of the scanner so all system resources are not fully dedicated to running this tool.\n")
   printf("                     No arguments accepted for this option.  See the throttle_* properties in the configuration file.                                   \n")
   printf("--update-rules,   -r Gets updated scan rules from the server (discovery scan not performed).\n")
@@ -941,4 +942,24 @@ def show_geographies()
   8 | China           
   9 | Other          
 "
+end
+
+def print_rule_version_info()
+  universal_rules_version = ScanRulesReader.get_universal_rules_version()
+  universal_rules_md5 = ScanRulesReader.generate_aggregate_md5(File.dirname(@rules_openlogic))
+  rules_files = ScanRulesReader.find_all_scanrules_files(File.dirname(@rules_openlogic))
+  puts ""
+  puts "===== General Rule Version Information ====="
+  puts "universal-version           : '#{universal_rules_version}'"
+  puts "universal-rules-md5         : '#{universal_rules_md5}'"
+  puts "total number of rules files : '#{rules_files.size}'"
+  puts ""
+  puts "===== Individual File Information ====="
+  rules_files.each_with_index do |rf, i|
+    the_file = File.new(rf)
+    the_file.binmode
+    md5_val = Digest::MD5.hexdigest(the_file.read)
+    puts "#{i+1}) #{md5_val} #{rf}"
+  end
+  puts ""
 end

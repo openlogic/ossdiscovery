@@ -417,11 +417,14 @@ class ScanRulesReader
       universal_versions << root.attributes['universal-version']
     end # of rules_files.each
     
-    if (universal_versions.size != 1) then
-      raise "Expected there to be exactly one universal version for all rules files. Instead there were #{universal_versions.size} (#{universal_versions.to_a.inspect})."
+    if (universal_versions.size == 0) then
+      return "NO_UNIVERSAL_VERSION_VALUES_SET"
+    elsif (universal_versions.size > 1) then
+      return "MULTIPLE_UNIQUE_UNIVERSAL_VERSIONS"
+    else
+      return universal_versions.to_a[0]
     end
-  
-    return universal_versions.to_a[0]
+    
   end
   
 end
