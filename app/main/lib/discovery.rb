@@ -270,6 +270,7 @@ options = GetoptLong.new(
   [ "--preview-results","-R", GetoptLong::OPTIONAL_ARGUMENT ], # the existence of this flag will cause discovery to print to stdout the machine results file when scan is completed 
   [ "--production-scan","-P", GetoptLong::NO_ARGUMENT ],       # This flag identifies the scan you run as a scan of a production machine in the results.
   # future [ "--speed", "-s", GetoptLong::REQUIRED_ARGUMENT ], # speed hint - how much analysis to do, which rules to use
+  [ "--rule-version", "-V", GetoptLong::NO_ARGUMENT ],         # print out rule version info and do nothing else (no scan performed)
   [ "--throttle", "-T", GetoptLong::NO_ARGUMENT ],             # enable production throttling (by default it is disabled)
   [ "--update-rules", "-r", GetoptLong::OPTIONAL_ARGUMENT ],   # get update scan rules, and optionally perform the scan after getting them
   [ "--verbose", "-b", GetoptLong::OPTIONAL_ARGUMENT ],        # be verbose while scanning - every X files scanned  
@@ -503,6 +504,10 @@ options = GetoptLong.new(
     when "--production-scan"
       @production_scan = true
       @@log.info('Discovery') {'This scan will be identified as a production scan.'}
+    
+    when "--rule-version"
+      print_rule_version_info
+      exit 0
       
     when "--throttle"
       @throttling_enabled = true
