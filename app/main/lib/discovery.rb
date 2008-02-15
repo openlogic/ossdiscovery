@@ -214,7 +214,7 @@ def update_scan_rules()
   begin
     updater.update_scanrules(@rules_openlogic, @rules_files_url_path)
   rescue Exception => e
-    @@log.error("#{e.to_s}")
+    @@log.error("Discovery: " << e.inspect + e.backtrace.inspect.gsub("[\"", "\n\t[\"").gsub(", ", ",\n\t ")) # if there's a better/easier way to get a readable exception trace, I don't know what it is
     printf("#{e.to_s}\n")
   end
 end
