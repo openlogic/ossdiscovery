@@ -123,12 +123,7 @@ class ScanRulesUpdater
     rules_files_url_path = ScanRulesUpdater.scrub_url_path(rules_files_url_path)
     
     # get the list of files that need to be downloaded
-    begin
-      rules_files_to_download = http_get_rules_files_to_download(rules_files_url_path)
-    rescue Exception => ge
-      raise ge, "Can't get the list of rules files to download", caller
-      # either the server failed to respond or there was an issue on the client side or internet connection to the server
-    end
+    rules_files_to_download = http_get_rules_files_to_download(rules_files_url_path)
     
     # back the scan rules dir up
     rules_dir = ""
