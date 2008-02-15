@@ -93,7 +93,8 @@ log_level: <% Logger::INFO %>
 ##### Debugging/Developer-oriented properties
 
 # Set this property to true if you'd like an auditable list of all the files of interested that triggered successful 
-# matches to be printed out.  If it is set to true, this will be printed to the value specified in the 'results' property.
+# matches to be printed out.  If it is set to true, the human readable results files will contain data that will be
+# useful for a rule writer in terms of auditing all the key files that were matched against during the discovery run.
 produce_match_audit_records: false
 
 
