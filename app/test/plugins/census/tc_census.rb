@@ -8,7 +8,7 @@ require 'census_utils'
 
 class TcCensus < Test::Unit::TestCase
   
-  def test
+  def test_it
     assert(false, "Breaking the build intentionally to test CCrb")
   end
   
