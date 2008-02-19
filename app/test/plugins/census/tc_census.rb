@@ -7,6 +7,11 @@ require 'conf/census_config'
 require 'census_utils'
 
 class TcCensus < Test::Unit::TestCase
+  
+  def test
+    assert(false, "Breaking the build intentionally to test CCrb")
+  end
+  
   def test_basic_values_with_brackets
     assert_not_nil CensusConfig['census_enabled']
     assert_not_nil CensusConfig['group_code']
