@@ -141,7 +141,7 @@ send_results: false                                             # default to not
 
 # Note that destination_server_url and server_base_url can neither be localhost urls if proxying is being 
 # used or tested.  You can't proxy a localhost URL.
-destination_server_url: https://localhost:3000/scans/scanpost   # change to OL disco production server
+destination_server_url: http://localhost:3000/scans/scanpost   # change to OL disco production server
 #destination_server_url: https://www.osscensus.org/service/scans/scanpost   # official scan post destination
 
 
@@ -188,9 +188,8 @@ update_rules_and_do_scan: false
 #  7 | Australia     | 
 #  8 | China         | 
 #  9 | Other         | 
-#100 | Undefined     |
 
-geography: 55
+#geography: 9
 
 # group passcode
 group_passcode: 
