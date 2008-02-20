@@ -205,13 +205,15 @@ def report( packages )
   @production_scan = false unless @production_scan == true
   printf(io, "production scan       : %s\n",  @production_scan)
   
+  max_version_length = 32
+  
   if ( packages.length > 0 )
     # Format the output by making sure the columns are lined up so it's easier to read.
     longest_name = "Package Name".length
     longest_version = "Version".length
     
     packages.each do |package| 
-      if ( package.version.length < 25 )
+      if ( package.version.length < max_version_length )
         longest_name = package.name.length if (package.name.length > longest_name)
         longest_version = package.version.length if (package.version.length > longest_version)
       end
@@ -223,8 +225,9 @@ def report( packages )
     packages.to_a.sort!.each do | package |
       begin 
 
-        if ( package.version.size > 25 )
+        if ( package.version.size > max_version_length )
           printf(io, "Possible error in rule: #{package.name} ... matched version text was too large (#{package.version.size} characters)\n")
+          @@log.error("Possible error in rule: #{package.name} ... matched version text was too large (#{package.version.size} characters) - matched version: '#{package.version}'")
         else
           printf(io, "#{package.name.ljust(longest_name)} #{package.version.ljust(longest_version)} #{package.found_at}\n")
         end
@@ -260,7 +263,11 @@ def report_audit_records( records )
   r_strings.sort!
   printf(io, "##### Audit Info ###############################################################\n")
   audit_info = RuleAnalyzer.analyze_audit_records(records)
-  audit_info.each_pair {|file, versions| printf(io, "Unique file (#{file}) produced multiple version matches: #{versions.inspect}\n")}
+  if (audit_info.nil? or audit_info.size == 0) then
+    printf(io, "no audit info\n")
+  else
+    audit_info.each_pair {|file, versions| printf(io, "Unique file (#{file}) produced multiple version matches: #{versions.inspect}\n")}
+  end
   printf(io, "##### Raw Audit Data ###########################################################\n")
   r_strings.each {|r| printf(io, r.to_s + "\n")}
   
