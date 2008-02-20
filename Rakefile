@@ -9,7 +9,7 @@ namespace :release do
     Rake::PackageTask.new(PACKAGE_NAME, PACKAGE_VERSION) do |p|
       p.need_tar_gz = true
       p.need_zip = true
-      p.package_files.include("lib/**/*.*", "doc/*", "log/*", "log", "license/*", "README*", "discovery", "discovery.bat")
+      p.package_files.include("lib/**/*", "doc/*", "log/*", "log", "license/*", "README*", "discovery", "discovery.bat")
       p.package_files.exclude("lib/**/*.jar")
     end
 
