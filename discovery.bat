@@ -30,5 +30,5 @@ REM You can contact OpenLogic at info@openlogic.com.
 set OSSDISCOVERY_HOME=%~dp0%
 
 cd "%OSSDISCOVERY_HOME%"
-ruby %OSSDISCOVERY_HOME%\lib\discovery.rb --progress 100 --human-results readable_scanresults.txt %1 %2 %3 %4 %5 %6
+ruby %OSSDISCOVERY_HOME%\lib\discovery.rb --progress 100 --human-results readable_scanresults.txt %*
 
