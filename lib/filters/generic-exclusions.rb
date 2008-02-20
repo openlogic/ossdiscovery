@@ -36,4 +36,5 @@
 require "#{@filterdir}/no-hidden.rb"
 require "#{@filterdir}/no-tmp.rb"
 require "#{@filterdir}/no-system.rb"
+#require "#{@filterdir}/no-media.rb"
 
