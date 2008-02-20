@@ -83,5 +83,5 @@ export JAVA_HOME
 
 cd $OSSDISCOVERY_HOME
 
-$OSSDISCOVERY_HOME/jruby/bin/jruby $OSSDISCOVERY_HOME/lib/discovery.rb --progress 100 --human-results readable_scanresults.txt "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
+$OSSDISCOVERY_HOME/jruby/bin/jruby $OSSDISCOVERY_HOME/lib/discovery.rb --progress 100 --human-results readable_scanresults.txt $*
 
