@@ -99,6 +99,22 @@ class TcCLI < Test::Unit::TestCase
     last_line_second_val = lines[lines.size - 1].split(',')[1]
     assert(first_line_second_val < last_line_second_val)
   end
+  
+  def test_cli_rule_version
+    output = `ruby #{DISCOVERY_RB} --rule-version`
+    
+    assert(output.include?('General Rule Version Information'))
+    assert(output.include?('universal-version'))
+    
+    universal_rules_md5 = output.match(/^universal-rules-md5\s+:\s+'(.*)'.*$/)[1]
+    assert_equal(32, universal_rules_md5.size)
+    
+    total_files = output.match(/^total number of rules files\s+:\s+'(.*)'.*$/)[1].to_i
+    assert(total_files > 0)
+    
+    assert(output.include?('Individual File Information'))
+    
+  end
    
   
 end
