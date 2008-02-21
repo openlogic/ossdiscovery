@@ -320,8 +320,6 @@ def major_platform()
     return "cygwin"    
   when ( RUBY_PLATFORM =~ /java/ )     # JRuby returns java regardless of platform so we need to turn this into a real platform string
 
-    puts "host os: #{RbConfig::CONFIG['host_os']}" 
-
     case 
     when RbConfig::CONFIG['host_os'] == "Mac OS X" || RbConfig::CONFIG['host_os'] == "darwin" 
       # "host_os"=>"Mac OS X",
