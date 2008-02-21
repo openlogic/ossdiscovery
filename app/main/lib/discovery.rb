@@ -342,8 +342,9 @@ options = GetoptLong.new(
           deliver_results( arg )
           exit 0
         else
-          @machine_results = arg
-          # proceed with the scan using new given filename as the machine results file
+          puts "The file you specified to be delivered to the census server does not exist."
+          puts File.expand_path(arg)
+          exit 1
         end
       end
 
