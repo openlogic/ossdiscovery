@@ -33,12 +33,3 @@
 # make sure the following value is set to 'true'.  If this value is set to 'false',
 # no other parameters in this file will be used.
 census_enabled: true
-
-#--------------------------------------------------------------------------------------
-# Group code is how the census relates multiple machines for unified reporting purposes.
-# In other words, you can see an aggregated report for all machines using the same group code.
-#
-# If set to nil, the group code will be assigned during scan submission.
-# If you already have a group code from registering with the census, you can
-# insert the value below or pass it on the command-line.
-group_code: nil

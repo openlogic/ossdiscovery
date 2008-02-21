@@ -191,5 +191,11 @@ update_rules_and_do_scan: false
 
 #geography: 9
 
-# group passcode
-group_passcode: 
+#--------------------------------------------------------------------------------------
+# Census code is how the census grroups multiple machines together for unified reporting purposes.
+# In other words, you can see an aggregated report for all machines using the same census code.
+#
+# If set to nil, the census code will be assigned during scan submission.
+# If you already have a census code from registering with the census, you can
+# insert the value below or pass it on the command-line.
+census_code: 
