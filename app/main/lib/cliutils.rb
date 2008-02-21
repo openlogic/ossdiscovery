@@ -318,11 +318,12 @@ def major_platform()
     return "macosx"
   when ( RUBY_PLATFORM =~ /cygwin/ )
     return "cygwin"    
-  when ( RUBY_PLATFORM =~ /java/ )     # JRuby returns java regardless of platform
-    # TODO - need to turn this into a real platform string
-    
+  when ( RUBY_PLATFORM =~ /java/ )     # JRuby returns java regardless of platform so we need to turn this into a real platform string
+
+    puts "host os: #{RbConfig::CONFIG['host_os']}" 
+
     case 
-    when RbConfig::CONFIG['host_os'] == "Mac OS X"
+    when RbConfig::CONFIG['host_os'] == "Mac OS X" || RbConfig::CONFIG['host_os'] == "darwin" 
       # "host_os"=>"Mac OS X",
       return "macosx"
     when RbConfig::CONFIG['host_os'] == "Linux"
@@ -513,7 +514,7 @@ def deliver_results( result_file )
       printf("Bad response from server while posting results")
       response["disco"] = "0, Bad response from server while posting results"
             
-    when response["disco"] == nil 
+    when response != nil && response["disco"] == nil 
       response.each { | name, value |
          printf("%s: %s\n", name, value )
        } 
