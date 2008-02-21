@@ -56,21 +56,19 @@ class TcCLI < Test::Unit::TestCase
   
   def test_list_projects
     
-    assert true
+    test = `ruby #{DISCOVERY_RB} --list-projects verbose`
+    if ( test.match("name,from,platforms,description") == nil || test.match("Unsupported option.  Please review the list of supported options and usage") != nil ) then
+      fail("The '--list-projects' cli option is not working as expected.")
+    else
+      assert(true, "TcCliParams#test_list_projects passed")
+    end
     
-#    test = `ruby #{DISCOVERY_RB} --list-projects verbose`
-#    if ( test.match("name,from,platforms,description") == nil || test.match("Unsupported option.  Please review the list of supported options and usage") != nil ) then
-#      fail("The '--list-projects' cli option is not working as expected.")
-#    else
-#      assert(true, "TcCliParams#test_list_projects passed")
-#    end
-#    
-#    test = `ruby #{DISCOVERY_RB} --list-projects`
-#    if ( test.match("Unsupported option.  Please review the list of supported options and usage") != nil ) then
-#      fail("The '--list-projects' cli option is not working as expected.")
-#    else
-#      assert(true, "TcCliParams#test_list_projects passed")
-#    end
+    test = `ruby #{DISCOVERY_RB} --list-projects`
+    if ( test.match("Unsupported option.  Please review the list of supported options and usage") != nil ) then
+      fail("The '--list-projects' cli option is not working as expected.")
+    else
+      assert(true, "TcCliParams#test_list_projects passed")
+    end
   end
   
   def test_cli_production_scan
