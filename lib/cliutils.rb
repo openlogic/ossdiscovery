@@ -327,7 +327,7 @@ def major_platform()
       return "macosx"
     when RbConfig::CONFIG['host_os'] == "Linux"
       # "host_os"=>"Linux",
-      return "macosx"      
+      return "linux"      
     end
   end
 end
@@ -367,8 +367,6 @@ def deliver_results( result_file )
   begin
     
     if not @destination_server_url.match("^https:")
-    # if false # XXX TODO take out
-    
       # The Open Source Census doesn't allow sending via regular HTTP for security reasons
       if defined?(CENSUS_PLUGIN_VERSION) && (@override_https == nil || @override_https == false)
         puts "For security reasons, the Open Source Census requires HTTPS."
@@ -436,16 +434,23 @@ def deliver_results( result_file )
           java.lang.System.setProperty("http.proxyPort", @proxy_port.to_s )
           java.lang.System.setProperty("https.proxyPort", @proxy_port.to_s )
 
+          # method #1 of basic authenticated proxy interaction - not working correctly - debugging
+          # HTTPS will only work through an open proxy 
+
           if ( @proxy_user != nil )
             # TODO - should support additional authorization types, digest, ntlm if possible
+            # TODO - problems getting https to work through an authenticated proxy
+            # http://forum.java.sun.com/thread.jspa?threadID=188930&messageID=619120
+
             puts "setting up proxy authentication for proxy user: #{@proxy_user}"
             java.lang.System.setProperty("http.proxyAuthType", "basic" )
-            java.lang.System.setProperty("http.proxyUsername", Base64.encode64(@proxy_user ))
-            java.lang.System.setProperty("http.proxyPassword", Base64.encode64(@proxy_password ))
+            java.lang.System.setProperty("http.proxyUserName", Base64.encode64(@proxy_user) )
+            java.lang.System.setProperty("http.proxyPassword", Base64.encode64(@proxy_password) )
 
             java.lang.System.setProperty("https.proxyAuthType", "basic" )
-            java.lang.System.setProperty("https.proxyUserName", @proxy_user )
-            java.lang.System.setProperty("https.proxyPassword", @proxy_password )
+            java.lang.System.setProperty("https.proxyUserName", Base64.encode64(@proxy_user) )
+            java.lang.System.setProperty("https.proxyPassword", Base64.encode64(@proxy_password) )
+
           end
           
         end
@@ -456,6 +461,19 @@ def deliver_results( result_file )
         connection.use_caches = false
         connection.set_request_property("Content-Type", "application/x-www-form-urlencoded")
         connection.set_request_property("Accept","*/*")
+
+        # method #2 of setting the proxy user/password doesn't work with a basic authenticated apache proxy, but neither does the version above
+        # HTTPS will only work through an open proxy 
+
+        if ( @proxy_user != nil )
+
+          authorization = "#{@proxy_user}:#{@proxy_password}"
+          encoded_password = Base64.encode64(authorization).strip 
+          puts "pw encoded: [#{encoded_password}]"
+          connection.set_request_property( "Proxy-Authorization", 'Basic ' + encoded_password ) 
+
+        end
+
         connection.request_method = "POST"
 
         begin
