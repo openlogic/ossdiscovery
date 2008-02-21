@@ -10,13 +10,11 @@ class TcCensus < Test::Unit::TestCase
   
   def test_basic_values_with_brackets
     assert_not_nil CensusConfig['census_enabled']
-    assert_not_nil CensusConfig['group_code']
     assert_raise(RuntimeError) { CensusConfig['dog'] }
   end
 
   def test_basic_values_with_methods
     assert_not_nil CensusConfig.census_enabled
-    assert_not_nil CensusConfig.group_code
     assert_raise(RuntimeError) { CensusConfig.dog }
   end
 
