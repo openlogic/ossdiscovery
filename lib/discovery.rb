@@ -93,7 +93,7 @@ require 'scan_rules_updater'
 @dir_exclusion_filters = Hash.new
 @distro = "Unknown: Unrecognized"
 @file_exclusion_filters = Hash.new
-@group_passcode = ""
+@census_code = ""
 @inclusion_filters = Hash.new
 @@log = Config.prop(:log)
 
@@ -252,7 +252,7 @@ options = GetoptLong.new(
   [ "--deliver-batch", "-D", GetoptLong::REQUIRED_ARGUMENT ],  # argument points to a directory of scan results files to submit
   [ "--help", "-h", GetoptLong::NO_ARGUMENT ],                 # get help, then exit
   [ "--geography", "-Y", GetoptLong::REQUIRED_ARGUMENT ],      # geography code 
-  [ "--group-passcode","-G", GetoptLong::REQUIRED_ARGUMENT ],  # token representing the group passcode
+  [ "--census-code","-C", GetoptLong::REQUIRED_ARGUMENT ],     # identifier representing the census code
   [ "--human-results","-u", GetoptLong::REQUIRED_ARGUMENT ],   # path to results file
   [ "--list-os","-o", GetoptLong::NO_ARGUMENT ],               # returns the same os string that will be reported with machine scan results
   [ "--list-excluded", "-e", GetoptLong::NO_ARGUMENT],         # show excluded filenames during scan
@@ -349,7 +349,7 @@ options = GetoptLong.new(
       end
 
       # if deliverying anonymous results (no group passcode), then the geography option is required
-      if ( (@group_passcode == "") && (@geography == 100 || (@geography.to_i < 1 || @geography.to_i > 9)) )
+      if ( (@census_code == "") && (@geography == 100 || (@geography.to_i < 1 || @geography.to_i > 9)) )
         printf("\nScan not completed\n")
         printf("\nWhen delivering anonymous results to the OSSCensus server, the geography must be defined\n")
         printf("  use --geography to specify the geography code or \n")
@@ -360,9 +360,9 @@ options = GetoptLong.new(
         printf("If you are registered with the OSSCensus site and have a group passcode or token, you should set that \n")
         printf("on the command line or add it to your config.yml file.\n")
         exit 1
-      elsif ( @group_passcode != "" && @geography.to_i == 100 )
+      elsif ( @census_code != "" && @geography.to_i == 100 )
         # default the geography to "" if group passcode is supplied but geography was not overridden
-        # geography will be associated on the server side using the group-passcode
+        # geography will be associated on the server side using the census-code
         @geography = ""
       end
   
@@ -410,11 +410,11 @@ options = GetoptLong.new(
           exit 1
        end
 
-    when "--group-passcode"
-        @group_passcode = arg
-        # TODO - validation of group passcode format
+    when "--census-code"
+        @census_code = arg
+        # TODO - validation of census code format
 
-	# if geography is undefined and a group_passcode is supplied, geography should be empty
+	# if geography is undefined and a census_code is supplied, geography should be empty
         if ( @geography.to_i < 1 || @geography.to_i > 9 )
           @geography = ""  
         end
@@ -620,7 +620,7 @@ def make_reports
                  @walker.permission_denied_ct, @walker.foi_ct,
                  @starttime, @endtime, @distro, @os_family, @os,
                  @os_version, @os_architecture, @kernel, @production_scan,
-                 @include_paths, @preview_results, @group_passcode,
+                 @include_paths, @preview_results, @census_code,
                  @universal_rules_md5, @universal_rules_version, @geography )
   end
 end
