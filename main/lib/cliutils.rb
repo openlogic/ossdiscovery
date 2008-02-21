@@ -324,9 +324,13 @@ def major_platform()
     when RbConfig::CONFIG['host_os'] == "Mac OS X" || RbConfig::CONFIG['host_os'] == "darwin" 
       # "host_os"=>"Mac OS X",
       return "macosx"
+
     when RbConfig::CONFIG['host_os'] == "Linux"
       # "host_os"=>"Linux",
       return "linux"      
+
+    when RbConfig::CONFIG['host_os'].match("Windows")
+      return "jruby-windows"
     end
   end
 end
@@ -587,10 +591,18 @@ def make_machine_id
   platform = major_platform
   
   case platform
-  when "windows", "java"     # java is what's reported if running under JRuby, 
+  when "windows", "java", "jruby-windows"     
+	                     # 'java' is what's reported if running under JRuby, 
                              # so use the simplest possible machine id regardless of "real" platform
                              # if using JRuby
+    if (platform == "jruby-windows" )
+       # this isn't as good or specific as pure ruby with Win32 gem can give, but at this writing
+       # Win32 gem isn't ready for prime time under JRuby
+       @kernel = "#{@os_architecture}-mswin" 
+    end
+
     make_simple_machine_id   
+
   else  # every other platform including cygwin supports uname -a
     make_uname_based_machine_id platform
   end
@@ -600,9 +612,10 @@ end
   return a hashed machine id composed of only hostname, IP address, and distro string
 =end
 def make_simple_machine_id
-  # TODO - if we support JRuby at some point, we need to fix this so the "real" platform is determined
-  # through JRuby/java and if linux or other unix, find the real kernel version
-  @kernel = RUBY_PLATFORM
+
+  if ( @kernel == nil )
+    @kernel = RUBY_PLATFORM
+  end
 
   hostname = Socket.gethostname
   ipaddr = IPSocket.getaddress(hostname)
@@ -715,6 +728,8 @@ def get_os_version_str
     return get_linux_version_str
   when "windows"
     return get_windows_version_str
+  when "jruby-windows"
+    return @os_family
   when "macosx"
     return get_macosx_version_str
   when "solaris"
