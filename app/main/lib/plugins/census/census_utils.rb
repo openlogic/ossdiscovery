@@ -90,7 +90,7 @@ module CensusUtils
                      permission_denied_count, files_of_interest_count,
                      start_time, end_time, distro, os_family, os,
 		     os_version, machine_architecture, kernel, 
-		     production_scan, include_paths, preview_results, group_passcode,
+		     production_scan, include_paths, preview_results, census_code,
                      universal_rules_md5, universal_rules_version, geography)
     io = nil
     if (destination == STDOUT) then
@@ -133,7 +133,7 @@ module CensusUtils
       kernel:                  <%= kernel %>
       ruby_platform:           <%= RUBY_PLATFORM %>
       production_scan:         <%= production_scan %>
-      group_code:              <%= group_passcode %>
+      group_code:              <%= census_code %>
       geography:               <%= geography %>
       universal_rules_md5:     <%= universal_rules_md5 %>
       universal_rules_version: <%= universal_rules_version %>
