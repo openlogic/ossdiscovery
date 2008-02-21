@@ -36,6 +36,7 @@ require 'erb'
 require 'rbconfig'
 require 'uri'
 require 'pp'
+require 'base64'   # used for java proxy authentication properties
 
 begin
   # if we're running under JRuby, we can still make HTTPS work
@@ -318,7 +319,16 @@ def major_platform()
   when ( RUBY_PLATFORM =~ /cygwin/ )
     return "cygwin"    
   when ( RUBY_PLATFORM =~ /java/ )     # JRuby returns java regardless of platform
-    return "java"    
+    # TODO - need to turn this into a real platform string
+    
+    case 
+    when RbConfig::CONFIG['host_os'] == "Mac OS X"
+      # "host_os"=>"Mac OS X",
+      return "macosx"
+    when RbConfig::CONFIG['host_os'] == "Linux"
+      # "host_os"=>"Linux",
+      return "macosx"      
+    end
   end
 end
 
@@ -357,7 +367,8 @@ def deliver_results( result_file )
   begin
     
     if not @destination_server_url.match("^https:")
-      
+    # if false # XXX TODO take out
+    
       # The Open Source Census doesn't allow sending via regular HTTP for security reasons
       if defined?(CENSUS_PLUGIN_VERSION) && (@override_https == nil || @override_https == false)
         puts "For security reasons, the Open Source Census requires HTTPS."
@@ -378,7 +389,8 @@ def deliver_results( result_file )
     elsif HTTPS_AVAILABLE
       # otherwise, the delivery URL is HTTPS and SSL is available
       
-      # TODO - HTTPS will not yet work through a proxy - all HTTPS deliveries must be direct for now
+      # TODO - HTTPS in pure ruby will not yet work through a proxy - all HTTPS deliveries must be direct for now in that case
+      # or the delivery URL must be explicitly changed to be HTTP only to use a proxy
       
       # parse the delivery url for hostname/IP, port if one is given, otherwise default to 443 for ssl
       # irb(main):006:0> URI.split("https://192.168.10.211:443/cgi-bin/scanpost.rb?test=this")
@@ -401,34 +413,69 @@ def deliver_results( result_file )
         port = 80
       end
       
-      if RUBY_HTTPS_AVAILABLE
-        http = Net::HTTP.new(host, port)
-        http.use_ssl = true
-        headers = { "Content-Type" => "application/x-www-form-urlencoded" }
-        response = http.request_post( path, "scan[scan_results]=#{results}", headers)
-      else # Java
-        # TODO - HTTPS through a proxy
+      if !JAVA_HTTPS_AVAILABLE && RUBY_HTTPS_AVAILABLE
+
+        # TODO - HTTPS will not yet work through a proxy when using ruby's Net classes - all HTTPS deliveries must be direct for now
+	# TODO - tell override option to use HTTP instead of HTTPS
+
+        if ( @proxy_host != nil )
+           puts "HTTPS posts through a proxy is not supported when running under the Ruby Net classes.  Try JRuby instead"
+        else
+          http = Net::HTTP.new(host, port)
+          http.use_ssl = true
+          headers = { "Content-Type" => "application/x-www-form-urlencoded" }
+          response = http.request_post( path, "scan[scan_results]=#{results}", headers)
+        end
+
+      else # do it the Java way because for HTTPS through a proxy this will work in addition to the standard HTTPS post
+        
+        if ( @proxy_host != nil )
+
+          java.lang.System.setProperty("http.proxyHost", @proxy_host )
+          java.lang.System.setProperty("https.proxyHost", @proxy_host )
+          java.lang.System.setProperty("http.proxyPort", @proxy_port.to_s )
+          java.lang.System.setProperty("https.proxyPort", @proxy_port.to_s )
+
+          if ( @proxy_user != nil )
+            # TODO - should support additional authorization types, digest, ntlm if possible
+            puts "setting up proxy authentication for proxy user: #{@proxy_user}"
+            java.lang.System.setProperty("http.proxyAuthType", "basic" )
+            java.lang.System.setProperty("http.proxyUsername", Base64.encode64(@proxy_user ))
+            java.lang.System.setProperty("http.proxyPassword", Base64.encode64(@proxy_password ))
+
+            java.lang.System.setProperty("https.proxyAuthType", "basic" )
+            java.lang.System.setProperty("https.proxyUserName", @proxy_user )
+            java.lang.System.setProperty("https.proxyPassword", @proxy_password )
+          end
+          
+        end
+        
         connection = java.net.URL.new(@destination_server_url).open_connection
+      
         connection.do_output = true
         connection.use_caches = false
         connection.set_request_property("Content-Type", "application/x-www-form-urlencoded")
         connection.set_request_property("Accept","*/*")
         connection.request_method = "POST"
-        # puts "getting output stream on class with name=#{connection.class.name}"
-	      begin
+
+        begin
       	  connection.connect
-      	  # puts "SSL version=#{connection.server_certificates[0].version}"
       	  os = connection.output_stream
       	rescue Exception => e
       	  puts "couldn't get output stream because: #{e}"
       	  return
         end
   
-	      dos = java.io.DataOutputStream.new(os)
-      	puts "connected to OSSCensus server...\n"
-      	dos.writeBytes("scan[scan_results]=#{results}")
-      	dos.flush
-      	dos.close
+        begin 
+	  dos = java.io.DataOutputStream.new(os)
+      	  puts "connected to OSSCensus server...\n"
+      	  dos.writeBytes("scan[scan_results]=#{results}")
+      	  dos.flush
+      	  dos.close
+        rescue Exception => e
+          puts "Error: #{e.to_s}"
+        end
+
       	response = { "disco" => connection.get_header_field("disco") }
       end
     else 
@@ -448,11 +495,11 @@ def deliver_results( result_file )
       printf("Bad response from server while posting results")
       response["disco"] = "0, Bad response from server while posting results"
             
-    else
-      printf("Error result: ")
+    when response["disco"] == nil 
       response.each { | name, value |
-        printf("%s: %s\n", name, value )
-      } if response
+         printf("%s: %s\n", name, value )
+       } 
+
     end
   
   rescue Errno::ECONNREFUSED, Errno::EBADF, OpenSSL::SSL::SSLError
