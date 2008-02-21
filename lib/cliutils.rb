@@ -332,6 +332,11 @@ def major_platform()
     when RbConfig::CONFIG['host_os'].match("Windows")
       return "jruby-windows"
     end
+
+    when RbConfig::CONFIG['host_os'].match("SunOS")
+      return "solaris"
+    end
+
   end
 end
 
