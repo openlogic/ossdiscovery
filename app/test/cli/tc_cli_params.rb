@@ -69,6 +69,21 @@ class TcCLI < Test::Unit::TestCase
     else
       assert(true, "TcCliParams#test_list_projects passed")
     end
+    
+    test = `ruby #{DISCOVERY_RB} --list-projects`
+    lines = Array.new
+    test.each_line do |line|
+      lines << line
+    end
+    
+    first_line_first_val = lines[0].split(',')[0]
+    assert_equal(1, first_line_first_val.to_i)
+    first_line_second_val = lines[0].split(',')[1]
+    
+    last_line_first_val = lines[lines.size - 1].split(',')[0]
+    assert(last_line_first_val.to_i > 1)
+    last_line_second_val = lines[lines.size - 1].split(',')[1]
+    assert(first_line_second_val < last_line_second_val)
   end
   
   def test_cli_production_scan
@@ -82,25 +97,6 @@ class TcCLI < Test::Unit::TestCase
     prod_scan_val = output_production.match(/^production scan\s+:\s+(.*).*$/)[1]
     assert_equal('true', prod_scan_val, "The production scan value was expected to be 'true' because the '--production-scan' cli arg was passed in.")
     
-  end
-  
-  def test_cli_list_projects
-    assert true
-    
-#    test = `ruby #{DISCOVERY_RB} --list-projects`
-#    lines = Array.new
-#    test.each_line do |line|
-#      lines << line
-#    end
-#    
-#    first_line_first_val = lines[0].split(',')[0]
-#    assert_equal(1, first_line_first_val.to_i)
-#    first_line_second_val = lines[0].split(',')[1]
-#    
-#    last_line_first_val = lines[lines.size - 1].split(',')[0]
-#    assert(last_line_first_val.to_i > 1)
-#    last_line_second_val = lines[lines.size - 1].split(',')[1]
-#    assert(first_line_second_val < last_line_second_val)
   end
   
   def test_cli_rule_version
