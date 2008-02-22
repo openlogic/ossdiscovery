@@ -141,19 +141,21 @@ send_results: false                                             # default to not
 
 # Note that destination_server_url and server_base_url can neither be localhost urls if proxying is being 
 # used or tested.  You can't proxy a localhost URL.
-destination_server_url: http://localhost:3000/scans/scanpost   # change to OL disco production server
-#destination_server_url: https://www.osscensus.org/service/scans/scanpost   # official scan post destination
+#destination_server_url: http://localhost:3000/scans/scanpost   # change to OL disco production server
+destination_server_url: https://faf.osscensus.org/service/scans/scanpost   # official scan post destination
+#destination_server_url: http://216.24.133.134/service/scans/scanpost   # official scan post destination
 
 
 # WARNING - osscensus production will not accept scans unless this is false
-override_https: true
+override_https: false
 
 # Configurable options for scan rules updating.  TODO findme: clean this up, combining where possible with the 'destination_server_url' 
 # for delivering results above. Note: On hold until the server-side of things has been firmed up.
 
 # TODO - IMPORTANT: This Default/Standard URL needs to point to OpenLogic's Disco 2 server when this goes to production
 # localhost URLs won't work if testing or using a proxy - this URL must be changed the real server URL
-server_base_url: http://192.168.10.159:3000/
+#server_base_url: http://216.24.133.134
+server_base_url: https://faf.osscensus.org
 rules_files_url_path: rules_files.xml
 # When you navigate in a browser to 'server_base_url + rules_files_url_path' (eg... http://localhost:3000/rules_files.xml), 
 # you should see an xml file that specifies all the scan rules files available on the server.
