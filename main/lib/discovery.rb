@@ -559,6 +559,11 @@ end
 
 #----------------------------- do the business -------------------------------------
 
+# If this is running under jruby, we ignore the --nofollow preference and manually set
+# symlinks to not be followed.  Jruby has a lot of problems with symlinks, so we have to
+# completely ignore them unless running in native ruby.
+@follow_symlinks = false if RUBY_PLATFORM =~ /java/
+
 # Immediately check to see if the machine results output file is writeable.  If it is not, don't be a hack and do the scan anyway.
 begin
   File.open(@machine_results, "w") {|file|}      
