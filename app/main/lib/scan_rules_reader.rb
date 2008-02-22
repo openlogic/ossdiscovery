@@ -392,6 +392,7 @@ class ScanRulesReader
     files.each do |f|
       file = File.new( f, "rb" )
       md5_val = Digest::MD5.hexdigest( file.read )
+      file.close
       md5s << md5_val
     end # of files.each
     

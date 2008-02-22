@@ -106,6 +106,7 @@ class BinaryMatchRule < FilenameMatchRule
     binary_file = File.new(actual_filepath)
     binary_file.binmode
     binary_content = binary_file.read
+    binary_file.close
     return binary_content
   end
   

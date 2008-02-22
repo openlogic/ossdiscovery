@@ -116,7 +116,9 @@ class MD5MatchRule < FilenameMatchRule
   def MD5MatchRule.get_digest_for(filepath)
     file = File.new( filepath )
     file.binmode
-    return Digest::MD5.hexdigest( file.read )
+    digest = Digest::MD5.hexdigest( file.read )
+    file.close
+    return digest
   end
     
 end
