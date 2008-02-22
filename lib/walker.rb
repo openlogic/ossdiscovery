@@ -94,6 +94,12 @@ class Walker
   
   @@symlink_cache = Hash.new
   
+  # If we are running under jruby, we might as well require java so that it is available to
+  # this class.
+  if RUBY_PLATFORM =~ /java/
+    require 'java'
+  end
+  
   def initialize()
     
     $stdout.sync = true        # used so progress indicators will flush to console immediately
@@ -172,6 +178,7 @@ class Walker
     if ( @show_verbose && @file_ct != 0 ) 
       q,r = @file_ct.divmod( @show_every )
       if ( r == 0 )
+        # puts fileordir # Uncomment this line in order to see the directories being walked
         progress_report()
       end
     end    
@@ -229,7 +236,7 @@ class Walker
         if (File.readable?(fileordir)) then
           @file_ct += 1
 
-          if ( File.symlink?(fileordir) )
+          if ( is_symlink?(fileordir) )
             if ( @follow_symlinks )
               resolved, fileordir = resolve_symlink( fileordir )
             else
@@ -266,8 +273,8 @@ class Walker
           # if it's not empty
   
           begin 
-            if ( File.lstat(fileordir).symlink? )
-            
+                      
+            if ( is_symlink?(fileordir) )
               if ( @follow_symlinks )
                 # need to resolve the symlink
                 resolved, fileordir = resolve_symlink( fileordir )
@@ -336,6 +343,24 @@ class Walker
     if ( @show_permission_denied )
       printf("permission denied: %s\n", fileordir)
     end
+  end
+  
+  def is_symlink?(fileordir)
+    # If we are running under jruby, we need to use the old abs/can path to check
+    # if a directory is a symlink.  Otherwise, we can use the file system.  This call
+    # using the ruby File object returns false even on symlinks when running under JRuby
+    is_symlink=false
+    if RUBY_PLATFORM =~ /java/
+      java_file=java.io.File.new(fileordir)
+      begin
+        is_symlink = java_file.getCanonicalPath != java_file.getAbsolutePath
+      rescue java.io.IOException
+        is_symlink = true
+      end
+    else
+      is_symlink=File.lstat(fileordir).symlink?
+    end
+    is_symlink
   end
   
 =begin rdoc
