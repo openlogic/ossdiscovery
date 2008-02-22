@@ -23,7 +23,7 @@ class TcWalkingSymLinks < Test::Unit::TestCase
 =end
   def test_walker_follow_symlinks
     
-    if ( !(RUBY_PLATFORM =~ /mswin/) )  # don't run symlink tests on a windows platform
+    if ( !(RUBY_PLATFORM =~ /mswin/) or !(RUBY_PLATFORM =~ /java/) )  # don't run symlink tests on a windows platform or if this is a jruby run as jruby soils the bed with symlinks in most cases
       
       test = `ruby #{DISCOVERY_RB} --path #{SYMLINK_TESTS_DIR}`
     
@@ -39,7 +39,7 @@ class TcWalkingSymLinks < Test::Unit::TestCase
 =end  
   def test_walker_nofollow_symlinks
     
-    if ( !(RUBY_PLATFORM =~ /mswin/) )  # don't run symlink tests on a windows platform
+    if ( !(RUBY_PLATFORM =~ /mswin/) or !(RUBY_PLATFORM =~ /java/) )  # don't run symlink tests on a windows platform or if this is a jruby run as jruby soils the bed with symlinks in most cases
 
       test = `ruby #{DISCOVERY_RB} --path #{SYMLINK_TESTS_DIR} --nofollow`
 
