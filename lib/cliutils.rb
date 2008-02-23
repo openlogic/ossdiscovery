@@ -41,7 +41,10 @@ require 'base64'   # used for java proxy authentication properties
 begin
   # if we're running under JRuby, we can still make HTTPS work
   require 'java'
+  require "#{ENV['OSSDISCOVERY_HOME']}/jruby/lib/commons-httpclient-3.1.jar"
+
   JAVA_HTTPS_AVAILABLE = true
+
 rescue LoadError
   JAVA_HTTPS_AVAILABLE = false
 end
@@ -374,7 +377,8 @@ def deliver_results( result_file )
   begin
     
     if not @destination_server_url.match("^https:")
-      # The Open Source Census doesn't allow sending via regular HTTP for security reasons
+      # The Open Source Census doesn't allow sending via regular HTTP for security reasons unless explicitly given the override
+
       if defined?(CENSUS_PLUGIN_VERSION) && (@override_https == nil || @override_https == false)
         puts "For security reasons, the Open Source Census requires HTTPS."
         puts "Please update the value of destination_server_url in conf/config.yml to the proper HTTPS URL."
@@ -391,6 +395,7 @@ def deliver_results( result_file )
         response = Net::HTTP.Proxy( @proxy_host, @proxy_port, @proxy_user, @proxy_password ).post_form(URI.parse(@destination_server_url),    
                                   {'scan[scan_results]' => results} )
       end
+
     elsif HTTPS_AVAILABLE
       # otherwise, the delivery URL is HTTPS and SSL is available
       
@@ -420,6 +425,8 @@ def deliver_results( result_file )
       
       if !JAVA_HTTPS_AVAILABLE && RUBY_HTTPS_AVAILABLE
 
+        puts "java HTTPS is not available"
+
         # TODO - HTTPS will not yet work through a proxy when using ruby's Net classes - all HTTPS deliveries must be direct for now
 	# TODO - tell override option to use HTTP instead of HTTPS
 
@@ -433,75 +440,48 @@ def deliver_results( result_file )
         end
 
       else # do it the Java way because for HTTPS through a proxy this will work in addition to the standard HTTPS post
-        
+
+        client = org.apache.commons.httpclient.HttpClient.new
+        post = org.apache.commons.httpclient.methods.PostMethod.new( @destination_server_url )
+        post.set_do_authentication( true )
+        # post method created
+
         if ( @proxy_host != nil )
-
-          java.lang.System.setProperty("http.proxyHost", @proxy_host )
-          java.lang.System.setProperty("https.proxyHost", @proxy_host )
-          java.lang.System.setProperty("http.proxyPort", @proxy_port.to_s )
-          java.lang.System.setProperty("https.proxyPort", @proxy_port.to_s )
-
-          # method #1 of basic authenticated proxy interaction - not working correctly - debugging
-          # HTTPS will only work through an open proxy 
-
-          if ( @proxy_user != nil )
-            # TODO - should support additional authorization types, digest, ntlm if possible
-            # TODO - problems getting https to work through an authenticated proxy
-            # http://forum.java.sun.com/thread.jspa?threadID=188930&messageID=619120
-
-            puts "setting up proxy authentication for proxy user: #{@proxy_user}"
-            java.lang.System.setProperty("http.proxyAuthType", "basic" )
-            java.lang.System.setProperty("http.proxyUserName", Base64.encode64(@proxy_user) )
-            java.lang.System.setProperty("http.proxyPassword", Base64.encode64(@proxy_password) )
-
-            java.lang.System.setProperty("https.proxyAuthType", "basic" )
-            java.lang.System.setProperty("https.proxyUserName", Base64.encode64(@proxy_user) )
-            java.lang.System.setProperty("https.proxyPassword", Base64.encode64(@proxy_password) )
-
-          end
-          
-        end
-        
-        connection = java.net.URL.new(@destination_server_url).open_connection
-      
-        connection.do_output = true
-        connection.use_caches = false
-        connection.set_request_property("Content-Type", "application/x-www-form-urlencoded")
-        connection.set_request_property("Accept","*/*")
-
-        # method #2 of setting the proxy user/password doesn't work with a basic authenticated apache proxy, but neither does the version above
-        # HTTPS will only work through an open proxy 
-
-        if ( @proxy_user != nil )
-
-          authorization = "#{@proxy_user}:#{@proxy_password}"
-          encoded_password = Base64.encode64(authorization).strip 
-          puts "pw encoded: [#{encoded_password}]"
-          connection.set_request_property( "Proxy-Authorization", 'Basic ' + encoded_password ) 
-
+           # setting up proxy
+           client.get_host_configuration().set_proxy(@proxy_host, @proxy_port)
+           scope = Java::OrgApacheCommonsHttpclientAuth::AuthScope::ANY
+           credentials = org.apache.commons.httpclient.UsernamePasswordCredentials.new( @proxy_user, @proxy_password )
+           client.get_state().set_proxy_credentials( scope, credentials ) 
+           # proxy credentials created
         end
 
-        connection.request_method = "POST"
+        # create post data
 
-        begin
-      	  connection.connect
-      	  os = connection.output_stream
-      	rescue Exception => e
-      	  puts "couldn't get output stream because: #{e}"
-      	  return
-        end
-  
-        begin 
-	  dos = java.io.DataOutputStream.new(os)
-      	  puts "connected to OSSCensus server...\n"
-      	  dos.writeBytes("scan[scan_results]=#{results}")
-      	  dos.flush
-      	  dos.close
-        rescue Exception => e
-          puts "Error: #{e.to_s}"
-        end
+        # it was not obvious how to pass a typed array from JRuby to Java without getting the TypeError exception.
+        # this is how to pass a typed array in JRuby.  make an array, then do a to_java passing the class name of the
+        # array type.  - ljc
 
-      	response = { "disco" => connection.get_header_field("disco") }
+        post_data = [ org.apache.commons.httpclient.NameValuePair.new("scan[scan_results]", "#{results}") ]
+
+        # post request
+        post.set_request_body( post_data.to_java( org.apache.commons.httpclient.NameValuePair) )
+
+        client.executeMethod( post )
+
+        # get response
+        response_line = post.get_status_line()
+
+	# DEBUG 
+        # puts response_line   # HTTP/1.1 200 OK
+        # puts post.get_response_header("disco")
+
+        # pull the disco status header from the response 
+        disco_status = post.get_response_header("disco").to_s
+        disco_status.gsub!("disco: ", "")   # strip the disco: string to match how pure ruby headers work
+      	response = { "disco" =>  disco_status.strip }
+
+        # release the method connection
+        post.release_connection()
       end
     else 
       puts("Can't submit scan results to secure server: #{@destination_server_url} because we can't find OpenSSL and we're not running in JRuby")
@@ -606,7 +586,6 @@ def make_machine_id
     end
 
     make_simple_machine_id   
-
   else  # every other platform including cygwin supports uname -a
     make_uname_based_machine_id platform
   end
