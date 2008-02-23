@@ -323,13 +323,16 @@ def major_platform()
     return "cygwin"    
   when ( RUBY_PLATFORM =~ /java/ )     # JRuby returns java regardless of platform so we need to turn this into a real platform string
 
+    # DEBUG
+    pp RbConfig::CONFIG
+
     case 
     when RbConfig::CONFIG['host_os'] == "Mac OS X" || RbConfig::CONFIG['host_os'] == "darwin" 
       # "host_os"=>"Mac OS X",
       return "macosx"
 
-    when RbConfig::CONFIG['host_os'] == "Linux"
-      # "host_os"=>"Linux",
+    when RbConfig::CONFIG['host_os'].match("inux")
+      # "host_os"=>"Linux",  # some platforms return "linux" others "Linux"
       return "linux"      
 
     when RbConfig::CONFIG['host_os'].match("Windows")
@@ -711,7 +714,7 @@ def get_os_version_str
     return get_linux_version_str
   when "windows"
     return get_windows_version_str
-  when "jruby-windows"
+  when "jruby-windows"  # this is special because Win32 classes aren't supported under JRuby at this writing
     return @os_family
   when "macosx"
     return get_macosx_version_str
