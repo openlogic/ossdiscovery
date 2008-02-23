@@ -22,7 +22,6 @@ class TcWalkingSymLinks < Test::Unit::TestCase
   black box test for following symlinks which is the default
 =end
   def test_walker_follow_symlinks
-    assert_equal("java", RUBY_PLATFORM) 
     if ( RUBY_PLATFORM =~ /mswin/ or (RUBY_PLATFORM =~ /java/) )  # don't run symlink tests on a windows platform or if this is a jruby run as jruby soils the bed with symlinks in most cases
       assert true, "don't run symlink tests on a windows platform or if this is a jruby run as jruby soils the bed with symlinks in most cases"
     else
