@@ -222,8 +222,6 @@ end
 def validate_directory_to_scan( dir )
 
   @directory_to_scan << File.expand_path( dir )
-  
-  puts @directory_to_scan.inspect
 
   @directory_to_scan.gsub!('//','/') 
 
@@ -565,10 +563,10 @@ end
 # symlinks to not be followed.  Jruby has a lot of problems with symlinks, so we have to
 # completely ignore them unless running in native ruby.
 @follow_symlinks = false if RUBY_PLATFORM =~ /java/
-if RUBY_PLATFORM =~ /java/
-  require 'java'
-  puts "Java Version: #{java.lang.System.getProperty('java.version')}"
-end
+#if RUBY_PLATFORM =~ /java/
+#  require 'java'
+#  puts "Java Version: #{java.lang.System.getProperty('java.version')}"
+#end
 
 # Immediately check to see if the machine results output file is writeable.  If it is not, don't be a hack and do the scan anyway.
 begin
