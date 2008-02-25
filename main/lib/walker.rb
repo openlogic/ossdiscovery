@@ -228,7 +228,6 @@ class Walker
     end
 
     resolved = true
-    symlink = false
 
     begin
       
@@ -353,7 +352,7 @@ class Walker
     if RUBY_PLATFORM =~ /java/
       java_file=java.io.File.new(fileordir)
       begin
-        is_symlink = java_file.getCanonicalPath != java_file.getAbsolutePath
+        is_symlink = java_file.getCanonicalPath.casecmp(java_file.getAbsolutePath) != 0
       rescue java.io.IOException
         is_symlink = true
       end
