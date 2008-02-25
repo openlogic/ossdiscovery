@@ -102,7 +102,7 @@ module CensusUtils
     # if SHA256 isn't available, we can't submit to the Census server 
     # because the results would be rejected as invalid
     unless SHA256_AVAILABLE
-      message = "Can't submit scan results to secure server #{@destination_server_url} because we can't find OpenSSL and we're not running in JRuby"
+      message = "OpenSSL 0.9.8 with SHA256 is required in order to properly write machine scan results.\nYour machine is either running a version of OpenSSL that is less than 0.9.8 or you need to install the ruby openssl gem"
       puts(message) unless io == STDOUT
       printf(message, io)
       io.close unless io == STDOUT
