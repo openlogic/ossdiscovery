@@ -47,7 +47,11 @@ load_plugins: true
 # if --path command line parameter is given, that path will override this one
 # if no --path is given and there are no filters in the inclusion_filter list, then
 # this path will be used to scan
-directory_to_scan: /
+
+# The default directory to scan is whatever the path is up to the first \ or / in the
+# current working directory.  This results in / for unix-based environments and c:\ 
+# for windows (or whatever drive discovery is running from)
+directory_to_scan: <% ENV['OSSDISCOVERY_HOME'].match(/^.*?[\\\/]/)[0] %>
 
 #--------------------------------------------------------------------------------------
 # which default filter set to use
