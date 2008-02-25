@@ -428,8 +428,6 @@ def deliver_results( result_file )
       
       if !JAVA_HTTPS_AVAILABLE && RUBY_HTTPS_AVAILABLE
 
-        puts "java HTTPS is not available"
-
         # TODO - HTTPS will not yet work through a proxy when using ruby's Net classes - all HTTPS deliveries must be direct for now
 	# TODO - tell override option to use HTTP instead of HTTPS
 
