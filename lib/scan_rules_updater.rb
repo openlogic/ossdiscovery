@@ -222,7 +222,7 @@ class ScanRulesUpdater
     # Net::HTTP.Proxy will use a normal HTTP if proxy host and port are nil, so this code will work whether or not
     # proxy support is enabled, but if it's not enabled, proxy host and port need to be nil
     
-#    begin
+    begin
       response = Net::HTTP.Proxy( @proxy_host, @proxy_port, @proxy_username, @proxy_password  ).start(url.host, url.port) do | http |
   
         http.read_timeout = 15
@@ -237,16 +237,16 @@ class ScanRulesUpdater
         http.request(request)
         
       end
-#    rescue Exception => e # most likely will be a Timeout::Error because a download failed midstream (the network cable yank scenario)
-#      raise e, "Failure trying to get '#{a_url}'", caller
-#    end
+    rescue Exception => e # most likely will be a Timeout::Error because a download failed midstream (the network cable yank scenario)
+      raise e, "Failure trying to get '#{a_url}'", e.backtrace
+    end
     
-#    begin
+    begin
       # Raises HTTP error if the response is not 2xx (aka... is not successful).
       response.value
-#    rescue => e
-#      raise e, "Trying to get '#{a_url}' produced an errant HTTP response.", caller
-#    end
+    rescue => e
+      raise e, "Trying to get '#{a_url}' produced an errant HTTP response.", e.backtrace
+    end
     
     return response
   end
