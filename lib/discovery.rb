@@ -221,16 +221,8 @@ end
 
 def validate_directory_to_scan( dir )
   
-  # Some versions of ruby have trouble when expanding a path with backslashes.
-  # In windows, replace all backslashes with forward slashes.
-  if major_platform =~ /windows/
-    dir=dir.gsub('\\','/')
-  end
-  
-  @directory_to_scan = File.expand_path( dir )
-  
-  @directory_to_scan.gsub!('//','/') 
-  
+  @directory_to_scan = normalize_dir(dir)
+ 
   dir_exists=true
   
   if ( !File.exist?(@directory_to_scan ) )

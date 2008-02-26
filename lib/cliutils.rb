@@ -1014,6 +1014,18 @@ def show_geographies()
 "
 end
 
+def normalize_dir(dir)
+  # Some versions of ruby have trouble when expanding a path with backslashes.
+  # In windows, replace all backslashes with forward slashes.
+  
+  if major_platform =~ /windows/
+    dir=dir.gsub('\\','/')
+  end
+  
+  dir = File.expand_path( dir )
+  dir = dir.gsub(/[\/]{2,}/,'/') 
+end
+
 def print_rule_version_info()
   universal_rules_version = ScanRulesReader.get_universal_rules_version()
   universal_rules_md5 = ScanRulesReader.generate_aggregate_md5(File.dirname(@rules_openlogic))
