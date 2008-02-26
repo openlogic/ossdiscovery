@@ -49,7 +49,7 @@ class RuleAnalyzer
   be used to report the actual information a user of this tool would care about... namely what do I 
   have installed and where is it installed.
 =end
-  def RuleAnalyzer.aggregate_matches(project_rules)
+  def self.aggregate_matches(project_rules)
     # Some comments regarding the allpackages_with_unknowns Set
     # This Enumerable is a Set because we need to ensure that the contents of it (all found packages) are unique.
     # You may be thinking now, how would they ever not be unique?  Glad you asked... here's an example:
@@ -90,10 +90,20 @@ class RuleAnalyzer
       end
     end # of project_rules.each
     
+    allpackages = self.remove_our_dogfood(allpackages)
     return allpackages
   end
   
-  def RuleAnalyzer.analyze_audit_records(records)
+  def self.remove_our_dogfood(allpackages)
+    app_home = ENV['OSSDISCOVERY_HOME']
+    
+    # normalize dir lives in cliutils
+    allpackages.delete_if {|pkg| normalize_dir(pkg.found_at).include?(normalize_dir(app_home))}    
+    
+    return allpackages
+  end
+  
+  def self.analyze_audit_records(records)
     file_to_versions_list = Hash.new
     records.each do |r|
       if (file_to_versions_list.has_key?(r.foi_that_matched)) then
