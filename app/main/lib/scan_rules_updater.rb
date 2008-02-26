@@ -247,10 +247,10 @@ class ScanRulesUpdater
 
         if ( a_url.match("^https") && (port == nil || port == '') )
           port = 443
+          http.use_ssl = true
         end
 
         http = Net::HTTP.new( host, port )
-        http.use_ssl = true
         response = http.get( path )
 		
         return response.body
