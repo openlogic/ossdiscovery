@@ -114,6 +114,18 @@ class TcCLI < Test::Unit::TestCase
     assert(output.include?('Individual File Information'))
     
   end
+  
+  def test_cli_bad_arg
+    output = `ruby #{DISCOVERY_RB} --foobar`
+    
+    assert(output.include?('Unsupported option'))
+    assert(output.include?('Usage'))
+    
+    # ensuring something like this doesn't end up in the output
+    # /home/bnoll/tools/ruby-1.8.5/lib/ruby/1.8/getoptlong.rb:403:in `set_error':
+    assert(!output.include?('getoptlong'))
+    
+  end
    
   
 end
