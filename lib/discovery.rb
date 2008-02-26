@@ -255,7 +255,9 @@ end
  
 
 #----------------------------- command line parsing ------------------------------------------
-options = GetoptLong.new(
+options = GetoptLong.new()
+options.quiet = true
+options.set_options(
 
   # please maintain these in alphabetical order
   [ "--conf", "-c", GetoptLong::REQUIRED_ARGUMENT ],           # specific conf file
@@ -291,9 +293,7 @@ options = GetoptLong.new(
   # TODO - need to be able to throttle the scan rate so it doesn't soak CPU cycles on production boxes
 )
 
-
-
-# begin
+begin
    
   # Every property from the config.yml file is loaded as an instance variable of self.
   # This is done so that this file can have default values for all of these properties, and then 
@@ -308,7 +308,7 @@ options = GetoptLong.new(
   @machine_id = make_machine_id
   
   options.each do | opt, arg |
-
+  
     case opt
 
     when "--conf"
@@ -552,14 +552,24 @@ options = GetoptLong.new(
     end   # case
   end # options do
 
-# rescue Exception => e
-#   printf("Unsupported option. Please review the list of supported options and usage:\n")
-#   @@log.error('Discovery') {"Unsupported option. Please review the list of supported options and usage: #{$!}"}
-#   @@log.error('Discovery') {"#{e.message}\n#{e.backtrace}"}
-#   puts "#{e.message}\n#{e.backtrace}"
-#   help()
-#   exit 1
-# end
+rescue Exception => e
+  if (e.is_a?(GetoptLong::InvalidOption)) then
+    printf("Unsupported option. Please review the list of supported options and usage:\n")
+    @@log.error('Discovery') {"Unsupported option. Please review the list of supported options and usage:"}
+    @@log.error('Discovery') {e.inspect + e.backtrace.inspect.gsub("[\"", "\n\t[\"").gsub(", ", ",\n\t ")}
+    help()
+    exit 1
+  elsif (e.is_a?(SystemExit))
+    exit e.status
+  else
+    printf("Unexpected error (#{e.message}). Please see the log for more detailed information.\n")
+    @@log.error('Discovery') {e.inspect + e.backtrace.inspect.gsub("[\"", "\n\t[\"").gsub(", ", ",\n\t ")}
+    help()
+    exit 1
+  end
+  
+  
+end
 
 # interpret any leftover arguments as the override path
 if ( ARGV.size > 0 )
