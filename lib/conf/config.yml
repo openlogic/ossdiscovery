@@ -159,6 +159,7 @@ override_https: false
 # localhost URLs won't work if testing or using a proxy - this URL must be changed the real server URL
 server_base_url: http://192.168.10.11  # dummy dev location
 rules_files_url_path: rules_files.xml
+rule_file_base_url: https://faf.osscenus.org 
 # When you navigate in a browser to 'server_base_url + rules_files_url_path' (eg... http://localhost:3000/rules_files.xml), 
 # you should see an xml file that specifies all the scan rules files available on the server.
 
