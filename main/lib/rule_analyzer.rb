@@ -31,6 +31,7 @@
 require 'set'
 
 require 'package'
+require 'cliutils'
 
 =begin rdoc
   This is the class that is responsible for taking lists of raw ProjectRule 
