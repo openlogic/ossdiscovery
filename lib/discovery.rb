@@ -349,7 +349,7 @@ options = GetoptLong.new(
       end
 
       # if deliverying anonymous results (no group passcode), then the geography option is required
-      if ( (@census_code == "") && (@geography == 100 || (@geography.to_i < 1 || @geography.to_i > 9)) )
+      if ( (@census_code == nil || @census_code == "") && (@geography == nil || (@geography.to_i < 1 || @geography.to_i > 9)) )
         printf("\nScan not completed\n")
         printf("\nWhen delivering anonymous results to the OSSCensus server, the geography must be defined\n")
         printf("  use --geography to specify the geography code or \n")
