@@ -1,5 +1,6 @@
 require 'test/unit'
 $:.unshift File.join(File.dirname(__FILE__), '..', 'main', 'lib')
+require 'cliutils'
 
 require 'scan_rules_updater'
 
@@ -9,7 +10,11 @@ class TcScanRulesUpdater < Test::Unit::TestCase
   
   @@log = Config.log
   
+  JAVA_HTTPS_AVAILABLE = false
+  RUBY_HTTPS_AVAILABLE = false
+  
   def setup
+    
   end
   
   def teardown
@@ -17,13 +22,13 @@ class TcScanRulesUpdater < Test::Unit::TestCase
  
   
   def test_new
-    sru = ScanRulesUpdater.new("http://localhost:3000/")
+    sru = ScanRulesUpdater.new("http://localhost:3000/", "http://localhost:3000/")
     assert_equal("http://localhost:3000/", sru.base_url)
     
-    sru = ScanRulesUpdater.new("http://localhost:3000")
+    sru = ScanRulesUpdater.new("http://localhost:3000", "http://localhost:3000/")
     assert_equal("http://localhost:3000/", sru.base_url)
     
-    sru = ScanRulesUpdater.new(nil)
+    sru = ScanRulesUpdater.new(nil, nil)
     assert_equal("http://localhost:3000/", sru.base_url)
   end
   
@@ -60,7 +65,7 @@ class TcScanRulesUpdater < Test::Unit::TestCase
     
     dest_dir = File.expand_path(File.dirname(__FILE__))
     
-    sru = ScanRulesUpdater.new("http://repo1.maven.org/")
+    sru = ScanRulesUpdater.new("http://repo1.maven.org/", "http://repo1.maven.org/")
     sru.download_file("maven2/ant/ant/maven-metadata.xml", dest_dir)
     
     downloaded_file = File.expand_path(File.join(dest_dir, "maven-metadata.xml"))
