@@ -206,7 +206,7 @@ def execute()
 end
 
 def update_scan_rules()
-  updater = ScanRulesUpdater.new(@server_base_url)
+  updater = ScanRulesUpdater.new(@server_base_url, @rules_file_base_url)
   updater.proxy_host = @proxy_host
   updater.proxy_port = @proxy_port
   updater.proxy_username = @proxy_user
