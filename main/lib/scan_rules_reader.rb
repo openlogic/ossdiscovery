@@ -347,7 +347,7 @@ class ScanRulesReader
           !path.include?(".svn") && 
           (path.size >= ".xml".size + 1) &&
           (path[(path.size - ".xml".size)..(path.size)] == ".xml") && 
-          !path.include?(".bak") 
+          !path.include?("bak") 
           ) then
         all_files << File.expand_path(path)
       end

@@ -3,6 +3,7 @@ $:.unshift File.join(File.dirname(__FILE__), "..", "main", "lib")
 require 'scan_rules_reader'
 
 require 'digest/md5' 
+require 'test_helper'
 
 class TcScanRulesReader < Test::Unit::TestCase
   
@@ -29,6 +30,18 @@ class TcScanRulesReader < Test::Unit::TestCase
       rulesfiledir = File.new(File.dirname(__FILE__) + '/resources/rules/test_dir_00_valid_original/scan-rules.xml', "r").path
       ScanRulesReader.setup_project_rules(rulesfiledir, 2)
     end
+  end
+  
+  def test_find_all_scanrules_files_in_dir_containing_backed_up_files
+    rulesfiledir = File.dirname(File.new(File.dirname(__FILE__) + '/resources/rules/test_dir_08_backed_up_files/README.txt', "r").path)
+    
+    all_files = TestHelper.find_all_files(rulesfiledir)
+    xml_files_count = 0
+    all_files.each { |file| if (File.expand_path(file).include?('xml')) then xml_files_count = xml_files_count + 1 end }
+    assert_equal(2, xml_files_count)
+    
+    rules_files = ScanRulesReader.find_all_scanrules_files(rulesfiledir)
+    assert_equal(1, rules_files.size)
   end
   
   def test_get_match_rule_class_name()
