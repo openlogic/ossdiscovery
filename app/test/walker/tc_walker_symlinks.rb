@@ -25,7 +25,6 @@ class TcWalkingSymLinks < Test::Unit::TestCase
     if ( RUBY_PLATFORM =~ /mswin/ or (RUBY_PLATFORM =~ /java/) )  # don't run symlink tests on a windows platform or if this is a jruby run as jruby soils the bed with symlinks in most cases
       assert true, "don't run symlink tests on a windows platform or if this is a jruby run as jruby soils the bed with symlinks in most cases"
     else
-      puts "got here for some odd reason"  
       test = `ruby #{DISCOVERY_RB} --path #{SYMLINK_TESTS_DIR}`
     
       if ( test.match('not followed.*?: 0') == nil )
