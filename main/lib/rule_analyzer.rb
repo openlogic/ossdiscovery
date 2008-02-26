@@ -95,7 +95,8 @@ class RuleAnalyzer
     return allpackages
   end
   
-  def self.remove_our_dogfood(allpackages)
+  def self.remove_our_dogfood(allpackages)    
+    return nil if allpackages.nil?    
     app_home = ENV['OSSDISCOVERY_HOME']
     
     # normalize dir lives in cliutils
