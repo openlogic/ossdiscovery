@@ -238,14 +238,14 @@ class ScanRulesUpdater
         
       end
     rescue Exception => e # most likely will be a Timeout::Error because a download failed midstream (the network cable yank scenario)
-      raise e, "Failure trying to get '#{a_url}'", e.backtrace
+      raise e, "Failure trying to get '#{a_url}' (original message: #{e.message})", e.backtrace
     end
     
     begin
       # Raises HTTP error if the response is not 2xx (aka... is not successful).
       response.value
     rescue => e
-      raise e, "Trying to get '#{a_url}' produced an errant HTTP response.", e.backtrace
+      raise e, "Trying to get '#{a_url}' produced an errant HTTP response. (original message: #{e.message})", e.backtrace
     end
     
     return response
