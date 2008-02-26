@@ -347,24 +347,6 @@ options = GetoptLong.new(
           exit 1
         end
       end
-
-      # if deliverying anonymous results (no group passcode), then the geography option is required
-      if ( (@census_code == "") && (@geography == 100 || (@geography.to_i < 1 || @geography.to_i > 9)) )
-        printf("\nScan not completed\n")
-        printf("\nWhen delivering anonymous results to the OSSCensus server, the geography must be defined\n")
-        printf("  use --geography to specify the geography code or \n")
-        printf("  modify the geography property in the config.yml file\n")
-        printf("  Geography codes for the --geography option are:\n")
-        printf( show_geographies() )
-        printf("\n  --geography is an order dependent parameter and must be used before the --deliver-results parameter\n")
-        printf("If you are registered with the OSSCensus site and have a group passcode or token, you should set that \n")
-        printf("on the command line or add it to your config.yml file.\n")
-        exit 1
-      elsif ( @census_code != "" && @geography.to_i == 100 )
-        # default the geography to "" if group passcode is supplied but geography was not overridden
-        # geography will be associated on the server side using the census-code
-        @geography = ""
-      end
   
       begin
         File.open(@machine_results, "w") {|file|}      
@@ -555,6 +537,24 @@ if ( ARGV.size > 0 )
   if ( ARGV[0] != "" )
     validate_directory_to_scan( ARGV[0] ) 
   end
+end
+
+# if deliverying anonymous results (no group passcode), then the geography option is required
+if ( (@census_code == nil || @census_code.strip == "") && (@geography == nil || (@geography.to_i < 1 || @geography.to_i > 9)) )
+  printf("\nScan not completed\n")
+  printf("\nWhen delivering anonymous results to the OSSCensus server, the geography must be defined\n")
+  printf("  use --geography to specify the geography code or \n")
+  printf("  modify the geography property in the config.yml file\n")
+  printf("  Geography codes for the --geography option are:\n")
+  printf( show_geographies() )
+  printf("\n  --geography is an order dependent parameter and must be used before the --deliver-results parameter\n")
+  printf("If you are registered with the OSSCensus site and have a group passcode or token, you should set that \n")
+  printf("on the command line or add it to your config.yml file.\n")
+  exit 1
+elsif ( @census_code != "" && @geography.to_i == 100 )
+  # default the geography to "" if group passcode is supplied but geography was not overridden
+  # geography will be associated on the server side using the census-code
+  @geography = ""
 end
 
 #----------------------------- do the business -------------------------------------
