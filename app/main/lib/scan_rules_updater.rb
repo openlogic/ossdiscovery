@@ -123,7 +123,12 @@ class ScanRulesUpdater
     rules_files_url_path = ScanRulesUpdater.scrub_url_path(rules_files_url_path)
     
     # get the list of files that need to be downloaded
-    rules_files_to_download = http_get_rules_files_to_download(rules_files_url_path)
+    begin
+      rules_files_to_download = http_get_rules_files_to_download(rules_files_url_path)
+    rescue Exception => ge
+      raise ge, "Can't get the list of rules files to download (original message: #{ge.message}", ge.backtrace
+      # either the server failed to respond or there was an issue on the client side or internet connection to the server
+    end
     
     # back the scan rules dir up
     rules_dir = ""
@@ -144,7 +149,7 @@ class ScanRulesUpdater
       end
     rescue Exception => e
       ScanRulesUpdater.rollback_update(backup_dir)
-      raise e, "Scan rules update failed, rollback performed. The rules that were in effect before the update attempt occurred are still in effect.", caller
+      raise e, "Scan rules update failed, rollback performed.\nThe rules that were in effect before the update attempt occurred are still in effect.\n(original message: #{e.message})", e.backtrace
     end
     
   end
