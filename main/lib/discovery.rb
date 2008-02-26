@@ -220,26 +220,45 @@ def update_scan_rules()
 end
 
 def validate_directory_to_scan( dir )
-
-  @directory_to_scan << File.expand_path( dir )
-
+  
+  # Some versions of ruby have trouble when expanding a path with backslashes.
+  # In windows, replace all backslashes with forward slashes.
+  if major_platform =~ /windows/
+    dir=dir.gsub!('\\','/')
+  end
+  
+  @directory_to_scan = File.expand_path( dir )
+  
   @directory_to_scan.gsub!('//','/') 
-
-  # for some stupid reason, ruby expands a c:\ to /c:/ so if there's a drive spec in the 
-  # path, strip off the leading /
-
-  if ( @directory_to_scan =~ /:/ )
-   @directory_to_scan = @directory_to_scan[1..@directory_to_scan.length]
-  end
-
+  
+  dir_exists=true
+  
   if ( !File.exist?(@directory_to_scan ) )
-
-   printf("The given path to scan does not exist: %s\n", dir )
-   # printf("Expanded path does not exist: %s\n", @directory_to_scan )
-   return false
+    
+    # If it doesn't exist, it may be a weirdism with ruby turning c:\ into /c:/.  So 
+    # make that change and try again
+    
+    if ( @directory_to_scan =~ /:/ )
+      @directory_to_scan = @directory_to_scan[1..@directory_to_scan.length]
+      if ( !File.exist?(@directory_to_scan) )
+        dir_exists=false
+      else
+        dir_exists=true
+      end
+    else
+      dir_exists=false
+    end
+    
   end
-
-  return true
+  
+  if not dir_exists
+    printf("The given path to scan does not exist: %s\n", dir )
+    # printf("Expanded path does not exist: %s\n", @directory_to_scan )
+    return false
+  else
+    return true
+  end
+  
 end
  
 
