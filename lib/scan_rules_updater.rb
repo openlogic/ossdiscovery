@@ -245,12 +245,15 @@ class ScanRulesUpdater
         port = parts[3]
         path = parts[5]
 
+
         if ( a_url.match("^https") && (port == nil || port == '') )
           port = 443
+          http = Net::HTTP.new( host, port )
           http.use_ssl = true
+        else
+          http = Net::HTTP.new( host, 80 )
         end
 
-        http = Net::HTTP.new( host, port )
         response = http.get( path )
 		
         return response.body
