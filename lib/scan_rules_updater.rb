@@ -55,7 +55,7 @@ require 'rexml/document'
 =end    
 class ScanRulesUpdater
   
-  @@log = Config.log
+@@log = Config.log
   
   attr_accessor :base_url, :proxy_host, :proxy_port, :proxy_username, :proxy_password
   
@@ -87,14 +87,15 @@ class ScanRulesUpdater
   This class assumes that the 'rules_file.xml' file and the downloadable files themselves with have
   the same 'base_url'
 =end    
-  def initialize(base_url)
-    if (base_url == nil) then
+  def initialize(service_base_url, rules_file_base_url )
+
+    if (service_base_url == nil)
       @base_url = "http://localhost:3000/"
     else
-      if (base_url[base_url.size - 1 ..base_url.size - 1] == "/")
-        @base_url = base_url
+      if (service_base_url[service_base_url.size - 1 ..service_base_url.size - 1] == "/")
+        @base_url = service_base_url
       else
-        @base_url = base_url << "/"
+        @base_url = service_base_url << "/"
       end
     end
     
@@ -102,7 +103,18 @@ class ScanRulesUpdater
     @proxy_port = nil
     @proxy_username = nil
     @proxy_password = nil
-    
+
+    if ( rules_file_base_url == nil )
+       @rules_file_base_url = "http://localhost:3000/"
+    else
+      @rules_file_base_url = rules_file_base_url
+      if (@rules_file_base_url[ @rules_file_base_url.size - 1 ..@rules_file_base_url.size - 1] == "/")
+        @rules_file_base_url = rules_file_base_url
+      else
+        @rules_file_base_url = rules_file_base_url << "/"
+      end
+    end
+   
   end
 
 =begin rdoc
@@ -175,8 +187,8 @@ class ScanRulesUpdater
     
     File.open(File.join(dest_dir, File.basename(file_to_download_path)), "w") do |downloaded_file|
     
-      if ( response = http_get_file( @base_url + file_to_download_path ) )
-        downloaded_file.write( response.body )
+      if ( response_body = http_get_file( @rules_file_base_url + file_to_download_path ) )
+        downloaded_file.write( response_body )
       end
     
     end # of File.open
@@ -191,9 +203,9 @@ class ScanRulesUpdater
 
   def http_get_rules_files_to_download(rules_files_url_path)
     rules_files_url_path = ScanRulesUpdater.scrub_url_path(rules_files_url_path)
-    res = http_get_file(@base_url + rules_files_url_path )
+    response_body = http_get_file(@base_url + rules_files_url_path )
 
-    xml_str = res.body
+    xml_str = response_body
     
     xml = REXML::Document.new(xml_str)
     root = xml.root
@@ -221,39 +233,61 @@ class ScanRulesUpdater
   def http_get_file( a_url )
     @@log.debug("ScanRulesUpdater") {"Doing an HTTP Get on '#{a_url}'"}
     
-    url = URI.parse(a_url)
-    request = Net::HTTP::Get.new(url.path)
-    
     # Net::HTTP.Proxy will use a normal HTTP if proxy host and port are nil, so this code will work whether or not
     # proxy support is enabled, but if it's not enabled, proxy host and port need to be nil
-    
-    begin
-      response = Net::HTTP.Proxy( @proxy_host, @proxy_port, @proxy_username, @proxy_password  ).start(url.host, url.port) do | http |
-  
-        http.read_timeout = 15
-        
-        # if the update rules URL is secured, and openssl has been found on this machine, proceed to update
-        if ( (url.scheme == "https" || url.port == 443) && !@@no_ssl )
-          http.use_ssl = true
-        elsif ( url.scheme == "https" || url.port == 443 )
-          printf("Can't update scan rules from secure server: #{url.to_s} because we can't find OpenSSL\n")
+
+    if !JAVA_HTTPS_AVAILABLE && RUBY_HTTPS_AVAILABLE
+
+      begin
+        parts = URI.split(a_url)
+        protocol = parts[0]
+        host = parts[2]
+        port = parts[3]
+        path = parts[5]
+
+        if ( a_url.match("^https") && (port == nil || port == '') )
+          port = 443
         end
-        
-        http.request(request)
-        
+
+        http = Net::HTTP.new( host, port )
+        http.use_ssl = true
+        response = http.get( path )
+		
+        return response.body
+
+      rescue Exception => e # most likely will be a Timeout::Error because a download failed midstream (the network cable yank scenario)
+        raise e, "Failure trying to get '#{a_url}' (original message: #{e.message})", e.backtrace
       end
-    rescue Exception => e # most likely will be a Timeout::Error because a download failed midstream (the network cable yank scenario)
-      raise e, "Failure trying to get '#{a_url}' (original message: #{e.message})", e.backtrace
+	    
+      begin
+        # Raises HTTP error if the response is not 2xx (aka... is not successful).
+        response.value
+      rescue => e
+        raise e, "Trying to get '#{a_url}' produced an errant HTTP response. (original message: #{e.message})", e.backtrace
+      end
+
+    else
+	# do it the Java way because for HTTPS through a proxy this will work in addition to the standard HTTPS post
+        client = org.apache.commons.httpclient.HttpClient.new
+        get = org.apache.commons.httpclient.methods.GetMethod.new( a_url )
+        get.set_do_authentication( true )
+
+        if ( @proxy_host != nil )
+           # setting up proxy
+           client.get_host_configuration().set_proxy(@proxy_host, @proxy_port)
+           scope = Java::OrgApacheCommonsHttpclientAuth::AuthScope::ANY
+           credentials = org.apache.commons.httpclient.UsernamePasswordCredentials.new( @proxy_user, @proxy_password )
+           client.get_state().set_proxy_credentials( scope, credentials ) 
+           # proxy credentials created
+        end
+
+        client.executeMethod( get )
+
+        response = get.getResponseBodyAsString()
+        return response
     end
-    
-    begin
-      # Raises HTTP error if the response is not 2xx (aka... is not successful).
-      response.value
-    rescue => e
-      raise e, "Trying to get '#{a_url}' produced an errant HTTP response. (original message: #{e.message})", e.backtrace
-    end
-    
-    return response
+   
+    return nil 
   end
   
   
