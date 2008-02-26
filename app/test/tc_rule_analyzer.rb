@@ -23,6 +23,8 @@ class TcRuleAnalyzer < Test::Unit::TestCase
   end
   
   def test_remove_our_dogfood()
+    
+    # one out of two should remain
     allpackages = Set.new
     p1 = Package.new()
     p1.name = 'ant'
@@ -38,6 +40,56 @@ class TcRuleAnalyzer < Test::Unit::TestCase
     
     packages = RuleAnalyzer.remove_our_dogfood(allpackages)
     assert_equal(1, packages.size)
+    
+    
+    # none out of two should remain
+    allpackages = Set.new
+    p1 = Package.new()
+    p1.name = 'ant'
+    p1.version = '1.0'
+    p1.found_at = "#{ENV['OSSDISCOVERY_HOME']}/under/home/somewhere"
+    
+    p2 = Package.new()
+    p2.name = 'maven'
+    p2.version = '1.0'
+    p2.found_at = "#{ENV['OSSDISCOVERY_HOME']}/somewhere/else/under/home"
+    
+    allpackages << p1 << p2
+    
+    packages = RuleAnalyzer.remove_our_dogfood(allpackages)
+    assert_equal(0, packages.size)
+    
+    
+    # two out of two should remain
+    allpackages = Set.new
+    p1 = Package.new()
+    p1.name = 'ant'
+    p1.version = '1.0'
+    p1.found_at = "/should/not/be/removed"
+    
+    p2 = Package.new()
+    p2.name = 'maven'
+    p2.version = '1.0'
+    p2.found_at = "/should/also/not/be/removed"
+    
+    allpackages << p1 << p2
+    
+    packages = RuleAnalyzer.remove_our_dogfood(allpackages)
+    assert_equal(2, packages.size)
+    
+    
+    # empty set should stay empty
+    allpackages = Set.new
+    
+    packages = RuleAnalyzer.remove_our_dogfood(allpackages)
+    assert_equal(0, packages.size)
+    
+    
+    # nil set should stay nil and the method should not puke because the set is nil
+    allpackages = nil
+    
+    packages = RuleAnalyzer.remove_our_dogfood(allpackages)
+    assert_nil(allpackages)
   end
 
 end
