@@ -589,6 +589,7 @@ def make_machine_id
     make_simple_machine_id   
   else  # every other platform including cygwin supports uname -a
     make_uname_based_machine_id platform
+    Digest::MD5.hexdigest( `date` )
   end
 end
 
