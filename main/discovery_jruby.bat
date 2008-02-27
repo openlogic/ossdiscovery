@@ -30,5 +30,5 @@ REM You can contact OpenLogic at info@openlogic.com.
 set OSSDISCOVERY_HOME=%~dp0%
 
 cd "%OSSDISCOVERY_HOME%"
-%OSSDISCOVERY_HOME%\jruby\bin\jruby.bat -J-Xmx512m -J-Xms512m -J-client %OSSDISCOVERY_HOME%\lib\discovery.rb --progress 100 --human-results readable_scanresults.txt %*
+"%OSSDISCOVERY_HOME%\jruby\bin\jruby.bat" -J-Xmx512m -J-Xms512m -J-client %OSSDISCOVERY_HOME%\lib\discovery.rb --progress 100 --human-results readable_scanresults.txt %*
 
