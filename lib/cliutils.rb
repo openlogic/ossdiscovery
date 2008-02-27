@@ -539,7 +539,7 @@ def deliver_batch( result_directory )
 
   Find.find( result_directory ) do | results_fname |
 
-    # printf("results fname: #{results_fname}\n")
+    #printf("results fname: #{results_fname}\n")
 
     begin
         case
@@ -549,15 +549,17 @@ def deliver_batch( result_directory )
              # expected to be in a valid results file
              results_content = File.new( results_fname, "r" ).read 
 
-             if ( results_content.match('^type:summary') == nil ||
-                  results_content.match('^denied:') == nil||
-                  results_content.match('^foi:') == nil  ||
-                  results_content.match('^distro:') == nil 
+             if ( results_content.match('^report_type: census') == nil ||
+                  results_content.match('^permission_denied_count:') == nil||
+                  results_content.match('^distro:') == nil  ||
+                  results_content.match('^os_family:') == nil ||
+                  results_content.match('^integrity_check:') == nil 
                 )
+               printf("Invalid results file #{results_fname}, not sent\n")
                next
+         
              end
 
-             printf("sending #{results_fname}\n")
              deliver_results( results_fname ) 
         end
      rescue Errno::EACCES, Errno::EPERM
@@ -589,6 +591,8 @@ def make_machine_id
     make_simple_machine_id   
   else  # every other platform including cygwin supports uname -a
     make_uname_based_machine_id platform
+#TAKE OUT XXX
+Digest::MD5.hexdigest(`date`)
   end
 end
 
