@@ -302,24 +302,23 @@ class ScanRulesUpdater
   Returns the expanded path to the backup directory.
 =end    
   def ScanRulesUpdater.backup_scanrules_dir(local_scan_rules_dir=nil, bak_extension=nil) 
+    
+    if (bak_extension.nil? or bak_extension == "") then bak_extension = "_" + ScanRulesUpdater.get_YYYYMMDD_HHMM_str + ".bak" end    
     @@log.info("ScanRulesUpdater") {"Backing up the local scan rules dir (#{local_scan_rules_dir}) with extension '#{bak_extension}'"}
+    
     path = ""
     if (local_scan_rules_dir == nil) then
       path = ScanRulesUpdater.get_default_scan_rules_dir()
     else 
       path = File.expand_path(local_scan_rules_dir)
-    end
-    if (bak_extension == nil) then
-      bak_extension = "_" + ScanRulesUpdater.get_YYYYMMDD_HHMM_str + ".bak"
-    end
+    end    
     
     backup = path + bak_extension
     FileUtils.mv(path, backup)
     
-    all_files = Set.new
-    Find.find(backup) do |path|
-      if (File.directory?(path) && File.basename(path) == ".svn") then
-        FileUtils.remove_dir(path, true)
+    Find.find(backup) do |the_path|
+      if (File.directory?(the_path) && File.basename(the_path) == ".svn") then
+        FileUtils.remove_dir(the_path, true)
       end
     end
     return backup
