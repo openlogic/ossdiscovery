@@ -146,8 +146,7 @@ send_results: false                                             # default to not
 # Note that destination_server_url and server_base_url can neither be localhost urls if proxying is being 
 # used or tested.  You can't proxy a localhost URL.
 #destination_server_url: http://localhost:3000/scans/scanpost   # change to OL disco production server
-#destination_server_url: https://192.168.10.11/service/scans/scanpost  # dummy dev location
-destination_server_url: https://faf.osscensus.org/service/scans/scanpost  # dummy dev location
+destination_server_url: https://192.168.10.11/service/scans/scanpost  # dummy dev location
 
 
 # WARNING - osscensus production will not accept scans unless this is false
@@ -158,8 +157,7 @@ override_https: false
 
 # TODO - IMPORTANT: This Default/Standard URL needs to point to OpenLogic's Disco 2 server when this goes to production
 # localhost URLs won't work if testing or using a proxy - this URL must be changed the real server URL
-#server_base_url: http://192.168.10.11  # dummy dev location
-server_base_url: https://faf.osscensus.org/service  # dummy dev location
+server_base_url: http://192.168.10.11/service  # dummy dev location
 rules_files_url_path: rules_files.xml
 rules_file_base_url: https://faf.osscensus.org 
 # When you navigate in a browser to 'server_base_url + rules_files_url_path' (eg... http://localhost:3000/rules_files.xml), 
@@ -196,7 +194,7 @@ update_rules_and_do_scan: false
 #  8 | China         | 
 #  9 | Other         | 
 
-#geography: 9
+geography: 9999
 
 #--------------------------------------------------------------------------------------
 # Census code is how the census grroups multiple machines together for unified reporting purposes.
@@ -206,3 +204,7 @@ update_rules_and_do_scan: false
 # If you already have a census code from registering with the census, you can
 # insert the value below or pass it on the command-line.
 census_code: 
+
+# end of config
+
+
