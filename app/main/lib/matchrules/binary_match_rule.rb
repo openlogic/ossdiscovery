@@ -58,8 +58,20 @@ class BinaryMatchRule < FilenameMatchRule
         match_set = @matched_against[File.dirname(actual_filepath)]
         @@log.debug('BinaryMatchRule') {"Multiple versions of the same project likely exist in the same directory. MatchRule name: '#{@name}', version: '#{@version}', defined filename: '#{@defined_filename}', defined_regexp: '#{@defined_regexp}'"}
       end
-      match_set << match_value[1]
-      @latest_match_val = match_value[1]
+      
+#      # code to replace
+#      match_set << match_value[1]
+#      @latest_match_val = match_value[1]
+#      # end code to replace
+      
+      # start of new code
+      start, finish = match_value.offset(1)
+      s = match_value.string
+      mv = (start...finish).inject("") { |all, character| all << s[character] }
+      match_set << mv
+      @latest_match_val = mv
+      # end of new code
+      
       @matched_against[File.dirname(actual_filepath)] = match_set
     end
     
