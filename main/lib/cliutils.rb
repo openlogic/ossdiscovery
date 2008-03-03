@@ -188,26 +188,27 @@ def report( packages )
   else
     throttling_enabled_or_disabled = 'disabled'
   end
+  end_of_line = "\n"
 
-  printf(io, "\n")
-  printf(io, "directories walked    : %d\n", @walker.dir_ct )
-  printf(io, "files encountered     : %d\n", @walker.file_ct )
-  printf(io, "symlinks found        : %d\n", @walker.sym_link_ct )
-  printf(io, "symlinks not followed : %d\n", @walker.not_followed_ct )  
-  printf(io, "bad symlinks found    : %d\n", @walker.bad_link_ct )
-  printf(io, "permission denied     : %d\n", @walker.permission_denied_ct )
-  printf(io, "files of interest     : %d\n", @walker.foi_ct )
-  printf(io, "start time            : %s\n", @starttime.asctime )
-  printf(io, "end time              : %s\n", @endtime.asctime )
-  printf(io, "scan time             : %02d:%02d:%02d (hh:mm:ss)\n", scan_hours, scan_min, scan_sec )
-  printf(io, "distro                : %s\n", @distro )
-  printf(io, "kernel                : %s\n", @kernel )
-  printf(io, "machine id            : %s\n", @machine_id )
+  printf(io, end_of_line)
+  printf(io, "directories walked    : %d#{end_of_line}", @walker.dir_ct )
+  printf(io, "files encountered     : %d#{end_of_line}", @walker.file_ct )
+  printf(io, "symlinks found        : %d#{end_of_line}", @walker.sym_link_ct )
+  printf(io, "symlinks not followed : %d#{end_of_line}", @walker.not_followed_ct )  
+  printf(io, "bad symlinks found    : %d#{end_of_line}", @walker.bad_link_ct )
+  printf(io, "permission denied     : %d#{end_of_line}", @walker.permission_denied_ct )
+  printf(io, "files of interest     : %d#{end_of_line}", @walker.foi_ct )
+  printf(io, "start time            : %s#{end_of_line}", @starttime.asctime )
+  printf(io, "end time              : %s#{end_of_line}", @endtime.asctime )
+  printf(io, "scan time             : %02d:%02d:%02d (hh:mm:ss)#{end_of_line}", scan_hours, scan_min, scan_sec )
+  printf(io, "distro                : %s#{end_of_line}", @distro )
+  printf(io, "kernel                : %s#{end_of_line}", @kernel )
+  printf(io, "machine id            : %s#{end_of_line}", @machine_id )
   printf(io, "")
-  printf(io, "packages found        : %d\n", packages.length )
-  printf(io, "throttling            : #{throttling_enabled_or_disabled} (total seconds paused: #{@walker.total_seconds_paused_for_throttling})\n" )
+  printf(io, "packages found        : %d#{end_of_line}", packages.length )
+  printf(io, "throttling            : #{throttling_enabled_or_disabled} (total seconds paused: #{@walker.total_seconds_paused_for_throttling})#{end_of_line}" )
   @production_scan = false unless @production_scan == true
-  printf(io, "production scan       : %s\n",  @production_scan)
+  printf(io, "production scan       : %s#{end_of_line}",  @production_scan)
   
   max_version_length = 32
   
@@ -223,20 +224,20 @@ def report( packages )
       end
     end # of packages.each
     
-    printf(io, %{#{"Package Name".ljust(longest_name)} #{"Version".ljust(longest_version)} Location\n})
-    printf(io, %{#{"============".ljust(longest_name)} #{"=======".ljust(longest_version)} ========\n})
+    printf(io, %{#{"Package Name".ljust(longest_name)} #{"Version".ljust(longest_version)} Location#{end_of_line}})
+    printf(io, %{#{"============".ljust(longest_name)} #{"=======".ljust(longest_version)} ========#{end_of_line}})
     
     packages.to_a.sort!.each do | package |
       begin 
 
         if ( package.version.size > max_version_length )
-          printf(io, "Possible error in rule: #{package.name} ... matched version text was too large (#{package.version.size} characters)\n")
+          printf(io, "Possible error in rule: #{package.name} ... matched version text was too large (#{package.version.size} characters)#{end_of_line}")
           @@log.error("Possible error in rule: #{package.name} ... matched version text was too large (#{package.version.size} characters) - matched version: '#{package.version}'")
         else
-          printf(io, "#{package.name.ljust(longest_name)} #{package.version.ljust(longest_version)} #{package.found_at}\n")
+          printf(io, "#{package.name.ljust(longest_name)} #{package.version.ljust(longest_version)} #{package.found_at}#{end_of_line}")
         end
       rescue Exception => e
-        printf(io, "Possible error in rule: #{package.name}\n")
+        printf(io, "Possible error in rule: #{package.name}#{end_of_line}")
       end
     end # of packages.each
   end
