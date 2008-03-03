@@ -398,6 +398,8 @@ def deliver_results( result_file )
 
         response = Net::HTTP.Proxy( @proxy_host, @proxy_port, @proxy_user, @proxy_password ).post_form(URI.parse(@destination_server_url),    
                                   {'scan[scan_results]' => results} )
+
+        response_headers = response.to_hash()
       end
 
     elsif HTTPS_AVAILABLE
@@ -434,11 +436,14 @@ def deliver_results( result_file )
 
         if ( @proxy_host != nil )
            puts "HTTPS posts through a proxy is not supported when running under the Ruby Net classes.  Try JRuby instead"
+           return
         else
           http = Net::HTTP.new(host, port)
           http.use_ssl = true
           headers = { "Content-Type" => "application/x-www-form-urlencoded" }
           response = http.request_post( path, "scan[scan_results]=#{results}", headers)
+
+          response_headers = response.to_hash()
         end
 
       else # do it the Java way because for HTTPS through a proxy this will work in addition to the standard HTTPS post
@@ -482,6 +487,12 @@ def deliver_results( result_file )
         disco_status.gsub!("disco: ", "")   # strip the disco: string to match how pure ruby headers work
       	response = { "disco" =>  disco_status.strip }
 
+        response_headers = Hash.new
+        response_status = response_line.to_s
+        response_status.gsub!('HTTP/1.1 ','')
+        response_headers["status"] = response_status   # just leave 200 OK like Net:HTTP of pure ruby
+        response_headers["disco"] = disco_status.strip  
+
         # release the method connection
         post.release_connection()
       end
@@ -489,45 +500,34 @@ def deliver_results( result_file )
       puts("Can't submit scan results to secure server: #{@destination_server_url} because we can't find OpenSSL and we're not running in JRuby")
       response = { "disco" => "0, OpenSSL not found" }
     end
-  
-    case response
-    when JAVA_HTTPS_AVAILABLE
-      # let response header tell the story
-      
-    when Net::HTTPSuccess
-      # format constructed by the discovery server and added to the 'disco' header in the http post response:
-      #  100, Scan saved, 16 packages
-      
-    when Net::HTTPBadResponse
-      printf("Bad response from server while posting results")
-      response["disco"] = "0, Bad response from server while posting results"
-            
-    when response != nil && response["disco"] == nil 
-      response.each { | name, value |
-         printf("%s: %s\n", name, value )
-       } 
+ 
+    # homogenize JRuby/java.net and Ruby Net::HTTP responses into a response header hash
 
+    if ( !response_headers["status"].to_s.match("200") )
+      printf("Error submitting the scan results\n")
+      response["disco"] = "0, Bad response from server while posting results. #{response_headers['status']}"
     end
-  
-  rescue Errno::ECONNREFUSED, Errno::EBADF, OpenSSL::SSL::SSLError
-    printf("Can't submit scan. The connection was refused when trying to deliver the scan results.\nPlease check your network connection or contact the administrator for the server at: %s\n", @destination_server_url )
+ 
+  rescue Errno::ECONNREFUSED, Errno::EBADF, OpenSSL::SSL::SSLError, Timeout::Error
+    printf("Can't submit scan. The connection was refused or server did not respond when trying to deliver the scan results.\nPlease check your network connection or contact the administrator for the server at: %s\n", @destination_server_url )
     printf("\nYour machine readable results can be found in the file: %s\n", result_file )
     response = Hash.new
-    response["disco"] = "0, Connection Refused"
+    response["disco"] = "0, Connection Refused or Server did not respond"
   end
   
   # by now there should be a response["disco"] header.  If not, then the request was sent to a non-discovery
   # server
   
-  if ( response == nil || response["disco"] == nil )
-    if ( response == nil )
-      response = Hash.new
-    end
-    
+  if ( response == nil )
+    response = Hash.new
+  end
+
+  if ( response["disco"] == nil )
     response["disco"] = "0, Improper or unexpected destination server response.  Check your destination URL to make sure it's correct"    
   end
-    
-  printf("Result: %s\n", response["disco"] )
+   
+  # request by Customer to strip disco status code from output 
+  printf("Result: %s\n", response["disco"].to_s.strip.gsub!(/^[0-9]+, /,"") )
   
 end
 
