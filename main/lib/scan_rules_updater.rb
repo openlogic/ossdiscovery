@@ -138,7 +138,7 @@ class ScanRulesUpdater
     begin
       rules_files_to_download = http_get_rules_files_to_download(rules_files_url_path)
     rescue Exception => ge
-      raise ge, "Can't get the list of rules files to download (original message: #{ge.message}", ge.backtrace
+      raise ge, "Can't get the list of rules files to download -> caused by: #{ge.message}", ge.backtrace
       # either the server failed to respond or there was an issue on the client side or internet connection to the server
     end
     
@@ -161,7 +161,7 @@ class ScanRulesUpdater
       end
     rescue Exception => e
       ScanRulesUpdater.rollback_update(backup_dir)
-      raise e, "Scan rules update failed, rollback performed.\nThe rules that were in effect before the update attempt occurred are still in effect.\n(original message: #{e.message})", e.backtrace
+      raise e, "Scan rules update failed, rollback performed.\nThe rules that were in effect before the update attempt occurred are still in effect.\n  -> caused by: #{e.message}", e.backtrace
     end
     
   end
@@ -203,7 +203,10 @@ class ScanRulesUpdater
 
   def http_get_rules_files_to_download(rules_files_url_path)
     rules_files_url_path = ScanRulesUpdater.scrub_url_path(rules_files_url_path)
-    response_body = http_get_file(@base_url + rules_files_url_path )
+    response_body = http_get_file(@base_url + rules_files_url_path)    
+    if (!response_body.include?('rules-files')) then
+      raise "Unable to get rules files info from service at url '#{@base_url + rules_files_url_path}'"
+    end
 
     xml_str = response_body
     
@@ -259,14 +262,14 @@ class ScanRulesUpdater
         return response.body
 
       rescue Exception => e # most likely will be a Timeout::Error because a download failed midstream (the network cable yank scenario)
-        raise e, "Failure trying to get '#{a_url}' (original message: #{e.message})", e.backtrace
+        raise e, "Failure trying to get '#{a_url}' -> caused by: #{e.message}", e.backtrace
       end
 	    
       begin
         # Raises HTTP error if the response is not 2xx (aka... is not successful).
         response.value
       rescue => e
-        raise e, "Trying to get '#{a_url}' produced an errant HTTP response. (original message: #{e.message})", e.backtrace
+        raise e, "Trying to get '#{a_url}' produced an errant HTTP response. -> caused by: #{e.message}", e.backtrace
       end
 
     else
