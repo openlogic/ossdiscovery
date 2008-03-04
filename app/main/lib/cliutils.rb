@@ -197,18 +197,18 @@ def report( packages )
   printf(io, "symlinks not followed : %d#{end_of_line}", @walker.not_followed_ct )  
   printf(io, "bad symlinks found    : %d#{end_of_line}", @walker.bad_link_ct )
   printf(io, "permission denied     : %d#{end_of_line}", @walker.permission_denied_ct )
-  printf(io, "files of interest     : %d#{end_of_line}", @walker.foi_ct )
+  printf(io, "files examined        : %d#{end_of_line}", @walker.foi_ct )
   printf(io, "start time            : %s#{end_of_line}", @starttime.asctime )
   printf(io, "end time              : %s#{end_of_line}", @endtime.asctime )
   printf(io, "scan time             : %02d:%02d:%02d (hh:mm:ss)#{end_of_line}", scan_hours, scan_min, scan_sec )
   printf(io, "distro                : %s#{end_of_line}", @distro )
   printf(io, "kernel                : %s#{end_of_line}", @kernel )
-  printf(io, "machine id            : %s#{end_of_line}", @machine_id )
+  printf(io, "anonymous machine hash: %s#{end_of_line}", @machine_id )
   printf(io, "")
   printf(io, "packages found        : %d#{end_of_line}", packages.length )
   printf(io, "throttling            : #{throttling_enabled_or_disabled} (total seconds paused: #{@walker.total_seconds_paused_for_throttling})#{end_of_line}" )
   @production_scan = false unless @production_scan == true
-  printf(io, "production scan       : %s#{end_of_line}",  @production_scan)
+  printf(io, "production machine    : %s#{end_of_line}",  @production_scan)
   
   max_version_length = 32
   
