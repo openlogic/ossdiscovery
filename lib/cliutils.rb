@@ -39,7 +39,7 @@ require 'pp'
 require 'base64'   # used for java proxy authentication properties
 
 begin
-  # if we're running under JRuby, we can still make HTTPS work
+  # if we're running under JRuby use the apache httpclient for https posts
   require 'java'
   require "#{ENV['OSSDISCOVERY_HOME']}/jruby/lib/commons-httpclient-3.1.jar"
 
@@ -67,8 +67,6 @@ end
 
 # we can use HTTPS if it's available through either Ruby or Java
 HTTPS_AVAILABLE = RUBY_HTTPS_AVAILABLE || JAVA_HTTPS_AVAILABLE
-
-
 
 begin
     require 'win32/registry'
