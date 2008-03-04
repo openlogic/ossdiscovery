@@ -526,9 +526,13 @@ def deliver_results( result_file )
     response["disco"] = "0, Improper or unexpected destination server response.  Check your destination URL to make sure it's correct"    
   end
    
-  # request by Customer to strip disco status code from output 
-  printf("Result: %s\n", response["disco"].to_s.strip.gsub!(/^[0-9]+, /,"") )
-  
+  # request by Customer to strip disco status code from output and put in referrer message
+  if ( response["disco"].match("^100") )
+    printf("Result: Success! View reports at http://www.osscensus.org\n") # DIS-825
+  else
+    printf("Result: %s\n", response["disco"] )
+  end 
+
 end
 
 
