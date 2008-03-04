@@ -34,7 +34,7 @@ class TcCLI < Test::Unit::TestCase
     
     assert(lines[last_line_index].include?('Scan complete'))
     # This assertion means that nothing was found (aka... no found packages were listed between the 'production scan' line and the 'Scan complete' line
-    assert(lines[last_line_index - 1].include?('production scan'))
+    assert(lines[last_line_index - 1].include?('production machine'))
     
   end
   
