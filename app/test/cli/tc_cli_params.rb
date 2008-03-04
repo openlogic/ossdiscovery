@@ -90,7 +90,7 @@ class TcCLI < Test::Unit::TestCase
     nothing_to_discover_dir = File.expand_path(File.join(File.dirname(__FILE__)))
     
     output_default = `ruby #{DISCOVERY_RB} --path #{nothing_to_discover_dir}`
-    default_scan_val = output_default.match(/^production scan\s+:\s+(.*).*$/)[1]
+    default_scan_val = output_default.match(/^production machine\s+:\s+(.*).*$/)[1]
     assert_equal('false', default_scan_val, "The default production scan value is expected to be 'false'")
     
     output_production = `ruby #{DISCOVERY_RB} --path #{nothing_to_discover_dir} --production-scan`
