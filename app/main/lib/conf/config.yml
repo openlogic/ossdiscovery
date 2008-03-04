@@ -113,7 +113,7 @@ produce_match_audit_records: false
 include_paths: false
 
 # machine readable results file
-machine_results: scan_results.txt
+machine_results: scanresults-census.txt  
 
 # whether or not to show the machine scan results after the scan is complete
 preview_results: false
