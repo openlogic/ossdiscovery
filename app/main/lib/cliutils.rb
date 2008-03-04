@@ -508,7 +508,7 @@ def deliver_results( result_file )
       response["disco"] = "0, Bad response from server while posting results. #{response_headers['status']}"
     end
  
-  rescue Errno::ECONNREFUSED, Errno::EBADF, OpenSSL::SSL::SSLError, Timeout::Error
+  rescue Errno::ECONNREFUSED, Errno::EBADF, OpenSSL::SSL::SSLError, Timeout::Error, Errno::EHOSTUNREACH
     printf("Can't submit scan. The connection was refused or server did not respond when trying to deliver the scan results.\nPlease check your network connection or contact the administrator for the server at: %s\n", @destination_server_url )
     printf("\nYour machine readable results can be found in the file: %s\n", result_file )
     response = Hash.new
@@ -527,10 +527,10 @@ def deliver_results( result_file )
   end
    
   # request by Customer to strip disco status code from output and put in referrer message
-  if ( response["disco"].match("^100") )
+  if ( response["disco"].match("^100") )  # look for success code from discovery server
     printf("Result: Success! View reports at http://www.osscensus.org\n") # DIS-825
   else
-    printf("Result: %s\n", response["disco"] )
+    printf("Result: %s\n", response["disco"].gsub(/^[0-9]+, /, "") )
   end 
 
 end
