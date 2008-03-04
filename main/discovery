@@ -80,5 +80,5 @@ export OSSDISCOVERY_HOME
 
 cd $OSSDISCOVERY_HOME
 
-ruby $OSSDISCOVERY_HOME/lib/discovery.rb --progress 100 --human-results readable_scanresults.txt $*
+ruby $OSSDISCOVERY_HOME/lib/discovery.rb --progress 100 --human-results scanresults-local.txt  $*
 
