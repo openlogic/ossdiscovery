@@ -3,7 +3,7 @@ require File.join(File.dirname(__FILE__), '..', '..', 'main', 'lib', 'cliutils.r
 #require File.join(File.dirname(__FILE__), '..', 'test_helper.rb')
 
 
-class TcCLI < Test::Unit::TestCase
+class TcDontFindOurDogfood < Test::Unit::TestCase
   DISCOVERY_RB = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'main', 'lib', 'discovery.rb')) unless defined? DISCOVERY_RB
   
   def setup
