@@ -38,6 +38,8 @@ require 'uri'
 require 'pp'
 require 'base64'   # used for java proxy authentication properties
 
+MAX_GEO_NUM = 195
+
 begin
   # if we're running under JRuby use the apache httpclient for https posts
   require 'java'
