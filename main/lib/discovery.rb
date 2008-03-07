@@ -272,6 +272,7 @@ options.set_options(
   [ "--list-files", "-l", GetoptLong::NO_ARGUMENT ],           # show encountered filenames during scan
   [ "--list-filters", "-g", GetoptLong::NO_ARGUMENT ],         # show list of filters, then exit
   [ "--list-foi", "-i", GetoptLong::NO_ARGUMENT ],             # show a list of files of interest derived from scan rules, then exit
+  [ "--list-geos", "-G", GetoptLong::NO_ARGUMENT ],            # shows a list of geographies and their codes
   [ "--list-projects", "-j", GetoptLong::OPTIONAL_ARGUMENT ],  # show a list projects discovery is capable of finding
   [ "--list-md5-dupes", "-M", GetoptLong::NO_ARGUMENT ], # 
   [ "--list-tag", "-t", GetoptLong::NO_ARGUMENT ],             # dump the MD5 hash which is the machine id tag 
@@ -390,7 +391,7 @@ begin
     when "--geography"
        @geography = arg
 
-       if ( @geography.to_i < 1 || @geography.to_i > 9 )
+       if ( @geography.to_i < 1 || @geography.to_i > 195 )
           printf("Invalid geography #{@geography}\n")
           printf(show_geographies())
           exit 1
@@ -422,6 +423,10 @@ begin
     when "--list-foi"    
       @list_foi = true
   
+    when "--list-geos"    
+      puts show_geographies_long()
+      exit 0
+ 
     when "--list-md5-dupes"
       ScanRulesReader.find_duplicated_md5_match_rules(@rules_dirs)      
       exit 0

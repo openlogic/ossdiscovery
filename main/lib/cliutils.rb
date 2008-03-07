@@ -110,6 +110,7 @@ def help()
   printf("--list-files,     -f during a scan, print a list of all files that matched a rule or other criteria\n")
   printf("--list-filters,   -g print a list of generic filters that would be active during the next scan\n")
   printf("--list-foi,       -i print a list of files of interest %s will be looking for\n", @discovery_name)
+  printf("--list-geos       -G print a list of geographies and their numeric codes\n")
   printf("--list-os,        -o list the operating system, version, and distro on which #{@discovery_name} is running\n")  
   printf("--list-projects,  -j print a list of the projects that are capable of being discovered\n")
   printf("                     Optionally append 'verbose' to get verbose output.\n")
@@ -143,8 +144,8 @@ def help()
   printf("   scans the directory /home/lcox and places the results files in the /tmp directory.\n")
 
   printf("\n\n")
-  printf("Reference for geography codes used with --geography command line option or the geography config.yml property\n")
-  printf( show_geographies() )
+  printf("For geography codes used with --geography command line option or the geography config.yml property,\n")
+  printf( "#{show_geographies_short()}\n" )
 
   printf("\n%s\n", version() )    
   printf("%s\n", @copyright )
@@ -511,6 +512,8 @@ def deliver_results( result_file )
     printf("\nYour machine readable results can be found in the file: %s\n", result_file )
     response = Hash.new
     response["disco"] = "0, Connection Refused or Server did not respond"
+  rescue Exception => e
+    printf("Error: #{e.to_s}\n")
   end
   
   # by now there should be a response["disco"] header.  If not, then the request was sent to a non-discovery
@@ -1005,17 +1008,207 @@ def get_macosx_version_str
   return "Mac OS X: #{os} #{kernel} #{release}"
 end
 
-def show_geographies()
+def show_geographies_short()
+  "see command line option --list-geos for a full listing of geographies"
+end
 
-"  1 | United States 
-  2 | Canada          
-  3 | South America   
-  4 | Europe          
-  5 | Japan           
-  6 | India           
-  7 | Australia       
-  8 | China           
-  9 | Other          
+def show_geographies_long()
+
+"1,AFGHANISTAN
+2,ALBANIA
+3,ALGERIA
+4,ANDORRA
+5,ANGOLA
+6,ANTIGUA_AND_BARBUDA
+7,ARGENTINA
+8,ARMENIA
+9,AUSTRALIA
+10,AUSTRIA
+11,AZERBAIJAN
+12,BAHAMAS
+13,BAHRAIN
+14,BANGLADESH
+15,BARBADOS
+16,BELARUS
+17,BELGIUM
+18,BELIZE
+19,BENIN
+20,BHUTAN
+21,BOLIVIA
+22,BOSNIA_AND_HERZEGOVINA
+23,BOTSWANA
+24,BRAZIL
+25,BRUNEI
+26,BULGARIA
+27,BURKINA_FASO
+28,BURMA_MYANMAR
+29,BURUNDI
+30,CAMBODIA
+31,CAMEROON
+32,CANADA
+33,CAPE_VERDE
+34,CENTRAL_AFRICAN_REPUBLIC
+35,CHAD
+36,CHILE
+37,CHINA
+38,COLOMBIA
+39,COMOROS
+40,CONGO
+41,CONGO_DEMOCRATIC_REPUBLIC_OF
+42,COSTA_RICA
+43,COTE_D_IVOIRE_IVORY_COAST
+44,CROATIA
+45,CUBA
+46,CYPRUS
+47,CZECH_REPUBLIC
+48,DENMARK
+49,DJIBOUTI
+50,DOMINICA
+51,DOMINICAN_REPUBLIC
+52,EAST_TIMOR
+53,ECUADOR
+54,EGYPT
+55,EL_SALVADOR
+56,EQUATORIAL_GUINEA
+57,ERITREA
+58,ESTONIA
+59,ETHIOPIA
+60,FIJI
+61,FINLAND
+62,FRANCE
+63,GABON
+64,GAMBIA
+65,GEORGIA
+66,GERMANY
+67,GHANA
+68,GREECE
+69,GRENADA
+70,GUATEMALA
+71,GUINEA
+72,GUINEA_BISSAU
+73,GUYANA
+74,HAITI
+75,HONDURAS
+76,HUNGARY
+77,ICELAND
+78,INDIA
+79,INDONESIA
+80,IRAN
+81,IRAQ
+82,IRELAND
+83,ISRAEL
+84,ITALY
+85,JAMAICA
+86,JAPAN
+87,JORDAN
+88,KAZAKSTAN
+89,KENYA
+90,KIRIBATI
+91,NORTH_KOREA
+92,SOUTH_KOREA
+93,KUWAIT
+94,KYRGYZSTAN
+95,LAOS
+96,LATVIA
+97,LEBANON
+98,LESOTHO
+99,LIBERIA
+100,LIBYA
+101,LIECHTENSTEIN
+102,LITHUANIA
+103,LUXEMBOURG
+104,MACEDONIA
+105,MADAGASCAR
+106,MALAWI
+107,MALAYSIA
+108,MALDIVES
+109,MALI
+110,MALTA
+111,MARSHALL_ISLANDS
+112,MAURITANIA
+113,MAURITIUS
+114,MEXICO
+115,MICRONESIA
+116,MOLDOVA
+117,MONACO
+118,MONGOLIA
+119,MONTENEGRO
+120,MOROCCO
+121,MOZAMBIQUE
+122,NAMIBIA
+123,NAURU
+124,NEPAL
+125,NETHERLANDS
+126,NEW_ZEALAND
+127,NICARAGUA
+128,NIGER
+129,NIGERIA
+130,NORWAY
+131,OMAN
+132,PAKISTAN
+133,PALAU
+134,PANAMA
+135,PAPUA_NEW_GUINEA
+136,PARAGUAY
+137,PERU
+138,PHILIPPINES
+139,POLAND
+140,PORTUGAL
+141,QATAR
+142,ROMANIA
+143,RUSSIAN_FEDERATION
+144,RWANDA
+145,SAINT_KITTS_AND_NEVIS
+146,SAINT_LUCIA
+147,SAINT_VINCENT_AND_THE_GRENADINES
+148,SAMOA
+149,SAN_MARINO
+150,SAO_TOME_AND_PRINCIPE
+151,SAUDI_ARABIA
+152,SENEGAL
+153,SERBIA
+154,SEYCHELLES
+155,SIERRA_LEONE
+156,SINGAPORE
+157,SLOVAKIA
+158,SLOVENIA
+159,SOLOMON_ISLANDS
+160,SOMALIA
+161,SOUTH_AFRICA
+162,SPAIN
+163,SRI_LANKA
+164,SUDAN
+165,SURINAME
+166,SWAZILAND
+167,SWEDEN
+168,SWITZERLAND
+169,SYRIA
+170,TAJIKISTAN
+171,TANZANIA
+172,TAIWAN
+173,THAILAND
+174,TOGO
+175,TONGA
+176,TRINIDAD_AND_TOBAGO
+177,TUNISIA
+178,TURKEY
+179,TURKMENISTAN
+180,TUVALU
+181,UGANDA
+182,UKRAINE
+183,UNITED_ARAB_EMIRATES
+184,UNITED_KINGDOM
+185,UNITED_STATES
+186,URUGUAY
+187,UZBEKISTAN
+188,VANUATU
+189,VATICAN
+190,VENEZUELA
+191,VIETNAM
+192,YEMEN
+193,ZAMBIA
+194,ZIMBABWE
+195,OTHER
 "
 end
 

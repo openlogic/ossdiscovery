@@ -184,15 +184,8 @@ update_rules_and_do_scan: false
 # 
 #  This value can be overwridden on the command line with the --geography
 #
-#  1 | United States | 
-#  2 | Canada        | 
-#  3 | South America | 
-#  4 | Europe        | 
-#  5 | Japan         | 
-#  6 | India         | 
-#  7 | Australia     | 
-#  8 | China         | 
-#  9 | Other         | 
+# in order to see the numeric value to supply for this property, run ossdiscovery --list-geos
+# 9999 is an invalid geography, it must be overridden to submit a scan anonymously
 
 geography: 9999
 
