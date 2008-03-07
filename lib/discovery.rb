@@ -390,10 +390,10 @@ begin
 
     when "--geography"
        @geography = arg
-
-       if ( @geography.to_i < 1 || @geography.to_i > 195 )
+ 
+       if ( @geography.to_i < 1 || @geography.to_i > MAX_GEO_NUM )
           printf("Invalid geography #{@geography}\n")
-          printf(show_geographies())
+          printf(show_geographies_long())
           exit 1
        end
 
@@ -560,7 +560,7 @@ end
 
 if @send_results
   # if deliverying anonymous results (no group passcode), then the geography option is required
-  if ( (@census_code == nil || @census_code == "") && (@geography == nil || (@geography.to_i < 1 || @geography.to_i > 9)) )
+  if ( (@census_code == nil || @census_code == "") && (@geography == nil || (@geography.to_i < 1 || @geography.to_i > MAX_GEO_NUM)) )
     printf("\nScan not completed\n")
     printf("\nWhen delivering anonymous results to the OSSCensus server, the geography must be defined\n")
     printf("  use --geography to specify the geography code or \n")
@@ -571,7 +571,7 @@ if @send_results
     printf("If you are registered with the OSSCensus site and have a group passcode or token, you should set that \n")
     printf("on the command line or add it to your config.yml file.\n")
     exit 1
-  elsif ( @census_code != nil && @census_code != "" && @geography.to_i == 100 )
+  elsif ( @census_code != nil && @census_code != "" && @geography == 9999 )
     # default the geography to "" if group passcode is supplied but geography was not overridden
     # geography will be associated on the server side using the census-code
     @geography = ""
@@ -604,6 +604,7 @@ rescue Exception => e
   exit 1
 end
 
+
 if (@update_rules) then
   do_a_scan = "Finished getting the updated rules, going on to perform a scan.\n"
   just_update_rules = "Finished getting the updated rules, no scan being performed.\n"
@@ -631,6 +632,7 @@ if (@update_rules) then
   end
 end
 
+
 # execute a scan
 execute
 
@@ -645,13 +647,14 @@ def make_reports
     report_audit_records @rule_engine.audit_records
   end
 
-  if ( @geography.to_i < 1 || @geography.to_i > 9 )
+  if ( @geography.to_i < 1 || @geography.to_i > MAX_GEO_NUM )
      @geography = ""
   end
 
   # machine_report method is no longer defined in cliutils.rb -- see the 'TODO technical debt' in census_utils.rb
   if (Object.respond_to?(:machine_report, true)) then
     # deal with machine reports and sending results if allowed
+
     machine_report(@machine_results, @packages, version, @machine_id,
                  @walker.dir_ct, @walker.file_ct, @walker.sym_link_ct,
                  @walker.permission_denied_ct, @walker.foi_ct,
