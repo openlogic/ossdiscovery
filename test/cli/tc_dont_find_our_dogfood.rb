@@ -26,15 +26,18 @@ class TcDontFindOurDogfood < Test::Unit::TestCase
       lines << line
     end
     
-    if (lines[lines.size - 1].include?('Scan complete')) then
-      last_line_index = lines.size - 1
-    else
-      last_line_index = lines.size - 2
+    str = 'Discovery has completed a scan'
+    index = 0
+    lines.each_with_index do |line, i|
+      if (line.include?(str)) then
+        index = i
+      end      
     end
     
-    assert(lines[last_line_index].include?('Scan complete'))
-    # This assertion means that nothing was found (aka... no found packages were listed between the 'production scan' line and the 'Scan complete' line
-    assert(lines[last_line_index - 1].include?('production machine'))
+    assert(index != 0, "Expecting the string '#{str}' to exist somewhere in the output")
+    
+    # This assertion means that nothing was found (aka... no found packages were listed between the 'production scan' line and the 'Discovery has completed a scan' line
+    assert(lines[index - 2].include?('production machine')) # [index - 2] because there's a line of whitespace in there
     
   end
   
