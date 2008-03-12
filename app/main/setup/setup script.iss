@@ -1,11 +1,11 @@
 [Setup]
 AppName=Open Source Census
-AppVerName=Open Source Census Discovery Client 2.0
-AppVersion=2.0
+AppVerName=Open Source Census Discovery Client 2.0b1
+AppVersion=2.0b1
 AppPublisherURL={cm:CensusURL}
-DefaultDirName={pf}\OSS Discovery
+DefaultDirName={pf}\OSSCensus-Discovery-2.0b1
 AllowUNCPath=false
-OutputBaseFilename=OSS Discovery Setup
+OutputBaseFilename=OSSCensus-Discovery-2.0b1-Setup
 PrivilegesRequired=none
 UsePreviousAppDir=false
 WizardSmallImageFile=census-small.bmp
@@ -18,7 +18,7 @@ UsePreviousGroup=false
 OutputDir=..\pkg
 
 [CustomMessages]
-CensusURL=https://www.osscensus.org
+CensusURL=https://faf.osscensus.org
 CensusRegisterURL=%1/app/index.php?do=register
 WhatIsCensusCodeResponse=The Census Code identifies you as a Census participant, allowing you to view Census reports and personalized inventory reports in addition to the freely available public reports.%n%nIf you have already registered, access your 'My Account' page on the OSS Census site to retrieve your Census Code.%nIf you have not registered, you'll need to before you can continue. Registration is free.%n%nWould you like to register and obtain a Census Code now?
 WhatIsCensusCode=What is a Census Code?
