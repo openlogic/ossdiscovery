@@ -34,7 +34,7 @@ Source: "..\license\*"; DestDir: {app}\license\; Excludes: ".svn"; Flags: recurs
 Source: "..\log\*"; DestDir: {app}\log\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
 Source: "..\doc\*"; DestDir: {app}\doc\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
 Source: "..\jruby\*"; DestDir: {app}\jruby\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
-Source: "..\jre\jre-1.5.0_07-windows-ia32\*"; DestDir: {app}\jre\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
+Source: "..\jre\jre-1.5.0_07-windows-ia32\*"; DestDir: {app}\jre\jre-1.5.0_07-windows-ia32; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
 Source: "..\README.txt"; DestDir: {app};
 Source: "..\setup\oss_census.ico"; DestDir: {app};
 Source: "..\discovery_jre_windows.bat"; DestDir: {app}; DestName: "discovery.bat";
