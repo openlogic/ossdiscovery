@@ -96,6 +96,20 @@ namespace :release do
       rm_rf "#{dest_dir}"
     end
 
+    desc "Build installer"
+    task :installer do
+      if ENV['INNO_HOME'].nil?
+        puts "You must have the INNO_HOME environment variable set in order to build the installer.  Installer will not be built.  Set INNO_HOME to the path to inno setup"
+      else
+        result=`which wine`
+        if result == ""
+          puts "You must have wine installed in order to build the installer"      
+        else
+          system "wine $INNO_HOME/ISCC.exe setup/setup\\ script.iss"
+        end
+      end
+    end
+
   end
 
   namespace :linux do 
