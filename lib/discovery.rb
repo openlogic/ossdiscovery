@@ -86,8 +86,8 @@ require 'scan_rules_updater'
 @basedir = File.expand_path(File.dirname(__FILE__))
 @config = 'conf/config.rb'
 @copyright = "Copyright (C) 2007-2008 OpenLogic, Inc."
-@discovery_version = "ossdiscovery-2.0b1"
-@discovery_name = "discovery"
+@discovery_version = "2.0b1"
+@discovery_name = "ossdiscovery"
 @discovery_license = "GNU Affero General Public License version 3"
 @discovery_license_shortname = "Affero GPLv3" 
 @dir_exclusion_filters = Hash.new
