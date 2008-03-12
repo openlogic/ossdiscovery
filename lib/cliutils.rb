@@ -192,7 +192,7 @@ def report( packages )
   else
     throttling_enabled_or_disabled = 'disabled'
   end
-  end_of_line = "\n"
+  end_of_line = "\r\n"
 
   printf(io, end_of_line)
   printf(io, "directories walked    : %d#{end_of_line}", @walker.dir_ct )
