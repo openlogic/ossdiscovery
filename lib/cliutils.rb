@@ -101,7 +101,7 @@ def help()
   # please maintain this list in alphabetical order
   printf("\nOptions are not order dependent and may be one or more of:\n")
   printf("--conf,           -c the absolute or relative path and filename of the configuration file to use for the scan\n")
-  printf("--deliver-batch   -D the absolute or relative path to a directory contain one or more scan results files to deliver\n")
+  printf("--deliver-batch   -D the absolute or relative path to a directory containing one or more scan results files to deliver\n")
   printf("--deliver-results -d existence says 'yes' deliver results to server. Server destination is configured in config/config.yml\n")
   printf("                     optionally --deliver-results can take a parameter which is a path to an existing scan results file to deliver\n")
   printf("--help,           -h print this help message\n")
@@ -588,10 +588,10 @@ def deliver_batch( result_directory )
     dirname = File.join(ENV['OSSDISCOVERY_HOME'], "failed_census_deliveries", ScanRulesUpdater.get_YYYYMMDD_HHMM_str)
     FileUtils.mkdir_p(dirname)
     FileUtils.cp(failed_deliveries, dirname)
-    msg =  "There were #{failed_deliveries.size} failed deliveries.\n" 
-    msg << "To resubmit these failures, please perform this operation again,\n"
-    msg << "providing this directory as an argument: \n"
-    msg << "    #{dirname}"
+    msg =  "\nFailed to deliver #{failed_deliveries.size} scan(s) as part of the batch submission.\n" 
+    msg << "To resubmit these failures, please perform this operation\n"
+    msg << "again, providing this directory as an argument: \n"
+    msg << "    #{dirname}\n"
     puts msg
   end
   
