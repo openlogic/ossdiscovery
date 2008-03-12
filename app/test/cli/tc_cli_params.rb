@@ -91,10 +91,12 @@ class TcCLI < Test::Unit::TestCase
     
     output_default = `ruby #{DISCOVERY_RB} --path #{nothing_to_discover_dir}`
     default_scan_val = output_default.match(/^production machine\s+:\s+(.*).*$/)[1]
+    default_scan_val.sub!("\r", "")
     assert_equal('false', default_scan_val, "The default production machine value is expected to be 'false'")
     
     output_production = `ruby #{DISCOVERY_RB} --path #{nothing_to_discover_dir} --production-scan`
     prod_scan_val = output_production.match(/^production machine\s+:\s+(.*).*$/)[1]
+    prod_scan_val.sub!("\r", "")
     assert_equal('true', prod_scan_val, "The production machine value was expected to be 'true' because the '--production-scan' cli arg was passed in.")
     
   end
