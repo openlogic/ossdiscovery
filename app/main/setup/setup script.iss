@@ -17,9 +17,8 @@ UninstallDisplayIcon={app}\oss_census.ico
 UsePreviousGroup=false
 
 [CustomMessages]
-CensusSite=www.osscensus.org
-CensusURL=https://{cm:CensusSite}
-CensusRegisterURL={cm:CensusURL}/app/index.php?do=register
+CensusURL=https://www.osscensus.org
+CensusRegisterURL=%1/app/index.php?do=register
 WhatIsCensusCodeResponse=The Census Code identifies you as a Census participant, allowing you to view Census reports and personalized inventory reports in addition to the freely available public reports.%n%nIf you have already registered, access your 'My Account' page on the OSS Census site to retrieve your Census Code.%nIf you have not registered, you'll need to before you can continue. Registration is free.%n%nWould you like to register and obtain a Census Code now?
 WhatIsCensusCode=What is a Census Code?
 CensusCodeEmptyError=You must enter a Census Code.%n%nWould you like to register and obtain a Census Code now?
@@ -29,13 +28,13 @@ FinishMessage=If you've elected not to scan your box now, or you would like to s
 WelcomeLabel2=This will install [name/ver] on your computer.%n%nUsing it, you will be able to scan your system for open source software and submit the results to the Open Source Census.
 
 [Files]
-Source: "..\lib\*"; DestDir: {app}\lib\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
-Source: "..\license\*"; DestDir: {app}\license\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
-Source: "..\log\*"; DestDir: {app}\log\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
-Source: "..\doc\*"; DestDir: {app}\doc\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
-Source: "..\jruby\*"; DestDir: {app}\jruby\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
-Source: "..\jre\jre-1.5.0_07-windows-ia32\*"; DestDir: {app}\jre\jre-1.5.0_07-windows-ia32; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
-Source: "..\README.txt"; DestDir: {app};
+;Source: "..\lib\*"; DestDir: {app}\lib\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
+;Source: "..\license\*"; DestDir: {app}\license\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
+;Source: "..\log\*"; DestDir: {app}\log\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
+;Source: "..\doc\*"; DestDir: {app}\doc\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
+;Source: "..\jruby\*"; DestDir: {app}\jruby\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
+;Source: "..\jre\jre-1.5.0_07-windows-ia32\*"; DestDir: {app}\jre\jre-1.5.0_07-windows-ia32; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
+;Source: "..\README.txt"; DestDir: {app};
 Source: "..\setup\oss_census.ico"; DestDir: {app};
 Source: "..\discovery_jre_windows.bat"; DestDir: {app}; DestName: "discovery.bat";
 Source: "..\DiscoveryWinWrapper.bat"; DestDir: {app};
@@ -55,7 +54,7 @@ var
 begin
   if MsgBox(CustomMessage('WhatIsCensusCodeResponse'), mbConfirmation, MB_YESNO) = IDYES then
   begin
-    ShellExec('open', CustomMessage('CensusRegisterURL'), '', '', SW_SHOWNORMAL, ewNoWait, ErrorCode);
+        ShellExec('open', FmtMessage(CustomMessage('CensusRegisterURL'), [CustomMessage('CensusURL')]), '', '', SW_SHOWNORMAL, ewNoWait, ErrorCode);
   end;
 end;
 
@@ -91,7 +90,7 @@ begin
   CancelButton := WizardForm.CancelButton;
 
   URLLabel := TNewStaticText.Create(WizardForm);
-  URLLabel.Caption := 'http://'+CustomMessage('CensusSite');
+  URLLabel.Caption := CustomMessage('CensusURL')
   URLLabel.Cursor := crHand;
   URLLabel.OnClick := @URLLabelOnClick;
   URLLabel.Parent := WizardForm;
@@ -113,7 +112,7 @@ begin
     if CensusCodePage.Values[0] = '' then begin
       if MsgBox(CustomMessage('CensusCodeEmptyError'), mbConfirmation, MB_YESNO) = IDYES then
       begin
-        ShellExec('open', CustomMessage('CensusRegisterURL'), '', '', SW_SHOWNORMAL, ewNoWait, ErrorCode);
+        ShellExec('open', FmtMessage(CustomMessage('CensusRegisterURL'), [CustomMessage('CensusURL')]), '', '', SW_SHOWNORMAL, ewNoWait, ErrorCode);
       end;
       Result := False;
     end else begin
