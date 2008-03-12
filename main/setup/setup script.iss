@@ -28,13 +28,13 @@ FinishMessage=If you've elected not to scan your box now, or you would like to s
 WelcomeLabel2=This will install [name/ver] on your computer.%n%nUsing it, you will be able to scan your system for open source software and submit the results to the Open Source Census.
 
 [Files]
-;Source: "..\lib\*"; DestDir: {app}\lib\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
-;Source: "..\license\*"; DestDir: {app}\license\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
-;Source: "..\log\*"; DestDir: {app}\log\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
-;Source: "..\doc\*"; DestDir: {app}\doc\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
-;Source: "..\jruby\*"; DestDir: {app}\jruby\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
-;Source: "..\jre\jre-1.5.0_07-windows-ia32\*"; DestDir: {app}\jre\jre-1.5.0_07-windows-ia32; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
-;Source: "..\README.txt"; DestDir: {app};
+Source: "..\lib\*"; DestDir: {app}\lib\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
+Source: "..\license\*"; DestDir: {app}\license\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
+Source: "..\log\*"; DestDir: {app}\log\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
+Source: "..\doc\*"; DestDir: {app}\doc\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
+Source: "..\jruby\*"; DestDir: {app}\jruby\; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
+Source: "..\jre\jre-1.5.0_07-windows-ia32\*"; DestDir: {app}\jre\jre-1.5.0_07-windows-ia32; Excludes: ".svn"; Flags: recursesubdirs createallsubdirs
+Source: "..\README.txt"; DestDir: {app};
 Source: "..\setup\oss_census.ico"; DestDir: {app};
 Source: "..\discovery_jre_windows.bat"; DestDir: {app}; DestName: "discovery.bat";
 Source: "..\DiscoveryWinWrapper.bat"; DestDir: {app};
