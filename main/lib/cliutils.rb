@@ -30,13 +30,16 @@
 #  cliutils.rb contains methods to support CLI command processing and output
 #
 
-require 'net/http'
-require 'find'
+require 'scan_rules_updater'
+
+require 'base64'   # used for java proxy authentication properties
 require 'erb'
+require 'fileutils'
+require 'find'
+require 'net/http'
+require 'pp'
 require 'rbconfig'
 require 'uri'
-require 'pp'
-require 'base64'   # used for java proxy authentication properties
 
 MAX_GEO_NUM = 195
 
@@ -532,8 +535,10 @@ def deliver_results( result_file )
   # request by Customer to strip disco status code from output and put in referrer message
   if ( response["disco"].match("^100") )  # look for success code from discovery server
     printf("Result: Success! View reports at http://www.osscensus.org\n") # DIS-825
+    return true
   else
     printf("Result: %s\n", response["disco"].gsub(/^[0-9]+, /, "") )
+    return false
   end 
 
 end
@@ -544,36 +549,52 @@ end
 =end
 
 def deliver_batch( result_directory )
+  
+  failed_deliveries = []
 
   Find.find( result_directory ) do | results_fname |
 
     #printf("results fname: #{results_fname}\n")
 
     begin
-        case
-          when File.file?( results_fname )
+      case
+        when File.file?( results_fname )
 
-             # do some basic validation test by spot checking for a couple of fields that are
-             # expected to be in a valid results file
-             results_content = File.new( results_fname, "r" ).read 
+          # do some basic validation test by spot checking for a couple of fields that are
+          # expected to be in a valid results file
+          results_content = File.new( results_fname, "r" ).read 
 
-             if ( results_content.match('^report_type: census') == nil ||
-                  results_content.match('^permission_denied_count:') == nil||
-                  results_content.match('^distro:') == nil  ||
-                  results_content.match('^os_family:') == nil ||
-                  results_content.match('^integrity_check:') == nil 
-                )
-               printf("Invalid results file #{results_fname}, not sent\n")
-               next
-         
-             end
+          if ( results_content.match('^report_type: census') == nil ||
+               results_content.match('^permission_denied_count:') == nil||
+               results_content.match('^distro:') == nil  ||
+               results_content.match('^os_family:') == nil ||
+               results_content.match('^integrity_check:') == nil 
+             )
+            printf("Invalid results file #{results_fname}, not sent\n")
+            next
+          end # of if
 
-             deliver_results( results_fname ) 
-        end
-     rescue Errno::EACCES, Errno::EPERM
-        puts "Cannot access #{results_fname}\n" 
-     end
+          success = deliver_results( results_fname ) 
+          if (!success) then
+            failed_deliveries << File.expand_path(results_fname)
+          end
+      end # of case
+    rescue Errno::EACCES, Errno::EPERM
+      puts "Cannot access #{results_fname}\n" 
+    end
   end
+  
+  if (failed_deliveries.size > 0) then
+    dirname = File.join(ENV['OSSDISCOVERY_HOME'], "failed_census_deliveries", ScanRulesUpdater.get_YYYYMMDD_HHMM_str)
+    FileUtils.mkdir_p(dirname)
+    FileUtils.cp(failed_deliveries, dirname)
+    msg =  "There were #{failed_deliveries.size} failed deliveries.\n" 
+    msg << "To resubmit these failures, please perform this operation again,\n"
+    msg << "providing this directory as an argument: \n"
+    msg << "    #{dirname}"
+    puts msg
+  end
+  
 
 end
 
