@@ -88,10 +88,6 @@ Commons Logging		http://jakarta.apache.org/commons/logging
 			Donkin, Peter Donald, Costin Manolache, Richard Sitze, Juozas Baliuka, Simon Kitching,
 			Dennis Lundberg, Brian Stransberry
 
-JUnit			http://junit.sourceforge.net/
-			Authors: Mike Clark, Matthias Schmidt, David Saff, Erich Gamma, Erik G. H. Meade, Kent 
-			Beck, Vladimir Ritz, Bossicard
-
 Commons HTTPClient	http://jakarta.apache.org/commons/httpclient
 			Authors: Michael Becke, Jeff Dever, dIon Gillard, Ortwin Glueck, Sung-Gu, Oleg Kalnichevski,
 			Sean C. Sullivan, Adrian Sutton, Rodney Waldhoff
