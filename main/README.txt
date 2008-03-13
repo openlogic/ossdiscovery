@@ -125,6 +125,12 @@ The source code is organized like this:
     - For linux users who would like to not scan anything in their /media directory add the no-media.rb require
       to the generic-exlusions.rb file.  We may add a "no media" flag to the CLI options in the future.
 
+- Known Issues
+===============
+
+- OSS Discovery can not be installed to/run from a path with spaces in it.
+- The pure Ruby distribution can not be run from an authenticated proxy.
+
 LEGAL NOTICE
 -------------
 
