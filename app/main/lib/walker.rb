@@ -169,7 +169,7 @@ class Walker
    def walk_dir( fileordir )
     @root_scan_dir = fileordir if @root_scan_dir.nil?
     # crude progress indicator
-    if ( @show_progress && @file_ct != 0 ) 
+    if ( !@show_verbose && @show_progress && @file_ct != 0 ) 
       q,r = @file_ct.divmod( @show_every )
       if ( r == 0 )
         printf "."
@@ -408,6 +408,12 @@ class Walker
   def progress_report(fileordir)
     if (@last_verbose_report.nil?) then
       @last_verbose_report = @starttime if @last_verbose_report.nil?
+      if (@root_scan_dir_split_count.nil?) then
+        @root_scan_dir_split_count = @root_scan_dir.split(File::SEPARATOR).size
+        if (@root_scan_dir_split_count == 0) then @root_scan_dir_split_count = 1 end
+      end
+      now_scanning = fileordir.split(File::SEPARATOR)[0..@root_scan_dir_split_count].join(File::SEPARATOR)
+      puts "\nelapsed time: #{((Time.new - @starttime).to_i)} seconds - scanning '#{now_scanning}' - walked #{dir_ct()} directories - scanned #{foi_ct()} files"
     else
       now = Time.new
       if ((now - @last_verbose_report) >= 120) then
