@@ -66,7 +66,7 @@ class Walker
 
   attr_accessor :file_ct, :dir_ct, :sym_link_ct, :bad_link_ct, :permission_denied_ct, :foi_ct, :not_found_ct
   attr_accessor :follow_symlinks, :symlink_depth, :not_followed_ct, :show_every, :show_verbose, :show_progress, :throttling_enabled, :throttle_number_of_files, :throttle_seconds_to_pause
-  attr_accessor :list_exclusions, :list_files, :show_permission_denied
+  attr_accessor :list_exclusions, :list_files, :show_permission_denied, :starttime
   attr_reader :total_seconds_paused_for_throttling
 
   # criteria[:] 
@@ -167,6 +167,7 @@ class Walker
 =end
 
    def walk_dir( fileordir )
+    @root_scan_dir = fileordir if @root_scan_dir.nil?
     # crude progress indicator
     if ( @show_progress && @file_ct != 0 ) 
       q,r = @file_ct.divmod( @show_every )
@@ -179,7 +180,7 @@ class Walker
       q,r = @file_ct.divmod( @show_every )
       if ( r == 0 )
         # puts fileordir # Uncomment this line in order to see the directories being walked
-        progress_report()
+        progress_report(fileordir)
       end
     end    
     
@@ -404,15 +405,28 @@ class Walker
   periodically called to show more verbose progress 
 =end
 
-  def progress_report()
+  def progress_report(fileordir)
+    if (@last_verbose_report.nil?) then
+      @last_verbose_report = @starttime if @last_verbose_report.nil?
+    else
+      now = Time.new
+      if ((now - @last_verbose_report) >= 120) then
+        if (@root_scan_dir_split_count.nil?) then
+          @root_scan_dir_split_count = @root_scan_dir.split(File::SEPARATOR).size
+          if (@root_scan_dir_split_count == 0) then @root_scan_dir_split_count = 1 end
+        end
+        now_scanning = fileordir.split(File::SEPARATOR)[0..@root_scan_dir_split_count].join(File::SEPARATOR)
+        puts "\nelapsed time: #{((now - @starttime).to_i / 60)} minutes - scanning '#{now_scanning}' - walked #{dir_ct()} directories - scanned #{foi_ct()} files"
+        @last_verbose_report = now
+      end
+    end
     
-    printf( "directories walked: %d\n", dir_ct() )
-    printf( "files encountered : %d\n", file_ct() )
-    printf( "symlinks found    : %d\n", sym_link_ct() )
-    printf( "bad symlink count : %d\n", bad_link_ct() )
-    printf( "permission denied : %d\n", permission_denied_ct() )
-    printf( "files of interest : %d\n...\n", foi_ct() )
-    
+#        printf( "directories walked: %d\n", dir_ct() )
+#        printf( "files encountered : %d\n", file_ct() )
+#        printf( "symlinks found    : %d\n", sym_link_ct() )
+#        printf( "bad symlink count : %d\n", bad_link_ct() )
+#        printf( "permission denied : %d\n", permission_denied_ct() )
+#        printf( "files of interest : %d\n", foi_ct() )
   end
 
 =begin rdoc

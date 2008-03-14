@@ -31,5 +31,5 @@ set OSSDISCOVERY_HOME=%~dp0%
 set JAVA_HOME=%OSSDISCOVERY_HOME%\jre\jre-1.5.0_07-windows-ia32\
 
 cd "%OSSDISCOVERY_HOME%"
-"%OSSDISCOVERY_HOME%\jruby\bin\jruby.bat" -J-Xmx512m -J-Xms512m -J-client "%OSSDISCOVERY_HOME%\lib\discovery.rb" --progress 100 --human-results scanresults-local.txt  %*
+"%OSSDISCOVERY_HOME%\jruby\bin\jruby.bat" -J-Xmx512m -J-Xms512m -J-client "%OSSDISCOVERY_HOME%\lib\discovery.rb" --progress 100 --human-results scanresults-local.txt --verbose %*
 
