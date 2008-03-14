@@ -128,8 +128,32 @@ The source code is organized like this:
 - Known Issues
 ===============
 
-- OSS Discovery can not be installed to/run from a path with spaces in it.
-- The pure Ruby distribution can not be run from an authenticated proxy.
+
+DIS-847-- Major -- The pure Ruby distribution can not be run from an authenticated proxy.
+
+DIS-920 -- Minor -- On Linux, the OSS Discovery distribution can not be installed to/run from a path with spaces in it.
+ 
+DIS-881 -- Minor -- Under significant scan submission load, the public installations line graph and the installations summary are out of sync.
+ 
+DIS-859 -- Critical -- A MySQL Deadlock can result when posting scans through the command line interface using --deliver-batch.
+ 
+DIS-851 -- Minor -- No update error message is provided when rules are out of synch.
+ 
+DIS-846 -- Minor -- Maven rules for Drools and Drools-example display the wrong version number.
+ 
+DIS-839 -- Major -- Ruby and JRE distributions report Machine Id, operating system and kernel differently.
+ 
+DIS-838 -- Major -- User must submit scans in order to view reports.
+ 
+DIS-837 -- Minor -- Duplicate delivery of a batch of scans doesn't report a duplicate submission.
+ 
+DIS-829 -- Critical -- User must logout and log back in order to see filters after submitting scan while logged in.
+ 
+DIS-826 -- Minor -- Error finding Elclipse Plug-in: PDE.
+ 
+DIS-804 -- Minor -- Pie charts labels are too big.
+ 
+DIS-347 -- Minor -- Discovery is not finding version for Xerces 2.9.1.
 
 LEGAL NOTICE
 -------------
