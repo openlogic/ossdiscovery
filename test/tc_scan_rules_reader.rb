@@ -3,7 +3,7 @@ $:.unshift File.join(File.dirname(__FILE__), "..", "main", "lib")
 require 'scan_rules_reader'
 
 require 'digest/md5' 
-require 'test_helper'
+require File.join(File.dirname(__FILE__), 'test_helper')
 
 class TcScanRulesReader < Test::Unit::TestCase
   
@@ -170,9 +170,12 @@ class TcScanRulesReader < Test::Unit::TestCase
     assert_equal(expected, actual)
   end
 
-  def test_get_universal_rules_version
+  def test_universal_rules_version
     urv = ScanRulesReader.get_universal_rules_version
-    assert(!urv.nil? && urv != "")
+    assert(!urv.nil? && urv != "" && 
+            urv != ScanRulesReader::ERROR_NO_UNIVERSAL_VERSION_VALUES_SET && 
+            urv != ScanRulesReader::ERROR_MULTIPLE_UNIQUE_UNIVERSAL_VERSIONS, 
+            "There is something out of whack with the universal version values in the project rules files (which was reported as '#{urv}'). All files are expected to have a 'universal-version' attribute defined on the 'project-rules' element, and they should all be the exact same value.")
   end
   
 end
