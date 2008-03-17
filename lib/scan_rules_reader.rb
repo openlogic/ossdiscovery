@@ -53,6 +53,9 @@ require File.join(File.dirname(__FILE__), 'conf', 'config')
 class ScanRulesReader
   
   @@log = Config.log
+
+  ERROR_NO_UNIVERSAL_VERSION_VALUES_SET = "NO_UNIVERSAL_VERSION_VALUES_SET" unless defined? ERROR_NO_UNIVERSAL_VERSION_VALUES_SET
+  ERROR_MULTIPLE_UNIQUE_UNIVERSAL_VERSIONS = "MULTIPLE_UNIQUE_UNIVERSAL_VERSIONS" unless defined? ERROR_MULTIPLE_UNIQUE_UNIVERSAL_VERSIONS
   
 =begin rdoc
   This method turns stuff from a scanrules xml file into ProjectRule objects (with their 
@@ -419,10 +422,10 @@ class ScanRulesReader
       universal_versions << root.attributes['universal-version']
     end # of rules_files.each
     
-    if (universal_versions.size == 0) then
-      return "NO_UNIVERSAL_VERSION_VALUES_SET"
+    if (universal_versions.size == 0 or (universal_versions.size == 1 and universal_versions.to_a.first.nil?)) then
+      return ERROR_NO_UNIVERSAL_VERSION_VALUES_SET
     elsif (universal_versions.size > 1) then
-      return "MULTIPLE_UNIQUE_UNIVERSAL_VERSIONS"
+      return ERROR_MULTIPLE_UNIQUE_UNIVERSAL_VERSIONS
     else
       return universal_versions.to_a[0]
     end
