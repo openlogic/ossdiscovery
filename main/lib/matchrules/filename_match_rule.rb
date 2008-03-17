@@ -47,7 +47,7 @@ class FilenameMatchRule < MatchRule
   def initialize(name, defined_filename)
     super(name)
     @type = MatchRule::TYPE_FILENAME
-    @defined_filename = Regexp.new(defined_filename)
+    @defined_filename = Regexp.new(/#{defined_filename}/i)
     
     # To understand what this is, see the comments in the 'match?' method.
     @matched_against = Hash.new
