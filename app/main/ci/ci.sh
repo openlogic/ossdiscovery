@@ -2,7 +2,6 @@
 # This script needs to be run from directory directly above 'main' (which is where CruiseControl runs it from).
 export OSSDISCOVERY_HOME=`pwd`/main
 svn up $OSSDISCOVERY_HOME/../test-internal $OSSDISCOVERY_HOME --username guest && \
-svn up $OSSDISCOVERY_HOME/../main $OSSDISCOVERY_HOME --username guest && \
 ruby $OSSDISCOVERY_HOME/../test-internal/ts_test_all.rb && \
 ruby $OSSDISCOVERY_HOME/../test/ts_test_unit.rb && \
 $OSSDISCOVERY_HOME/jruby/bin/jruby -J-Xmx256m $OSSDISCOVERY_HOME/../test-internal/ts_test_all.rb && \
