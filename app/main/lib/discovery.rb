@@ -350,14 +350,7 @@ begin
         # the results file to post when the scan is complete
 
         if ( File.exists?(arg) )
-          printf("Immediately delivering the results file: #{arg} ...\n")
-
-          # don't need to enforce geography check on cli because by delivering files, that geography would
-          # have already been validated.  Also, if the scan_results geography is invalid, the server
-          # will reject the scan
-
-          deliver_results( arg )
-          exit 0
+          @deliver_results_immediately = arg
         else
           puts "The file you specified to be delivered to the census server does not exist."
           puts File.expand_path(arg)
@@ -562,6 +555,23 @@ if ( ARGV.size > 0 )
     validate_directory_to_scan( ARGV[0] ) 
   end
 end
+
+if defined? @deliver_results_immediately
+  printf("Immediately delivering the results file: #{@deliver_results_immediately} ...\n")
+  
+  # don't need to enforce geography check on cli because by delivering files, that geography would
+  # have already been validated.  Also, if the scan_results geography is invalid, the server
+  # will reject the scan
+  
+  unless @census_code.nil? or @census_code==""
+    deliver_results( @deliver_results_immediately, :group_code=>@census_code )
+  else 
+    deliver_results( @deliver_results_immediately )
+  end
+  
+  exit 0
+end
+
 
 if @send_results
   # if deliverying anonymous results (no group passcode), then the geography option is required
