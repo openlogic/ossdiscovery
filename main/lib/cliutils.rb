@@ -371,6 +371,69 @@ def dump_filters()
   printf("\n")
 end
 
+=begin rdoc
+  this method takes a result set and a hash of key/value pairs to override in the file, then replaces them and 
+  recalculates the integrity check
+  
+  good reference:  http://www.ruby-doc.org/stdlib/libdoc/net/http/rdoc/classes/Net/HTTP.html
+=end
+def apply_overrides(results, overrides)
+  #The 'plugin' design is already completely broken and needs to be refactored, so whatever:
+  include CensusUtils
+  
+  if verify_integrity_check(results)
+    #Now let's override various parts of the results file and recalculate the integrity check
+    
+    overrides.each do |key, value|
+      results=results.sub(/#{key}:.*/,"#{key}: #{value}")
+    end
+   
+    #Get rid of the existing check
+    results=results.sub(/\n*integrity_check:.*\n/,"")
+    integrity_check=create_integrity_check(results, results.match(/universal_rules_md5:\s*(.*)/)[1])
+    results="integrity_check: #{integrity_check}\n#{results}"
+  else
+    puts "Tried to override results value but original integrity check was invalid"
+    exit 0
+  end
+end
+
+
+=begin rdoc
+  verifies that the integrity check in a results file is correct
+=end
+def verify_integrity_check(results)
+
+  rcvd_integrity_check = results.match(/integrity_check:\s*(.*)/)[1]
+  universal_rules_md5 = results.match(/universal_rules_md5:\s*(.*)/)[1]
+
+  if ( rcvd_integrity_check == nil || rcvd_integrity_check == "")
+    return false        
+  end
+    
+  integrity_check_value = rcvd_integrity_check.hex
+
+  if ( rcvd_integrity_check.size < 60 && rcvd_integrity_check.size > 68 )  
+    return false        
+  end
+
+  if ( integrity_check_value < 100000000 )
+    return false        
+  end
+
+  if ( (integrity_check_value % 97) != 1)
+    return false        
+  end
+
+  #Remove the integrity check from the file and recalculate the integrity check
+  integrity_check = create_integrity_check(results.sub(/\n*integrity_check:.*\n/,""),universal_rules_md5 )
+
+  unless rcvd_integrity_check == integrity_check 
+    return false        
+  end
+  
+  return true
+end
 
 =begin rdoc
   this method posts the machine scan results back to the discovery server using the Net classes in stdlib
@@ -378,9 +441,13 @@ end
   good reference:  http://www.ruby-doc.org/stdlib/libdoc/net/http/rdoc/classes/Net/HTTP.html
 =end
 
-def deliver_results( result_file )
+def deliver_results( result_file, overrides={} )
   printf("Posting results to: %s ...please wait\n", @destination_server_url )
   results = File.new( result_file ).read
+  
+  if overrides.size > 0
+   results=apply_overrides(results,overrides)
+  end
   
   begin
     
