@@ -59,8 +59,6 @@ do
             fi
         done
     done
-    # Change ":" chars back to spaces.
-    REALPATH=`echo $REALPATH | sed -e 's;:; ;g'`
 
     if [ "$REALPATH" = "$SCRIPT" ]
     then
@@ -69,6 +67,9 @@ do
         SCRIPT="$REALPATH"
     fi
 done
+
+# Change ":" chars back to spaces.
+REALPATH=`echo $REALPATH | sed -e 's;:; ;g'`
 
 # Change the current directory to the location of the script
 cd "`dirname "$REALPATH"`"
@@ -81,7 +82,7 @@ export JAVA_HOME
 
 # echo "%%%% OSSDISCOVERY_HOME=$OSSDISCOVERY_HOME"
 
-cd $OSSDISCOVERY_HOME
+cd "$OSSDISCOVERY_HOME"
 
-$OSSDISCOVERY_HOME/jruby/bin/jruby -J-Xmx512m -J-Xms512m -J-client $OSSDISCOVERY_HOME/lib/discovery.rb --progress 100 --human-results scanresults-local.txt --verbose $*
+"$OSSDISCOVERY_HOME/jruby/bin/jruby" -J-Xmx512m -J-Xms512m -J-client "$OSSDISCOVERY_HOME/lib/discovery.rb" --progress 100 --human-results scanresults-local.txt --verbose $*
 
