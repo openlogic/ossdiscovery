@@ -1702,13 +1702,6 @@
       <match-rule name="dnsjava_jar" type="filenameVersion" filename="^dnsjava-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="drools" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="drools_fv" speed="1"/>
-    <match-rules name="drools_fv">
-      <match-rule name="drools_jar" type="filenameVersion" filename="^drools-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="easymock" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="easymock_fv" speed="1"/>
