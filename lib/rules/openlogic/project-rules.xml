@@ -1267,6 +1267,7 @@
     <match-rules name="drools_version">
       <result expression="OR-ALL"/>
       <match-rule name="drools_ver" type="filenameVersion" filename="^drools-core-([0-9].*?)\.jar$"/>
+      <match-rule name="drools_jar" type="filenameVersion" filename="^drools-jsr[0-9]+-([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="drupal" from="wild" os="all">
