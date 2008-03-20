@@ -605,6 +605,9 @@ def deliver_results( result_file, overrides={} )
     return true
   else
     printf("Result: %s\n", response["disco"].gsub(/^[0-9]+, /, "") )
+    if (response["disco"].include?('not eligible for being discovered')) then
+      printf("\nThis error can likely be resolved by updating your project rules.\nTo do this, run discovery with the '--update-rules' option, then perform the scan again and re-deliver the results.\n")
+    end
     return false
   end 
 
