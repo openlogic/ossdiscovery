@@ -29,6 +29,10 @@ REM You can contact OpenLogic at info@openlogic.com.
 
 set OSSDISCOVERY_HOME=%~dp0%
 
+if not "%JAVA_HOME%" == "" goto javaHomeAlreadySet
+for %%P in (%PATH%) do if exist %%P\java.exe set JAVA_HOME=%%P..\
+
+:javaHomeAlreadySet
 cd "%OSSDISCOVERY_HOME%"
 "%OSSDISCOVERY_HOME%\jruby\bin\jruby.bat" -J-Xmx512m -J-Xms512m -J-client "%OSSDISCOVERY_HOME%\lib\discovery.rb" --progress 100 --human-results scanresults-local.txt --verbose %*
 
