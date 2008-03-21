@@ -20,7 +20,7 @@ ruby $OSSDISCOVERY_HOME/lib/discovery.rb --list-projects >> $CC_BUILD_ARTIFACTS/
 # -------------
 # 
 # OSS Discovery is a tool that finds installed open source software.
-#    Copyright (C) 2007 OpenLogic, Inc.
+#    Copyright (C) 2007-2008 OpenLogic, Inc.
 #  
 # OSS Discovery is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License version 3 as 
