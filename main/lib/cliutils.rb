@@ -677,16 +677,7 @@ def make_machine_id
   platform = major_platform
   
   case platform
-  when "windows", "java", "jruby-windows"     
-	                     # 'java' is what's reported if running under JRuby, 
-                             # so use the simplest possible machine id regardless of "real" platform
-                             # if using JRuby
-    if (platform == "jruby-windows" )
-       # this isn't as good or specific as pure ruby with Win32 gem can give, but at this writing
-       # Win32 gem isn't ready for prime time under JRuby
-       @kernel = "#{@os_architecture}-mswin" 
-    end
-
+  when "windows", "jruby-windows"     
     make_simple_machine_id   
   else  # every other platform including cygwin supports uname -a
     make_uname_based_machine_id platform
@@ -699,7 +690,7 @@ end
 def make_simple_machine_id
 
   if ( @kernel == nil )
-    @kernel = RUBY_PLATFORM
+    @kernel = RbConfig::CONFIG["target_alias"] 
   end
 
   hostname = Socket.gethostname
@@ -811,10 +802,8 @@ def get_os_version_str
   case major_platform
   when "linux"
     return get_linux_version_str
-  when "windows"
+  when "windows", "jruby-windows"
     return get_windows_version_str
-  when "jruby-windows"  # this is special because Win32 classes aren't supported under JRuby at this writing
-    return @os_family
   when "macosx"
     return get_macosx_version_str
   when "solaris"
@@ -845,10 +834,7 @@ def get_windows_version_str
 
   @os_architecture = "unknown"
 
-  Win32::Registry::HKEY_LOCAL_MACHINE.open('HARDWARE\DESCRIPTION\System\CentralProcessor\0') do |reg|
-    reg_typ, reg_val = reg.read('ProcessorNameString')
-    @os_architecture = reg_val
-  end
+  @os_architecture = ENV["PROCESSOR_ARCHITECTURE"] 
      
   [ENV['HOMEDRIVE'],"C","D","Z"].each do | drivespec |
     
@@ -856,18 +842,22 @@ def get_windows_version_str
    
    if ( File.exists?(@prodspec_fn) )
       content = File.new(@prodspec_fn, "r").read
+
+      # pp content
       
       # Product=Windows XP Professional
       # Version=5.0
       # Localization=English  
       # ServicePackNumber=0
       
-      product = content.match("Product=(.*?)$")[1]
+      product = content.match('Product=(.*?)[\r\n]$')[1]
 
       @os = product
       @os_family = "windows"
-      @os_version = content.match("Version=(.*?)$")[1]
-      
+      # pick of 2nd Version= which is the one for Windows, the first Version=1.0 is for SMS
+      @os_version = content.match('Version=([3-6].*?)$')[1]
+      @kernel = "#{product} #{@os_version}"
+
       return "Windows: #{product}"
 
    end # if
