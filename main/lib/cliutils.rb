@@ -689,10 +689,6 @@ end
 =end
 def make_simple_machine_id
 
-  if ( @kernel == nil )
-    @kernel = RbConfig::CONFIG["target_alias"] 
-  end
-
   hostname = Socket.gethostname
   ipaddr = IPSocket.getaddress(hostname)
   
@@ -744,7 +740,7 @@ def make_uname_based_machine_id(platform)
   # these are two forms of ifconfig output for showing mac, 'HWaddr' and 'ether'
   if ( ifconfig != nil && 
       ((matchdata = ifconfig.match( '(HWaddr) ([0-9:A-F].*?)+$')) != nil || 
-       (matchdata = ifconfig.match( '(ether) ([0-9:A-F].*?)+$' )) != nil) )
+       (matchdata = ifconfig.match( '(ether) ([0-9:A-F].*?)$' )) != nil) )
 
     # load the found mac address
     mac = matchdata[2]
@@ -771,6 +767,10 @@ def make_uname_based_machine_id(platform)
   # obfuscate the entire blob of info we gather into a single, 32 byte MD5 sum   
   # if any single one of these items changes over time, the machine ID will change.  This is a known
   # limitation.
+
+  puts "machine id blob:"
+  puts hostname + mac + @uname + @distro
+
   @machine_id = Digest::MD5.hexdigest(hostname + mac + @uname + @distro)
 end
 
