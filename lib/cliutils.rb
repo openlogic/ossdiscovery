@@ -794,7 +794,6 @@ end
 def get_os_version_str
 
   @os_family = RbConfig::CONFIG['host_os']
-  @os_architecture = RbConfig::CONFIG['host_cpu']
    
   case major_platform
   when "linux"
@@ -828,8 +827,6 @@ def get_windows_version_str
   #
   # need to find out systemroot, drive, etc before going after prodspec.ini file.
   # some admins put system on drives other than C:
-
-  @os_architecture = "unknown"
 
   @os_architecture = ENV["PROCESSOR_ARCHITECTURE"] 
      
@@ -937,6 +934,8 @@ def get_linux_version_str
   
   platform = RUBY_PLATFORM
           
+  @os_architecture = `uname -m`.strip
+
   @linux_distros.each do | distrofile, distroname |
     
     if ( File.exist?(distrofile))
@@ -1082,7 +1081,7 @@ def get_macosx_version_str
   
   @os = os                          # distro major name "ubuntu"
   @os_family = "macosx"             # linux, windows, etc
-  @os_architecture = archparts[1]   # i386, x86_64, sparc, etc
+  @os_architecture = `uname -m`.strip
   @os_version = kernel              # 5.04, 10.4, etc
     
   return "Mac OS X: #{os} #{kernel} #{release}"
