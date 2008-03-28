@@ -23,7 +23,7 @@ CensusRegisterURL=%1/app/index.php?do=register
 WhatIsCensusCodeResponse=The Census Code identifies you as a Census participant, allowing you to view Census reports and personalized inventory reports in addition to the freely available public reports.%n%nIf you have already registered, access your 'My Account' page on the OSS Census site to retrieve your Census Code.%nIf you have not registered, you'll need to before you can continue. Registration is free.%n%nWould you like to register and obtain a Census Code now?
 WhatIsCensusCode=What is a Census Code?
 CensusCodeEmptyError=You must enter a Census Code.%n%nWould you like to register and obtain a Census Code now?
-FinishMessage=Thank you for participating in the open source census. The OSSDiscovery scanner client can be started again at any time by clicking on Start > All Programs > OSS Discovery > Scan Machine for Open Source, or by double-clicking the icon on your desktop.
+FinishMessage=Thank you for participating in the Open Ssource Census. The OSSDiscovery scanner client can be started again at any time by clicking on Start > All Programs > OSS Discovery > Scan Machine for Open Source, or by double-clicking the icon on your desktop.
 
 [Messages]
 WelcomeLabel2=This will install [name/ver] on your computer.%n%nUsing it, you will be able to scan your system for open source software and submit the results to the Open Source Census.
@@ -46,7 +46,7 @@ Name: {userdesktop}\Scan For Open Source; Filename: {app}\DiscoveryWinWrapper.ba
 Name: {group}\Uninstall OSS Census; Filename: {uninstallexe};
 
 [Run]
-Filename: {app}\DiscoveryWinWrapper.bat; Parameters: --census-code {code:GetCode|Name} --deliver-results; Description: Scan Machine For Open Source; Flags: postinstall
+Filename: {app}\DiscoveryWinWrapper.bat; Parameters: --census-code {code:GetCode|Name} --deliver-results; Description: Scan Computer Now; Flags: postinstall
 
 [Code]
 procedure ButtonOnClick(Sender: TObject);
