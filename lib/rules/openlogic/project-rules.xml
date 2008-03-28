@@ -87,7 +87,7 @@
       <match-rule name="apache2_exe" type="binary" filename="^Apache.exe" regexp="build.([0-9]\.[0-9]+\.[0-9]+)"/>
     </match-rules>
   </project-rule>
-  <project-rule name="Apache Soap" from="wild" os="all">
+  <project-rule name="apache-soap" from="wild" os="all">
     <description>Checks md5 against soap.jar or detects presence of file</description>
     <eval expression="apache-soap_filename OR apache-soap_md5 OR apache-soap_filename_version" speed="1"/>
     <match-rules name="apache-soap_filename">
@@ -157,7 +157,7 @@
       <match-rule name="axis2_fv" type="filenameVersion" filename="^axis2.*-(.*)\.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="Base" from="wild" os="all">
+  <project-rule name="base" from="wild" os="all">
     <description>Checks version number in file base_conf.php.dist </description>
     <eval expression="base_bin" speed="1"/>
     <match-rules name="base_bin">
@@ -3610,6 +3610,7 @@
       <match-rule name="26-maven-2.0.5-bin.tar.gz-maven-core-2.0.5.jar" type="MD5" md5sum="1c1f13c861214c5ce083d4b410e0239e" filename="^maven-core.*jar$" version="2.0.5"/>
       <match-rule name="29-maven-2.0.6-bin.tar.gz-maven-core-2.0.6-uber.jar" type="MD5" md5sum="0290bc46379e607993b03840a7fe91e8" filename="^maven-core.*jar$" version="2.0.6"/>
       <match-rule name="31-maven-2.0.7-bin.tar.gz-maven-core-2.0.7-uber.jar" type="MD5" md5sum="74af6d7853246c91dcf41e1ec4891846" filename="^maven-core.*jar$" version="2.0.7"/>
+      <match-rule name="32-maven-2.0.8-bin.tar.gz" type="MD5" md5sum="1b87d9804f09425fa17cc1a81d6b010f" filename="^maven.*jar$" version="2.0.8"/>
     </match-rules>
     <!-- for a speed 3 ruleset, if needed, use all MD5 rules for matching every known maven core jar -->
   </project-rule>
