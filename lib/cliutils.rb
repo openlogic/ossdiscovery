@@ -326,6 +326,8 @@ def major_platform()
     return "macosx"
   when ( RUBY_PLATFORM =~ /cygwin/ )
     return "cygwin"    
+  when ( RUBY_PLATFORM =~ /freebsd/ )
+    return "freebsd"
   when ( RUBY_PLATFORM =~ /java/ )     # JRuby returns java regardless of platform so we need to turn this into a real platform string
 
     # DEBUG
@@ -345,6 +347,10 @@ def major_platform()
 
     when RbConfig::CONFIG['host_os'].match("SunOS")
       return "solaris"
+
+    when RbConfig::CONFIG['host_os'].downcase.include?('freebsd')
+      return "freebsd"
+
     end
 
   end
@@ -806,6 +812,8 @@ def get_os_version_str
     return get_solaris_version_str
   when "cygwin"
     return get_cygwin_version_str
+  when "freebsd"
+    return get_freebsd_version_str
     
   # new platform cases go here
   
@@ -1011,6 +1019,19 @@ def get_linux_version_str
   end
   
   return "Unknown: Unrecognized distro"
+end
+
+def get_freebsd_version_str
+ @os_architecture = `uname -m`.strip
+ kernel_parts = `uname -v`.split(" ")
+ @kernel = kernel_parts[1] + " " + kernel_parts[2].match(/(.*):/)[1]
+
+ version = File.new('/usr/src/sys/conf/newvers.sh').read.match(/REVISION=\"(.*)\"/)[1]
+ if (!version.nil?) then
+   @os_version = version
+ end
+ 
+ return "FreeBSD " + @os_version
 end
 
 
