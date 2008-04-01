@@ -764,9 +764,8 @@ def make_uname_based_machine_id(platform)
   mac = Digest::MD5.hexdigest( mac )  # obfuscate the mac address or ifconfig output
 
   @uname = `uname -a`
-  @uname_parts = @uname.split(" ")
-  @kernel = sprintf( "%s %s", @uname_parts[2], @uname_parts[3] )
-
+  @kernel = get_starnix_kernel(@uname)
+  
   # typical output from uname -a 
   #   Linux smoker 2.6.16.21-0.8-smp #1 SMP Mon Jul 3 18:25:39 UTC 2006 x86_64 x86_64 x86_64 GNU/Linux
 
@@ -775,6 +774,29 @@ def make_uname_based_machine_id(platform)
   # limitation.
 
   @machine_id = Digest::MD5.hexdigest(hostname + mac + @uname + @distro)
+end
+
+def get_starnix_kernel(uname_a)
+  # This method and check exists because the FreeBSD (tested on version 7.0) kernel value
+  # could not be accurately extracted by using the uname parts technique that most other
+  # versions of *nix succumbed to.  The FreeBSD value is set in the 'get_freebsd_version_str'
+  # method.  
+
+  # This feels a little odd actually, because the only way this really works is because the
+  # 'get_os_version_str' (the method where the @kernel is initialized in a FreeBSD environment)
+  # method is called before the 'make_machine_id' method over in discovery.rb.  I think this 
+  # oddness is indicative of the notion that cliutils.rb and discovery.rb should probably be
+  # refactored whenever we get the time so that they become a more OOish (classes and modules used).
+  # This kind of refactoring would undoubtedly make it easier for the census plugin to behave more
+  # like an actual plugin by being able to mix methods in somewhere other than directly on Object.
+  # (bnoll - 04/01/2008)
+
+  @uname_parts = @uname.split(" ")
+  if (@kernel.nil? or @kernel == "") then
+    @kernel = sprintf( "%s %s", @uname_parts[2], @uname_parts[3] )
+  end 
+
+  return @kernel  
 end
 
 =begin rdoc
@@ -1022,6 +1044,10 @@ def get_linux_version_str
 end
 
 def get_freebsd_version_str
+ freebsd = "FreeBSD"
+ @os_family = freebsd
+ @os = freebsd
+
  @os_architecture = `uname -m`.strip
  kernel_parts = `uname -v`.split(" ")
  @kernel = kernel_parts[1] + " " + kernel_parts[2].match(/(.*):/)[1]
@@ -1031,7 +1057,7 @@ def get_freebsd_version_str
    @os_version = version
  end
  
- return "FreeBSD " + @os_version
+ return freebsd + " " + @os_version
 end
 
 
