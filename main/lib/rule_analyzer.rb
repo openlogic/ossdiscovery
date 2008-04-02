@@ -97,10 +97,22 @@ class RuleAnalyzer
   
   def self.remove_our_dogfood(allpackages)    
     return nil if allpackages.nil?    
-    app_home = ENV['OSSDISCOVERY_HOME']
+    app_home = normalize_dir(ENV['OSSDISCOVERY_HOME'])
     
-    # normalize dir lives in cliutils
-    allpackages.delete_if {|pkg| normalize_dir(pkg.found_at).include?(normalize_dir(app_home))}    
+    running_on_windows = false
+    if (major_platform.include?('windows')) then # major_platform lives in cliutils
+      app_home.downcase!
+      running_on_windows = true
+    end    
+    
+    # normalize_dir lives in cliutils
+    allpackages.delete_if do |pkg|
+      if (running_on_windows) then
+        normalize_dir(pkg.found_at).downcase.include?(app_home)
+      else
+        normalize_dir(pkg.found_at).include?(app_home)
+      end
+    end
     
     return allpackages
   end
