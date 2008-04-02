@@ -1,7 +1,7 @@
 require 'rake/packagetask'
 
 PACKAGE_NAME=ENV["NAME"] || "ossdiscovery"
-PACKAGE_VERSION=ENV["VERSION"] || "2.0b1"
+PACKAGE_VERSION=ENV["VERSION"] || "2.0"
 
 namespace :release do
   namespace :ruby do 
