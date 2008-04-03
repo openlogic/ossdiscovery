@@ -904,6 +904,7 @@ def get_windows_version_str
       end
   
       if (is_vista) then
+        @kernel = "#{@os_architecture}-mswin"
         @os = 'Vista'
         @os_family = 'windows'
         # TODO - set the os_version 
