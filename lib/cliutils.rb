@@ -887,7 +887,34 @@ def get_windows_version_str
    end # if
   end # do
 
-  return "Unknown"
+  # if we got here, we know that the '/windows/system32/prodspec.ini' file did not exist 
+  # (which means we're probably on Vista - we can prove this by checking for the string 
+  # 'VISTA' in the '/windows/system32/license.rtf' file, if it exists)
+  [ENV['HOMEDRIVE'],"C","D","Z"].each do | drivespec |
+    
+    license_rtf_fn = "#{drivespec}:/windows/system32/license.rtf"
+   
+    if ( File.exists?(license_rtf_fn) )
+      content = File.new(license_rtf_fn, "r").read
+      is_vista = false
+      content.each_line do |line| 
+        if (line.include?('EULAID') and line.include?('VISTA')) then
+          is_vista = true
+        end
+      end
+  
+      if (is_vista) then
+        @os = 'Vista'
+        @os_family = 'windows'
+        # TODO - set the os_version 
+        return "Windows: #{@os}"
+      end
+  
+    end # if
+  end # do
+
+  # if we got here, we don't know what version of Windows it is
+  return "Windows: Unknown"
 end
 
 =begin rdoc
