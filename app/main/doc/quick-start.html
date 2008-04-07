@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<title>Census Quick Start Guide</title>
+
+		<meta HTTP-EQUIV="keywords" CONTENT="keyword1,keyword2,keyword3">
+		<meta HTTP-EQUIV="description" CONTENT="this is my page">
+		<meta HTTP-EQUIV="content-type"
+			CONTENT="text/html; charset=ISO-8859-1">
+
+		<!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+	</head>
+	<body>
+
+		<h2>
+			Census Quick Start Guide (All Platforms)
+		</h2>
+		<a ID="register"></a>
+		<h3> 
+			Step 1: <a href="https://osscensus.org/app/index.php?do=register" title="Register">Register anonymously</a>. If you're already registered, <a href="https://osscensus.org/app/index.php" title="login">login</a>.
+			<br>
+		</h3>
+		
+		
+
+
+
+			<h3>
+				Step 2: Download OSS Discovery (Census Edition)
+			</h3>
+			<p STYLE="font-weight: normal;">Presumably, if you're reading this document, you have downloaded OSS Discovery, but if not, select the appropriate distribution for your operating system. 
+			</p>
+			<table CELLSPACING="2" CELLPADDING="0" BORDER="0">
+				<tr HEIGHT="30">
+
+					<td WIDTH="150" HEIGHT="30" ALIGN="left">
+						Linux Download:
+					</td>
+					<td WIDTH="400" HEIGHT="30" ALIGN="left">
+						<a HREF="https://osscensus.org/quick-start.php/ossdiscovery-linux-2.0b1-census-faf.tar.gz">ossdiscovery-linux-2.0b1-census-faf.tar.gz
+							&gt;</a>
+					</td>
+				</tr>
+				<tr HEIGHT="30">
+
+					<td WIDTH="150" HEIGHT="30" ALIGN="left">
+						Mac Download:
+					</td>
+					<td WIDTH="400" HEIGHT="30" ALIGN="left">
+						<a HREF="https://osscensus.org/quick-start.php/ossdiscovery-jruby-2.0b1-census-faf.tar.gz">ossdiscovery-jruby-2.0b1-census-faf.tar.gz
+							&gt;</a>
+					</td>
+				</tr>
+				<tr HEIGHT="30">
+
+					<td WIDTH="150" HEIGHT="30" ALIGN="left">
+						Solaris Download:
+					</td>
+					<td WIDTH="400" HEIGHT="30" ALIGN="left">
+						<a HREF="https://osscensus.org/quick-start.php/ossdiscovery-solaris-2.0b1-census-faf.tar.gz">ossdiscovery-solaris-2.0b1-census-faf.tar.gz
+							&gt;</a>
+					</td>
+				</tr>
+				<tr HEIGHT="30">
+
+					<td WIDTH="150" HEIGHT="30" ALIGN="left">
+						Windows Download:
+					</td>
+					<td WIDTH="400" HEIGHT="30" ALIGN="left">
+						<a HREF="https://osscensus.org/quick-start.php/ossdiscovery-windows-2.0b1-census-faf.zip">ossdiscovery-windows-2.0b1-census-faf.zip
+							&gt;</a>
+					</td>
+				</tr>
+				<tr HEIGHT="30">
+
+					<td WIDTH="200" HEIGHT="30" ALIGN="left" COLSPAN="2">
+						Want to scan other platforms?
+						<a HREF="https://osscensus.org/discovery.php">See more download options &gt;</a>
+					</td>
+				</tr>
+			</table>
+
+			<h3>
+				Step 3: Run OSS Discovery On One Machine and Automatically
+				Contribute Scans
+			</h3>
+
+
+			<h4>
+				Important Information
+			</h4>
+			<p STYLE="font-weight: normal;">
+				Before you get started, please take note of these important points:
+			</p>
+
+			<ul STYLE="font-weight: normal;">
+				<li>
+					You can only submit one scan
+					<strong>from the same machine</strong> per 24 hour period.
+				</li>
+				<li>
+					Scans can take several minutes to several hours depending on the
+					size and content of your machine. Most desktop machines scan in
+					under an hour. You can continue to use your machine while the scan
+					is running.
+				</li>
+				<li>
+					Scans on Linux/Unix will include all mounted shares.
+				</li>
+				<li> 
+					You may encounter an error if your company uses a proxy or 
+					authenticated server.</li><li><strong>FreeBSD</strong> users must, as root, create a symlink to access bash using the following command: ln -s /usr/local/bin/bash /bin/bash<br></li>
+			</ul>
+
+			<h4>
+				For Linux &amp; Solaris
+			</h4>
+
+
+			<p STYLE="font-weight: normal;">
+				In a shell, CD to the directory where you extracted OSS Discovery
+				and execute:
+			</p>
+			./discovery&nbsp;--census-code&nbsp;YOUR-CENSUS-CODE-GOES-HERE&nbsp;--deliver-results
+			<p ID="indent" STYLE="font-weight: normal;">
+				Replace YOUR-CENSUS-CODE-GOES-HERE with the Census Code you received
+				at registration. Right-click in the command window to paste text.
+			</p>
+
+			<p STYLE="font-weight: normal;">
+				<strong>Note:</strong> The Census Code is case sensitive and must be
+				used exactly as provided at registration, including dashes. You must
+				include the Census Code in order to see your reports on the Census
+				website. You can retrieve your Census Code at any time by logging
+				into the Census website and clicking the &quot;My Account&quot; link
+				in the upper-right corner.
+			</p>
+
+
+			<h4>
+				For Windows
+			</h4>
+
+			<p STYLE="font-weight: normal;">
+				At the command line, CD to the directory where you extracted OSS
+				Discovery and
+				run:discovery.bat&nbsp;--census-code&nbsp;YOUR-CENSUS-CODE-GOES-HERE&nbsp;--deliver-results
+			</p>
+			<p ID="indent" STYLE="font-weight: normal;">
+				Replace YOUR-CENSUS-CODE-GOES-HERE with the Census Code you received
+				at registration. Right-click in the command window to paste text.
+			</p>
+			<p STYLE="font-weight: normal;">
+
+				<strong>Note:</strong> The Census Code is case sensitive and must be
+				used exactly as provided at registration, including dashes. You must
+				include the Census Code in order to see your reports on the Census
+				website. You can retrieve your Census Code at any time by logging
+				into the Census website and clicking the &quot;My Account&quot; link
+				in the upper-right corner.
+			</p>
+
+			
+			
+			<h4>For additional scan options: </h4>
+			
+
+			<ul>
+				<li>
+					<a HREF="more-scan-options.html#option2">Scan one machine &amp;
+						review results before contributing to Census &gt;</a>
+				</li>
+				<li>
+					<a HREF="more-scan-options.html#option3">Scan multiple machines
+						&amp; review results before contributing to Census &gt;</a>
+				</li>
+				<li>
+					<a HREF="more-scan-options.html#option4">Scan multiple machines
+						&amp; automatically contribute to Census &gt;</a>
+				</li>
+			</ul>
+
+
+
+			<h4>
+				For more information:
+			</h4>
+			<p>
+				Please refer to the
+				<a
+					HREF="discovery-census-user-guide/OSSDiscoveryUser_CensusEdition.html"
+					TARGET="_blank">OSS Discovery (Census Edition) User Guide</a> for a
+				full list of parameters that can be passed on the command line and
+				values that can be set in the configuration file. For additional
+				help, contact
+				<a HREF="mailto:support@openlogic.com">OpenLogic technical
+					support</a>.
+			</p>
+
+
+
+		</h3>
+	</body>
+</html>
+
+
