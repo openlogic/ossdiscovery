@@ -3048,7 +3048,7 @@
     <description>checks md5 against jfreechart jar or detects presence of file</description>
     <eval expression="jfreechart_filename or jfreechart_md5" speed="1"/>
     <match-rules name="jfreechart_filename">
-      <match-rule name="1-jfreechart-file" type="filename" filename="^jfreechart-.*\.jar$"/>
+      <match-rule name="1-jfreechart-file" type="filename" filename="^jfreechart.jar$"/>
     </match-rules>
     <match-rules name="jfreechart_md5">
       <match-rule name="1-jfreechart-version-0-9-21" type="MD5" md5sum="eefc58de858bbe4feda666ecc9c1f1bb" filename="^jfreechart-.*\.jar$" version="0.9.21"/>
