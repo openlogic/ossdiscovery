@@ -119,13 +119,6 @@
       <match-rule name="cargo_jar" type="filenameVersion" filename="^cargo-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="castor" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="castor_fv" speed="1"/>
-    <match-rules name="castor_fv">
-      <match-rule name="castor_jar" type="filenameVersion" filename="^castor-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="ch.ethz.ganymed" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="ch.ethz.ganymed_fv" speed="1"/>
