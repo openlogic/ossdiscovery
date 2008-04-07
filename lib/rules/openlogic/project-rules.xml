@@ -141,7 +141,10 @@
   </project-rule>
   <project-rule name="axis" from="wild" os="all">
     <description>Assumes jars start with 'axis' (not 'axis2') and uses md5 digests to find version 1.4 only.</description>
-    <eval expression="axis_filename or axis_md5" speed="1"/>
+    <eval expression="axis_fv or axis_filename or axis_md5" speed="1"/>
+    <match-rules name="axis_fv">
+      <match-rule name="axis_fv" type="filenameVersion" filename="^axis-([0-9].*?[0-9]).jar$"/>
+    </match-rules>    
     <match-rules name="axis_filename">
       <match-rule name="axis_fn" type="filename" filename="^axis[^2].*\jar$"/>
     </match-rules>
@@ -3664,6 +3667,13 @@
       <match-rule name="mod_jk_jar" type="filenameVersion" filename="^mod_jk-apache-(\d\.\d\.\d\d).*\.so$"/>
     </match-rules>
   </project-rule>
+  <project-rule name="mule" from="wild" os="all">
+    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
+    <eval expression="mule_fv" speed="1"/>
+    <match-rules name="mule_fv">
+      <match-rule name="mule_jar" type="filenameVersion" filename="^mule\-core\-([0-9].*?[0-9]).jar$"/>
+    </match-rules>
+  </project-rule>  
   <project-rule name="myfaces" from="wild" os="all">
     <description>Assumes jars start with 'myfaces' and uses md5 digests to find versions gte 0.1.2 and lte 1.1.1</description>
     <!-- GS This rule catches all "old" myfaces releases before the switch to maven at apache.org (includes sourceforge) -->
@@ -4336,7 +4346,7 @@
     <match-rules name="springfile">
       <result expression="springjar"/>
       <!-- this would catch any of spring-ibatis.jar spring-agent.jar spring.jar spring-aspects.jar, etc-->
-      <match-rule name="springjar" type="filename" filename="spring.*?\.jar"/>
+      <match-rule name="springjar" type="filename" filename="^spring.*?\.jar"/>
     </match-rules>
     <match-rules name="springfileversion">
       <result expression="OR-ALL"/>
