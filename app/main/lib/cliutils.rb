@@ -907,6 +907,8 @@ def get_windows_version_str
         @kernel = "#{@os_architecture}-mswin"
         @os = 'Vista'
         @os_family = 'windows'
+        version = `ver`   # Microsoft Windows [Version 6.0.6000]
+        @os_version = version.match("Version (.*?)\]")[1]
         # TODO - set the os_version 
         return "Windows: #{@os}"
       end
