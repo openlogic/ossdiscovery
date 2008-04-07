@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<title>More Scan Options</title>
+
+		<meta HTTP-EQUIV="keywords" CONTENT="keyword1,keyword2,keyword3">
+		<meta HTTP-EQUIV="description" CONTENT="this is my page">
+		<meta HTTP-EQUIV="content-type"
+			CONTENT="text/html; charset=ISO-8859-1">
+
+		<!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+	</head>
+	<body>
+			<h2>More Scan Options for OSS Discovery (Census Edition)</h2>
+
+			<p>This page outlines some of the most commonly used options for scanning machines with OSS Discovery (Census Edition).</p>
+			
+			<p>Before you get started, here is some basic information:</p>
+			<p id="indent"><ul><li>Scans can take several minutes to several hours depending on the size and contents of your machine.  Most desktop machines will be under an hour.  You can continue to use your machine while the scan is running.  If you would like to throttle CPU usage during the scan, refer to the OSS Discovery (Census Edition) User Guide.</li>
+			<li> Scans on Linux/Unix will include all mounted shares.</li>
+			<li>You can only submit one scan <strong>from the same machine</strong> per 24 hour period.</li>
+			<li> You may encounter an error if your company uses a proxy or authenticated server.  Refer to the OSS Discovery (Census Edition) User Guide for details on how to configure OSS Discovery to work in your environment.</li><li><strong>FreeBSD</strong> users must, as root, create a symlink to access bash using the following command: ln -s /usr/local/bin/bash /bin/bash</li>
+
+
+<!-- Start Option 1 -->
+
+
+			<h4><a ID="option1"></a>Option 1: Run OSS Discovery (Census Edition) on one machine and automatically contribute scan results to The Open Source Census</h4>
+
+
+			<ol>
+				<li>In a command line or shell, navigate to the OSS Discovery (Census Edition) install directory and then navigate to the OSS Discovery subdirectory.</li>
+				<br>	
+					<p id="indent">To invoke a command line: Start Menu > Run > Enter 'cmd' and return > 'cd' to ossdiscovery directory of the installation directory. For example:<br>
+					<br>cd C:\Documents and Settings\yourUserName\My Documents\osscensus<br>
+					<br>where yourUserName is your login on your computer and osscensus it the directory where you unpacked your OSS Discovery files.</p>				
+				<li>Run OSS Discovery using instructions below:</li>
+				<br>
+				
+					<p id="indent"><strong>Windows:</strong><br>
+				
+									
+					Enter the command below into the command line window, but replace YOUR-CENSUS-CODE-GOES-HERE with the Census Code you received at registration.  Right-click in the command window to paste text.<br>
+					&nbsp; &nbsp; &nbsp;discovery.bat &nbsp;--census-code &nbsp;YOUR-CENSUS-CODE-GOES-HERE &nbsp;--deliver-results</p>
+					
+					
+					
+
+
+					<p id="indent"><strong>Linux/Solaris/Mac:</strong><br>
+									
+					
+					Enter the command below into the command line window, but replace YOUR-CENSUS-CODE-GOES-HERE with the Census Code you received at registration.  Right-click in the command window to paste text.<br>
+					&nbsp; &nbsp; &nbsp;./discovery &nbsp;--census-code &nbsp;YOUR-CENSUS-CODE-GOES-HERE &nbsp;--deliver-results</p>	
+					
+					
+					
+					
+
+										
+					<p><strong>Note:</strong> In the instructions above, replace YOUR-CENSUS-CODE-GOES-HERE with the Census Code that you received at registration.  You can retrieve your Census Code at any time by logging into the Census website and clicking the "My Account" link in the upper-right corner. The Census Code is case sensitive and must be used exactly as provided at registration, including dashes. You must include the Census Code in order to see your reports on the Census website.</p>
+					
+						
+					
+			</ol>
+
+<!-- Start Option 2 -->
+
+
+			<h4><a ID="option2"></a>Option 2: Run OSS Discovery (Census Edition) on one machine and review results before contributing them to The Open Source Census</h4>
+
+			<ol>
+				<li>In a command line or shell, navigate to the OSS Discovery (Census Edition) install directory and then navigate to the OSS Discovery subdirectory.</li>
+				<br>	
+					<p id="indent">To invoke a command line: Start Menu > Run > Enter 'cmd' and return > 'cd' to ossdiscovery directory of the installation directory. For example:<br>
+					<br>cd C:\Documents and Settings\yourUserName\My Documents\osscensus<br>
+					<br>where yourUserName is your login on your computer and osscensus it the directory where you unpacked your OSS Discovery files.</p>				
+				<li>Run OSS Discovery using instructions below:</li>
+				<br>
+					<p id="indent"><strong>Windows:</strong><br>
+				
+					
+					
+					Enter the command below into the command line window, but replace YOUR-CENSUS-CODE-GOES-HERE with the Census Code you received at registration.  Right-click in the command window to paste text.<br>
+					&nbsp; &nbsp; &nbsp;discovery.bat &nbsp;--census-code &nbsp;YOUR-CENSUS-CODE-GOES-HERE</p>
+					
+
+
+					<p id="indent"><strong>Linux/Solaris/Mac:</strong><br>
+								
+					
+					Enter the command below into the command line window, but replace YOUR-CENSUS-CODE-GOES-HERE with the Census Code you received at registration.  Right-click in the command window to paste text.<br>
+					&nbsp; &nbsp; &nbsp;./discovery &nbsp;--census-code &nbsp;YOUR-CENSUS-CODE-GOES-HERE</p></p>
+										
+					<p><strong>Note:</strong> In the instructions above, replace YOUR-CENSUS-CODE-GOES-HERE with the Census Code that you received at registration.  You can retrieve your Census Code at any time by logging into the Census website and clicking the "My Account" link in the upper-right corner. The Census Code is case sensitive and must be used exactly as provided at registration, including dashes. You must include the Census Code in order to see your reports on the Census website.</p>
+					
+						
+					
+			
+				<li>Review results that will be submitted to the Census.</li>
+				
+				
+					<p id="indent">Open the scan_results.txt file in the ossdiscovery-2.0b1 directory.  This is the file that will be contributed to the Census.</p>
+					<p id="indent"><strong>Note:</strong> For an easier to read version, you can review the readable_scanresults.txt file.  Keep in mind that this file does include pathnames for the open source found, while the file that is contributed to the Census does not.</p><ol>
+				<li>In a command line or shell, navigate to the OSS Discovery (Census Edition) install directory and then navigate to the subdirectory ossdiscovery-2.0b1.</li>
+				<br>				
+				<li>To contribute your results, enter the following: 
+				<br>
+					<p id="indent"><strong>Windows:</strong><br>
+					Enter the command line parameters as shown below (right click in the command window to paste text):<br>					
+					&nbsp; &nbsp; &nbsp;discovery.bat &nbsp;--deliver-results scan_results.txt</p>
+
+					<p id="indent"><strong>Linux/Solaris/Mac:</strong><br>
+					Enter the command line parameters as shown below:<br>					
+					&nbsp; &nbsp; &nbsp;./discovery &nbsp;--deliver-results scan_results.txt</p>				
+			</ol></ol>
+
+
+<!-- Start Option 3 -->
+
+
+			<h4><a ID="option3"></a>Option 3: Run OSS Discovery (Census Edition) on multiple machines, gather scan results and hold to contribute manually</h4>
+			<ol>
+				<li>Configure the [install dir]/ossdiscovery-[platform]-[version]/lib/conf/config.yml file as follows. 
+					
+					Note that in the command below you must replace YOUR-CENSUS-CODE-GOES-HERE with the Census Code you received at registration:</li>
+								
+				
+			
+				
+					
+					<p id="indent">census-code: YOUR-CENSUS-CODE-GOES-HERE</p>
+									
+				
+					
+					
+				<li>Use the software distribution mechanism standard to your organization to distribute OSS Discovery (Census Edition) to multiple machines.</li>
+				<br>
+				<li>OSS Discovery (Census Edition) on each individual machine and rename the results.</li>
+				<br>
+				<li>Aggregate the results into one central location. Install OSS Discovery on that server.</li>
+				<br>
+				<li>In a command line or shell, navigate to the ossdiscovery-2.0b1 directory in the OSS Discovery installation directory on the machine where the aggregated results are stored.</li>
+				
+					<p id="indent">To invoke a command line: Start Menu > Run > Enter 'cmd' and return > 'cd' to ossdiscovery directory of the installation directory. For example:<br>
+					<br>cd C:\Documents and Settings\yourUserName\My Documents\osscensus<br>
+					<br>where 'yourUserName' is your login on your computer and 'osscensus' is the directory where you unpacked your OSS Discovery files.</p>
+				<li>To contribute your results, enter the following:</li>
+				
+					<p id="indent"><strong>Windows:</strong><br>
+					Enter the command line parameters as shown below (right click in the command window to paste text):<br>						
+					&nbsp; &nbsp; &nbsp;discovery.bat &nbsp;--deliver-batch [path to renamed scan results]</p>
+
+					<p id="indent"><strong>Linux/Solaris/Mac:</strong><br>
+					Enter the command line parameters as shown below:<br>						
+					&nbsp; &nbsp; &nbsp;./discovery &nbsp;--deliver-batch [path to renamed scan results]</p>
+			</ol>
+
+
+<!-- Start Option 4 -->
+
+
+		<h4><a ID="option4"></a>Option 4: Run OSS Discovery (Census Edition) on multiple machines and contribute	results to OSS Census immediately following scan</h4>
+		<ol>
+		<li>In this scenario, you follow the same steps as in Option #3, but adjust config.yml file as follows before distributing OSS Discovery (Census Edition) in your environment.
+		
+		
+		Note that in the command below you must replace YOUR-CENSUS-CODE-GOES-HERE with the Census Code you received at registration:</li>
+				
+		
+	
+		
+		
+		<p id="indent">send_results: true<br>
+		census_code: YOUR-CENSUS-CODE-GOES-HERE</p>
+					
+		
+		This configures OSS Discovery (Census Edition) to send results to the OSS Census server immediately following the scan. You will not need to complete the aggregation step described in Option #3.
+		</ol>
+
+
+
+
+
+</body></html>
+
