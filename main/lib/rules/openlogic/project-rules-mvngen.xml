@@ -2252,7 +2252,7 @@
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="jfreechart_fv" speed="1"/>
     <match-rules name="jfreechart_fv">
-      <match-rule name="jfreechart_jar" type="filenameVersion" filename="^jfreechart-.*?([0-9].*?)(?:-sources)?.jar$"/>
+      <match-rule name="jfreechart_jar" type="filenameVersion" filename="^jfreechart-.*?([0-9].*?[0-9])(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="jgraph" from="wild" os="all">
