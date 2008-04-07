@@ -1,0 +1,420 @@
+h1 {
+   font-family: Tahoma, Arial, Helvetica, sans-serif;
+   font-weight: bold;
+   font-size: 150%;
+   color: #080808;
+   background: #8B8878;
+   margin-bottom: -10px;
+   text-align: center;
+   padding-top: 25px;
+   padding-bottom: 25px;
+   padding-left: 25px;
+   padding-right; 25px;
+}
+
+h1.subtitle {
+   font-family: Tahoma, Arial, Helvetica, sans-serif;
+   font-weight: bold;
+   font-size: 125%;
+   color: #080808;
+   background: #8B8878;
+   margin-bottom: -10px;
+   margin-top: -45px;
+   text-align: center;
+   padding-bottom: 25px;
+   padding-left: 5px;
+   padding-right; 5px;
+}
+
+h2 { font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 125%; font-weight: bold; color: #000; margin-bottom: 5px; background-color: #e2e6ea
+; padding: 3px; }
+
+h2.subtitle {
+   color: #666666;
+   text-align: center;
+   font-size: 125%;
+   margin-bottom: 5px;
+}
+
+h2#section {
+   color: #080808;
+   background:#CDC8B1;
+   padding-top: 20px;
+   padding-bottom: 5px;
+   padding-left: 10px
+}
+
+h3 {
+   font-family: Tahoma, Arial, Helvetica, sans-serif;
+   font-size: 110%;
+   font-weight: bold;
+   color: #666666;
+   margin-bottom: 5px;
+}
+
+h4 {
+   font-family: Tahoma, Arial, Helvetica, sans-serif;
+   font-size: 100%;
+   font-weight: bold;
+   color: #666666;
+   margin-bottom: 10px;
+   margin-left: 25px;
+}
+
+h5 {
+   font-family: Tahoma, Arial, Helvetica, sans-serif;
+   font-size: 100%;
+   font-style: italic;
+   font-weight: bold;
+   color: #666666;
+   margin-bottom: 5px;
+   margin-left: 50px;
+}
+
+body {
+   background-color: #ffffff;
+   margin: 2em;
+}
+
+body,td {
+   font-family: Verdana, Arial, Helvetica, sans-serif;
+   color: #000000;
+   font-size: .8em;
+}
+
+.prompt {
+   font-weight: bold;
+}
+
+.defaultvalue {
+   font-style: italic;
+}
+
+.example {
+   margin-left: 5em;
+   padding-top: 1em;
+   padding-bottom: 0;
+   margin-bottom: 0;
+}
+
+.glossary {
+   border: 3px solid gray;
+   margin-right: 100px;
+   padding-bottom: 10px;
+   padding-top: 10px;
+   padding-left: 10px;
+   padding-right: 10px;
+   margin-bottom: 0px;
+}
+
+.command {
+   font-family: Courier New, Courier, mono;
+   padding-bottom: 0x;
+   padding-top: 0;
+}
+
+.copyright {
+   padding-top: 80px;
+   text-align: center;
+}
+
+b {
+   color: #666666;
+}
+
+p {
+   margin-top: 0;
+}
+
+.sectionContent {
+   margin-left: 10px;
+}
+
+.heading4content {
+   margin-left: 50px;
+}
+
+.heading5content {
+   margin-left: 50px;
+}
+
+h4 + p, h5 + p {
+   margin-left: 25px;
+}
+
+p.legalnotice-title {
+   font-family: Tahoma, Arial, Helvetica, sans-serif;
+   font-size: 125%;
+   font-weight: bold;
+   color: #666666;
+   margin-bottom: 1.5em;
+}
+
+p.title {
+   color: #666666;
+}
+
+p.note {
+   font-weight: bold;
+   font-size: 90%;
+   color: #606060;
+   padding: 1em;
+   width: 70%;
+   border: .1em solid gray;
+}
+
+p.note:before {
+   content: "NOTE: ";
+}
+
+.abstract {
+   margin-top: 2em;
+   margin-left: 1em;
+   margin-right: 1em;
+}
+
+.subtitle {
+   font-size: 120%;
+   color: #003399;
+}
+
+Preformatted,pre {
+   color: #000066;
+   font-family: Courier New, Courier, mono;
+   padding: 1.5em;
+   border-style: solid;
+   border-width: .1em;
+   border-color: #CCCCCC;
+   background-color: #F4F4F4;
+}
+
+tt,code {
+   font-family: Courier New, Courier, mono;
+}
+
+.caution,.important,.note,.tip,.warning {
+   margin-top: 1.5em;
+   margin-bottom: 2em;
+}
+
+.caution th,.important th,.note th,.tip th,.warning th {
+   text-align: left;
+   vertical-align: top;
+}
+
+table {
+   padding: .40em;
+}
+
+caption {
+   font-size: 85%;
+   text-align: left;
+}
+
+td>h1 {
+   font-weight: bold;
+   font-size: 150%;
+   color: #006666;
+   margin-bottom: -10px;
+   text-align: center;
+}
+
+tr.question {
+   font-weight: bold;
+}
+
+/* USE THIS FOR COMMANDS THAT TAKE MORE THAN ONE LINE. 
+Nest as span inside command span.*/
+
+.indented {
+    padding: 0px;
+    margin-left: 2em;
+    text-align: left;
+}
+
+/* START TOC STYLING */
+
+#tocwrap {
+margin left: 5 em; 
+}
+
+ul#toc { 
+list-style: none; 
+width: 445px;
+}
+
+/*
+#toc li { 
+background: url(docs/images/dot.gif) 
+repeat-x 0 .99em; 
+}*/
+
+#toc li a { 
+background: #fff; 
+text-decoration: none;
+padding: 0 4px 0 0; 
+}
+
+#toc li span { 
+float: left; 
+background: #FFF; 
+padding: 0 0 0 4px; 
+}
+#toc li br { 
+clear: both; 
+}
+
+/*this is old (predates me) and I don't know where it's used*/
+.toc {
+   color: #006666;
+}
+
+/* END TOC STYLING */
+
+/* START PROCEDURE STEP STYLING */
+
+#proc {
+}
+
+ol#proc {
+}
+
+ul#proc {
+}
+
+#proc li {
+margin-bottom: 10px;
+}
+
+/* END PROCEDURE STEP STYLING */
+
+
+div.image {
+    text-align: center;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+div.abstract>p:first-child {
+   margin-bottom: 0;
+}
+
+div.comment {
+   color: pink;
+   font-weight: bold;
+   font-style: italic;
+}
+
+div.itemizedlist>ul,ol {
+   margin-left: 1em;
+}
+
+div.remark {
+   color: red;
+   font-style: italic;
+}
+
+div.qandaset td {
+   margin-top: 20px;
+}
+
+div.table p.title {
+   margin-top: 40px;
+   margin-bottom: 10px;
+}
+
+div.table th {
+   font-size: 75%;
+}
+
+div.table td, th {
+   padding-left: 20px;
+   padding-right: 20px;
+   border-bottom: thin solid black;
+}
+
+a {
+   font-weight: bold;
+}
+
+a:link {
+   color: #0033CC;
+   text-decoration: underline;
+}
+
+a:hover {
+   color: #606060;
+   text-decoration: underline;
+   font-style: italic;
+}
+
+a:visited {
+   color: #666666;
+   text-decoration: underline;
+}
+
+/*   CSS FOR PRINT   */
+
+@media print {
+   body {
+      background-color: #f00;
+      margin-left: 3em;
+      font-size: .75em;
+   }
+   
+   h1, h2, h3, h4, h5 {
+      page-break-after: avoid;
+   }
+   
+   h2#section {
+   color: #080808;
+   background:#CDC8B1;
+   padding-top: 20px;
+   padding-bottom: 5px;
+   padding-left: 10px
+   }
+   
+   table {
+      page-break-before: avoid;
+   }
+   
+   p.note {
+      padding: 1em;
+      border: 0;
+      width: 70%;
+      border: .1em solid gray;
+      page-break-after: avoid;
+   }
+   
+   ol, ol li {
+      page-break-inside: avoid;
+   }   
+   
+   a {
+      font-weight: normal;
+      font-style: normal;
+      text-decoration: none;
+      color: #000000;
+   }
+   
+   a:link {
+      font-weight: normal;
+      font-style: normal;
+      text-decoration: none;
+      color: #000000;
+   }
+   
+   a:hover {
+      font-weight: normal;
+      font-style: normal;
+      text-decoration: none;
+      color: #000000;
+   }
+   
+   a:visited {
+      font-weight: normal;
+      font-style: normal;
+      text-decoration: none;
+      color: #000000;
+   }
+}

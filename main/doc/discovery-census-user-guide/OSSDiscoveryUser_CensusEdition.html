@@ -1,0 +1,2635 @@
+
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8" />
+
+  <HEAD>
+    <LINK href="docs.css" rel="stylesheet" type="text/css">
+  </HEAD>
+  
+<style TYPE="text/css">
+h3 {
+	font-family: Arial, Helvetica, sans-serif
+}
+
+#body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 18px;
+	padding-right: 5px
+}
+
+#sidebar {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	line-height: 16px;
+	margin: 2px 2px 2px 2px
+}
+</style>
+
+
+
+<h2>Table of Contents</h2>
+
+<div ID="tocwrap">
+	<ul ID="toc">
+		<li> 
+			<p id="body"> 
+				Section 1: 
+				<a title="Introduction to OSS Discovery (Census Edition)" href="#Anchor_Section1">&nbsp;Introduction 
+					to OSS Discovery (Census Edition)</a></p></li>
+		<br />
+		<li>
+			<p ID="body">
+				Section 2:
+				<a TITLE="The Basics"
+					HREF="#Anchor_Section2">&nbsp;The
+					Basics</a>
+			</p>
+		</li>
+		<br />
+		<li>
+			<p ID="body">
+				Section 3:
+				<a TITLE="Beyond the Basics"
+					HREF="#Anchor_Section3">&nbsp;Beyond
+					the Basics</a>
+			</p>
+		</li>
+		<br />
+		<li>
+			<p ID="body">
+				Section 4:
+				<a TITLE="Filters and Rules"
+					HREF="#Anchor_Section4">&nbsp;Filters
+					and Rules</a>
+			</p>
+		</li>
+		<br />
+		<li>
+			<p ID="body">
+				Section 5:
+				<a TITLE="Help "
+					HREF="#Anchor_Section5">&nbsp;Help
+					and Troubleshooting</a>
+			</p>
+		</li>
+	</ul>
+</div>
+
+<br>
+<h2>
+	<a NAME="Anchor_Section1"></a><a ID="HeadingIntroduction"></a>Section
+		1: Introduction to OSS Discovery (Census Edition)
+</h2>
+
+<div CLASS="sectionContent">
+	<h3>
+		What OSS Discovery (Census Edition) Does
+	</h3>
+	<p ID="body">
+		OSS Discovery (Census Edition) finds open source software installed on a computer. It
+		can be used to inventory open source software in use both across an
+		enterprise and on a single machine. In the future, OSS Discovery (Census Edition) will
+		also enable individuals and companies to easily contribute data to The
+		Open Source Census.
+	</p>
+	<p ID="body">
+		OSS Discovery (Census Edition):
+	</p>
+	<div CLASS="heading4content">
+		<p id="body"> 
+			<span class="prompt"><span class="defaultvalue">Includes 
+					an extensible library of project rules</span> </span> &ndash; OSS Discovery (Census Edition) uses 
+			a library of open source &ldquo;project fingerprint rules&rdquo; to 
+			uniquely identify a wide range of open source software. Users wishing to contribute results to the Open Source Census may not add custom rules at this time.</p><p ID="body">
+			<span CLASS="prompt"><span CLASS="defaultvalue">Works
+					with software distribution tools</span> </span> &ndash; Enterprises can use their
+			existing software distribution tools to deliver OSS Discovery (Census Edition) to
+			multiple machines and remotely execute scans.
+			<br />
+		</p>
+
+		<p ID="body">
+			<span CLASS="prompt"><span CLASS="defaultvalue">Provides
+					easy-to-understand results</span> </span> &ndash; Each OSS Discovery (Census Edition) scan
+			produces a text file listing the open source packages and versions
+			found. The results of OSS Discovery (Census Edition) scans can be reviewed for an
+			individual system, and can also be delivered to a server for
+			aggregation and further analysis.
+			<br>
+			<span CLASS="prompt"><span CLASS="defaultvalue"></span> </span>
+		</p>
+		<p ID="body">
+			<span CLASS="prompt"><span CLASS="defaultvalue">Supports
+					a number of platforms </span> </span>&ndash; OSS Discovery (Census Edition) scans workstations and
+			servers running Windows, Linux, or Solaris operating systems.
+		</p>
+		<p ID="body">
+			<span CLASS="prompt"><span CLASS="defaultvalue">Allows
+					enterprises to contribute to The Open Source Census</span> </span>-- OSS
+			Discovery provides the option to anonymously contribute scan results
+			to The Open Source Census. The Open Source Census is a global,
+			collaborative project to collect and share quantitative data on the
+			use of open source software in enterprise. The Open Source Census
+			began accepting anonymous contributions of scans in early 2008. Scan
+			contributors can see summarized results for their scans and benchmark
+			their open source usage. For more information, visit The Open Source
+			Census website.
+			<!-- TODO Put a link in here. -->
+		</p>
+	</div>
+	<h3>
+		How OSS Discovery (Census Edition) Works
+	</h3>
+	<p ID="body">
+		OSS Discovery (Census Edition) scans a file system on a computer looking for open
+		source software using what are called fingerprints or project rules to
+		identify each open source package. A project rule is made up of a set
+		of criteria that can uniquely identify a particular such package.
+		These criteria can include factors such as file names, directories,
+		file contents and checksums. Each project rule strives to accurately
+		and uniquely identify a project using the minimum possible set of
+		criteria. This discipline ensures that each project rule can
+		successfully identify the target open source package, while minimizing
+		&quot;false positives&quot; or conflicts with other rules. The broader
+		the criteria, the higher the likelihood of &quot;false
+		positives&quot;.
+	</p>
+	<p ID="body">
+		OSS Discovery (Census Edition) comes with a library of project rules that can identify
+		a wide range of open source software. To augment that library,
+		community members can
+		<a
+			HREF="http://ossdiscovery.opensource.collab.net/servlets/ProjectProcess?pageID=kRdxZI" target="_blank">contribute</a> 
+		new project rules, and users can add their own custom fingerprints to 
+		find any software package in their environment. Users wishing to contribute scans to The Open Source Census may not add custom rules at this time. 
+	</p>
+	<p ID="body">
+		Using existing software distribution tools, enterprises can run scans
+		across multiple systems. OSS Discovery (Census Edition) can then be configured to
+		deliver the resulting scans to a central server for aggregation and
+		further analysis.&nbsp;
+	</p>
+	<p ID="body">
+		Highly configurable, OSS Discovery (Census Edition) provides a variety of options that
+		enable users to, among other things, specify the directories and files
+		to scan, determine the volume and content of information reported
+		about the scan and configure locations to send the results.
+	</p>
+	<img BORDER="0"
+			ALIGN="middle"
+			SRC="discovery-architecture.jpg"
+			ALT="" /><a href="/cn-project-pages/images/basic-architecture.png" target="_blank"> </a>
+	<p ID="body">
+		&nbsp;
+	</p>
+	<h3>
+		Terms and concepts
+	</h3>
+	<table BORDER="0" STYLE="height: 231px">
+		<tbody>
+
+			<tr>
+				<td VALIGN="top">
+					<p ID="body">
+						fingerprint
+					</p>
+					<br />
+				</td>
+				<td VALIGN="top">
+					<p ID="body">
+						Also referred to as a project rules, this is the set of criteria
+						used to uniquely identify a particular open source package.
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<p ID="body">
+						project rule
+					</p>
+					<br />
+				</td>
+				<td>
+					<p ID="body">
+						Also referred to as a fingerprint, a project rule consists of one
+						or more sets of match rules used to uniquely identify a particular
+						open source project. For example, there is one project rule for
+						Apache and another for Ant.
+					</p>
+					<br />
+				</td>
+			</tr>
+			<tr>
+				<td VALIGN="top">
+					<p ID="body">
+						match rules
+					</p>
+					<br />
+				</td>
+				<td VALIGN="top">
+					<p ID="body">
+						Each project rule has a set of criteria designed to recognize the
+						project's 'fingerprint' referred to as the 'match rules'. Match
+						rules are joined by logical operators and so are also evaluated to
+						a Boolean expression.
+					</p>
+					<br />
+				</td>
+			</tr>
+			<tr>
+				<td VALIGN="top">
+					<p ID="body">
+						match rule
+					</p>
+					<br />
+				</td>
+				<td VALIGN="top">
+					<p ID="body">
+						The atomic component of the OSS Discovery (Census Edition) rule system, an
+						individual match rule attempts to 'match' some aspect of the
+						project. Each match rule is evaluated as 'true' or 'false'. A
+						'match' is the same as a 'true' value. For a more detialed
+						explanation of the rules, please see
+						<a
+							HREF="http://ossdiscovery.opensource.collab.net/servlets/ProjectProcess?pageID=0Hr9UD"
+							TARGET="_blank" TITLE="Rule Writing">Rule Writing for OSS
+							Discovery 2</a>. Note that users who wish to participate in The OSS Census cannot add custom rules at this time. 
+					</p>
+					<br />
+				</td>
+			</tr>
+			<tr>
+				<td VALIGN="top">
+					<p ID="body">
+						Fingerprint Live Update
+					</p>
+					<br />
+				</td>
+				<td VALIGN="top">
+					<p ID="body">
+						The OpenLogic service that makes updates to rules available.
+					</p>
+					<br />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<p ID="body">
+						filter
+					</p>
+				</td>
+				<td>
+					<p ID="body">
+						Filters and rules work in tandem to provide OSS Discovery (Census Edition) the
+						parameters it needs to complete a scan. A filter tells OSS
+						Discovery to exclude particular directories or file types.
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td STYLE="width: 200px">
+					<p ID="body">files examined</p>
+					<br />
+				</td>
+				<td>
+					<p ID="body">Once all filters have been applied and rules examined, the resulting set of files are the 'files examined'. This is the set of files that OSS Discovery (Census Edition) will scan.</p>
+					<br />
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<p ID="body">
+		&nbsp;
+	</p>
+	<h3>
+		Before You Start
+	</h3>
+	<ul>
+		<li style=""> 
+			<p id="body">Users should note that they must have the most recent distribution of OSS Discovery (Census Edition) (such as that available on The Open Source Census Web site) to participate in The Open Source Census. Older versions of OSS Discovery (Census Edition) (available on the OSS Discovery (Census Edition) Web site) will not allow the submission of scans.</p></li><li style=""><p id="body">Users do not need any special skills to complete basic configuration 
+				of OSS Discovery (Census Edition) or to run a scan. 
+			</p> 
+		</li>
+		<li>
+			<p ID="body">
+				Users wishing to do advanced customization of OSS Discovery (Census Edition) will
+				need the following skills and information:
+			</p>
+		</li>
+		<ul>
+			<li>
+				<p ID="body">
+					A working knowledge of XML.
+				</p>
+			</li>
+			<li>
+				<p ID="body">
+					A working knowledge of systems administration and networks.
+				</p>
+			</li>
+			<li>
+				<p ID="body">
+					A working knowledge of the Ruby language.
+				</p>
+				<br />
+			</li></ul>
+			<li><strong>FreeBSD</strong> users must, as root, create a symlink to access bash using the following command: ln -s /usr/local/bin/bash /bin/bash</li>
+		
+		
+	</ul>
+	<h3>
+		Installation
+	</h3>
+	<p ID="body">
+		If you're an enterprise user, perform the following steps to install
+		OSS Discovery (Census Edition):
+	</p>
+
+	<br />
+	<ol>
+		<li>
+			<p ID="body">
+				Obtain the archive of OSS Discovery (Census Edition) appropriate for your operating
+				system (.zip for Solaris and Windows, .tar.gz. for Linux).
+			</p>
+		</li>
+		<br />
+		<li>
+			<p ID="body">
+				Unpack it in your chosen installation directory ([install dir] for
+				the remainder of this document).
+			</p>
+		</li>
+		<br />
+		<li>
+			<p ID="body"> 
+				Navigate to the install dir and enter: 
+			</p>
+			
+			<div CLASS="example">
+				<p ID="body">
+					Windows:
+					<span CLASS="command">discovery.bat --path</span> [path to scan]
+				</p>
+				<br />
+				<p ID="body"> 
+					Linux/Solaris: 
+					<span CLASS="command">./discovery --path</span> [path to scan]
+				</p>
+			</div>
+			<br />
+			<div CLASS="example">
+				<p ID="body">
+					Members of the developer community will use the same commands in
+					the
+					<span CLASS="command">ossdiscovery-[operating system]-[version]\lib directory</span>
+					of the source.
+				</p>
+			</div>
+		</li>
+	</ol>
+</div>
+<ol>
+</ol>
+<h3>
+	System Requirements
+</h3>
+<ul>
+	<li>
+		<p ID="body">
+			750KB of disk space
+		</p>
+		<br />
+	</li>
+	<li>
+		<p ID="body">
+			512MB or greater of RAM
+		</p>
+	</li>
+	<li>
+		<p ID="body">
+			Live internet connection if scan results will be submitted or project
+			scan rules updated
+		</p>
+		<br />
+	</li>
+	<li>
+		<p ID="body">
+			Ruby 1.8.5 or 1.8.6 for chosen platform
+		</p>
+		<br />
+	</li>
+	<li>
+		<p ID="body">
+			Operating systems supported and tested:
+		</p>
+		<br />
+	</li>
+	<ul>
+		<li>
+			<p ID="body">
+				Solaris 8,9, and 10 (SPARC)
+			</p>
+			<br />
+		</li>
+		<li>
+			<p ID="body">
+				Red Hat Enterprise Linux 3, 4, 5 (x86)
+			</p>
+			<br />
+		</li>
+		<li>
+			<p ID="body">
+				Windows XP, 2000, 2003 (x86)
+			</p>
+			<br />
+			<div ID="comment-32534-closed" STYLE="display: none">
+				<div
+					STYLE="background: #f0f0f0 none repeat scroll 0% 50%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial">
+					<div CLASS="action-links subText smallgrey">
+						[
+						<a CLASS="smallgrey"
+							ONCLICK="toggleDivsWithCookie('comment-32534-open', 'comment-32534-closed'); return false;"
+							HREF="http://users.openlogic.com/ems/browse/DIS-411">Show
+							&raquo;</a> ]
+					</div>
+					<div CLASS="action-details" STYLE="overflow: hidden; height: 1em">
+						<a NAME="action_32534"></a>
+						<a
+							HREF="http://users.openlogic.com/ems/secure/ViewProfile.jspa?name=landon.cox">Landon
+							Cox</a>
+						<font SIZE="-2">[<span CLASS="date">Nov 28, 2007</span>]</font>
+						System requirements and prerequisites: 750KB of disk space RAM:
+						512MB or greater Active internet connection if scan results will
+						be submitted or project scan rules updated Ruby 1.8.5 or 1.8.6 for
+						your chosen platform (
+						<a HREF="http://www.ruby-lang.org/">http://www.ruby-lang.org</a> )
+						Operating systems supported and tested: Solaris 8,9, and 10
+						(SPARC) Red Hat Enterprise Linux 3, 4, 5 (x86) Windows XP, 2000,
+						2003 (x86)
+					</div>
+				</div>
+			</div>
+			<br />
+		</li>
+	</ul>
+</ul>
+
+<br>
+<h2>
+	<a NAME="Anchor_Section2"></a><a ID="HeadingBasics"></a>Section 2: The
+		Basics - A QuickStart
+</h2>
+<div CLASS="sectionContent">
+	<h3><a
+			HREF="../quick-start.php#run-oss-discovery">
+			Running Your First Scan</a></h3>
+	<h3>
+		<a
+			HREF="http://ossdiscovery.opensource.collab.net/servlets/ProjectProcess?pageID=Whgu7t" target="_blank">Understanding
+			Scan Results</a>
+	</h3>
+</div>
+
+<br>
+<h2>
+	<a NAME="Anchor_Section3"></a><a ID="HeadingBBasics"></a>Section 3:
+		Beyond the Basics
+</h2>
+<div CLASS="sectionContent">
+	<p ID="body">
+		All of the parameters OSS Discovery (Census Edition) needs to run a scan can be found
+		in the config.yml file (
+		<span CLASS="command">[install
+			dir]\ossdiscovery-[operating system]-[version]\lib\conf\config.yml</span>). OSS Discovery (Census Edition) ships with
+		this file populated by a set of default values. Users have the option
+		to override the defaults by modifying the settings in the config.yml
+		file, or by specifying parameters on the command line when running OSS
+		Discovery. Note that the config.yml file includes more variables than
+		are accessible from the CLI. Project developers recommend users set
+		the properties in the config.yml file with values agreed upon by their
+		enterprise, and then use the available CLI commands that correlate to
+		those variables to override the established defaults when necessary.
+		<br />
+	</p>
+	<p ID="body">
+		Advanced users are provided the ability to set a property's value to
+		the evaluated result of a snippet of Ruby code. The code must be
+		placed between '&lt;%' and '%&gt;' as in the following example:
+		<span CLASS="command">log_device =&lt;% File.dirname(__FILE__)
+			%&gt;</span>.
+	</p>
+	<h3>
+		Setting Properties in the Custom Configuration File
+	</h3>
+	<p ID="body">
+		Set the properties below in the config.yml file that ships with OSS
+		Discovery ([
+		<span CLASS="command">install
+			dir]\ossdiscovery-[operating system]-[version]\lib\conf\config.yml</span>). The explanation of each
+		property contains a link to information on the corresponding command
+		line option if one exists. Pass the command line option to override
+		the config.yml setting.
+	</p>
+	<br />
+	<div CLASS="table">
+		<table>
+			<tbody>
+				<tr>
+					<td>
+						<p ID="body"><strong>
+							Properties</strong>
+						</p>
+					</td>
+					<td>
+						<p ID="body"><strong>
+							Explanation</strong>
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td VALIGN="middle">
+						<p ID="body">
+							<a ID="prop_company_name"></a>company_name:
+								&quot;anonymous&quot;
+						</p>
+					</td>
+					<td VALIGN="top">
+						<p ID="body">
+							Specify your company name or nickname.
+							<br />
+							<br />
+							Corresponding CLI Option: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td VALIGN="middle">
+						<p ID="body">
+							<a ID="prop_machine_id"></a>machine_id: &quot;default&quot;
+						</p>
+					</td>
+					<td VALIGN="top">
+						<p ID="body">
+							Must be a universally unique and static value. If a machine id is
+							not specified in the configuration file, OSS Discovery (Census Edition) will
+							replace &quot;default&quot; with an id generated from
+							characteristics of the machine.
+						</p>
+
+						<p ID="body">
+							If you choose to override OSS Discovery (Census Edition)'s assigned value, and you
+							wish to submit your results to OSS Census, the value you assign
+							to each machine must be unique.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td VALIGN="middle">
+						<p ID="body">
+							<a ID="directory_to_scan"></a>directory_to_scan: &quot;/&quot;
+						</p>
+					</td>
+					<td VALIGN="top">
+						<p ID="body">
+							Use this property to specify a directory for OSS Discovery (Census Edition) to
+							scan. If a directory has been specified in the inclusion filter,
+							it will override the setting here. If --path is passed using the
+							CLI, that value overrides both the value specified here and in
+							the inclusion filter.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option:
+							<a
+								HREF="#path">--path</a>
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="generic_filters"></a>generic_filters:
+								&quot;../filters/filters-list.rb&quot;
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							Specify which default filter set to use.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td NOWRAP="nowrap">
+						<p ID="body">
+							<a ID="log_device"></a>LOG_DEVICE: log\discovery.log unless
+								defined?(LOG_DEVICE)
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							Specify the location to which you would like the log results
+							sent. This can be a filename or an IO object; typically used
+							parameters are STDOUT or STDERR. Note that if this property is
+							set to STDOUT and the results property is set to STDOUT, the
+							results will be intermingled.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td NOWRAP="nowrap">
+						<p ID="body">
+							<a ID="log_level"></a>LOG_LEVEL: Logger::INFO unless 
+								defined?(LOG_LEVEL)
+						</p>
+					</td>
+					<td>
+
+
+						<p ID="body">
+							Intended for use by developers wishing to work with the OSS
+							Discovery code, this allows the specification of the level of
+							information included in the log results. Valid options are:
+							FATAL, ERROR, WARN, INFO and DEBUG.
+						</p>
+
+						<p ID="body">
+							'WARN' is the recommended setting for productions runs because it
+							typically includes important warnings while omitting most
+							extraneous information.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="log"></a>log: Logger.new(LOG_DEVICE); @@log.level = 
+								LOG_LEVEL
+						</p>
+						<br />
+					</td>
+					<td VALIGN="top">
+						<p ID="body">
+							Intended for use by developers wishing to work with the OSS
+							Discovery code, this property allows access to logging via a
+							'require cofiguration' call.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="human_results"></a>results: STDOUT
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							Specifies the location to which you would like the human readable
+							version of the scan results sent. The default prints to the
+							screen (STDOUT). Note that if this property is set to STDOUT and
+							the logging property is set to STDOUT, the results will be
+							intermingled.
+						</p>
+
+						<p ID="body">
+							Additionally, users can specify a filename and path. To specify a
+							file, the user will need to create a Ruby file to write to.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option:
+							<a
+								HREF="#human">--human-results
+							</a>
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="machine_results"></a>machine_results: &quot;scan_results-census.txt&quot;</p>
+					</td>
+					<td>
+						<p ID="body">
+							Specifies the path and filename to which OSS Discovery (Census Edition) should
+							write the machine readable version of the scan results.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option:
+							<a
+								HREF="#machine">--machine-results</a>
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td ID="preview_results">
+						<p ID="body">
+							preview_results: false
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							Specifies whether or not to show the machine scan results after
+							the scan is complete.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option: none
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td ID="include_paths">
+						<p ID="body">
+							include_paths: true
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							Specifies whether to include location (paths) in the machine scan
+							results file.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option:
+							<a
+								HREF="#inc_path">--inc-path</a>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="send_results"></a>send_results: false
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							Use to specify whether or not results will be sent for
+							aggregation.
+						</p>
+
+						<p ID="body">
+							When set to false, no results are sent. When set to 'true'
+							results will be sent to the url specified by the
+							destination_server_url property.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option:
+							<a
+								HREF="#deliver">--deliver-results</a>
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="destination_server"></a>destination_server_url: 
+								&quot;http://192.168.10.133:3000/scans/scanpost&quot;
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							Specify the url to which results will be sent.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option: None
+						</p>
+
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="server_bases"></a>server_base_url: 
+								&quot;http://localhost:3000/&quot;
+						</p>
+					</td>
+					<td VALIGN="top">
+						<p ID="body">
+							Specify the port to which the user will navigate to view all
+							project rules available on the server.
+						</p>
+
+						<p ID="body">
+							This value must be followed by the value in the
+							rules_files_url_path property.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="rules_files_url"></a>rules_files_url_path: 
+								&quot;rules_files.xml&quot;
+						</p>
+					</td>
+					<td VALIGN="top">
+						<p ID="body">
+							Specifies the name of the file that contains the project rules
+							available on the server.
+						</p>
+
+						<p ID="body">
+							A functional url is achieved by preceeding this value with the
+							value in the server_base_url property.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="username"></a>username: nil
+						</p>
+					</td>
+					<td VALIGN="top">
+						<p ID="body">
+							If authentication is in use, set the username with this property.
+							Should be left to 'nil' otherwise.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td VALIGN="middle">
+						<p ID="body">
+							<a ID="password"></a>password: nil
+						</p>
+					</td>
+					<td VALIGN="top">
+						<p ID="body">
+							If authentication is in use, set the password using this
+							property. Should be left to 'nil' otherwise.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td VALIGN="top">
+						<p ID="body">
+							<a ID="proxy_host"></a>proxy_host: &quot;192.168.10.211&quot;
+						</p>
+
+					</td>
+					<td VALIGN="top">
+						<p ID="body">
+							Specify proxy settings for sending a scan. Check with your system
+							administrator to determine if you've got a proxy in use. If so,
+							adjust this property accordingly. If not, leave it set to 'nil'.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option: None/
+						</p>
+						<p ID="body">
+							<br />
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td VALIGN="top">
+						<p ID="body">
+							<a ID="proxy_port"></a>proxy_port: 4545
+						</p>
+						<br />
+					</td>
+					<td VALIGN="top">
+						<p ID="body">
+							Specify proxy settings for sending a scan. Check with your system
+							administrator to determine if you've got a proxy in use. If so,
+							adjust this property accordingly. If not, leave it set to 'nil'.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td VALIGN="top">
+						<p ID="body">
+							<a ID="proxy_user"></a>proxy_user: &quot;proxyuser&quot;
+						</p>
+						<br />
+					</td>
+					<td VALIGN="top">
+						<p ID="body">
+							Specify proxy settings for sending a scan. Check with your system
+							administrator to determine if you've got a proxy in use. If so,
+							adjust this property accordingly. If not, leave it set to 'nil'.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td VALIGN="top">
+						<p ID="body">
+							<a ID="proxy_password"></a>proxy_password: &quot;proxypw&quot;
+						</p>
+
+					</td>
+					<td VALIGN="top">
+						<p ID="body">
+							Specify proxy settings for sending a scan. Check with your system
+							administrator to determine if you've got a proxy in use. If so,
+							adjust this property accordingly. If not, leave it set to 'nil'.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td VALIGN="top">
+						<p ID="body">
+							<a ID="rules_openlogic"></a>rules_openlogic: 
+								File.expand_path(File.join(File.dirname(__FILE__), 
+								&quot;..&quot;, &quot;rules&quot;, &quot;openlogic&quot;))
+						</p>
+						<br />
+					</td>
+					<td VALIGN="top">
+						<p ID="body">
+							Specify the location of the default project fingerpring rules
+							obtained from OpenLogic.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td VALIGN="top">
+						<p ID="body">
+							<a ID="rules_drop_ins"></a>rules_drop_ins: 
+								File.expand_path(File.join(File.dirname(__FILE__), 
+								&quot;..&quot;, &quot;rules&quot;, &quot;drop_ins&quot;))
+						</p>
+						<br />
+					</td>
+					<td VALIGN="top">
+						<p ID="body">
+							Specify the location of any additional project fingerprint rules.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td VALIGN="top">
+						<p ID="body">
+							<a id="rules_dirs"></a>rules_dirs: [@@rules_openlogic, 
+								@@rules_drop_ins]
+						</p>
+						<br />
+					</td>
+					<td VALIGN="top">
+						<p ID="body">
+							Include the location of default set of project fingerprint rules
+							and any additional rules in one property.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<!--<tr>
+					<td VALIGN="top">
+						<p ID="body">
+							<a ID="speed">speedhint</a> = 2
+						</p>
+						<br>
+					</td>
+					<td VALIGN="top">
+						<p ID="body">
+							There are a few ways to adjust the speed of a OSS Discovery (Census Edition) scan.
+							Using this property, you can set the default speed of the scan to
+							one of the following values:
+						</p>
+
+						<p ID="body">
+							1 - fastest, least granular
+							<br>
+							2 - will show most package-versions
+							<br>
+							3 - slowest, most granular
+							<br>
+							<br>
+							Corresponding CLI Option:
+							<a
+								XHREF="http://ossdiscovery.opensource.collab.net/cn-project-pages/User Guide/#speed2"
+								MCE_HREF="http://ossdiscovery.opensource.collab.net/cn-project-pages/User Guide/#speed2">--speed
+								to 'medium' </a>
+						</p>
+
+						<br>
+					</td>
+				</tr>-->
+				<tr>
+					<td VALIGN="top">
+						<p ID="body">
+							<a ID="show_permission_denied"></a>show_permission_denied: false
+						</p>
+						<br />
+					</td>
+					<td VALIGN="top">
+						<p ID="body">
+							Set to the default of 'false', the scan reports only files
+							scanned. This list will only include files the user has
+							permission to see. The list will not include files that have been
+							excluded from the scan based on user permissions.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="update_rules"></a>update_rules: false
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							By default, OSS Discovery (Census Edition) will never check to see if new project
+							rules are available.
+						</p>
+
+						<p ID="body">
+							Set this property to 'true' to check for updated project rules
+							every time OSS Discovery (Census Edition) is invoked, whether or not OSS Discovery (Census Edition)
+							has been asked to scan.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option:
+							<a
+								HREF="#getForce">[--rules-update-get
+								| --rule-update-force] </a>
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td VALIGN="top">
+						<p ID="body">
+							<a ID="update_rules_and_do"></a>update_rules_and_do_scan: false
+						</p>
+						<br />
+					</td>
+					<td VALIGN="top">
+						<p ID="body">
+							By default, OSS Discovery (Census Edition) separates the actions of updating
+							project rules and scanning./
+						</p>
+						<p ID="body">
+						</p>
+						<p ID="body">
+							Set this property to 'true' to link those activities and proceed
+							with a scan every time rules are updated.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option:
+							<a
+								HREF="#rules">--update-rules</a>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td VALIGN="top">
+						<p ID="body"><br>
+							<a ID="geography"></a>country:</p>
+						<br />
+					</td>
+					<td>
+						<p id="body">
+							Set this property to submit an anonymous scan to the OSS Census.
+							It must be one of the following values:
+						</p>
+						<p id="body">
+							<br>
+						</p>
+
+						<pre>
+   1 | Afghanistan                      | 
+   2 | Albania                          | 
+   3 | Algeria                          | 
+   4 | Andorra                          | 
+   5 | Angola                           | 
+   6 | Antigua and Barbuda              | 
+   7 | Argentina                        | 
+   8 | Armenia                          | 
+   9 | Australia                        | 
+  10 | Austria                          | 
+  11 | Azerbaijan                       | 
+  12 | Bahamas                          | 
+  13 | Bahrain                          | 
+  14 | Bangladesh                       | 
+  15 | Barbados                         | 
+  16 | Belarus                          | 
+  17 | Belgium                          | 
+  18 | Belize                           | 
+  19 | Benin                            | 
+  20 | Bhutan                           | 
+  21 | Bolivia                          | 
+  22 | Bosnia and Herzegovina           | 
+  23 | Botswana                         | 
+  24 | Brazil                           | 
+  25 | Brunei                           | 
+  26 | Bulgaria                         | 
+  27 | Burkina Faso                     | 
+  28 | Burma/Myanmar                    | 
+  29 | Burundi                          | 
+  30 | Cambodia                         | 
+  31 | Cameroon                         | 
+  32 | Canada                           | 
+  33 | Cape Verde                       | 
+  34 | Central African Republic         | 
+  35 | Chad                             | 
+  36 | Chile                            | 
+  37 | China                            | 
+  38 | Colombia                         | 
+  39 | Comoros                          | 
+  40 | Congo                            | 
+  41 | Congo, Democratic Republic of    | 
+  42 | Costa Rica                       | 
+  43 | Cote d'Ivoire/Ivory Coast        | 
+  44 | Croatia                          | 
+  45 | Cuba                             | 
+  46 | Cyprus                           | 
+  47 | Czech Republic                   | 
+  48 | Denmark                          | 
+  49 | Djibouti                         | 
+  50 | Dominica                         | 
+  51 | Dominican Republic               | 
+  52 | East Timor                       | 
+  53 | Ecuador                          | 
+  54 | Egypt                            | 
+  55 | El Salvador                      | 
+  56 | Equatorial Guinea                | 
+  57 | Eritrea                          | 
+  58 | Estonia                          | 
+  59 | Ethiopia                         | 
+  60 | Fiji                             | 
+  61 | Finland                          | 
+  62 | France                           | 
+  63 | Gabon                            | 
+  64 | Gambia                           | 
+  65 | Georgia                          | 
+  66 | Germany                          | 
+  67 | Ghana                            | 
+  68 | Greece                           | 
+  69 | Grenada                          | 
+  70 | Guatemala                        | 
+  71 | Guinea                           | 
+  72 | Guinea-Bissau                    | 
+  73 | Guyana                           | 
+  74 | Haiti                            | 
+  75 | Honduras                         | 
+  76 | Hungary                          | 
+  77 | Iceland                          | 
+  78 | India                            | 
+  79 | Indonesia                        | 
+  80 | Iran                             | 
+  81 | Iraq                             | 
+  82 | Ireland                          | 
+  83 | Israel                           | 
+  84 | Italy                            | 
+  85 | Jamaica                          | 
+  86 | Japan                            | 
+  87 | Jordan                           | 
+  88 | Kazakstan                        | 
+  89 | Kenya                            | 
+  90 | Kiribati                         | 
+  91 | Korea, North                     | 
+  92 | Korea, South                     | 
+  93 | Kuwait                           | 
+  94 | Kyrgyzstan                       | 
+  95 | Laos                             | 
+  96 | Latvia                           | 
+  97 | Lebanon                          | 
+  98 | Lesotho                          | 
+  99 | Liberia                          | 
+ 100 | Libya                            | 
+ 101 | Liechtenstein                    | 
+ 102 | Lithuania                        | 
+ 103 | Luxembourg                       | 
+ 104 | Macedonia                        | 
+ 105 | Madagascar                       | 
+ 106 | Malawi                           | 
+ 107 | Malaysia                         | 
+ 108 | Maldives                         | 
+ 109 | Mali                             | 
+ 110 | Malta                            | 
+ 111 | Marshall Islands                 | 
+ 112 | Mauritania                       | 
+ 113 | Mauritius                        | 
+ 114 | Mexico                           | 
+ 115 | Micronesia                       | 
+ 116 | Moldova                          | 
+ 117 | Monaco                           | 
+ 118 | Mongolia                         | 
+ 119 | Montenegro                       | 
+ 120 | Morocco                          | 
+ 121 | Mozambique                       | 
+ 122 | Namibia                          | 
+ 123 | Nauru                            | 
+ 124 | Nepal                            | 
+ 125 | Netherlands                      | 
+ 126 | New Zealand                      | 
+ 127 | Nicaragua                        | 
+ 128 | Niger                            | 
+ 129 | Nigeria                          | 
+ 130 | Norway                           | 
+ 131 | Oman                             | 
+ 132 | Pakistan                         | 
+ 133 | Palau                            | 
+ 134 | Panama                           | 
+ 135 | Papua New Guinea                 | 
+ 136 | Paraguay                         | 
+ 137 | Peru                             | 
+ 138 | Philippines                      | 
+ 139 | Poland                           | 
+ 140 | Portugal                         | 
+ 141 | Qatar                            | 
+ 142 | Romania                          | 
+ 143 | Russian Federation               | 
+ 144 | Rwanda                           | 
+ 145 | Saint Kitts and Nevis            | 
+ 146 | Saint Lucia                      | 
+ 147 | Saint Vincent and the Grenadines | 
+ 148 | Samoa                            | 
+ 149 | San Marino                       | 
+ 150 | Sao Tome and Principe            | 
+ 151 | Saudi Arabia                     | 
+ 152 | Senegal                          | 
+ 153 | Serbia                           | 
+ 154 | Seychelles                       | 
+ 155 | Sierra Leone                     | 
+ 156 | Singapore                        | 
+ 157 | Slovakia                         | 
+ 158 | Slovenia                         | 
+ 159 | Solomon Islands                  | 
+ 160 | Somalia                          | 
+ 161 | South Africa                     | 
+ 162 | Spain                            | 
+ 163 | Sri Lanka                        | 
+ 164 | Sudan                            | 
+ 165 | Suriname                         | 
+ 166 | Swaziland                        | 
+ 167 | Sweden                           | 
+ 168 | Switzerland                      | 
+ 169 | Syria                            | 
+ 170 | Tajikistan                       | 
+ 171 | Tanzania                         | 
+ 172 | Taiwan                           | 
+ 173 | Thailand                         | 
+ 174 | Togo                             | 
+ 175 | Tonga                            | 
+ 176 | Trinidad and Tobago              | 
+ 177 | Tunisia                          | 
+ 178 | Turkey                           | 
+ 179 | Turkmenistan                     | 
+ 180 | Tuvalu                           | 
+ 181 | Uganda                           | 
+ 182 | Ukraine                          | 
+ 183 | United Arab Emirates             | 
+ 184 | United Kingdom                   | 
+ 185 | United States                    | 
+ 186 | Uruguay                          | 
+ 187 | Uzbekistan                       | 
+ 188 | Vanuatu                          | 
+ 189 | Vatican City                     | 
+ 190 | Venezuela                        | 
+ 191 | Vietnam                          | 
+ 192 | Yemen                            | 
+ 193 | Zambia                           | 
+ 194 | Zimbabwe                         | 
+ 195 | Other        
+					</pre>
+
+
+
+						<p ID="body">
+							Corresponding CLI Option:
+							<a
+								HREF="#--geography">--country</a></p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td VALIGN="top">
+						<p ID="body">
+							<a ID="group"></a>census_code:
+						</p>
+						<br />
+					</td>
+					<td>
+						<p ID="body">
+							Set this variable to specify the Census Code received
+							at registration. As with the others, if the variable is set here
+							it needn't be passed on the command line when the results are
+							delivered to the census server.
+
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option:
+							<a
+								HREF="#grouppasscode">--censuscode
+							</a>
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td VALIGN="top">
+						<p ID="body">
+							<a ID="follow_symlinks"></a>follow_symlinks: true
+						</p>
+						<br />
+					</td>
+					<td VALIGN="top">
+						<p ID="body">
+							Specify whether or not OSS Discovery (Census Edition) should include symlink'd
+							files in the scan.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option:
+							<a
+								HREF="#nofollow">--nofollow</a>
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td VALIGN="top">
+						<p ID="body">
+							<a ID="symlink_depth"></a>symlink_depth: 5
+						</p>
+						<br />
+					</td>
+					<td VALIGN="top">
+						<p ID="body">
+							Specify the maximum number of indirections to follow through
+							symlinks.
+						</p>
+
+						<p ID="body">
+							Corresponding CLI Option: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td VALIGN="top">
+						<p id="body">
+							<a id="throttle"></a>throttle_number_of_files: 300
+						</p>
+						<p id="body">
+							throttle_seconds_to_pause: 2.5
+						</p>
+						<br />
+					</td>
+					<td VALIGN="top">
+						<p ID="body">
+							These values allow users to control the system resources used by
+							a scan. They work in tandem. The first value indicates the number
+							of files to be processed before the scan pauses, and the second
+							value indicates the number of seconds the scan should pause.
+							<br> 
+							Corresponding CLI Option: <a
+								HREF="#--throttle">--throttle
+							<br />
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td VALIGN="top">
+						<p ID="body">
+							<a id="symlink_depth"></a><br>produce_match_audit_records:
+								false<br> 
+						</p>
+						<br />
+					</td>
+					<td VALIGN="top">
+						<p ID="body">Setting this property to true creates an auditable list of all the files examined that triggered successful matches and prints it to the value specified in the 'results' property. This option is included to assist with debugging.</p>
+
+						<p ID="body">
+							Corresponding CLI Option: None
+						</p>
+						<br />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<h3>
+		Options to Pass via Command Line
+		<br />
+	</h3>
+	<p ID="body">
+		Use the options in the table below to pass parameters to OSS Discovery (Census Edition)
+		and override the settings in the config.yml file. In the description
+		for each relevant option is a link to the related property that can be
+		set in the configuration file if one exists.
+	</p>
+
+	<p ID="body">
+		Along with a number of other options, the
+		<span CLASS="command">discovery.bat</span> (Windows)/
+		<span CLASS="command">./discovery</span> (Linux) command takes a path
+		as an argument to set the directory to be scanned. Unlike all the
+		other options which are truly optional, OSS Discovery (Census Edition) developers
+		recommend that a path is provided whenever OSS Discovery (Census Edition) is run. If a
+		path and directory are not specified, OSS Discovery (Census Edition) will scan all
+		directories at root and the procedure could take a very long time.
+	</p>
+
+	<p ID="body">
+		If a path is specified, which we recommend, the syntax of the command
+		to run OSS Discovery (Census Edition) will look like this:
+	</p>
+
+	<div CLASS="example">
+		<p ID="body">
+			Windows:
+			<span CLASS="command">discovery.bat --path [path to scan]</span>
+		</p>
+
+		<p ID="body">
+			Linux:
+			<span CLASS="command">./discovery --path [path to scan]</span>
+		</p>
+	</div>
+
+	<p ID="body">
+		Add all other options after path.
+		<!-- TODO Landon says this changed with the new stuff. -->
+		There are no rules dictating the order in which the options are
+		passed.
+	</p>
+	<br />
+	<br />
+	<div CLASS="table">
+		<div ALIGN="center">
+		</div>
+		<table>
+			<tbody>
+				<tr>
+					<td NOWRAP="nowrap" ALIGN="center">
+						<p ID="body"><strong>
+							Option
+						<br />
+							Long Form</strong>
+						</p>
+						<br />
+					</td>
+					<td NOWRAP="nowrap" ALIGN="center">
+						<p ID="body"><strong>
+							Option
+						<br />
+							Short Form</strong>
+						</p>
+						<br />
+					</td>
+					<td ALIGN="center">
+						<p ID="body"><strong>
+							Explanation</strong>
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="path"></a>--path
+						</p>
+						<br />
+						<br />
+					</td>
+					<td>
+					<p ID="body">	-p</p>
+					</td>
+					<td>
+						<p ID="body">
+							This option tells OSS Discovery (Census Edition) which path to scan, absolute or
+							relative. The default is root.
+						</p>
+
+						<p ID="body">
+							Corresponding property:
+							<a
+								HREF="#directory_to_scan">directory_to_scan</a>
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="conf"></a>--conf
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							-c
+						</p>
+					</td>
+					<td VALIGN="middle">
+						<p ID="body">
+							Specify the absolute or relative path and filename of the
+							configuration file to use for the scan. By default, OSS Discovery (Census Edition)
+							will use the config.yml located in
+							<span CLASS="command">[install
+								dir]\ossdiscovery-[operating system]-[versions]\lib\conf\config.yml</span>.
+						</p>
+
+						<p ID="body">
+							Corresponding property: none
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="deliver"></a>--deliver-batch 
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							-D
+						</p>
+						<br />
+					</td>
+					<td VALIGN="middle">
+						<p ID="body">
+							Passing this option instructs OSS Discovery (Census Edition) to deliver a batch of
+							results to the server specified in the config.yml file.
+						</p>
+
+						<p id="body"> 
+							This option must have an argument optionally. -D [path to batch 
+							location] specifies the location of the results file to send to 
+							the server. Use this to batch many scans run with different sets 
+							of fingerprint rules and filters, or to send scans collected from 
+							many boxes in a distributed environment.</p><p id="body">Delivering batch results could take quite a long time.<br> 
+						</p>
+
+						<p ID="body">
+							Corresponding property:
+							<!--  <a
+								HREF="http://ossdiscovery.opensource.collab.net/cn-project-pages/User%20Guide/#send_results">-->
+							none
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="deliver"></a>--deliver-results 
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							-d
+						</p>
+						<br />
+					</td>
+					<td VALIGN="middle">
+						<p ID="body">
+							Passing this option instructs OSS Discovery (Census Edition) to deliver results to
+							the server specified in the config.yml file.
+						</p>
+
+						<p ID="body">
+							This option takes an argument optionally. -d [filename] specifies
+							the results file to send to the server. Use this to select from
+							many scans run with different sets of fingerprint rules and
+							filters, or to send scans from many boxes in a distributed
+							environment.
+						</p>
+
+						<p ID="body">
+							Corresponding property:
+							<a
+								HREF="#send_results">send_results</a>
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="help"></a>--help
+						</p>
+
+					</td>
+					<td>
+						<p ID="body">
+							-h
+						</p>
+					</td>
+					<td VALIGN="middle">
+						<p ID="body">
+							View the help contents on the screen./
+						</p>
+						<p ID="body">
+						</p>
+						<p ID="body">
+							Corresponding property: none
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="human"></a>--human-results
+						</p>
+
+					</td>
+					<td>
+						<p ID="body">
+							-u
+						</p>
+					</td>
+					<td VALIGN="middle">
+						<p ID="body">
+							Adding the path and/or filename as an argument, use this option
+							to specify where OSS Discovery (Census Edition) should write the human readable
+							results files. If no filename is specified, the default is STDOUT
+							which reports results to the screen.
+						</p>
+
+						<p ID="body">
+							Corresponding property:
+							<a
+								HREF="#human_results">results</a>
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td valign="top">
+						<p ID="body"><br><br>
+							<a ID="--geography"></a>--country</p>
+
+					</td>
+					<td valign="top">
+						<p ID="body"><br><br>
+							-Y
+						</p>
+					</td>
+					<td VALIGN="middle">
+						<p ID="body">Use this option to pass a country code. If you have a Census Code, you don't need to specify a country code. Use the country code if you wish to remain anonymous. As with the other values, if the scan is submitted to census server as an anonymous scan and this value is passed, it overrides value in the config.yml file. This is an exception to order dependences and must occur before --deliver-results on the command line. Acceptable values are:</p>
+						
+						</br>
+						<pre>
+   1 | Afghanistan                      | 
+   2 | Albania                          | 
+   3 | Algeria                          | 
+   4 | Andorra                          | 
+   5 | Angola                           | 
+   6 | Antigua and Barbuda              | 
+   7 | Argentina                        | 
+   8 | Armenia                          | 
+   9 | Australia                        | 
+  10 | Austria                          | 
+  11 | Azerbaijan                       | 
+  12 | Bahamas                          | 
+  13 | Bahrain                          | 
+  14 | Bangladesh                       | 
+  15 | Barbados                         | 
+  16 | Belarus                          | 
+  17 | Belgium                          | 
+  18 | Belize                           | 
+  19 | Benin                            | 
+  20 | Bhutan                           | 
+  21 | Bolivia                          | 
+  22 | Bosnia and Herzegovina           | 
+  23 | Botswana                         | 
+  24 | Brazil                           | 
+  25 | Brunei                           | 
+  26 | Bulgaria                         | 
+  27 | Burkina Faso                     | 
+  28 | Burma/Myanmar                    | 
+  29 | Burundi                          | 
+  30 | Cambodia                         | 
+  31 | Cameroon                         | 
+  32 | Canada                           | 
+  33 | Cape Verde                       | 
+  34 | Central African Republic         | 
+  35 | Chad                             | 
+  36 | Chile                            | 
+  37 | China                            | 
+  38 | Colombia                         | 
+  39 | Comoros                          | 
+  40 | Congo                            | 
+  41 | Congo, Democratic Republic of    | 
+  42 | Costa Rica                       | 
+  43 | Cote d'Ivoire/Ivory Coast        | 
+  44 | Croatia                          | 
+  45 | Cuba                             | 
+  46 | Cyprus                           | 
+  47 | Czech Republic                   | 
+  48 | Denmark                          | 
+  49 | Djibouti                         | 
+  50 | Dominica                         | 
+  51 | Dominican Republic               | 
+  52 | East Timor                       | 
+  53 | Ecuador                          | 
+  54 | Egypt                            | 
+  55 | El Salvador                      | 
+  56 | Equatorial Guinea                | 
+  57 | Eritrea                          | 
+  58 | Estonia                          | 
+  59 | Ethiopia                         | 
+  60 | Fiji                             | 
+  61 | Finland                          | 
+  62 | France                           | 
+  63 | Gabon                            | 
+  64 | Gambia                           | 
+  65 | Georgia                          | 
+  66 | Germany                          | 
+  67 | Ghana                            | 
+  68 | Greece                           | 
+  69 | Grenada                          | 
+  70 | Guatemala                        | 
+  71 | Guinea                           | 
+  72 | Guinea-Bissau                    | 
+  73 | Guyana                           | 
+  74 | Haiti                            | 
+  75 | Honduras                         | 
+  76 | Hungary                          | 
+  77 | Iceland                          | 
+  78 | India                            | 
+  79 | Indonesia                        | 
+  80 | Iran                             | 
+  81 | Iraq                             | 
+  82 | Ireland                          | 
+  83 | Israel                           | 
+  84 | Italy                            | 
+  85 | Jamaica                          | 
+  86 | Japan                            | 
+  87 | Jordan                           | 
+  88 | Kazakstan                        | 
+  89 | Kenya                            | 
+  90 | Kiribati                         | 
+  91 | Korea, North                     | 
+  92 | Korea, South                     | 
+  93 | Kuwait                           | 
+  94 | Kyrgyzstan                       | 
+  95 | Laos                             | 
+  96 | Latvia                           | 
+  97 | Lebanon                          | 
+  98 | Lesotho                          | 
+  99 | Liberia                          | 
+ 100 | Libya                            | 
+ 101 | Liechtenstein                    | 
+ 102 | Lithuania                        | 
+ 103 | Luxembourg                       | 
+ 104 | Macedonia                        | 
+ 105 | Madagascar                       | 
+ 106 | Malawi                           | 
+ 107 | Malaysia                         | 
+ 108 | Maldives                         | 
+ 109 | Mali                             | 
+ 110 | Malta                            | 
+ 111 | Marshall Islands                 | 
+ 112 | Mauritania                       | 
+ 113 | Mauritius                        | 
+ 114 | Mexico                           | 
+ 115 | Micronesia                       | 
+ 116 | Moldova                          | 
+ 117 | Monaco                           | 
+ 118 | Mongolia                         | 
+ 119 | Montenegro                       | 
+ 120 | Morocco                          | 
+ 121 | Mozambique                       | 
+ 122 | Namibia                          | 
+ 123 | Nauru                            | 
+ 124 | Nepal                            | 
+ 125 | Netherlands                      | 
+ 126 | New Zealand                      | 
+ 127 | Nicaragua                        | 
+ 128 | Niger                            | 
+ 129 | Nigeria                          | 
+ 130 | Norway                           | 
+ 131 | Oman                             | 
+ 132 | Pakistan                         | 
+ 133 | Palau                            | 
+ 134 | Panama                           | 
+ 135 | Papua New Guinea                 | 
+ 136 | Paraguay                         | 
+ 137 | Peru                             | 
+ 138 | Philippines                      | 
+ 139 | Poland                           | 
+ 140 | Portugal                         | 
+ 141 | Qatar                            | 
+ 142 | Romania                          | 
+ 143 | Russian Federation               | 
+ 144 | Rwanda                           | 
+ 145 | Saint Kitts and Nevis            | 
+ 146 | Saint Lucia                      | 
+ 147 | Saint Vincent and the Grenadines | 
+ 148 | Samoa                            | 
+ 149 | San Marino                       | 
+ 150 | Sao Tome and Principe            | 
+ 151 | Saudi Arabia                     | 
+ 152 | Senegal                          | 
+ 153 | Serbia                           | 
+ 154 | Seychelles                       | 
+ 155 | Sierra Leone                     | 
+ 156 | Singapore                        | 
+ 157 | Slovakia                         | 
+ 158 | Slovenia                         | 
+ 159 | Solomon Islands                  | 
+ 160 | Somalia                          | 
+ 161 | South Africa                     | 
+ 162 | Spain                            | 
+ 163 | Sri Lanka                        | 
+ 164 | Sudan                            | 
+ 165 | Suriname                         | 
+ 166 | Swaziland                        | 
+ 167 | Sweden                           | 
+ 168 | Switzerland                      | 
+ 169 | Syria                            | 
+ 170 | Tajikistan                       | 
+ 171 | Tanzania                         | 
+ 172 | Taiwan                           | 
+ 173 | Thailand                         | 
+ 174 | Togo                             | 
+ 175 | Tonga                            | 
+ 176 | Trinidad and Tobago              | 
+ 177 | Tunisia                          | 
+ 178 | Turkey                           | 
+ 179 | Turkmenistan                     | 
+ 180 | Tuvalu                           | 
+ 181 | Uganda                           | 
+ 182 | Ukraine                          | 
+ 183 | United Arab Emirates             | 
+ 184 | United Kingdom                   | 
+ 185 | United States                    | 
+ 186 | Uruguay                          | 
+ 187 | Uzbekistan                       | 
+ 188 | Vanuatu                          | 
+ 189 | Vatican City                     | 
+ 190 | Venezuela                        | 
+ 191 | Vietnam                          | 
+ 192 | Yemen                            | 
+ 193 | Zambia                           | 
+ 194 | Zimbabwe                         | 
+ 195 | Other        						
+						</pre>
+
+
+
+						<p ID="body">
+							Corresponding property:
+							<a
+								HREF="#geography">country</a></p>
+						<br />
+					</td>
+				</tr>
+
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="grouppasscode"></a>--census-code
+						</p>
+
+					</td>
+					<td>
+						<p ID="body">
+							-G
+						</p>
+					</td>
+					<td VALIGN="middle">
+						<p ID="body">
+							Use this option to specify the Census Code received
+							at registration.
+						</p>
+
+						<p ID="body">
+							Corresponding property:
+							<a
+								HREF="#group_code">census_code</a>
+						</p>
+						<br />
+					</td>
+				</tr>
+
+				<tr>
+					<td ID="inc_path">
+						<p ID="body">
+							--inc-path
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							-I
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							This option reports the path/location of detected packages in
+							machine scan results.
+						</p>
+
+						<p ID="body">
+							Corresponding property:
+							<a
+								HREF="#include_paths">include_paths</a>
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="excluded"></a>--list-excluded 
+						</p>
+						<br />
+					</td>
+					<td>
+					<p ID="body">
+						-e</p>
+					</td>
+					<td VALIGN="middle">
+						<p ID="body">
+							This option prints to the screen files excluded from the scan,
+							and the filter that excluded them.
+						</p>
+
+						<p ID="body">
+							Corresponding property: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="files"></a>--list-files
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							-f
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							This option prints to the screen a list of all files found in the
+							scan that matched a rule or other criteria.
+						</p>
+
+						<p ID="body">
+							Corresponding property: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="filters"></a>--list-filters
+						</p>
+					</td>
+					<td><p ID="body">
+						-g</p>
+					</td>
+					<td>
+						<p ID="body">
+							This option prints to the screen a list of generic filters that
+							will be active and the directories that will be excluded, unless
+							specified otherwise, during the next scan.
+						</p>
+
+						<p ID="body">
+							Corresponding property: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="foi"></a>--list-foi
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							-i
+						</p>
+					</td>
+					<td>
+						<p ID="body">After OSS Discovery (Census Edition) applies all filters and rules, the files left are called 'files examined', or 'foi'. These are the files that OSS Discovery (Census Edition) will scan. This option prints the list of files examined to the screen.</p>
+
+						<p ID="body">
+							Corresponding property: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="os"></a>--list-os
+						</p>
+						<br />
+					</td>
+					<td>
+						<p ID="body">
+							-o
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							This option prints to the screen the operating system, version,
+							and distro on which discovery is running.
+						</p>
+
+						<p ID="body">
+							Corresponding property: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="projects"></a>--list-projects
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							-j
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							This option prints to the screen a list of the projects that OSS
+							Discovery is capable of finding.
+						</p>
+
+						<p ID="body">
+							Corresponding property: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="tag"></a>--list-md5-dupes
+						</p>
+						<br />
+					</td>
+					<td>
+						<p ID="body">
+							-M
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							This option prints duplicated digests if the same MD5 digest is
+							used in two or more match rule definitions.
+						</p>
+
+						<p ID="body">
+							Corresponding property: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="tag"></a>--list-tag
+						</p>
+						<br />
+					</td>
+					<td>
+						<p ID="body">
+							-t
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							This option prints to the screen the machine ID that will be
+							reported with scan results.
+						</p>
+
+						<p ID="body">
+							Corresponding property: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="machine"></a>--machine-results
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							-m
+						</p>
+					</td>
+					<td>
+						<p ID="body">Adding the filename and the absolute or relative path, use this option to specify where OSS Discovery (Census Edition) should write the machine readable results files. The machine readable results differ from the human readable results in that they're structured so that server can parse it. By default, OSS Discovery (Census Edition) writes machine results to scanresults-census.txt.</p>
+
+						<p ID="body">
+							Corresponding property:
+							<a
+								HREF="#machine_results">machine_results</a>
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="nofollow"></a>--nofollow
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							-S
+						</p>
+						<br />
+					</td>
+					<td>
+						<p ID="body">
+							This option tells OSS Discovery (Census Edition) not to follow symlinks.
+						</p>
+
+						<p ID="body">
+							Corresponding property:
+							<a
+								HREF="#follow_symlinks">follow_symlinks</a>
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="progress"></a>--preview-results
+						</p>
+
+					</td>
+					<td>
+						<p ID="body">
+							-R
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							Pass this option to view the machine results in the console when
+							the scan is complete.
+						</p>
+
+						<p ID="body">
+							Corresponding property: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="progress"></a>--production-scan
+						</p>
+
+					</td>
+					<td>
+						<p ID="body">
+							-P
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							Pass this option to identify the scan as that of a production
+							machine in the results.
+						</p>
+
+						<p ID="body">
+							Corresponding property: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="progress"></a>--progress
+						</p>
+
+					</td>
+					<td>
+						<p ID="body">
+							-x
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							Adding any number as an argument, use this option to force OSS
+							Discovery to provide indications of progress. A 'dot' will appear
+							in the progress bar on the command line at each increment
+							specified.
+						</p>
+
+						<p ID="body">
+							Corresponding property: None
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="getForce"></a>[--rules-update-get | --rules-update-force]
+						</p>
+
+					</td>
+					<td>
+						<p ID="body">
+							[-G | -F]
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							This option allows OSS Discovery (Census Edition) to retrieve updates from
+							OpenLogic to the project rules or force updates to the rules, but
+							does not execute a scan.
+						</p>
+
+						<p ID="body">
+							Parameters such as urls will come from the config.yml file.
+						</p>
+
+						<p ID="body">
+							Corresponding property:
+							<a
+								HREF="#update_rules">update_rules</a>
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="--throttle"></a>--throttle
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							-T
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							Use this option to enable throttling of the scanner so all system resources are not
+							fully dedicated to the scan. The throttle_* properties in the config.yml file allow you
+							to specify the parameters. 
+						</p>
+
+						<p ID="body"> 
+							Corresponding property: <a
+								HREF="#throttle">throttle_number_of_files</a>
+						</p>
+						<br />
+					</td>
+				</tr>
+
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="rules"></a>--update-rules
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							-r
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							This option contacts OpenLogic to obtain any updates to project
+							rules prior to running a scan.
+						</p>
+
+						<p ID="body">
+							Corresponding property:
+							<a
+								HREF="#update_and_do">update_rules_and_do_scan</a>
+						</p>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p ID="body">
+							<a ID="version"></a>--version
+						</p>
+						
+					</td>
+					<td>
+						<p ID="body">
+							-v
+						</p>
+					</td>
+					<td>
+						<p ID="body">
+							This option prints to the screen the version of OSS Discovery (Census Edition).
+						</p>
+
+						<p ID="body">
+							Corresponding property: None
+						</p>
+						
+					</td>
+				</tr>
+			</tbody>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+	<h3>
+		Deploying to Multiple Machines
+	</h3>
+	<div CLASS="heading3content">
+		<p ID="body">
+			Use the software distribution mechanism standard to your organization
+			to distribute OSS Discovery (Census Edition) to multiple machines. Project developers
+			recommend configuring the config.yml to allow collection of the
+			results files in a central location.
+		</p>
+
+
+	</div>
+
+</div>
+
+
+<h2>
+	<a NAME="Anchor_Section4"></a><a ID="HeadingFilter"></a>Section 4:
+		Filters and Project Rules 
+</h2>
+<div CLASS="sectionContent">
+	<h3>
+		How Filters and Project Rules Work
+	</h3>
+	<div CLASS="heading3content">
+		<p ID="body">
+			Filters and rules work in tandem to provide OSS Discovery (Census Edition) the
+			direction it needs to complete a scan. Filters specify directories to
+			exclude, like the trash. Project rules tell OSS Discovery (Census Edition) how to
+			recognize open source packages as it walks the directories remaining
+			after filters are applied.
+		</p>
+
+		<p ID="body">
+			Managing filters and rules can impact the performance, precision and
+			accuracy of a scan. For example, for a fast scan, you'd exclude all
+			extraneous directories and you'd use a filename match. To provide
+			extra information - like what package version is installed - you'd
+			need both a filename-match and a binary-match that can extract or
+			deduce the version information from the binary. The latter would take
+			more time because it has to read the file and perform a search for it
+			to find a pattern that the author has defined as indicative of a
+			version. Given all this work, the scan will proceed more slowly; the
+			results, however, will be more precise.
+		</p>
+
+		
+		<h3>
+			Creating New Filters
+		</h3>
+		<p ID="body">
+			It's possible to create new scan filters, and to specify different
+			filter sets for OSS Discovery (Census Edition) to use when scanning a drive.
+			<!-- TODO We don't include  instructions on how to specify a different filter set. -->
+		</p>
+		<h4>
+			To Add a New Filter
+		</h4>
+		<ol>
+			<li>
+				<p ID="body">
+					Write the new filter using an existing example (
+					<span CLASS="command">[install
+						dir]\ossdiscovery-[operating system]-[version]\lib\filters</span>) and place the
+					<span CLASS="command">filter.rb</span> file in the
+					<span CLASS="command">[install
+						dir]\ossdiscovery-[operating system]-[version]\lib\filters</span> directory.
+				</p>
+			</li>
+			<li>
+				<p ID="body">
+					Add the new filter by adding a 'require' line to the
+					<span CLASS="command">generic-exclusions.rb</span> file (located in
+					the [install dir]\ossdiscovery-[operating system]-[version]\lib\filters directory
+					<span CLASS="command">). Follow the existing syntax and OSS
+						Discovery will pull in the new filter. </span>
+				</p>
+			</li>
+		</ol>
+		<h3>
+			Creating New Project Rules
+		</h3>
+		<div CLASS="heading3content">
+			<p id="body">Note: If you intend to contribute your results to The Open Source Census, you cannot add custom rules at this time. <br></p><p id="body">Users can customize a scan by leveraging existing match rules to 
+				create a new project rule for any project not already in the OSS 
+				Discovery Library. A project rule is comprised of a set of match 
+				rules configured to locate some aspect of the project. Each project 
+				has its own project rule - Apache, for instance. Apache's project 
+				rule consists of match rules configured to find it based on its 
+				particular characteristics. The match rules in each project's rule 
+				set can be combined using logical expressions (AND, OR) and 
+				precedence operators (), so the author can describe the order in 
+				which the rules should be evaluated. 
+			</p>
+			<p ID="body">
+				There are 4 major match rule types:
+			</p>
+
+			<ol>
+				<li>
+					<p ID="body">
+						filename matches -- matches a specific filename or regex. This is
+						an existence check only, and will rarely give provide the version.
+					</p>
+				</li>
+				<li>
+					<p ID="body">
+						binary matches -- match text within binary content. This works
+						well at retrieving version information and is commonly used for C
+						projects and other executables where MD5 match techniques are not
+						reliable.
+					</p>
+				</li>
+				<li>
+					<p ID="body">
+						md5 checksum matches -- matches the md5 sum of given file. This is
+						an exact match commonly used for Java projects (*.jar files).
+					</p>
+				</li>
+				<li>
+					<p ID="body">
+						filenameVersion matches -- matches filename and version - This
+						works well for files in which the word 'version' appears.
+
+					</p>
+				</li>
+			</ol>
+
+			<p ID="body">
+				For more detailed information on creating a new project rule, see
+				the project-rules.xml document located in [install
+				directory]\ossdiscovery-[operating system]-[version]\lib\rules and the document
+				<a title="Rule Writing for OSS Discovery"
+					HREF="http://ossdiscovery.opensource.collab.net/servlets/ProjectProcess?pageID=0Hr9UD" target="_blank">Rule Writing for OSS Discovery</a>.
+
+			</p>
+
+		</div>
+
+	</div>
+
+	<h2>
+		<a NAME="Anchor_Section5"></a><a ID="HeadingHelp"></a>Section 5: Help
+			and Troubleshooting
+	</h2>
+	<div CLASS="sectionContent">
+		<h3>
+			Accessing the FAQ
+		</h3>
+		<div CLASS="heading3content">
+			<p ID="body">
+				For assistance with specific questions, access the
+				<a
+					HREF="https://osscensus.org/faq.php">FAQ</a>.
+			</p>
+		</div>
+		<h3>
+			Accessing Support
+		</h3>
+		<p ID="body">
+			For support, please access OSS Discovery (Census Edition)'s User mailing list. Mailing
+			lists are moderated by the project team and every effort is made to
+			resolve issues in a timely manner.
+		</p>
+
+		<h3>
+			Reporting Bugs
+		</h3>
+		<p ID="body">
+			If you find a problem with OSS Discovery (Census Edition), please visit 'Issue
+			Tracking' area of the site and enter an issue.
+		</p>
+
+			</div>
+</div>
+
+<br>
+<br>
+
+<hr>
+<p ID="body">
+	Documentation CC Deed
+</p>
+<br>
+<a REL="license"
+	HREF="http://creativecommons.org/licenses/by-sa/3.0/us/"> <img
+		ALT="Creative Commons License" STYLE="border-width: 0"
+		SRC="http://i.creativecommons.org/l/by-sa/3.0/us/88x31.png" /> </a>
+<br />
+<p ID="body">
+	This work is licensed under a
+	<a REL="license"
+		HREF="http://creativecommons.org/licenses/by-sa/3.0/us/"
+		TARGET="_blank">Creative Commons Attribution-Share Alike 3.0
+		United States License</a>.
+</p>
+
+
+
