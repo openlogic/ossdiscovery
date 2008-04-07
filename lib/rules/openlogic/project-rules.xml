@@ -285,7 +285,7 @@
     <match-rules name="nameversion">
       <result expression="OR-ALL"/>
       <!-- filename version match -->
-      <match-rule name="castor" type="filenameVersion" filename="^castor-([0-9].*?)\.jar$"/>
+      <match-rule name="castor" type="filenameVersion" filename="^castor-([0-9].*?[0-9])\.jar$"/>
     </match-rules>
     <match-rules name="name">
       <result expression="OR-ALL"/>
