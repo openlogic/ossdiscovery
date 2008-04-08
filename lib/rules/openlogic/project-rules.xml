@@ -44,6 +44,9 @@
     <match-rules name="md5">
       <result expression="OR-ALL"/>
       <match-rule name="1.1" type="MD5" md5sum="d5dd655f6056a72116f6a0666745a386" filename="^activation\.jar$" version="1.1"/>
+      <match-rule name="1.1alt" type="MD5" md5sum="73591cda3e5824d80637cfbc883e9041" filename="^activation\.jar$" version="1.1"/>
+      <match-rule name="1.1alt2" type="MD5" md5sum="a14ab2f4355cc2b375b85b3aa8b39284" filename="^activation\.jar$" version="1.1"/>
+      <match-rule name="1.1alt3" type="MD5" md5sum="aea505595d2cf9665a3f5d9e3c9ccbe0" filename="^activation\.jar$" version="1.1"/>
       <match-rule name="1.1.1" type="MD5" md5sum="c264c7a20fe37c9dc702ab8b0cf54f58" filename="^activation\.jar$" version="1.1.1"/>
     </match-rules>
   </project-rule>
@@ -459,6 +462,10 @@
       <match-rule name="1.1" type="MD5" version="1.1" filename="^commons-codec.*jar$" md5sum="a5c3b5cd0605bb7331d1846cdc14b13b"/>
       <match-rule name="1.2" type="MD5" version="1.2" filename="^commons-codec.*jar$" md5sum="f07c03056a1ebae7add71a1245b6395f"/>
       <match-rule name="1.3" type="MD5" version="1.3" filename="^commons-codec.*jar$" md5sum="8e149c1053741c03736a52df83974dcc"/>
+      <match-rule name="1.3alt" type="MD5" version="1.3" filename="^commons-codec.*jar$" md5sum="d2ebc348a47664432303f35ec540ea8d"/>
+      <match-rule name="1.3alt2" type="MD5" version="1.3" filename="^commons-codec.*jar$" md5sum="6fdeebc9f709224e13da3394c3667609"/> 
+      <match-rule name="1.3alt3" type="MD5" version="1.3" filename="^commons-codec.*jar$" md5sum="28efc6e12028d22eb2ce716ec1805dc7"/> 
+      <match-rule name="1.3alt4" type="MD5" version="1.3" filename="^commons-codec.*jar$" md5sum="edc1b528e080ebedc9fe525528c296f9"/> 
     </match-rules>
   </project-rule>
   <project-rule name="commons-collections" from="wild" os="all">
@@ -481,6 +488,8 @@
       <match-rule name="2.1.1" type="MD5" version="2.1.1" filename="^commons-collections.*jar$" md5sum="9b47ae4871f91707617dda4ef1509b2c"/>
       <match-rule name="3.0" type="MD5" version="3.0" filename="^commons-collections.*jar$" md5sum="87e27d2ba688c70565f2590946ae7bb6"/>
       <match-rule name="3.1" type="MD5" version="3.1" filename="^commons-collections.*jar$" md5sum="d1dcb0fbee884bb855bb327b8190af36"/>
+      <match-rule name="3.1alt" type="MD5" version="3.1" filename="^commons-collections.*jar$" md5sum="a386aad69fa1d29bf2ccd69070391247"/>
+      <match-rule name="3.1alt2" type="MD5" version="3.1" filename="^commons-collections.*jar$" md5sum="34a2df6dc3d5e58774aeec2a5bb08738"/>     
       <match-rule name="3.2" type="MD5" version="3.2" filename="^commons-collections.*jar$" md5sum="7b9216b608d550787bdf43a63d88bf3b"/>
     </match-rules>
   </project-rule>
@@ -692,6 +701,10 @@
       <match-rule name="29-commons-httpclient-3.0-rc3.tar.gz-commons-httpclient-3.0-rc3.jar" type="MD5" md5sum="49a6de9126cb7370fbe09bad477d6daf" filename="^commons-httpclient.*jar$" version="3.0-rc3"/>
       <match-rule name="31-commons-httpclient-3.0-rc4.tar.gz-commons-httpclient-3.0-rc4.jar" type="MD5" md5sum="78a27a90b41eefd50e1b02834f300046" filename="^commons-httpclient.*jar$" version="3.0-rc4"/>
       <match-rule name="33-commons-httpclient-3.0.1.tar.gz-commons-httpclient-3.0.1.jar" type="MD5" md5sum="456245a3b1b49eb51c57d037acebfefc" filename="^commons-httpclient.*jar$" version="3.0.1"/>
+      <match-rule name="3.0.1alt" type="MD5" md5sum="a87028c7c5babfcab20ee76e0ecc0bed" filename="^commons-httpclient.*jar$" version="3.0.1"/>
+      <match-rule name="3.0.1alt2" type="MD5" md5sum="0ffe6e9b792cfb4137cffcbdfc8a10f4" filename="^commons-httpclient.*jar$" version="3.0.1"/>
+      <match-rule name="3.0.1alt3" type="MD5" md5sum="69ca6b760da0d39cf05166c967d88df7" filename="^commons-httpclient.*jar$" version="3.0.1"/>
+      <match-rule name="3.0.1alt4" type="MD5" md5sum="b27ee30940738cf8c658f9190a960c5a" filename="^commons-httpclient.*jar$" version="3.0.1"/>
       <match-rule name="35-commons-httpclient-3.0.tar.gz-commons-httpclient-3.0.jar" type="MD5" md5sum="cd69c70d6c078f4340bd5e867ec6f1b6" filename="^commons-httpclient.*jar$" version="3.0"/>
       <match-rule name="37-commons-httpclient-3.1-alpha1.tar.gz-commons-httpclient-3.1-alpha1.jar" type="MD5" md5sum="22e1c768290d6e3628d62d694aea9931" filename="^commons-httpclient.*jar$" version="3.1-alpha1"/>
       <match-rule name="39-commons-httpclient-3.1-beta1.tar.gz-commons-httpclient-3.1-beta1.jar" type="MD5" md5sum="2d194dcb46165563b3223a3ad8278b60" filename="^commons-httpclient.*jar$" version="3.1-beta1"/>
@@ -877,6 +890,10 @@
       <match-rule name="1.1-default-tgz" type="MD5" version="1.1" filename="^commons-logging.*jar$" md5sum="6b62417e77b000a87de66ee3935edbf5"/>
       <match-rule name="1.1-adapters-tgz" type="MD5" version="1.1" filename="^commons-logging.*jar$" md5sum="efab4a460e39b4e20fa3ee2b8a24d70c"/>
       <match-rule name="1.1-api-tgz" type="MD5" version="1.1" filename="^commons-logging.*jar$" md5sum="4374238076ab08e60e0d296234480837"/>
+      <match-rule name="1.1.0.jboss" type="MD5" version="1.1.0" filename="^commons-logging.*jar$" md5sum="70f14997b1759b69c567e444a1eb2328"/>
+      <match-rule name="1.1.0.jboss2" type="MD5" version="1.1.0" filename="^commons-logging.*jar$" md5sum="15c4cc4c136d88640be97122c2b3f42f"/>
+      <match-rule name="1.1.0.jboss3" type="MD5" version="1.1.0" filename="^commons-logging.*jar$" md5sum="78974edaaf7b72392d01e090079efd16"/>
+      <match-rule name="1.1.0.jboss4" type="MD5" version="1.1.0" filename="^commons-logging.*jar$" md5sum="4ce9b1cf37ef687aeaf7a90e36680948"/>
     </match-rules>
   </project-rule>
   <project-rule name="commons-math" from="wild" os="all">
@@ -1150,7 +1167,7 @@
     <description>checks md5 against derby jar or detects presence of file</description>
     <eval expression="derby_filename or derby_md5" speed="1"/>
     <match-rules name="derby_filename">
-      <match-rule name="1-derby-file" type="filename" filename="^derby.*\.jar$"/>
+      <match-rule name="1-derby-file" type="filename" filename="^derby(?!-plugin).*\.jar$"/>
     </match-rules>
     <match-rules name="derby_md5">
       <result expression="OR-ALL"/>
@@ -2674,10 +2691,7 @@
   </project-rule>
   <project-rule name="jboss" from="wild" os="all">
     <description>Uses md5 digests to find versions gte 3.0.5 and lte 5.0.0.Beta2</description>
-    <eval expression="jboss_versions or jboss_filename" speed="1"/>
-    <match-rules name="jboss_filename">
-      <match-rule name="jboss_fn" type="filename" filename="^jboss-system.*\jar$"/>
-    </match-rules>
+    <eval expression="jboss_versions" speed="1"/>
     <match-rules name="jboss_versions">
       <result expression="OR-ALL"/>
       <!-- It was verified that all of these handwritten match-rules are good for both gz and zip formats. -->
