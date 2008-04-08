@@ -1237,6 +1237,14 @@
       <match-rule name="7-dom4j-version-10-3-2-1" type="MD5" md5sum="0370cc785eb4db50e386b42ca07107f7" filename="^derby.*\.jar$" version="10.3.2.1"/>
     </match-rules>
   </project-rule>
+  <project-rule name="discovery" from="wild" os="all">
+    <description>Looks for the discovery.rb file, then pulls the version string out.  Spaces are ignored in the line of code, and both forms of quotes are accepted</description>
+    <eval expression="discoveryrb" speed="1"/>
+    <match-rules name="discoveryrb">
+      <result expression="OR-ALL"/>
+      <match-rule name="discovery" type="binary" filename="^discovery.rb$" regexp="@discovery_version\s*=\s*[\x22\x27](.*)[\x22\x27]"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="dojo-toolkit" from="wild" os="all">
     <description/>
     <eval expression="dojo-toolkit_filename or dojo-toolkit_md5" speed="1"/>
@@ -4622,6 +4630,13 @@
       <!-- extracted/sakai-bin_2-3-2.tar.gz.extracted/server/lib/sakai-dav-server-2.3.2.jar -->
       <match-rule name="sakai-bin_2-4-1-sakai-dav-server-2.4.1.jar" type="MD5" md5sum="a3b2526cf93dc64fd3e1b9f8e91f0639" filename="^sakai-dav-server.*jar$" version="2.4.1"/>
       <!-- extracted/sakai-bin_2-4-1.tar.gz.extracted/server/lib/sakai-dav-server-2.4.1.jar -->
+    </match-rules>
+  </project-rule>
+  <project-rule name="samba" from="wild" os="linux">
+    <eval expression="executable" speed="1"/>
+    <match-rules name="executable">
+      <result expression="OR-ALL"/>
+      <match-rule name="sambabuild" type="binary" filename="^smbclient|smbd$" regexp="/samba-(.*)/source"/>
     </match-rules>
   </project-rule>
   <project-rule name="saxon" from="wild" os="all">
