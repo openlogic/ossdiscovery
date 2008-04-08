@@ -559,7 +559,7 @@
     </match-rules>
     <match-rules name="fileversion">
       <result expression="jar"/>
-      <match-rule name="jar" type="filenameVersion" filename="^commons-configuration-[^\d]*(.*)\.jar$"/>
+      <match-rule name="jar" type="filenameVersion" filename="^commons-configuration-.*?([0-9].*?\d).jar$"/>
     </match-rules>
     <match-rules name="md5">
       <result expression="OR-ALL"/>
