@@ -1979,6 +1979,13 @@
       <match-rule name="win-ghostscript-version" type="binary" filename="^gswin.*\.exe$" regexp="gs(\d\.\d\d)"/>
     </match-rules>
   </project-rule>
+  <project-rule name="gimp" from="wild" os="linux,windows">
+    <eval expression="executable" speed="1"/>
+    <match-rules name="executable">
+      <result expression="OR-ALL"/>
+      <match-rule name="gimpbuild" type="binary" filename="^gimp[-0-9.]*(?:.exe)?$" regexp="\x00GIMP ([.0-9]{2}[.0-9A-Za-z-]{0,10})\x00"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="glassfish" from="wild" os="all">
     <description>Assumes jars start with 'appserv-'.</description>
     <eval expression="v1_b48_jar_md5 OR                        v1_ur1_b14_jar_md5 OR                        v1-ur1-p01-b02_jar_md5 OR                        v2-b50g_jar_md5 OR                        v2-b58g_jar_md5 OR                        v2ur1-b09d_jar_md5 OR                        v3-preview1-b2_jar_md5 OR                        v3-preview1_jar_md5 OR                        filename" speed="1"/>
