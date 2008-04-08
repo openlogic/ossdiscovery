@@ -25,7 +25,7 @@
  You can contact OpenLogic at info@openlogic.com.
 
 -->
-<project-rules universal-version="20080408-132430">
+<project-rules universal-version="20080408-154015">
   <project-rule name="acegi" from="wild" os="all">
     <description>Finds versions using file names.</description>
     <eval expression="name" speed="1"/>
