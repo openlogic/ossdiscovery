@@ -205,40 +205,38 @@
       <match-rule name="bashbinary" type="binary" filename="^bash$" regexp="Bash version (.*?) release GNU"/>
     </match-rules>
   </project-rule>
-  <project-rules>
-    <project-rule name="batik" from="wild" os="all">
-      <description>Checks md5 against batik\.jar or detects presence of file</description>
-      <eval expression="batik_filename OR batik_md5 OR batik_filename_version" speed="1"/>
-      <match-rules name="batik_filename">
-        <match-rule name="batik-file" type="filename" filename="^batik\.jar$"/>
-      </match-rules>
-      <match-rules name="batik_filename_version">
-        <match-rule name="batik_jar" type="filenameVersion" filename="^batik-.*?([0-9].*?)(?:-sources)?.jar$"/>
-      </match-rules>
-      <match-rules name="batik_md5">
-        <result expression="OR-ALL"/>
-        <match-rule name="batik-1.0beta2" type="MD5" md5sum="863d6455094d0706eb6ab2934688aedd" filename="batik\.jar" version="1.0beta2"/>
-        <match-rule name="batik-1.0" type="MD5" md5sum="f490db41af9d1960596c7bb63c33181b" filename="batik\.jar" version="1.0"/>
-        <match-rule name="batik-1.1.1" type="MD5" md5sum="739956e1bfea85d32688fdae89675468" filename="batik\.jar" version="1.1.1"/>
-        <match-rule name="batik-1.1rc1" type="MD5" md5sum="9b78bcfa886b777dc9375728a02196c9" filename="batik\.jar" version="1.1rc1"/>
-        <match-rule name="batik-1.1rc2" type="MD5" md5sum="32aee59ab17fd3a17a61ec575d905263" filename="batik\.jar" version="1.1rc2"/>
-        <match-rule name="batik-1.1rc3" type="MD5" md5sum="9d715440bb03e83bfbe3c271122387f8" filename="batik\.jar" version="1.1rc3"/>
-        <match-rule name="batik-1.1rc4" type="MD5" md5sum="bea9631d6dcb0a4006f82e98798afd32" filename="batik\.jar" version="1.1rc4"/>
-        <match-rule name="batik-1.1" type="MD5" md5sum="f03b5b2edf1afad2f00d64cf1664934e" filename="batik\.jar" version="1.1"/>
-        <match-rule name="batik-1.5.1" type="MD5" md5sum="f098f36ec1c743801b84fb7da6fb860c" filename="batik\.jar" version="1.5.1"/>
-        <match-rule name="batik-1.5b1" type="MD5" md5sum="2926a4775d190814a36e0336c096ce73" filename="batik\.jar" version="1.5beta1"/>
-        <match-rule name="batik-1.5b2" type="MD5" md5sum="25fdff4460c0986258744be3a53a24e6" filename="batik\.jar" version="1.5beta2"/>
-        <match-rule name="batik-1.5b3" type="MD5" md5sum="6f840ec2542b27016c80f527d6388047" filename="batik\.jar" version="1.5beta3"/>
-        <match-rule name="batik-1.5b4b" type="MD5" md5sum="53513474d7b4280bf87bec362a67a63c" filename="batik\.jar" version="1.5beta4b"/>
-        <match-rule name="batik-1.5b4" type="MD5" md5sum="e869f79545490dce133fbfcf0af19321" filename="batik\.jar" version="1.5beta4"/>
-        <match-rule name="batik-1.5b5" type="MD5" md5sum="27ee78d9b860b1a33f97e3881b78e50e" filename="batik\.jar" version="1.5beta5"/>
-        <match-rule name="batik-1.5" type="MD5" md5sum="9c8e52e786e7751c8e001926508122b2" filename="batik\.jar" version="1.5"/>
-        <match-rule name="batik-1.6" type="MD5" md5sum="a82c49f879b9567e7bce46033cfca04c" filename="batik\.jar" version="1.6"/>
-        <match-rule name="batik-1.7b1" type="MD5" md5sum="ac415edcb55d38aaf9b4e4d265b26e37" filename="batik\.jar" version="1.7beta1"/>
-        <match-rule name="batik-1.7" type="MD5" md5sum="71f1e084d38180ae302e09ffe5675ae7" filename="batik\.jar" version="1.7"/>
-      </match-rules>
-    </project-rule>
-  </project-rules>
+  <project-rule name="batik" from="wild" os="all">
+    <description>Checks md5 against batik\.jar or detects presence of file</description>
+    <eval expression="batik_filename OR batik_md5 OR batik_filename_version" speed="1"/>
+    <match-rules name="batik_filename">
+      <match-rule name="batik-file" type="filename" filename="^batik\.jar$"/>
+    </match-rules>
+    <match-rules name="batik_filename_version">
+      <match-rule name="batik_jar" type="filenameVersion" filename="^batik-.*?([0-9].*?)(?:-sources)?.jar$"/>
+    </match-rules>
+    <match-rules name="batik_md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="batik-1.0beta2" type="MD5" md5sum="863d6455094d0706eb6ab2934688aedd" filename="batik\.jar" version="1.0beta2"/>
+      <match-rule name="batik-1.0" type="MD5" md5sum="f490db41af9d1960596c7bb63c33181b" filename="batik\.jar" version="1.0"/>
+      <match-rule name="batik-1.1.1" type="MD5" md5sum="739956e1bfea85d32688fdae89675468" filename="batik\.jar" version="1.1.1"/>
+      <match-rule name="batik-1.1rc1" type="MD5" md5sum="9b78bcfa886b777dc9375728a02196c9" filename="batik\.jar" version="1.1rc1"/>
+      <match-rule name="batik-1.1rc2" type="MD5" md5sum="32aee59ab17fd3a17a61ec575d905263" filename="batik\.jar" version="1.1rc2"/>
+      <match-rule name="batik-1.1rc3" type="MD5" md5sum="9d715440bb03e83bfbe3c271122387f8" filename="batik\.jar" version="1.1rc3"/>
+      <match-rule name="batik-1.1rc4" type="MD5" md5sum="bea9631d6dcb0a4006f82e98798afd32" filename="batik\.jar" version="1.1rc4"/>
+      <match-rule name="batik-1.1" type="MD5" md5sum="f03b5b2edf1afad2f00d64cf1664934e" filename="batik\.jar" version="1.1"/>
+      <match-rule name="batik-1.5.1" type="MD5" md5sum="f098f36ec1c743801b84fb7da6fb860c" filename="batik\.jar" version="1.5.1"/>
+      <match-rule name="batik-1.5b1" type="MD5" md5sum="2926a4775d190814a36e0336c096ce73" filename="batik\.jar" version="1.5beta1"/>
+      <match-rule name="batik-1.5b2" type="MD5" md5sum="25fdff4460c0986258744be3a53a24e6" filename="batik\.jar" version="1.5beta2"/>
+      <match-rule name="batik-1.5b3" type="MD5" md5sum="6f840ec2542b27016c80f527d6388047" filename="batik\.jar" version="1.5beta3"/>
+      <match-rule name="batik-1.5b4b" type="MD5" md5sum="53513474d7b4280bf87bec362a67a63c" filename="batik\.jar" version="1.5beta4b"/>
+      <match-rule name="batik-1.5b4" type="MD5" md5sum="e869f79545490dce133fbfcf0af19321" filename="batik\.jar" version="1.5beta4"/>
+      <match-rule name="batik-1.5b5" type="MD5" md5sum="27ee78d9b860b1a33f97e3881b78e50e" filename="batik\.jar" version="1.5beta5"/>
+      <match-rule name="batik-1.5" type="MD5" md5sum="9c8e52e786e7751c8e001926508122b2" filename="batik\.jar" version="1.5"/>
+      <match-rule name="batik-1.6" type="MD5" md5sum="a82c49f879b9567e7bce46033cfca04c" filename="batik\.jar" version="1.6"/>
+      <match-rule name="batik-1.7b1" type="MD5" md5sum="ac415edcb55d38aaf9b4e4d265b26e37" filename="batik\.jar" version="1.7beta1"/>
+      <match-rule name="batik-1.7" type="MD5" md5sum="71f1e084d38180ae302e09ffe5675ae7" filename="batik\.jar" version="1.7"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="bison" from="wild" os="all">
     <description>Checks version number in file base_conf.php.dist </description>
     <eval expression="bison_bin" speed="1"/>
