@@ -50,6 +50,15 @@
       <match-rule name="1.1.1" type="MD5" md5sum="c264c7a20fe37c9dc702ab8b0cf54f58" filename="^activation\.jar$" version="1.1.1"/>
     </match-rules>
   </project-rule>
+  <project-rule name="analog" from="wild" os="all">
+    <description> </description>
+    <eval expression="analog_bin" speed="1"/>
+    <match-rules name="analog_bin">
+      <result expression="OR-ALL"/>
+      <match-rule name="analog-version" type="binary" filename="^analog$" regexp="stdout.(\d.*?)\/Unix.*"/>
+      <match-rule name="analog-version2" type="binary" filename="^analog$" regexp="\/analog-(\d.*?)\/lang.*"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="antlr" from="wild" os="all">
     <description>Assumes jars start with 'antlr' and uses md5 digests to find versions.</description>
     <eval expression="nameversion OR filename" speed="1"/>
@@ -142,6 +151,25 @@
     </match-rules>
     <!-- a speed level 3 match would be similar to speed 2 except it would look at all jars instead of those which start with "ant" -->
   </project-rule>
+  <project-rule name="aurigadoc" from="wild" os="all">
+    <description>Checks md5 against aurigadoc.jar or detects presence of file</description>
+    <eval expression="aurigadoc_filename OR aurigadoc_md5 OR aurigadoc_filename_version" speed="1"/>
+    <match-rules name="aurigadoc_filename">
+      <match-rule name="aurigadoc-file" type="filename" filename="^aurigadoc\.jar$"/>
+    </match-rules>
+    <match-rules name="aurigadoc_filename_version">
+      <match-rule name="aurigadoc_jar" type="filenameVersion" filename="^aurigadoc-.*?([0-9].*?)(?:-sources)?.jar$"/>
+    </match-rules>
+    <match-rules name="aurigadoc_md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="aurigadoc-1.1" type="MD5" md5sum="dc42c117a3426115f770e5fea88aa9e1" filename="^aurigadoc\.jar$" version="1.1"/>
+      <match-rule name="aurigadoc-1.2" type="MD5" md5sum="73b2ea1a4b375846f54cab87365516e0" filename="^aurigadoc\.jar$" version="1.2"/>
+      <match-rule name="aurigadoc-1.2b" type="MD5" md5sum="d764782f07ab4cba30957afed67d4af8" filename="^aurigadoc\.jar$" version="1.2b"/>
+      <match-rule name="aurigadoc-1.3" type="MD5" md5sum="b596cbf9ca145c78cf0a544903528c4e" filename="^aurigadoc\.jar$" version="1.3"/>
+      <match-rule name="aurigadoc-1.3b" type="MD5" md5sum="88671e6004b75bf9e78ed67a9965e8df" filename="^aurigadoc\.jar$" version="1.3b"/>
+      <match-rule name="aurigadoc-1.4.0" type="MD5" md5sum="83e87da52743aeb0b66bbfa13fa25e0d" filename="^aurigadoc\.jar$" version="1.4.0"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="axis" from="wild" os="all">
     <description>Assumes jars start with 'axis' (not 'axis2') and uses md5 digests to find version 1.4 only.</description>
     <eval expression="axis_fv or axis_filename or axis_md5" speed="1"/>
@@ -177,6 +205,40 @@
       <match-rule name="bashbinary" type="binary" filename="^bash$" regexp="Bash version (.*?) release GNU"/>
     </match-rules>
   </project-rule>
+  <project-rules>
+    <project-rule name="batik" from="wild" os="all">
+      <description>Checks md5 against batik\.jar or detects presence of file</description>
+      <eval expression="batik_filename OR batik_md5 OR batik_filename_version" speed="1"/>
+      <match-rules name="batik_filename">
+        <match-rule name="batik-file" type="filename" filename="^batik\.jar$"/>
+      </match-rules>
+      <match-rules name="batik_filename_version">
+        <match-rule name="batik_jar" type="filenameVersion" filename="^batik-.*?([0-9].*?)(?:-sources)?.jar$"/>
+      </match-rules>
+      <match-rules name="batik_md5">
+        <result expression="OR-ALL"/>
+        <match-rule name="batik-1.0beta2" type="MD5" md5sum="863d6455094d0706eb6ab2934688aedd" filename="batik\.jar" version="1.0beta2"/>
+        <match-rule name="batik-1.0" type="MD5" md5sum="f490db41af9d1960596c7bb63c33181b" filename="batik\.jar" version="1.0"/>
+        <match-rule name="batik-1.1.1" type="MD5" md5sum="739956e1bfea85d32688fdae89675468" filename="batik\.jar" version="1.1.1"/>
+        <match-rule name="batik-1.1rc1" type="MD5" md5sum="9b78bcfa886b777dc9375728a02196c9" filename="batik\.jar" version="1.1rc1"/>
+        <match-rule name="batik-1.1rc2" type="MD5" md5sum="32aee59ab17fd3a17a61ec575d905263" filename="batik\.jar" version="1.1rc2"/>
+        <match-rule name="batik-1.1rc3" type="MD5" md5sum="9d715440bb03e83bfbe3c271122387f8" filename="batik\.jar" version="1.1rc3"/>
+        <match-rule name="batik-1.1rc4" type="MD5" md5sum="bea9631d6dcb0a4006f82e98798afd32" filename="batik\.jar" version="1.1rc4"/>
+        <match-rule name="batik-1.1" type="MD5" md5sum="f03b5b2edf1afad2f00d64cf1664934e" filename="batik\.jar" version="1.1"/>
+        <match-rule name="batik-1.5.1" type="MD5" md5sum="f098f36ec1c743801b84fb7da6fb860c" filename="batik\.jar" version="1.5.1"/>
+        <match-rule name="batik-1.5b1" type="MD5" md5sum="2926a4775d190814a36e0336c096ce73" filename="batik\.jar" version="1.5beta1"/>
+        <match-rule name="batik-1.5b2" type="MD5" md5sum="25fdff4460c0986258744be3a53a24e6" filename="batik\.jar" version="1.5beta2"/>
+        <match-rule name="batik-1.5b3" type="MD5" md5sum="6f840ec2542b27016c80f527d6388047" filename="batik\.jar" version="1.5beta3"/>
+        <match-rule name="batik-1.5b4b" type="MD5" md5sum="53513474d7b4280bf87bec362a67a63c" filename="batik\.jar" version="1.5beta4b"/>
+        <match-rule name="batik-1.5b4" type="MD5" md5sum="e869f79545490dce133fbfcf0af19321" filename="batik\.jar" version="1.5beta4"/>
+        <match-rule name="batik-1.5b5" type="MD5" md5sum="27ee78d9b860b1a33f97e3881b78e50e" filename="batik\.jar" version="1.5beta5"/>
+        <match-rule name="batik-1.5" type="MD5" md5sum="9c8e52e786e7751c8e001926508122b2" filename="batik\.jar" version="1.5"/>
+        <match-rule name="batik-1.6" type="MD5" md5sum="a82c49f879b9567e7bce46033cfca04c" filename="batik\.jar" version="1.6"/>
+        <match-rule name="batik-1.7b1" type="MD5" md5sum="ac415edcb55d38aaf9b4e4d265b26e37" filename="batik\.jar" version="1.7beta1"/>
+        <match-rule name="batik-1.7" type="MD5" md5sum="71f1e084d38180ae302e09ffe5675ae7" filename="batik\.jar" version="1.7"/>
+      </match-rules>
+    </project-rule>
+  </project-rules>
   <project-rule name="bison" from="wild" os="all">
     <description>Checks version number in file base_conf.php.dist </description>
     <eval expression="bison_bin" speed="1"/>
@@ -206,6 +268,17 @@
       <match-rule name="1-beanshell-version-2-0b1" type="MD5" md5sum="ad5832b1def4c34cd1c959b502c7bc86" filename="^bsh-[0-9\.a-z]\.jar$" version="2.0b1"/>
       <match-rule name="1-beanshell-version-2-0b2" type="MD5" md5sum="6ebe3780cc3f1a553c14a9a1f5699aba" filename="^bsh-[0-9\.a-z]\.jar$" version="2.0b2"/>
       <match-rule name="1-beanshell-version-2-0b4" type="MD5" md5sum="a1c60aa83c9c9a6cb2391c1c1b85eb00" filename="^bsh-[0-9\.a-z]\.jar$" version="2.0b4"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="blat" from="wild" os="all">
+    <eval expression="versions OR files" speed="1"/>
+    <match-rules name="files">
+      <result expression="OR-ALL"/>
+      <match-rule name="blatexe" type="filename" filename="^blat.exe$"/>
+    </match-rules>
+    <match-rules name="versions">
+      <result expression="OR-ALL"/>
+      <match-rule name="blatexe" type="binary" filename="^blat.exe$" regexp="F.i.l.e.V.e.r.s.i.o.n.....([0-9].\..[0-9].\..[0-9])"/>
     </match-rules>
   </project-rule>
   <project-rule name="bouncycastle-crypto" from="wild" os="all">
@@ -1220,6 +1293,37 @@
       <match-rule name="cvs_exe" type="binary" filename="^cvs.exe" regexp="cvs-([0-9]+.[0-9]+.[0-9]+)"/>
     </match-rules>
   </project-rule>
+  <project-rule name="db2xml" from="wild" os="all">
+    <description>Checks md5 against db2xml.jar or detects presence of file</description>
+    <eval expression="db2xml_filename OR db2xml_md5 OR db2xml_filename_version" speed="1"/>
+    <match-rules name="db2xml_filename">
+      <match-rule name="db2xml-file" type="filename" filename="^db2xml\.jar$"/>
+    </match-rules>
+    <match-rules name="db2xml_filename_version">
+      <match-rule name="db2xml_jar" type="filenameVersion" filename="^db2xml-.*?([0-9].*?)(?:-sources)?.jar$"/>
+    </match-rules>
+    <match-rules name="db2xml_md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="db2xml-1.4" type="MD5" md5sum="6e7fa71e686cd2bc1623950b1595aa4c" filename="^db2xml\.jar$" version="1.4"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="dbunit" from="wild" os="all">
+    <description>Checks md5 against dbunit.jar or detects presence of file</description>
+    <eval expression="dbunit_filename OR dbunit_md5 OR dbunit_filename_version" speed="1"/>
+    <match-rules name="dbunit_filename">
+      <match-rule name="dbunit-file" type="filename" filename="^dbunit.*\.jar$"/>
+    </match-rules>
+    <match-rules name="dbunit_filename_version">
+      <match-rule name="dbunit_jar" type="filenameVersion" filename="^dbunit-.*?([0-9].*?)(?:-sources)?.jar$"/>
+    </match-rules>
+    <match-rules name="dbunit_md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="dbunit-2.0" type="MD5" md5sum="ba4c2ce52ba209de50ab9f0b325356cf" filename="^dbunit.*\.jar$" version="2.0"/>
+      <match-rule name="dbunit-2.1" type="MD5" md5sum="e5411d8f25f4409695fd934b957963c5" filename="^dbunit.*\.jar$" version="2.1"/>
+      <match-rule name="dbunit-2.2" type="MD5" md5sum="fc39689deb9c98b84c76f35837d76d4e" filename="^dbunit.*\.jar$" version="2.2"/>
+      <match-rule name="dbunit-2.2.1" type="MD5" md5sum="8ee32dc6caddc15336112308dd74d50a" filename="^dbunit.*\.jar$" version="2.2.1"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="derby" from="wild" os="windows">
     <description>checks md5 against derby jar or detects presence of file</description>
     <eval expression="derby_filename or derby_md5" speed="1"/>
@@ -1243,6 +1347,62 @@
     <match-rules name="discoveryrb">
       <result expression="OR-ALL"/>
       <match-rule name="discovery" type="binary" filename="^discovery.rb$" regexp="@discovery_version\s*=\s*[\x22\x27](.*)[\x22\x27]"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="dns-java" from="wild" os="windows">
+    <description>checks md5 for dnsjava.jar or detects presence of file</description>
+    <eval expression="dnsjava_md5 or dnsjava_filename" speed="1"/>
+    <match-rules name="dnsjava_filename">
+      <match-rule name="1-dnsjava-filename" type="filename" filename="dnsjava-[0-9\.a-za-z]*\.jar$"/>
+    </match-rules>
+    <match-rules name="dnsjava_md5">
+      <match-rule name="1-dnsjava-1.2.0" type="MD5" md5sum="a8f85287d9d98bd86e8e3f1351abbc7a" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.2.0"/>
+      <match-rule name="2-dnsjava-1.2.1" type="MD5" md5sum="88e7b33be2686d5648ab206f86788307" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.2.1"/>
+      <match-rule name="3-dnsjava-1.2.2" type="MD5" md5sum="fd90ba836b673a6ae26124ddd40ecbc0" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.2.2"/>
+      <match-rule name="4-dnsjava-1.2.3" type="MD5" md5sum="7d8963b61581dadb99810d616679c1f2" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.2.3"/>
+      <match-rule name="5-dnsjava-1.2.4" type="MD5" md5sum="c2a405510f93c6b6e2ffcb3b4eba5b01" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.2.4"/>
+      <match-rule name="6-dnsjava-1.3.0-beta" type="MD5" md5sum="b82997002cec4e5aec350fdd405f285e" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.3.0-beta"/>
+      <match-rule name="7-dnsjava-1.3.0" type="MD5" md5sum="ba4d7c8e42ca6c3f870cf68c8951685d" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.3.0"/>
+      <match-rule name="8-dnsjava-1.3.1" type="MD5" md5sum="42422ed0e7b41e19d150703a3780ab3b" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.3.1"/>
+      <match-rule name="9-dnsjava-1.3.2" type="MD5" md5sum="f323710a83edfd4b4ef98f73ba0b70d9" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.3.2"/>
+      <match-rule name="10-dnsjava-1.4.0" type="MD5" md5sum="f6a85ce860670f3d362e295c8e148dd4" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.4.0"/>
+      <match-rule name="11-dnsjava-1.4.1" type="MD5" md5sum="f055c8f477a77833e0eb5307fa095ff3" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.4.1"/>
+      <match-rule name="12-dnsjava-1.4.2" type="MD5" md5sum="a692fc901308b3d9bfafac1fc03bc1d2" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.4.2"/>
+      <match-rule name="13-dnsjava-1.5.0" type="MD5" md5sum="ad873bfaa5449dfef14fbb8cef2fda01" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.5.0"/>
+      <match-rule name="14-dnsjava-1.5.1" type="MD5" md5sum="0321be8a4058a2cd99b0c4a7b53a4e9b" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.5.1"/>
+      <match-rule name="15-dnsjava-1.5.2" type="MD5" md5sum="aade53a8150bed7f6bfa34722070e3ac" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.5.2"/>
+      <match-rule name="16-dnsjava-1.6.1" type="MD5" md5sum="a0ceb118891d3f9d67d0f24590b87cc9" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.6.1"/>
+      <match-rule name="17-dnsjava-1.6.2" type="MD5" md5sum="2e964f5dfd25388615488efecfabb0b8" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.6.2"/>
+      <match-rule name="18-dnsjava-1.6.3" type="MD5" md5sum="cd0325710eb1397b53cb7af58808fb7d" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.6.3"/>
+      <match-rule name="19-dnsjava-1.6.4" type="MD5" md5sum="062810c52b66c54380fc42209244a5d4" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.6.4"/>
+      <match-rule name="20-dnsjava-1.6.5" type="MD5" md5sum="4180d3c0301d4e7ccc8eefd64df67e76" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.6.5"/>
+      <match-rule name="21-dnsjava-1.6.6" type="MD5" md5sum="5d697ae6b0fa047a82507b8624026d3a" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.6.6"/>
+      <match-rule name="22-dnsjava-2.0.0" type="MD5" md5sum="d04e0d579bc3a9c34f53ab66471bbcf9" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="2.0.0"/>
+      <match-rule name="23-dnsjava-2.0.1" type="MD5" md5sum="c112bee330ee0358a0d16444dcffda50" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="2.0.1"/>
+      <match-rule name="24-dnsjava-2.0.2" type="MD5" md5sum="efe9e9f5594de0b44d38cc3ea5f18d2c" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="2.0.2"/>
+      <match-rule name="25-dnsjava-2.0.3" type="MD5" md5sum="e9e0222f1cd3124b6929a5cb7a47f00c" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="2.0.3"/>
+      <match-rule name="26-dnsjava-2.0.4" type="MD5" md5sum="1b07df6e4568e6a87d46ebbcd9294ca1" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="2.0.4"/>
+      <match-rule name="27-dnsjava-2.0.5" type="MD5" md5sum="adfac35c3302f8aa4c1db68613dcaa14" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="2.0.5"/>
+      <match-rule name="28-dnsjava-2.0.6" type="MD5" md5sum="3a783229899ea708d3a7c73624d305c4" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="2.0.6"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="docbook-xml" from="wild" os="all">
+    <description> </description>
+    <eval expression="docbook-xml_bin" speed="1"/>
+    <match-rules name="docbook-xml_bin">
+      <result expression="OR-ALL"/>
+      <match-rule name="docbook-xml-version" type="binary" filename="^docbookx\.dtd$" regexp="DocBook XML DTD V(.*?) \.\..*"/>
+      <match-rule name="docbook-xml-version2" type="binary" filename="^catalog\.xml$" regexp="DTD DocBook XML.(\d.*?)\/\/EN.*"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="dojo-charting" from="wild" os="all">
+    <description>Finds dojo-charting</description>
+    <eval expression="md5s" speed="1"/>
+    <match-rules name="md5s">
+      <result expression="OR-ALL"/>
+      <match-rule name="0.4.1p1" type="MD5" md5sum="ab5da9d3b491e1075ae674e63faa3750" filename="^Chart.js$" version="0.4.1p1"/>
+      <match-rule name="0.4.2p1" type="MD5" md5sum="cd086ccdf7e1bbe08b82c0b56869a8b5" filename="^Chart.js$" version="0.4.2p1"/>
+      <match-rule name="0.4.3" type="MD5" md5sum="7a0c8fb8f928369d7b673b13c41feb26" filename="^Chart.js$" version="0.4.3"/>
     </match-rules>
   </project-rule>
   <project-rule name="dojo-toolkit" from="wild" os="all">
@@ -1309,41 +1469,14 @@
       <match-rule name="11-dom4j-1.6.1.tar.gz-dom4j-1.6.1.jar" type="MD5" md5sum="4d8f51d3fe3900efc6e395be48030d6d" filename="^dom4j.*jar$" version="1.6.1"/>
     </match-rules>
   </project-rule>
-  <project-rule name="dns-java" from="wild" os="windows">
-    <description>checks md5 for dnsjava.jar or detects presence of file</description>
-    <eval expression="dnsjava_md5 or dnsjava_filename" speed="1"/>
-    <match-rules name="dnsjava_filename">
-      <match-rule name="1-dnsjava-filename" type="filename" filename="dnsjava-[0-9\.a-za-z]*\.jar$"/>
+  <project-rule name="doxygen" from="wild" os="linux">
+    <description>Checks version number in doxygen file or detects presence of file</description>
+    <eval expression="yui_bin OR yui_filename" speed="1"/>
+    <match-rules name="yui_filename">
+      <match-rule name="1-yui-filename" type="filename" filename="^doxygen$"/>
     </match-rules>
-    <match-rules name="dnsjava_md5">
-      <match-rule name="1-dnsjava-1.2.0" type="MD5" md5sum="a8f85287d9d98bd86e8e3f1351abbc7a" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.2.0"/>
-      <match-rule name="2-dnsjava-1.2.1" type="MD5" md5sum="88e7b33be2686d5648ab206f86788307" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.2.1"/>
-      <match-rule name="3-dnsjava-1.2.2" type="MD5" md5sum="fd90ba836b673a6ae26124ddd40ecbc0" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.2.2"/>
-      <match-rule name="4-dnsjava-1.2.3" type="MD5" md5sum="7d8963b61581dadb99810d616679c1f2" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.2.3"/>
-      <match-rule name="5-dnsjava-1.2.4" type="MD5" md5sum="c2a405510f93c6b6e2ffcb3b4eba5b01" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.2.4"/>
-      <match-rule name="6-dnsjava-1.3.0-beta" type="MD5" md5sum="b82997002cec4e5aec350fdd405f285e" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.3.0-beta"/>
-      <match-rule name="7-dnsjava-1.3.0" type="MD5" md5sum="ba4d7c8e42ca6c3f870cf68c8951685d" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.3.0"/>
-      <match-rule name="8-dnsjava-1.3.1" type="MD5" md5sum="42422ed0e7b41e19d150703a3780ab3b" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.3.1"/>
-      <match-rule name="9-dnsjava-1.3.2" type="MD5" md5sum="f323710a83edfd4b4ef98f73ba0b70d9" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.3.2"/>
-      <match-rule name="10-dnsjava-1.4.0" type="MD5" md5sum="f6a85ce860670f3d362e295c8e148dd4" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.4.0"/>
-      <match-rule name="11-dnsjava-1.4.1" type="MD5" md5sum="f055c8f477a77833e0eb5307fa095ff3" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.4.1"/>
-      <match-rule name="12-dnsjava-1.4.2" type="MD5" md5sum="a692fc901308b3d9bfafac1fc03bc1d2" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.4.2"/>
-      <match-rule name="13-dnsjava-1.5.0" type="MD5" md5sum="ad873bfaa5449dfef14fbb8cef2fda01" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.5.0"/>
-      <match-rule name="14-dnsjava-1.5.1" type="MD5" md5sum="0321be8a4058a2cd99b0c4a7b53a4e9b" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.5.1"/>
-      <match-rule name="15-dnsjava-1.5.2" type="MD5" md5sum="aade53a8150bed7f6bfa34722070e3ac" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.5.2"/>
-      <match-rule name="16-dnsjava-1.6.1" type="MD5" md5sum="a0ceb118891d3f9d67d0f24590b87cc9" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.6.1"/>
-      <match-rule name="17-dnsjava-1.6.2" type="MD5" md5sum="2e964f5dfd25388615488efecfabb0b8" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.6.2"/>
-      <match-rule name="18-dnsjava-1.6.3" type="MD5" md5sum="cd0325710eb1397b53cb7af58808fb7d" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.6.3"/>
-      <match-rule name="19-dnsjava-1.6.4" type="MD5" md5sum="062810c52b66c54380fc42209244a5d4" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.6.4"/>
-      <match-rule name="20-dnsjava-1.6.5" type="MD5" md5sum="4180d3c0301d4e7ccc8eefd64df67e76" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.6.5"/>
-      <match-rule name="21-dnsjava-1.6.6" type="MD5" md5sum="5d697ae6b0fa047a82507b8624026d3a" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="1.6.6"/>
-      <match-rule name="22-dnsjava-2.0.0" type="MD5" md5sum="d04e0d579bc3a9c34f53ab66471bbcf9" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="2.0.0"/>
-      <match-rule name="23-dnsjava-2.0.1" type="MD5" md5sum="c112bee330ee0358a0d16444dcffda50" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="2.0.1"/>
-      <match-rule name="24-dnsjava-2.0.2" type="MD5" md5sum="efe9e9f5594de0b44d38cc3ea5f18d2c" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="2.0.2"/>
-      <match-rule name="25-dnsjava-2.0.3" type="MD5" md5sum="e9e0222f1cd3124b6929a5cb7a47f00c" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="2.0.3"/>
-      <match-rule name="26-dnsjava-2.0.4" type="MD5" md5sum="1b07df6e4568e6a87d46ebbcd9294ca1" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="2.0.4"/>
-      <match-rule name="27-dnsjava-2.0.5" type="MD5" md5sum="adfac35c3302f8aa4c1db68613dcaa14" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="2.0.5"/>
-      <match-rule name="28-dnsjava-2.0.6" type="MD5" md5sum="3a783229899ea708d3a7c73624d305c4" filename="dnsjava-[0-9\.a-za-z]*\.jar$" version="2.0.6"/>
+    <match-rules name="yui_bin">
+      <match-rule name="1-yui-version" type="binary" filename="^doxygen$" regexp="\x01\x00\x00\x00([0-9]{1}\.[0-9]{1}[-\.0-9a-z ]*)"/>
     </match-rules>
   </project-rule>
   <project-rule name="drools" from="wild" os="all">
@@ -2072,6 +2205,14 @@
       <match-rule name="gnu-hylafax-0.0.7" type="MD5" md5sum="ec0533fd4226f43454ff80df363db745" filename="^gnu-hylafax-.*jar$" version="0.0.7"/>
       <match-rule name="gnu-hylafax-0.0.8" type="MD5" md5sum="3dbc1d1cf3f24c0e62ff4c6dccda2ae9" filename="^gnu-hylafax-.*jar$" version="0.0.8"/>
       <match-rule name="gnu-hylafax-1.0.0" type="MD5" md5sum="36ca87ebebad1894e5cf441a039cae55" filename="^gnu-hylafax-.*jar$" version="1.0.0"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="gnumake" from="wild" os="all">
+    <description> </description>
+    <eval expression="gnumake_bin" speed="1"/>
+    <match-rules name="gnumake_bin">
+      <result expression="OR-ALL"/>
+      <match-rule name="gnumake-version" type="binary" filename="^make$" regexp="gnumake\/(\d.*?)\/make-.*"/>
     </match-rules>
   </project-rule>
   <project-rule name="gnupg" from="wild" os="all">
@@ -3255,6 +3396,26 @@
       <match-rule name="18-jibx-run-1.1.5.jar" type="MD5" md5sum="e0472be392078ba3288fe3a3b6cea3ae" filename="^jibx-run\.jar$" version="1.1.5"/>
     </match-rules>
   </project-rule>
+  <project-rule name="jmeter" from="wild" os="all">
+    <description>Checks md5 against jmeter.jar or detects presence of file</description>
+    <eval expression="jmeter_filename OR jmeter_md5 OR jmeter_filename_version" speed="1"/>
+    <match-rules name="jmeter_filename">
+      <match-rule name="jmeter-file" type="filename" filename="^ApacheJMeter\.jar$"/>
+    </match-rules>
+    <match-rules name="jmeter_filename_version">
+      <match-rule name="jmeter_jar" type="filenameVersion" filename="^jmeter-.*?([0-9].*?)(?:-sources)?.jar$"/>
+    </match-rules>
+    <match-rules name="jmeter_md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="jmeter-2.0.2" type="MD5" md5sum="03c25e23c69943e9f830633fd95be100" filename="^ApacheJMeter\.jar$" version="2.0.2"/>
+      <match-rule name="jmeter-2.0.3" type="MD5" md5sum="4099c7d7237436a6128242e950dbd4df" filename="^ApacheJMeter\.jar$" version="2.0.3"/>
+      <match-rule name="jmeter-2.1.1" type="MD5" md5sum="ed2681e9f8cd3c61d7cb48718d9ff527" filename="^ApacheJMeter\.jar$" version="2.1.1"/>
+      <match-rule name="jmeter-2.1rc1" type="MD5" md5sum="8b88d9737d7e6431ae01d985478ff5f4" filename="^ApacheJMeter\.jar$" version="2.1rc1"/>
+      <match-rule name="jmeter-2.1" type="MD5" md5sum="ea24980f3ac16c246c7cabf13be73c68" filename="^ApacheJMeter\.jar$" version="2.1"/>
+      <match-rule name="jmeter-2.2" type="MD5" md5sum="1ded32c2d3b93fc2659fc1c04f730da3" filename="^ApacheJMeter\.jar$" version="2.2"/>
+      <match-rule name="jmeter-2.0.1" type="MD5" md5sum="4e7c527fc41f26be59971a2af985b199" filename="^ApacheJMeter\.jar$" version="2.0.1"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="jikes" from="wild" os="all">
     <eval expression="jikes_filename or jikes_bin" speed="1"/>
     <match-rules name="jikes_filename">
@@ -3271,6 +3432,20 @@
       <match-rule name="3-jikes" type="binary" filename="jikes-.*" regexp="Jikes Compiler - Version ([\d\w].*)\s-.*$"/>
       <match-rule name="4-jikes" type="binary" filename="jikes.*\.exe" regexp="^Version ([\d\w].*)\s[\d].*$"/>
       <match-rule name="5-jikes" type="binary" filename="jikes-.*" regexp="^Version ([\d\w].*)\s[\d].*$"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="jldap" from="wild" os="all">
+    <description>Checks md5 against jldap.jar or detects presence of file</description>
+    <eval expression="jldap_filename OR jldap_md5 OR jldap_filename_version" speed="1"/>
+    <match-rules name="jldap_filename">
+      <match-rule name="jldap-file" type="filename" filename="^ldap\.jar$"/>
+    </match-rules>
+    <match-rules name="jldap_filename_version">
+      <match-rule name="jldap_jar" type="filenameVersion" filename="^jldap-.*?([0-9].*?)(?:-sources)?.jar$"/>
+    </match-rules>
+    <match-rules name="jldap_md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="jldap-3.01" type="MD5" md5sum="b7e9883f24cd25162dfe60a753b949f1" filename="^ldap\.jar$" version="3.01"/>
     </match-rules>
   </project-rule>
   <project-rule name="jmx" from="wild" os="all">
@@ -3533,6 +3708,17 @@
     <match-rules name="locc_md5">
       <match-rule name="1-locc-5.1" type="MD5" md5sum="c087c6e60a3dd7af3ab7fa6ddf0b52ca" filename="locc\.jar$" version="5.1"/>
       <match-rule name="2-locc-3.3" type="MD5" md5sum="3e833af5e1712449d326c69a5800c58a" filename="locc\.jar$" version="3.3"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="log4cpp" from="wild" os="windows">
+    <eval expression="library OR versionstring" speed="1"/>
+    <match-rules name="library">
+      <match-rule name="liblog" type="filename" filename="^log4cpp-config$"/>
+    </match-rules>
+    <match-rules name="versionstring">
+      <result expression="OR-ALL"/>
+      <match-rule name="linux-config-file-0.3x+" type="binary" filename="^log4cpp-config$" regexp="\$version ([\d\.]+[\w]*)"/>
+      <match-rule name="linux-config-file-0.2x" type="binary" filename="^log4cpp-config$" regexp="^version=.([\d\.]+[\w]*).$"/>
     </match-rules>
   </project-rule>
   <project-rule name="log4j" from="wild" os="all">
@@ -5080,6 +5266,16 @@
       <match-rule name="tinysql-2.26" type="MD5" md5sum="82a69137d2b9acb800721f153c0234ba" filename="^tinySQL.*?\.jar$" version="2.26"/>
     </match-rules>
   </project-rule>
+  <project-rule name="tk" from="wild" os="all">
+    <description> </description>
+    <eval expression="tk_unix_filename_version OR tk_win_filename_version" speed="1"/>
+    <match-rules name="tk_win_filename_version">
+      <match-rule name="win-tksh" type="filenameVersion" filename="^wish([0-9].*?)\.exe$"/>
+    </match-rules>
+    <match-rules name="tk_unix_filename_version">
+      <match-rule name="tk-name" type="filenameVersion" filename="^wish([0-9].*)$"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="tobago" from="wild" os="all">
     <description>Finds versions using MD5's.</description>
     <eval expression="md5 OR nameversion OR name" speed="1"/>
@@ -5700,6 +5896,15 @@
       <match-rule name="5-wireshark-version" type="binary" filename="^wireshark\.exe$" regexp="version=.*\x20\x00\x00(.*?)\x00\x00wireshark"/>
     </match-rules>
   </project-rule>
+  <project-rule name="woodstox" from="wild" os="all">
+    <eval expression="file_name_version" speed="1"/>
+    <match-rules name="file_name_version">
+      <result expression="OR-ALL"/>
+      <match-rule name="wstx-asl-version.jar" type="filenameVersion" filename="^wstx-asl-([\d].[\d].[\d]).jar$"/>
+      <match-rule name="wstx-lgpl-version.jar" type="filenameVersion" filename="^wstx-lgpl-([\d].[\d].[\d]).jar$"/>
+      <match-rule name="wstx-nolicense-version.jar" type="filenameVersion" filename="^wstx-([\d].[\d].[\d]).jar$"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="wordpress" from="wild" os="windows">
     <description>checks version number in global variables file vars.php or detect wp-settings.php</description>
     <eval expression="wordpress_bin" speed="1"/>
@@ -5716,8 +5921,10 @@
     </match-rules>
     <match-rules name="version_string">
       <result expression="OR-ALL"/>
-      <match-rule name="wx-config2.5.2-" type="binary" filename="^wx[\w]*-[\d].[\d]-config$" regexp="echo[\s]([0-9]\.[0-9]\.[0-9])"/>
+      <match-rule name="libwx_base2.5.2-" type="binary" filename="^libwx_base-[0-9]\.[0-9]\.so\.[0-9]\.[0-9]\.[0-9]" regexp="([0-9]\.[0-9]\.[0-9]) \("/>
       <match-rule name="wx-config2.5.4+" type="binary" filename="^[\w]*-ansi-release-[\d].[\d]$" regexp="option_version[^\d]*([0-9]\.[0-9]\.[0-9])\.[0-9]"/>
+      <match-rule name="wx-config2.5.2-windows" type="binary" filename="^wx-config$" regexp="echo[\s]*([0-9]\.[0-9]\.[0-9])"/>
+      <match-rule name="wx-config2.5.4+windows" type="binary" filename="^wx-config$" regexp="echo[\D]*([0-9]\.[0-9]\.[0-9])"/>
     </match-rules>
   </project-rule>
   <project-rule name="xalan" from="wild" os="all">
@@ -5910,6 +6117,16 @@
       <!-- xindice/extracted/xml-xindice-1.2m1-bin.tar.gz.extracted/xml-xindice-1.2m1/xindice-1.2m1.jar -->
     </match-rules>
   </project-rule>
+  <project-rule name="xming" from="wild" os="windows">
+    <eval expression="executable_name OR executable_version" speed="1"/>
+    <match-rules name="executable_name">
+      <match-rule name="exe_name" type="filename" filename="^Xming.exe$"/>
+    </match-rules>
+    <match-rules name="executable_version">
+      <result expression="OR-ALL"/>
+      <match-rule name="exe_version" type="binary" filename="^Xming.exe$" regexp="([\d\.]+[\w]*).Release"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="xmlbeans" from="wild" os="windows">
     <description>Finds versions by filename and MD5 Checksum</description>
     <eval expression="xmlbeans_filename AND xmlbeans_md5" speed="1"/>
@@ -5933,6 +6150,26 @@
       <result expression="OR-ALL"/>
       <match-rule name="xml-commons-1.0b2" type="MD5" md5sum="8c03c450a6dbf34ea314960bdf628bc9" filename="^resolver\.jar$" version="1.0b2"/>
       <match-rule name="xml-commons-1.0b1" type="MD5" md5sum="69f947333d3e5c51a15a7d73df31ccf7" filename="^which\.jar$" version="1.0b1"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="xom" from="wild" os="all">
+    <eval expression="file_name_version OR file_name" speed="1"/>
+    <match-rules name="file_name">
+      <match-rule name="name" type="filename" filename="^xom[\S]*.jar$"/>
+    </match-rules>
+    <match-rules name="file_name_version">
+      <result expression="OR-ALL"/>
+      <match-rule name="xom.jar" type="filenameVersion" filename="^xom-([\d\.]+[\w]*).jar$"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="yui" from="wild" os="linux">
+    <description>Checks version number in yahoo.js file or detects presence of file</description>
+    <eval expression="yui_bin OR yui_filename" speed="1"/>
+    <match-rules name="yui_filename">
+      <match-rule name="1-yui-filename" type="filename" filename="^.*yahoo(?:-min)\.js$"/>
+    </match-rules>
+    <match-rules name="yui_bin">
+      <match-rule name="1-yui-version" type="binary" filename="^.*yahoo(?:-min)\.js$" regexp="[Vv]+ersion:[\s\n]*([0-9\.a-zA-Z]+)"/>
     </match-rules>
   </project-rule>
   <project-rule name="zlib" from="wild" os="windows">
