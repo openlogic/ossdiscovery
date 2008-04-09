@@ -455,34 +455,6 @@
       <match-rule name="cleanimports.jar-2.0.1" type="MD5" md5sum="7381d621edc2d73c3f6518e2d993d5ab" filename="^cleanImports.jar$" version="2.0.1"/>
     </match-rules>
   </project-rule>
-  <project-rule name="cruisecontrol" from="wild" os="all">
-    <description>Finds cruisecontrol based on MD5 or by filename-version</description>
-    <eval expression="ccrules" speed="1"/>
-    <match-rules name="ccrules">
-      <result expression="OR-ALL"/>
-      <match-rule name="cc22" type="MD5" md5sum="5f5e52b50e6a0c1f102425b356a1f1dd" filename="^cruisecontrol.jar$" version="2.2"/>
-      <match-rule name="cc221" type="MD5" md5sum="729442dda0ca9a364cbb74b92552ca6f" filename="^cruisecontrol.jar$" version="2.2.1"/>
-      <match-rule name="cc231" type="MD5" md5sum="b48c25c0dd4a07e1cec1bcd5aa7a921d" filename="^cruisecontrol.jar$" version="2.3.1"/>
-      <match-rule name="cc2301" type="MD5" md5sum="011c10d60f355d7741e3f15ab4ae812a" filename="^cruisecontrol.jar$" version="2.3.0.1"/>
-      <match-rule name="cc240" type="MD5" md5sum="88a549afbafd61b65ee0a1781b4e54fb" filename="^cruisecontrol.jar$" version="2.4.0"/>
-      <match-rule name="cc241" type="MD5" md5sum="0a4de91f1634e4b247e2f03f35d84171" filename="^cruisecontrol.jar$" version="2.4.1"/>
-      <match-rule name="cc25" type="MD5" md5sum="0a4de91f1634e4b247e2f03f35d84171" filename="^cruisecontrol.jar$" version="2.5"/>
-      <match-rule name="cc26" type="MD5" md5sum="67e1d3a056240701ff1d4e4599b79ecb" filename="^cruisecontrol.jar$" version="2.6"/>
-      <match-rule name="cc261" type="MD5" md5sum="77e825b292f7eed074e5f9e4691703f6" filename="^cruisecontrol.jar$" version="2.6.1"/>
-      <match-rule name="cc262" type="MD5" md5sum="b4cce1bf516ed0274922258a88f17046" filename="^cruisecontrol.jar$" version="2.6.2"/>
-      <match-rule name="cc27" type="MD5" md5sum="d1c4bf30d78b12adabec085c7f3e7ced" filename="^cruisecontrol.jar$" version="2.7"/>
-      <match-rule name="cc271" type="MD5" md5sum="ca8e3b625a9c839b51b510c79cbdcd20" filename="^cruisecontrol.jar$" version="2.7.1"/>
-      <match-rule name="cc271thrdparty" type="MD5" md5sum="f44705c1fecad76a7df390e5d1b7bcd3" filename="^cruisecontrol.jar$" version="2.7.1"/>
-      <match-rule name="cc271weblib" type="MD5" md5sum="ca8e3b625a9c839b51b510c79cbdcd20" filename="^cruisecontrol.jar$" version="2.7.1"/>
-      <match-rule name="cc271dashlib" type="MD5" md5sum="ca8e3b625a9c839b51b510c79cbdcd20" filename="^cruisecontrol.jar$" version="2.7.1"/>
-      <match-rule name="cc272" type="MD5" md5sum="4db47468f960898ae2176d8e0c821348" filename="^cruisecontrol.jar$" version="2.7.2"/>
-      <match-rule name="cc272thrdparty" type="MD5" md5sum="37e7821e57d90d543b907c2269521ba7" filename="^cruisecontrol.jar$" version="2.7.2"/>
-      <match-rule name="cc272weblib" type="MD5" md5sum="4a4a4b6ed97d7a95491795901cb75ff1" filename="^cruisecontrol.jar$" version="2.7.2"/>
-      <match-rule name="cc272dashlib" type="MD5" md5sum="4db47468f960898ae2176d8e0c821348" filename="^cruisecontrol.jar$" version="2.7.2"/>
-      <match-rule name="ccfvjar" type="filenameVersion" filename="^cruisecontrol-([0-9].*?[0-9])\.jar$"/>
-      <match-rule name="ccfvexe" type="filenameVersion" filename="^CruiseControl-([0-9].*?[0-9])\.exe$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="cobertura" from="wild" os="all">
     <description/>
     <eval expression="cobertura_filename or cobertura_md5" speed="1"/>
@@ -493,6 +465,24 @@
       <result expression="OR-ALL"/>
       <match-rule name="cobertura.jar-1.6" type="MD5" md5sum="c6d75b19c1c7e00eac797a28019a848a" filename="^cobertura.jar$" version="1.6"/>
       <match-rule name="cobertura.jar-1.8" type="MD5" md5sum="45780c02887f847a00ccbb8a9c3dad44" filename="^cobertura.jar$" version="1.8"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="cocoon" from="wild" os="all">
+    <description>Checks md5 against cocoon\.jar or detects presence of file</description>
+    <eval expression="cocoon_filename OR cocoon_md5 OR cocoon_filename_version" speed="1"/>
+    <match-rules name="cocoon_filename">
+      <match-rule name="cocoon-file" type="filename" filename="^cocoon\.jar$"/>
+    </match-rules>
+    <match-rules name="cocoon_filename_version">
+      <match-rule name="cocoon_jar" type="filenameVersion" filename="^cocoon-.*?([0-9].*?)(?:-sources)?.jar$"/>
+    </match-rules>
+    <match-rules name="cocoon_md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="cocoon-2.1.7" type="MD5" md5sum="e269d1dc34ea3c599cbd2bf3596cae03" filename="cocoon\.jar" version="2.1.7"/>
+      <match-rule name="cocoon-2.1.8" type="MD5" md5sum="b9d785e04401ef1b393b5d3b7ac92f63" filename="cocoon\.jar" version="2.1.8"/>
+      <match-rule name="cocoon-2.1.9" type="MD5" md5sum="7379f3642ec8c49247cc88cf152c4643" filename="cocoon\.jar" version="2.1.9"/>
+      <match-rule name="cocoon-2.1.10" type="MD5" md5sum="562d1980df832ff6434231b5dda9b2b3" filename="cocoon\.jar" version="2.1.10"/>
+      <match-rule name="cocoon-2.1.11" type="MD5" md5sum="1d058680e6caa342e43d0d38f7966396" filename="cocoon\.jar" version="2.1.11"/>
     </match-rules>
   </project-rule>
   <project-rule name="commons-attributes" from="wild" os="all">
@@ -1273,6 +1263,34 @@
     </match-rules>
     <match-rules name="pmd_fv">
       <match-rule name="pmd_jar" type="filenameVersion" filename="^pmd-.*?([0-9].*?)(?:-sources)?.jar$"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="cruisecontrol" from="wild" os="all">
+    <description>Finds cruisecontrol based on MD5 or by filename-version</description>
+    <eval expression="ccrules" speed="1"/>
+    <match-rules name="ccrules">
+      <result expression="OR-ALL"/>
+      <match-rule name="cc22" type="MD5" md5sum="5f5e52b50e6a0c1f102425b356a1f1dd" filename="^cruisecontrol.jar$" version="2.2"/>
+      <match-rule name="cc221" type="MD5" md5sum="729442dda0ca9a364cbb74b92552ca6f" filename="^cruisecontrol.jar$" version="2.2.1"/>
+      <match-rule name="cc231" type="MD5" md5sum="b48c25c0dd4a07e1cec1bcd5aa7a921d" filename="^cruisecontrol.jar$" version="2.3.1"/>
+      <match-rule name="cc2301" type="MD5" md5sum="011c10d60f355d7741e3f15ab4ae812a" filename="^cruisecontrol.jar$" version="2.3.0.1"/>
+      <match-rule name="cc240" type="MD5" md5sum="88a549afbafd61b65ee0a1781b4e54fb" filename="^cruisecontrol.jar$" version="2.4.0"/>
+      <match-rule name="cc241" type="MD5" md5sum="0a4de91f1634e4b247e2f03f35d84171" filename="^cruisecontrol.jar$" version="2.4.1"/>
+      <match-rule name="cc25" type="MD5" md5sum="0a4de91f1634e4b247e2f03f35d84171" filename="^cruisecontrol.jar$" version="2.5"/>
+      <match-rule name="cc26" type="MD5" md5sum="67e1d3a056240701ff1d4e4599b79ecb" filename="^cruisecontrol.jar$" version="2.6"/>
+      <match-rule name="cc261" type="MD5" md5sum="77e825b292f7eed074e5f9e4691703f6" filename="^cruisecontrol.jar$" version="2.6.1"/>
+      <match-rule name="cc262" type="MD5" md5sum="b4cce1bf516ed0274922258a88f17046" filename="^cruisecontrol.jar$" version="2.6.2"/>
+      <match-rule name="cc27" type="MD5" md5sum="d1c4bf30d78b12adabec085c7f3e7ced" filename="^cruisecontrol.jar$" version="2.7"/>
+      <match-rule name="cc271" type="MD5" md5sum="ca8e3b625a9c839b51b510c79cbdcd20" filename="^cruisecontrol.jar$" version="2.7.1"/>
+      <match-rule name="cc271thrdparty" type="MD5" md5sum="f44705c1fecad76a7df390e5d1b7bcd3" filename="^cruisecontrol.jar$" version="2.7.1"/>
+      <match-rule name="cc271weblib" type="MD5" md5sum="ca8e3b625a9c839b51b510c79cbdcd20" filename="^cruisecontrol.jar$" version="2.7.1"/>
+      <match-rule name="cc271dashlib" type="MD5" md5sum="ca8e3b625a9c839b51b510c79cbdcd20" filename="^cruisecontrol.jar$" version="2.7.1"/>
+      <match-rule name="cc272" type="MD5" md5sum="4db47468f960898ae2176d8e0c821348" filename="^cruisecontrol.jar$" version="2.7.2"/>
+      <match-rule name="cc272thrdparty" type="MD5" md5sum="37e7821e57d90d543b907c2269521ba7" filename="^cruisecontrol.jar$" version="2.7.2"/>
+      <match-rule name="cc272weblib" type="MD5" md5sum="4a4a4b6ed97d7a95491795901cb75ff1" filename="^cruisecontrol.jar$" version="2.7.2"/>
+      <match-rule name="cc272dashlib" type="MD5" md5sum="4db47468f960898ae2176d8e0c821348" filename="^cruisecontrol.jar$" version="2.7.2"/>
+      <match-rule name="ccfvjar" type="filenameVersion" filename="^cruisecontrol-([0-9].*?[0-9])\.jar$"/>
+      <match-rule name="ccfvexe" type="filenameVersion" filename="^CruiseControl-([0-9].*?[0-9])\.exe$"/>
     </match-rules>
   </project-rule>
   <project-rule name="csvjdbc" from="wild" os="all">
@@ -4063,6 +4081,21 @@
       <match-rule name="win-mod_python-version" type="binary" filename="^mod_python\.so$" regexp="mod_python\/(.*?)\x00{4}\\.*"/>
     </match-rules>
   </project-rule>
+  <project-rule name="modsecurity" from="wild" os="all">
+    <description> </description>
+    <eval expression="version or file" speed="1"/>
+    <match-rules name="file">
+      <result expression="OR-ALL"/>
+      <match-rule name="modsecurity-file" type="filename" filename="^mod_security.*\.so$"/>
+    </match-rules>
+    <match-rules name="version">
+      <result expression="OR-ALL"/>
+      <match-rule name="modsecurity-version" type="binary" filename="^mod_security.*\.so$" regexp=".*ModSecurity v(\d\.\d\.\d[\-brc\d]*)"/>
+      <match-rule name="modsecurity-version-lin-2.5" type="binary" filename="^mod_security.*\.so$" regexp="ModSecurity for Apache\/(\d\.\d\.\d)"/>
+      <match-rule name="modsecurity-version-win-1.7-1.8" type="binary" filename="^mod_security.*\.so$" regexp="mod_security\/(\d\.\d\.\d)"/>
+      <match-rule name="modsecurity-version-win-1.9-1.9.1" type="binary" filename="^mod_security.*\.so$" regexp="mod_security\/.. configured - ...(\d\.\d[\.\d]*)"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="mod_ssl" from="wild" os="linux">
     <description>Checks apache httpd executable for mod_ssl data</description>
     <eval expression="mod_ssl_bin" speed="1"/>
@@ -6176,6 +6209,17 @@
       <result expression="OR-ALL"/>
       <match-rule name="xml-commons-1.0b2" type="MD5" md5sum="8c03c450a6dbf34ea314960bdf628bc9" filename="^resolver\.jar$" version="1.0b2"/>
       <match-rule name="xml-commons-1.0b1" type="MD5" md5sum="69f947333d3e5c51a15a7d73df31ccf7" filename="^which\.jar$" version="1.0b1"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="xmlunit" from="wild" os="all">
+    <eval expression="file_name_version OR file_name" speed="1"/>
+    <match-rules name="file_name">
+      <match-rule name="name" type="filename" filename="^xmlunit[\S]*.jar$"/>
+    </match-rules>
+    <match-rules name="file_name_version">
+      <result expression="OR-ALL"/>
+      <match-rule name="xmlunit.jar1.1+" type="filenameVersion" filename="^xmlunit-([\d\.]+[\w]*).jar$"/>
+      <match-rule name="xmlunit.jar1.0-" type="filenameVersion" filename="^xmlunit([\d\.]+[\w]*).jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="xom" from="wild" os="all">
