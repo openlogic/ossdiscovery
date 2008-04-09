@@ -59,6 +59,24 @@
       <match-rule name="analog-version2" type="binary" filename="^analog$" regexp="\/analog-(\d.*?)\/lang.*"/>
     </match-rules>
   </project-rule>
+  <project-rule name="andromda" from="wild" os="all">
+    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
+    <eval expression="andromda_fv or andro_md5" speed="1"/>
+    <match-rules name="andromda_fv">
+      <match-rule name="andromda_jar" type="filenameVersion" filename="^andromda-core-([0-9].*?)\.jar$"/>
+    </match-rules>
+    <match-rules name="andro_md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="andromda.jar202" type="MD5" md5sum="3c394f1f357e025a4983d2e25bd80fb6" filename="^andromda.jar$" version="2.02"/>
+      <match-rule name="andromda.jar203" type="MD5" md5sum="98cb9ec12610c2e2be2c2dabc36e3509" filename="^andromda.jar$" version="2.03"/>
+      <match-rule name="andromda.jar204" type="MD5" md5sum="57ae8030ef13286accae910938932386" filename="^andromda.jar$" version="2.04"/>
+      <match-rule name="andromda.jar205" type="MD5" md5sum="789714f96873176a120f7d500e09b883" filename="^andromda.jar$" version="2.05"/>
+      <match-rule name="andromda.jar206" type="MD5" md5sum="a582e1f8891636f7c145c7fff0c76f6e" filename="^andromda.jar$" version="2.06"/>
+      <match-rule name="andromda.jar210" type="MD5" md5sum="0635a62a233db32121f082b77f982e05" filename="^andromda.jar$" version="2.10"/>
+      <match-rule name="andromda.jar211" type="MD5" md5sum="917f3247d8213a8b00bc2575a3482e00" filename="^andromda.jar$" version="2.11"/>
+      <match-rule name="andromda.jar212" type="MD5" md5sum="76395213006959221ebf4b3f12f05332" filename="^andromda.jar$" version="2.12"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="antlr" from="wild" os="all">
     <description>Assumes jars start with 'antlr' and uses md5 digests to find versions.</description>
     <eval expression="nameversion OR filename" speed="1"/>
@@ -1573,6 +1591,23 @@
       <match-rule name="4-dynpageplus-1.0m2" type="MD5" md5sum="3e49aca08c8ffe1c7282751eddc69aa1" filename="[dd]yn[pp]age[pp]lus-[0-9\.a-za-z]+\.jar$" version="1.0m2"/>
     </match-rules>
   </project-rule>
+  <project-rule name="easymock" from="wild" os="all">
+    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
+    <eval expression="easymock_fv or easymock_md5" speed="1"/>
+    <match-rules name="easymock_fv">
+      <match-rule name="easymock_jar" type="filenameVersion" filename="^easymock.jar$"/>
+    </match-rules>
+    <match-rules name="easymock_md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="easymock1.1" type="MD5" md5sum="23902a6d78b03f653929ba98fd67a612" filename="^easymock.jar$" version="1.1"/>
+      <match-rule name="easymock1.2_java1.3" type="MD5" md5sum="a804d23cabc40db1ab70e4938cc16eff" filename="^easymock.jar$" version="1.2_java1.3"/>
+      <match-rule name="easymock1.2_java1.5" type="MD5" md5sum="4627a7c0b2c8540c65fea0747f3d190b" filename="^easymock.jar$" version="1.2_java1.5"/>
+      <match-rule name="easymock2.0" type="MD5" md5sum="315bdefdc908a0026aa9aa89a4285ebc" filename="^easymock.jar$" version="2.0"/>
+      <match-rule name="easymock2.1" type="MD5" md5sum="3fff2d3ed89c5ed5a27bdd887ef49b41" filename="^easymock.jar$" version="2.1"/>
+      <match-rule name="easymock2.2" type="MD5" md5sum="5631cb6dc39616dde6fd59e66b9ea38b" filename="^easymock.jar$" version="2.2"/>
+      <match-rule name="easymock2.3" type="MD5" md5sum="b0e7c5a0e1370214457246bd902caf06" filename="^easymock.jar$" version="2.3"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="eclipse" from="wild" os="all">
     <eval expression="fileversions" speed="1"/>
     <match-rules name="fileversions">
@@ -2068,6 +2103,18 @@
       <match-rule name="0.93-jdk13" type="MD5" version="0.93" filename="^fop.*jar$" md5sum="09db20b3d88cce8b931c3ffc07a2cbb0"/>
       <match-rule name="0.94-jdk14" type="MD5" version="0.94" filename="^fop.*jar$" md5sum="79bc0d4f812d194ca439e566181a1719"/>
       <match-rule name="0.94-jdk13" type="MD5" version="0.94" filename="^fop.*jar$" md5sum="39fe324af351960aca85e23afd90838a"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="foxtrot" from="wild" os="all">
+    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
+    <eval expression="foxtrot_fv or foxtrot_md5" speed="1"/>
+    <match-rules name="foxtrot_fv">
+      <match-rule name="foxtrot_jar" type="filenameVersion" filename="^foxtrot-core-([0-9].*?)\.jar$"/>
+    </match-rules>
+    <match-rules name="foxtrot_md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="foxtrot2.0" type="MD5" md5sum="9c5b26c5b39626fe9ffe61be6c927b18" filename="^foxtrot.jar$" version="2.0"/>
+      <match-rule name="foxtrot3.0" type="MD5" md5sum="8a18d57d37ffcdc1a7d511956f0356b7" filename="^foxtrot.*?\.jar$" version="3.0"/>
     </match-rules>
   </project-rule>
   <project-rule name="fitnesse" from="wild" os="windows">
@@ -2585,6 +2632,24 @@
       <match-rule name="hib_entman_fn" type="filename" filename="^hibernate-entitymanager.jar$"/>
     </match-rules>
   </project-rule>
+  <project-rule name="hsqldb" from="wild" os="all">
+    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
+    <eval expression="hsqldb_fn or hsqldb_md5" speed="1"/>
+    <match-rules name="hsqldb_fn">
+      <match-rule name="hsqldb_jar" type="filename" filename="^hsqldb.jar$"/>
+    </match-rules>
+    <match-rules name="hsqldb_md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="hsqldb_1_7_1" type="MD5" md5sum="d946ef1573bb634537fd2e61bb7a16d3" filename="^hsqldb.jar$" version="1.7.1"/>
+      <match-rule name="hsqldb_1_7_2_11" type="MD5" md5sum="2915598fe7cec0674cc41c89c61f63c8" filename="^hsqldb.jar$" version="1.7.2.11"/>
+      <match-rule name="hsqldb_1_7_3_3" type="MD5" md5sum="234b164007e189b76bad31bd08102b23" filename="^hsqldb.jar$" version="1.7.3.3"/>
+      <match-rule name="hsqldb_1_8_0_1" type="MD5" md5sum="fb579fb99e02b2f8aedd8e633cc43db1" filename="^hsqldb.jar$" version="1.8.0.1"/>
+      <match-rule name="hsqldb_1_8_0_2" type="MD5" md5sum="756c209d9d3cff851932cafc3f6052f7" filename="^hsqldb.jar$" version="1.8.0.2"/>
+      <match-rule name="hsqldb_1_8_0_4" type="MD5" md5sum="baa8c25c5b5a8d5f387b556b80e11fff" filename="^hsqldb.jar$" version="1.8.0.4"/>
+      <match-rule name="hsqldb_1_8_0_5" type="MD5" md5sum="b8429222d40541907e2b4c67bf34fa23" filename="^hsqldb.jar$" version="1.8.0.5"/>
+      <match-rule name="hsqldb_1_8_0_6" type="MD5" md5sum="c7a1219cfeb4c31fe6c996b73bb99da7" filename="^hsqldb.jar$" version="1.8.0.6"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="htmlparser" from="wild" os="all">
     <description>rules for html_parser date created : 01/21/2008 dpm</description>
     <eval expression="htmlparser_filename or htmlparser_md5" speed="1"/>
@@ -2718,6 +2783,20 @@
     <match-rules name="md5">
       <result expression="OR-ALL"/>
       <match-rule name="1.5" type="MD5" version="1.5" filename="^connector-api\.jar$" md5sum="d154194b7287c903f2722e26917f56a8"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="jacl" from="wild" os="all">
+    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
+    <eval expression="jacl_fn or jacl_md5" speed="1"/>
+    <match-rules name="jacl_fn">
+      <match-rule name="jacl_jar" type="filename" filename="^jacl.jar$"/>
+    </match-rules>
+    <match-rules name="jacl_md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="jacl.jar1.3.2" type="MD5" md5sum="bbd0fd61f93f2b20f6b1519a6004f877" filename="^jacl.jar$" version="1.3.2"/>
+      <match-rule name="jacl.jar1.3.3" type="MD5" md5sum="b7257e25e9ebe0077c48a0bbec3615cc" filename="^jacl.jar$" version="1.3.3"/>
+      <match-rule name="jacl.jar1.4.0" type="MD5" md5sum="fd3cb9f020a1de7a0a420345450cd553" filename="^jacl.jar$" version="1.4.0"/>
+      <match-rule name="jacl.jar1.4.1" type="MD5" md5sum="07ab0da431aa55d5ddc4faccc8cf7bca" filename="^jacl.jar$" version="1.4.1"/>
     </match-rules>
   </project-rule>
   <project-rule name="jacob" from="wild" os="all">
@@ -2863,6 +2942,19 @@
       <match-rule name="1.3" type="MD5" version="1.3" filename="^mail\.jar$" md5sum="ba58e757512f63775522d8e96f7a8e54"/>
       <match-rule name="1.2" type="MD5" version="1.2" filename="^mail\.jar$" md5sum="066df392cbdb80a43ad4361cdca94e73"/>
       <match-rule name="1.1.3" type="MD5" version="1.1.3" filename="^mail\.jar$" md5sum="69f8fd57f53ef916c4006bc24837a159"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="javancss" from="wild" os="all">
+    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
+    <eval expression="javancss_fn or javancss_md5" speed="1"/>
+    <match-rules name="javancss_fn">
+      <match-rule name="javancss_jar" type="filename" filename="^javancss.jar$"/>
+    </match-rules>
+    <match-rules name="javancss_md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="javancss.jar27.48" type="MD5" md5sum="1ebf49da09bc074996da276b490e4c87" filename="^javancss.jar$" version="27.48"/>
+      <match-rule name="javancss.jar28.49" type="MD5" md5sum="483fe3df22b043f543b45d9e37658f19" filename="^javancss.jar$" version="28.49"/>
+      <match-rule name="javancss.jar29.50" type="MD5" md5sum="3611a7024d58a449a16df104778a7cbc" filename="^javancss.jar$" version="29.50"/>
     </match-rules>
   </project-rule>
   <project-rule name="javaservicewrapper" from="wild" os="all">
@@ -3343,6 +3435,43 @@
       <match-rule name="9-jfreechart-version-1-0-7" type="MD5" md5sum="1b281c60f0c7ea1b36511f769a479f17" filename="^jfreechart-.*\.jar$" version="1.0.7"/>
       <match-rule name="10-jfreechart-version-1-0-8" type="MD5" md5sum="9ecce0fea90e6657bca42c0e5bc01ecd" filename="^jfreechart-.*\.jar$" version="1.0.8"/>
       <match-rule name="11-jfreechart-version-1-0-9" type="MD5" md5sum="e40fdcd9dcf52833f3a9b2e63f1f438c" filename="^jfreechart-.*\.jar$" version="1.0.9"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="jgoodies-animation" from="wild" os="all">
+    <description>Finds versions using MD5's.</description>
+    <eval expression="jgoodies_anim_md5 OR jgoodies_anim_fv" speed="1"/>
+    <match-rules name="jgoodies_anim_fv">
+      <result expression="OR-ALL"/>
+      <!-- filename version match -->
+      <match-rule name="ver" type="filenameVersion" filename="^animation-([0-9].*?)\.jar$"/>
+      <match-rule name="name" type="filename" filename="^animation.*?jar$"/>
+    </match-rules>
+    <match-rules name="jgoodies_anim_md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="v1.2.0" type="MD5" md5sum="47fb4868d5fd7e1e66c329bcffb8d5d1" filename="^animation.*?jar$" version="1.2.0"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="jgoodies-binding" from="wild" os="all">
+    <description>Finds versions using MD5's.</description>
+    <eval expression="jgoodies_bind_md5 OR jgoodies_bind_fv" speed="1"/>
+    <match-rules name="jgoodies_bind_fv">
+      <result expression="OR-ALL"/>
+      <!-- filename version match -->
+      <match-rule name="ver" type="filenameVersion" filename="^binding-([0-9].*?)\.jar$"/>
+      <match-rule name="name" type="filename" filename="^binding.*?jar$"/>
+    </match-rules>
+    <match-rules name="jgoodies_bind_md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="1.0.3.jar" type="MD5" md5sum="73b66d5c9e529ad56134c83fd59ffac7" filename="^binding.*?jar$" version="1.0.3"/>
+      <match-rule name="1.1.2.jar" type="MD5" md5sum="aa3c4841a4e2f212d786cb470c96879b" filename="^binding.*?jar$" version="1.1.2"/>
+      <match-rule name="1.2.0.jar" type="MD5" md5sum="bf5c076a333afd3610187f7847cb13ba" filename="^binding.*?jar$" version="1.2.0"/>
+      <match-rule name="1.3.0.jar" type="MD5" md5sum="55d74febf77eb054a683afb75539e225" filename="^binding.*?jar$" version="1.3.0"/>
+      <match-rule name="1.3.1.jar" type="MD5" md5sum="0d8590d4863cc16e7f8e6a60a7405edf" filename="^binding.*?jar$" version="1.3.1"/>
+      <match-rule name="1.3.2.jar" type="MD5" md5sum="a7ebf08de8acba98c5cc2a61764ce4fb" filename="^binding.*?jar$" version="1.3.2"/>
+      <match-rule name="1.4.0.jar" type="MD5" md5sum="353d468c5a752416c4383f38fd15b105" filename="^binding.*?jar$" version="1.4.0"/>
+      <match-rule name="1.5.0.jar" type="MD5" md5sum="f01e379aec5f69057bb2d82867fa2256" filename="^binding.*?jar$" version="1.5.0"/>
+      <match-rule name="2.0.0.jar" type="MD5" md5sum="a2685547677819a95a3b6f924f9c2067" filename="^binding.*?jar$" version="2.0.0"/>
+      <match-rule name="2.0.1.jar" type="MD5" md5sum="87f8ab25010bb0422177d6aec09f22bf" filename="^binding.*?jar$" version="2.0.1"/>
     </match-rules>
   </project-rule>
   <project-rule name="jgoodies-validation" from="wild" os="all">
@@ -4341,6 +4470,44 @@
       <match-rule name="1.2.0.CR2-net-2.0" type="MD5" md5sum="de07e542b7de15ad915a2bf358c42075" filename="^NHibernate.dll$" version="1.2.0.CR2-net-2.0"/>
       <match-rule name="1.0.3.0" type="MD5" md5sum="6f8dde86c41f5593a6a8c38a07f1c6cb" filename="^NHibernate.dll$" version="1.0.3.0"/>
       <match-rule name="1.0.4.0" type="MD5" md5sum="21a764436e4e21a7b4fb57e99ea0c56e" filename="^NHibernate.dll$" version="1.0.4.0"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="nunit" from="wild" os="all">
+    <description>Finds NUnit</description>
+    <eval expression="md5s OR filename" speed="1"/>
+    <match-rules name="filename">
+      <result expression="OR-ALL"/>
+      <match-rule name="nunit" type="filename" filename="^nunit.exe$"/>
+    </match-rules>
+    <match-rules name="md5s">
+      <match-rule name="2.3.6142-net-1.1" type="MD5" md5sum="95252bd0a507edd478be77c58d2c4b7d" filename="nunit.exe$" version="2.3.6142-net-1.1"/>
+      <match-rule name="2.3.6142-net-2.0" type="MD5" md5sum="23725e38882a2d3d337111a128caaf63" filename="nunit.exe$" version="2.3.6142-net-2.0"/>
+      <match-rule name="2.3.6162-net-1.1" type="MD5" md5sum="52f5b07b51c57e0055eefa4be1cbb405" filename="nunit.exe$" version="2.3.6162-net-1.1"/>
+      <match-rule name="2.3.6162-net-2.0" type="MD5" md5sum="204d0b5f1c95a27d4648cb8d427501f5" filename="nunit.exe$" version="2.3.6162-net-2.0"/>
+      <match-rule name="2.3.6293-net-1.1" type="MD5" md5sum="80f91fe0524706b6208f0cfc7787040b" filename="nunit.exe$" version="2.3.6293-net-1.1"/>
+      <match-rule name="2.3.6293-net-2.0" type="MD5" md5sum="7f31d8bffa27aa7964d765b2b7583e69" filename="nunit.exe$" version="2.3.6293-net-2.0"/>
+      <match-rule name="2.4-alpha-net1.1-msi" type="MD5" md5sum="7124ff5457b1b4a0861e9aef74a888e3" filename="nunit.exe$" version="2.4-net1.1-alpha"/>
+      <match-rule name="2.4-alpha-net2.0-msi" type="MD5" md5sum="06adefa0668c595ed5ef381ac2f30633" filename="nunit.exe$" version="2.4-net2.0-alpha"/>
+      <match-rule name="2.4-beta1-net1.1-msi" type="MD5" md5sum="e8c40e08cb8ab7950b2605a7fade433e" filename="nunit.exe$" version="2.4-net1.1-beta1"/>
+      <match-rule name="2.4-beta1-net2.0-msi" type="MD5" md5sum="86a2dc840eeda3b9d4a941901d3d78a8" filename="nunit.exe$" version="2.4-net2.0-beta1"/>
+      <match-rule name="2.4.0-net-1.1" type="MD5" md5sum="8d08af090df166f3e893e21e7aa1d8f4" filename="nunit.exe$" version="2.4.0-net-1.1"/>
+      <match-rule name="2.4.0-net-2.0" type="MD5" md5sum="9ed1bb629df1ff8cf3a72ee6e1c3f509" filename="nunit.exe$" version="2.4.0-net-2.0"/>
+      <match-rule name="2.4.0-r1-net-1.1" type="MD5" md5sum="f71ee29829913dad7da179e8068f1e6a" filename="nunit.exe$" version="2.4.0-r1-net-1.1"/>
+      <match-rule name="2.4.0-r1-net-2.0" type="MD5" md5sum="0d32d53a79b437984fa973261d0f0e6b" filename="nunit.exe$" version="2.4.0-r1-net-2.0"/>
+      <match-rule name="2.4.0-r2-net-1.1" type="MD5" md5sum="f49a5b1dc81b9a566e1febf72cfb00d8" filename="nunit.exe$" version="2.4.0-r2-net-1.1"/>
+      <match-rule name="2.4.0-r2-net-2.0" type="MD5" md5sum="419e884e49cef5fb56a85ee0e92ff933" filename="nunit.exe$" version="2.4.0-r2-net-2.0"/>
+      <match-rule name="2.4.1-net-1.1" type="MD5" md5sum="2f804477f8f41043fdb84baad892cab8" filename="nunit.exe$" version="2.4.1-net-1.1"/>
+      <match-rule name="2.4.1-net-2.0" type="MD5" md5sum="14475ea17c9946e6b68674b84219a7b0" filename="nunit.exe$" version="2.4.1-net-2.0"/>
+      <match-rule name="2.4.2-net-1.1" type="MD5" md5sum="b0b1ff2959d8abb53c81f0a7a4b1f309" filename="nunit.exe$" version="2.4.2-net-1.1"/>
+      <match-rule name="2.4.2-net-2.0" type="MD5" md5sum="00a8613d25937ac2e0a29337974d821e" filename="nunit.exe$" version="2.4.2-net-2.0"/>
+      <match-rule name="2.4.3-net-1.1" type="MD5" md5sum="bf2c058e320049ad223750a2fc3df483" filename="nunit.exe$" version="2.4.3-net-1.1"/>
+      <match-rule name="2.4.3-net-2.0" type="MD5" md5sum="ae10b72e183dfff11f42274fd507e504" filename="nunit.exe$" version="2.4.3-net-2.0"/>
+      <match-rule name="2.4.4-net-1.1" type="MD5" md5sum="18171b8391be867cd0b032ef35d3a918" filename="nunit.exe$" version="2.4.4-net-1.1"/>
+      <match-rule name="2.4.4-net-2.0" type="MD5" md5sum="a3400a375b6352828321c35d4a7b4c1e" filename="nunit.exe$" version="2.4.4-net-2.0"/>
+      <match-rule name="2.4.5-net-1.1" type="MD5" md5sum="25e384edb3462f4b63b664fadcfc7fab" filename="nunit.exe$" version="2.4.5-net-1.1"/>
+      <match-rule name="2.4.5-net-2.0" type="MD5" md5sum="c3a7f72f9b125754df9763df37a43004" filename="nunit.exe$" version="2.4.5-net-2.0"/>
+      <match-rule name="2.4.6-net-1.1" type="MD5" md5sum="36f10c09ed8a9fc0783160876c4483e3" filename="nunit.exe$" version="2.4.6-net-1.1"/>
+      <match-rule name="2.4.6-net-2.0" type="MD5" md5sum="84a9e81d2e8aea6a47befe72321e6eb2" filename="nunit.exe$" version="2.4.6-net-2.0"/>
     </match-rules>
   </project-rule>
   <project-rule name="openfire" from="wild" os="all">
