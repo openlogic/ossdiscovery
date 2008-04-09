@@ -3474,6 +3474,27 @@
       <match-rule name="2.0.1.jar" type="MD5" md5sum="87f8ab25010bb0422177d6aec09f22bf" filename="^binding.*?jar$" version="2.0.1"/>
     </match-rules>
   </project-rule>
+  <project-rule name="jgoodies-looks" from="wild" os="all">
+    <description>Finds versions using MD5's.</description>
+    <eval expression="jgoodies_looks_md5 OR jgoodies_looks_fv" speed="1"/>
+    <match-rules name="jgoodies_looks_fv">
+      <result expression="OR-ALL"/>
+      <!-- filename version match -->
+      <match-rule name="ver" type="filenameVersion" filename="^looks-([0-9].*?)\.jar$"/>
+      <match-rule name="name" type="filename" filename="^looks.*?jar$"/>
+    </match-rules>
+    <match-rules name="jgoodies_looks_md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="looks-1.1.3.jar" type="MD5" md5sum="a75008af3df69022738c31b4ddbed18b" filename="^looks.*?jar$" version="1.1.3"/>
+      <match-rule name="looks-1.2.2.jar" type="MD5" md5sum="a7e4bbdff527e47a002b9749c2b6bfbb" filename="^looks.*?jar$" version="1.2.2"/>
+      <match-rule name="looks-1.3.2.jar" type="MD5" md5sum="b9374d0983ef83a39e2f0d861b62411b" filename="^looks.*?jar$" version="1.3.2"/>
+      <match-rule name="looks-2.0.4.jar" type="MD5" md5sum="7afd1425e8aaec3d0360afe65f87d407" filename="^looks.*?jar$" version="2.0.4"/>
+      <match-rule name="looks-2.1.1.jar" type="MD5" md5sum="e49c90013f499783b6507af03fc14571" filename="^looks.*?jar$" version="2.1.1"/>
+      <match-rule name="looks-2.1.2.jar" type="MD5" md5sum="a8e28865a5c29db0012c44b2449f77c4" filename="^looks.*?jar$" version="2.1.2"/>
+      <match-rule name="looks-2.1.3.jar" type="MD5" md5sum="48ba3957f043f18704011d99eb8cc893" filename="^looks.*?jar$" version="2.1.3"/>
+      <match-rule name="looks-2.1.4.jar" type="MD5" md5sum="ab5e5eba6e8b70bec0004f7995b39fb2" filename="^looks.*?jar$" version="2.1.4"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="jgoodies-validation" from="wild" os="all">
     <description>Finds versions using MD5's.</description>
     <eval expression="md5 OR nameversion OR name" speed="1"/>
