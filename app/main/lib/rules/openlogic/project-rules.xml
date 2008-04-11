@@ -5827,6 +5827,18 @@
       <match-rule name="13-squirrel-sql-2.6.4" type="MD5" md5sum="c9c5c09f46e04860983d5e82b7b80588" filename="^squirrel-sql.*\.jar$" version="2.6.4"/>
     </match-rules>
   </project-rule>
+  <project-rule name="sslext" from="wild" os="linux">
+    <description>Checks for md5 of jar or finds filename</description>
+    <eval expression="sslext_filename OR sslext_md5" speed="1"/>
+    <match-rules name="sslext_filename">
+      <match-rule name="1-sslext" type="filename" filename="^sslext\.jar$"/>
+    </match-rules>
+    <match-rules name="sslext_md5">
+      <match-rule name="1-sslext-1.0" type="MD5" md5sum="57147523d32f4109647385da0c56c12f" filename="^sslext\.jar$" version="1.0"/>
+      <match-rule name="1-sslext-1.10" type="MD5" md5sum="d19408272660acc5a9ea9237b12c58d3" filename="^sslext\.jar$" version="1.10"/>
+      <match-rule name="1-sslext-1.2" type="MD5" md5sum="fda7f2a2f7ac9b017a5de1a4742753fd" filename="^sslext\.jar$" version="1.2"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="standardista-table-sorting" from="wild" os="all">
     <description>Assumes js start with 'standardista-table-sorting' and uses md5 digests to find versions.</description>
     <eval expression="js_md5 OR filename" speed="1"/>
