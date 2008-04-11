@@ -907,9 +907,19 @@ def get_windows_version_str
         @kernel = "#{@os_architecture}-mswin"
         @os = 'Vista'
         @os_family = 'windows'
-        version = `ver`   # Microsoft Windows [Version 6.0.6000]
-        @os_version = version.match("Version (.*?)\]")[1]
-        # TODO - set the os_version 
+
+        # this breaks under java/JRuby
+        # version = `ver`   # Microsoft Windows [Version 6.0.6000]
+        # @os_version = version.match("Version (.*?)\]")[1]
+        # 
+        # TODO - the workaround is to run ver in the .bat file and read the file here
+        #  ver > version.txt
+        #  open version.txt, read and match the version as above.
+        # per nathan/eric, given 1 hr to freeze, this will be hardwired
+        # since we know it's vista here, this is safe for now
+        
+        @os_version = "6.x" 
+
         return "Windows: #{@os}"
       end
   
