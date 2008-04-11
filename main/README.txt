@@ -125,38 +125,33 @@ The source code is organized like this:
     - For linux users who would like to not scan anything in their /media directory add the no-media.rb require
       to the generic-exlusions.rb file.  We may add a "no media" flag to the CLI options in the future.
 
+
 - Known Issues
 ===============
 
-
-DIS-847-- Major -- The pure Ruby distribution can not be run from an authenticated proxy.
-
-DIS-920 -- Minor -- On Linux, the OSS Discovery distribution can not be installed to/run from a path with spaces in it.
+DIS-347 -- Minor -- OSSDiscovery does not find version 2.9.1 for Xerces.
  
-DIS-881 -- Minor -- Under significant scan submission load, the public installations line graph and the installations summary are out of sync.
+DIS-701 -- Minor -- Configuration files need to be cleaned up.
  
-DIS-859 -- Critical -- A MySQL Deadlock can result when posting scans through the command line interface using --deliver-batch.
- 
-DIS-851 -- Minor -- No update error message is provided when rules are out of synch.
- 
-DIS-846 -- Minor -- Maven rules for Drools and Drools-example display the wrong version number.
- 
-DIS-839 -- Major -- Ruby and JRE distributions report Machine Id, operating system and kernel differently.
- 
-DIS-838 -- Major -- User must submit scans in order to view reports.
+DIS-836 -- Minor -- Currently, OSSDiscovery only reports finding a maximum of 1 instance of a given package version per machine scan.
  
 DIS-837 -- Minor -- Duplicate delivery of a batch of scans doesn't report a duplicate submission.
  
-DIS-829 -- Critical -- User must logout and log back in order to see filters after submitting scan while logged in.
+DIS-881 -- Minor -- Under significant scan submission load, the public installations line graph and the installations summary are out of sync.
  
-DIS-826 -- Minor -- Error finding Elclipse Plug-in: PDE.
+DIS-910 -- Minor -- With 9 Packages, reports for package by name and package by rank show page list control labels but no controls.
  
-DIS-804 -- Minor -- Pie charts labels are too big.
+DIS-935 -- Minor -- Missing geography value when executing --deliver-results results in an error.
  
-DIS-347 -- Minor -- Discovery is not finding version for Xerces 2.9.1.
+DIS-984 -- Major -- Many rules will only find distributions taken from Maven (ibilio).
+ 
+DIS-987 -- Major -- The --list-foi flag for OSSDiscovery reports that a scan is taking place.
 
-LEGAL NOTICE
--------------
+DIS-990 -- Major -- Subsequent scans of a machine increment the found count for all packages found in earlier scans of the same machine.
+
+
+- LEGAL NOTICE
+===============
 
 OSS Discovery is a tool that finds installed open source software.
   Copyright (C) 2007-2008 OpenLogic, Inc.
@@ -164,7 +159,6 @@ OSS Discovery is a tool that finds installed open source software.
 OSS Discovery is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License version 3 as 
 published by the Free Software Foundation.  
-
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
