@@ -169,8 +169,8 @@ rules_file_base_url: https://www.osscensus.org
 username: nil
 password: nil 
 
-# TODO - IMPORTANT: proxy data needs to be nil'd out when this is released open source
-# any proxy value not specified is required to be nil
+# IMPORTANT: proxy data needs to be nil'd out if no proxy is used. 
+# Any proxy value not specified (used) is required to be nil
 
 proxy_host: nil # "192.168.10.211"
 proxy_port: nil # 4545 # 3128
