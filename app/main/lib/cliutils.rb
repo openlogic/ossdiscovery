@@ -534,9 +534,11 @@ def deliver_results( result_file, overrides={} )
            # setting up proxy
            client.get_host_configuration().set_proxy(@proxy_host, @proxy_port)
            scope = Java::OrgApacheCommonsHttpclientAuth::AuthScope::ANY
-           credentials = org.apache.commons.httpclient.UsernamePasswordCredentials.new( @proxy_user, @proxy_password )
-           client.get_state().set_proxy_credentials( scope, credentials ) 
-           # proxy credentials created
+           if ( @proxy_user != nil && @proxy_password != nil )
+              credentials = org.apache.commons.httpclient.UsernamePasswordCredentials.new( @proxy_user, @proxy_password )
+              client.get_state().set_proxy_credentials( scope, credentials ) 
+              # proxy credentials created
+           end
         end
 
         # create post data
