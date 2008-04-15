@@ -686,8 +686,10 @@ if @send_results
   deliver_results @machine_results
 end
 msg =  "\nDiscovery has completed a scan of your machine or specified directory.\n"
+msg << "\n"
 msg << "If you have configured Discovery to contribute results directly to the Census,\n"
-msg << "you can view them at https://faf.osscensus.org.\n"
+msg << "you can view them at https://www.osscensus.org.\n"
+msg << "\n"
 msg << "Otherwise, to see your results, look at the scanresults-local.txt file\n"
 msg << "in the Discovery installation directory."
 puts msg
