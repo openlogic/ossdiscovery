@@ -175,10 +175,10 @@ password: nil
 # IMPORTANT: proxy data needs to be nil'd out if no proxy is used. 
 # Any proxy value not specified (used) is required to be nil
 
-proxy_host: nil # "192.168.10.211"
-proxy_port: nil # 4545 # 3128
-proxy_user: nil # 
-proxy_password: nil #
+proxy_host: nil     # example: "192.168.10.211"
+proxy_port: nil     # 4545 # 3128
+proxy_user: nil     # example: corpusername
+proxy_password: nil # example: corppassword
 
 update_rules: false
 update_rules_and_do_scan: false

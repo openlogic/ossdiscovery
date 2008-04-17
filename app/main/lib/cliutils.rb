@@ -534,6 +534,19 @@ def deliver_results( result_file, overrides={} )
            # setting up proxy
            client.get_host_configuration().set_proxy(@proxy_host, @proxy_port)
            scope = Java::OrgApacheCommonsHttpclientAuth::AuthScope::ANY
+           
+           # it's necessary to change the authentication scheme preference so that NTLM is not the first choice...
+           # users have experiences issues because NTLM is the first priority of HttpClient by default and if it fails
+           # it bails.   In those environments, it was found that often the proxy will support additional authentication
+           # schemes such as BASIC and DIGEST.  Trying those before NTLM often solves the issue
+           
+           authPrefs = java.util.ArrayList.new
+           authPrefs.add(Java::OrgApacheCommonsHttpclientAuth::AuthPolicy::BASIC)
+           authPrefs.add(Java::OrgApacheCommonsHttpclientAuth::AuthPolicy::DIGEST)
+           authPrefs.add(Java::OrgApacheCommonsHttpclientAuth::AuthPolicy::NTLM) 
+           
+           client.get_params().set_parameter( Java::OrgApacheCommonsHttpclientAuth::AuthPolicy::AUTH_SCHEME_PRIORITY, authPrefs)
+           
            if ( @proxy_user != nil && @proxy_password != nil )
               credentials = org.apache.commons.httpclient.UsernamePasswordCredentials.new( @proxy_user, @proxy_password )
               client.get_state().set_proxy_credentials( scope, credentials ) 
