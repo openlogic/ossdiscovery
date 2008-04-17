@@ -149,6 +149,9 @@ send_results: false                                             # default to not
 #destination_server_url: https://192.168.10.11/service/scans/scanpost  # dummy dev location
 destination_server_url: https://www.osscensus.org/service/scans/scanpost  # osscensus official
 
+# in some cases, ie: just can't get around a proxy configuration or protocol to programmatically submit results,
+# it's still possible to submit results by going to this URL in your browser and uploading the machine results file
+upload_url: https://www.osscensus.org/service/upload  # manually upload scanresults-census.txt, use this URL
 
 # WARNING - osscensus production will not accept scans unless this is false
 override_https: false
@@ -184,7 +187,7 @@ update_rules_and_do_scan: false
 # geography is the minimal data required for the submission
 #   geography should be one of the following values:
 # 
-#  This value can be overwridden on the command line with the --geography
+#  This value can be overridden on the command line with the --geography
 #
 # in order to see the numeric value to supply for this property, run ossdiscovery --list-geos
 # 9999 is an invalid geography, it must be overridden to submit a scan anonymously
@@ -192,12 +195,12 @@ update_rules_and_do_scan: false
 geography: 9999
 
 #--------------------------------------------------------------------------------------
-# Census code is how the census grroups multiple machines together for unified reporting purposes.
+# Census code is how the census groups multiple machines together for unified reporting purposes.
 # In other words, you can see an aggregated report for all machines using the same census code.
 #
-# If set to nil, the census code will be assigned during scan submission.
 # If you already have a census code from registering with the census, you can
 # insert the value below or pass it on the command-line.
+
 census_code: 
 
 # end of config

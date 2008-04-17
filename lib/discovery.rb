@@ -180,7 +180,7 @@ def execute()
   # in the process of constructing the object, the rule engine
   # will register with the walker and set up the list of files of interest
   # after this object is created, the machine is ready to scan
-  msg =  "Discovery is preparing to scan your machine or specified directory.\n"
+  msg =  "OSS Discovery is preparing to scan your machine or specified directory.\n"
   msg << "If the directory or drive being scanned contains many files this will take awhile.\n"
   msg << "You can continue to work on your machine while the scan proceeds.\n"
   msg << "Reading project rules....\n"
@@ -342,7 +342,16 @@ begin
   
     when "--deliver-results"  
       @send_results = true
-
+      
+      # test access to the destination_url for posting to make sure we can get out ok
+      
+      # pre-check and warn if server cannot be reached
+      if ( check_network_connectivity() == false )    # checks to see if www.osscensus.org is reachable.
+         puts "\nOSS Discovery could not contact the OSS Census server.   It's likely that you are operating behind a proxy.  "
+         puts "The scan will continue, but you will need to manually post your scan results, #{@machine_results} to:\n"
+         puts "#{@upload_url}\n\n"
+      end
+      
       if ( arg != nil && arg != "" )
         # results file was given, see if it exists.
         # if it exists, post it immediately, exit once the status code is received from the server
@@ -558,7 +567,15 @@ end
 
 if defined? @deliver_results_immediately
   printf("Immediately delivering the results file: #{@deliver_results_immediately} ...\n")
+  # test access to the destination_url for posting to make sure we can get out ok
   
+  # post-check and warn if server cannot be reached
+	if ( check_network_connectivity() == false )    # checks to see if www.osscensus.org is reachable.
+	   # pre-check has already happened, and since this is immediate and not printing out any intermediate text,
+	   # just exit now with no additional warning.
+		 exit 1
+	end
+	
   # don't need to enforce geography check on cli because by delivering files, that geography would
   # have already been validated.  Also, if the scan_results geography is invalid, the server
   # will reject the scan
@@ -683,15 +700,27 @@ end
 make_reports
 
 if @send_results
+  # test access to the destination_url for posting to make sure we can get out ok
+  # post-check and warn if server cannot be reached
+	if ( check_network_connectivity() == false )    # checks to see if www.osscensus.org is reachable.
+		 puts "\nOSS Discovery could not contact the OSS Census server.   It's likely that you are operating behind a proxy. "
+		 puts "The scan has run successfully, but you will need to manually post your scan results file, #{@machine_results}, to:\n\n"
+		 puts "#{@upload_url}\n"
+		 exit 1
+	end
+	
   deliver_results @machine_results
+
+  # since results were sent, prompt with the url to the OSS Census site
+  puts "\nResults may be viewed at https://www.osscensus.org.\n"
+
 end
+
 msg =  "\nDiscovery has completed a scan of your machine or specified directory.\n"
+
 msg << "\n"
-msg << "If you have configured Discovery to contribute results directly to the Census,\n"
-msg << "you can view them at https://www.osscensus.org.\n"
-msg << "\n"
-msg << "Otherwise, to see your results, look at the scanresults-local.txt file\n"
-msg << "in the Discovery installation directory."
+msg << "Results with directory location information can be found in the scanresults-local.txt file\n"
+msg << "located in the OSS Discovery installation directory."
 puts msg
 exit 0
 

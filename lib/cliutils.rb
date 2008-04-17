@@ -448,7 +448,7 @@ end
 =end
 
 def deliver_results( result_file, overrides={} )
-  printf("Posting results to: %s ...please wait\n", @destination_server_url )
+  printf("\nPosting results file, #{@machine_results}, to: %s ...please wait\n", @destination_server_url )
   results = File.new( result_file ).read
   
   if overrides.size > 0
@@ -1410,4 +1410,20 @@ def print_rule_version_info()
     puts "#{i+1}) #{md5_val} #{rf}"
   end
   puts ""
+end
+
+=begin rdoc
+  return true or false if we can reach the census site - typically only called if --deliver-results is active
+  we want to make sure we can reach the net and warn the user right up front if the census site cannot be reached.
+=end
+
+def check_network_connectivity()
+  begin
+  # use any proxy settings that are configured
+  response = Net::HTTP.Proxy( @proxy_host, @proxy_port, @proxy_user, @proxy_password ).start("www.osscensus.org") { | http | 
+     return true
+  }
+  rescue Exception => e
+     return false
+  end
 end
