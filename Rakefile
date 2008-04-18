@@ -1,7 +1,7 @@
 require 'rake/packagetask'
 
 PACKAGE_NAME=ENV["NAME"] || "ossdiscovery"
-PACKAGE_VERSION=ENV["VERSION"] || "2.0"
+PACKAGE_VERSION=ENV["VERSION"] || "2.0.1"
 
 namespace :release do
   namespace :ruby do 
@@ -105,7 +105,7 @@ namespace :release do
         if result == ""
           puts "You must have wine installed in order to build the installer"      
         else
-          system "wine $INNO_HOME/ISCC.exe setup/setup\\ script.iss"
+          system "wine $INNO_HOME/ISCC.exe setup/setup_script.iss"
         end
       end
     end
