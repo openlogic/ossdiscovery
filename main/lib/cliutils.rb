@@ -1430,12 +1430,20 @@ end
   we want to make sure we can reach the net and warn the user right up front if the census site cannot be reached.
 =end
 
-def check_network_connectivity()
+def check_network_connectivity( url )
+
   begin
-  # use any proxy settings that are configured
-  response = Net::HTTP.Proxy( @proxy_host, @proxy_port, @proxy_user, @proxy_password ).start("www.osscensus.org") { | http | 
-     return true
-  }
+    if ( url == nil )  # no need for network check
+       return true
+    end
+    
+		# use any proxy settings that are configured
+		
+		uri = URI.parse(url)
+	
+		response = Net::HTTP.Proxy( @proxy_host, @proxy_port, @proxy_user, @proxy_password ).start(uri.host) { | http | 
+			 return true
+		}
   rescue Exception => e
      return false
   end
