@@ -561,7 +561,7 @@ if defined? @deliver_results_immediately
   # test access to the destination_url for posting to make sure we can get out ok
   
   # post-check and warn if server cannot be reached
-	if ( check_network_connectivity( @destination_url ) == false )    # checks to see if www.osscensus.org is reachable.
+	if ( check_network_connectivity( @destination_server_url ) == false )    # checks to see if www.osscensus.org is reachable.
 	   # pre-check has already happened, and since this is immediate and not printing out any intermediate text,
 	   # just exit now with no additional warning.
 		 exit 1
@@ -631,7 +631,7 @@ end
 # test access to the destination_url for posting to make sure we can get out ok
 
 # pre-check and warn if server cannot be reached
-if ( check_network_connectivity(@destination_url) == false )    # checks to see if www.osscensus.org is reachable.
+if ( @send_results && (check_network_connectivity(@destination_server_url) == false) )    # checks to see if www.osscensus.org is reachable.
 	 puts "\nOSS Discovery could not contact the OSS Census server.   It's likely that you are operating behind a proxy.  "
 	 puts "The scan will continue, but you will need to manually post your scan results, #{@machine_results} to:\n"
 	 puts "#{@upload_url}\n\n"
@@ -703,7 +703,7 @@ make_reports
 if @send_results
   # test access to the destination_url for posting to make sure we can get out ok
   # post-check and warn if server cannot be reached
-	if ( check_network_connectivity(@destination_url) == false )    # checks to see if www.osscensus.org is reachable.
+	if ( check_network_connectivity(@destination_server_url) == false )    # checks to see if www.osscensus.org is reachable.
 		 puts "\nOSS Discovery could not contact the OSS Census server.   It's likely that you are operating behind a proxy. "
 		 puts "The scan has run successfully, but you will need to manually post your scan results file, #{@machine_results}, to:\n\n"
 		 puts "#{@upload_url}\n"
