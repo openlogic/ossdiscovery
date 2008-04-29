@@ -180,11 +180,17 @@ def execute()
   # in the process of constructing the object, the rule engine
   # will register with the walker and set up the list of files of interest
   # after this object is created, the machine is ready to scan
-  msg =  "OSS Discovery is preparing to scan your machine or specified directory.\n"
-  msg << "If the directory or drive being scanned contains many files this will take awhile.\n"
-  msg << "You can continue to work on your machine while the scan proceeds.\n"
+  msg = ""
+  
+  unless @list_foi 
+    msg << "OSS Discovery is preparing to scan your machine or specified directory.\n"
+    msg << "If the directory or drive being scanned contains many files this will take awhile.\n"
+    msg << "You can continue to work on your machine while the scan proceeds.\n"
+  end
+  
   msg << "Reading project rules....\n"
   puts msg
+  
   @rule_engine = RuleEngine.new(  @rules_dirs, @walker, SPEEDHINT )
 #  @rule_engine = RuleEngine.new(  @rules_dirs, @walker, @speedhint ) - future, whenever 'speedhint' gets added back to config.yml
 
