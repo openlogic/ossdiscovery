@@ -588,10 +588,9 @@ if @send_results
     printf("\nWhen delivering anonymous results to the OSSCensus server, the geography must be defined\n")
     printf("  use --geography to specify the geography code or \n")
     printf("  modify the geography property in the config.yml file\n")
-    printf("  Geography codes for the --geography option are:\n")
-    printf( show_geographies() )
-    printf("\n  --geography is an order dependent parameter and must be used before the --deliver-results parameter\n")
-    printf("If you are registered with the OSSCensus site and have a group passcode or token, you should set that \n")
+    printf("\nTo see the list of geographies, run discovery with the --list-geos option.\n")
+    printf("\nNote: --geography is an order dependent parameter and must be used before the --deliver-results parameter\n")
+    printf("\nIf you are registered with the OSSCensus site and have a group passcode or token, you should set that \n")
     printf("on the command line or add it to your config.yml file.\n")
     exit 1
   elsif ( @census_code != nil && @census_code != "" && @geography == 9999 )
