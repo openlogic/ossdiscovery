@@ -31,5 +31,13 @@ set OSSDISCOVERY_HOME=%~dp0%
 set JAVA_HOME=%OSSDISCOVERY_HOME%\jre\jre-1.5.0_07-windows-ia32\
 
 cd "%OSSDISCOVERY_HOME%"
+
+FOR %%A IN (%*) DO IF /I "%%A" EQU "--help" GOTO HELP
+GOTO RUN
+:HELP
+TYPE help.txt
+goto END
+:RUN
 "%OSSDISCOVERY_HOME%\jruby\bin\jruby.bat" -J-Xmx512m -J-Xms512m -J-client "%OSSDISCOVERY_HOME%\lib\discovery.rb" --progress 100 --human-results scanresults-local.txt --verbose %*
 
+:END
