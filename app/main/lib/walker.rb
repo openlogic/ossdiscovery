@@ -176,7 +176,7 @@ class Walker
       end
     end
     
-    if ( @show_verbose && @file_ct != 0 ) 
+    if ( @show_verbose && @file_ct != 0 && @show_every != 0) 
       q,r = @file_ct.divmod( @show_every )
       if ( r == 0 )
         # puts fileordir # Uncomment this line in order to see the directories being walked
