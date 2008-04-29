@@ -30,5 +30,14 @@ REM You can contact OpenLogic at info@openlogic.com.
 set OSSDISCOVERY_HOME=%~dp0%
 
 cd "%OSSDISCOVERY_HOME%"
+
+FOR %%A IN (%*) DO IF /I "%%A" EQU "--help" GOTO HELP
+GOTO RUN
+:HELP
+TYPE help.txt
+goto END
+:RUN
 ruby "%OSSDISCOVERY_HOME%\lib\discovery.rb" --progress 100 --human-results scanresults-local.txt --verbose %*
+
+:END
 
