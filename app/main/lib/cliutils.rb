@@ -874,72 +874,68 @@ def get_windows_version_str
   # some admins put system on drives other than C:
 
   @os_architecture = ENV["PROCESSOR_ARCHITECTURE"] 
-     
-  [ENV['HOMEDRIVE'],"C","D","Z"].each do | drivespec |
+  windir = ENV["windir"]   # this env var exists in both pure ruby and JRuby ENV arrays
     
-   @prodspec_fn = "#{drivespec}:/windows/system32/prodspec.ini"
-   
-   if ( File.exists?(@prodspec_fn) )
-      content = File.new(@prodspec_fn, "r").read
+  @prodspec_fn = "#{windir}/system32/prodspec.ini"
 
-      # pp content
-      
-      # Product=Windows XP Professional
-      # Version=5.0
-      # Localization=English  
-      # ServicePackNumber=0
-      
-      product = content.match('Product=(.*?)[\r\n]$')[1]
+	if ( File.exists?(@prodspec_fn) )
+    content = File.new(@prodspec_fn, "r").read
 
-      @os = product
-      @os_family = "windows"
-      # pick of 2nd Version= which is the one for Windows, the first Version=1.0 is for SMS
-      @os_version = content.match('Version=([3-6].*?)$')[1].strip
-      @kernel = "#{product} #{@os_version}"
+    # pp content
 
-      return "Windows: #{product}"
+    # Product=Windows XP Professional
+    # Version=5.0
+    # Localization=English  
+    # ServicePackNumber=0
 
-   end # if
-  end # do
+    product = content.match('Product=(.*?)[\r\n]$')[1]
 
-  # if we got here, we know that the '/windows/system32/prodspec.ini' file did not exist 
+    @os = product
+    @os_family = "windows"
+    # pick of 2nd Version= which is the one for Windows, the first Version=1.0 is for SMS
+    @os_version = content.match('Version=([3-6].*?)$')[1]
+    @kernel = "#{product} #{@os_version}"
+
+    return "Windows: #{product}"
+
+	end # if
+
+  # if we got here, we know that the '#{windir}/system32/prodspec.ini' file did not exist 
   # (which means we're probably on Vista - we can prove this by checking for the string 
-  # 'VISTA' in the '/windows/system32/license.rtf' file, if it exists)
-  [ENV['HOMEDRIVE'],"C","D","Z"].each do | drivespec |
+  # 'VISTA' in the '#{windir}/system32/license.rtf' file, if it exists)
     
-    license_rtf_fn = "#{drivespec}:/windows/system32/license.rtf"
-   
-    if ( File.exists?(license_rtf_fn) )
-      content = File.new(license_rtf_fn, "r").read
-      is_vista = false
-      content.each_line do |line| 
-        if (line.include?('EULAID') and line.include?('VISTA')) then
-          is_vista = true
-        end
+  license_rtf_fn = "#{windir}/system32/license.rtf"
+ 
+  if ( File.exists?(license_rtf_fn) )
+    content = File.new(license_rtf_fn, "r").read
+    is_vista = false
+    content.each_line do |line| 
+      if (line.include?('EULAID') and line.include?('VISTA')) then
+        is_vista = true
       end
-  
-      if (is_vista) then
-        @kernel = "#{@os_architecture}-mswin"
-        @os = 'Vista'
-        @os_family = 'windows'
+    end
 
-        # this breaks under java/JRuby
-        # version = `ver`   # Microsoft Windows [Version 6.0.6000]
-        # @os_version = version.match("Version (.*?)\]")[1]
-        # 
-        # TODO - the workaround is to run ver in the .bat file and read the file here
-        #  ver > version.txt
-        #  open version.txt, read and match the version as above.
-        # per nathan/eric, given 1 hr to freeze, this will be hardwired
-        # since we know it's vista here, this is safe for now
-        
-        @os_version = "6.x" 
+    if (is_vista) then
+      @kernel = "#{@os_architecture}-mswin"
+      @os = 'Vista'
+      @os_family = 'windows'
 
-        return "Windows: #{@os}"
-      end
-  
-    end # if
-  end # do
+      # this breaks under java/JRuby
+      # version = `ver`   # Microsoft Windows [Version 6.0.6000]
+      # @os_version = version.match("Version (.*?)\]")[1]
+      # 
+      # TODO - the workaround is to run ver in the .bat file and read the file here
+      #  ver > version.txt
+      #  open version.txt, read and match the version as above.
+      # per nathan/eric, given 1 hr to freeze, this will be hardwired
+      # since we know it's vista here, this is safe for now
+      
+      @os_version = "6.x" 
+
+      return "Windows: #{@os}"
+    end
+
+  end # if
 
   # if we got here, we don't know what version of Windows it is
   return "Windows: Unknown"
