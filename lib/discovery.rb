@@ -86,10 +86,11 @@ require 'scan_rules_updater'
 @basedir = File.expand_path(File.dirname(__FILE__))
 @config = 'conf/config.rb'
 @copyright = "Copyright (C) 2007-2008 OpenLogic, Inc."
-@discovery_version = "2.0.1"
+@discovery_version = "2.0.2"
 @discovery_name = "ossdiscovery"
 @discovery_license = "GNU Affero General Public License version 3"
 @discovery_license_shortname = "Affero GPLv3" 
+@directories_to_scan = Array.new
 @dir_exclusion_filters = Hash.new
 @distro = "Unknown: Unrecognized"
 @file_exclusion_filters = Hash.new
@@ -192,7 +193,6 @@ def execute()
   puts msg
   
   @rule_engine = RuleEngine.new(  @rules_dirs, @walker, SPEEDHINT )
-#  @rule_engine = RuleEngine.new(  @rules_dirs, @walker, @speedhint ) - future, whenever 'speedhint' gets added back to config.yml
 
   # obey the command line parameter to list the files of interest.  this can't be done until
   # the rule engine has parsed the scan rules file so that we know all the actual files of 
@@ -206,10 +206,31 @@ def execute()
     exit 0
   end
   
-  # This is the main call to start scanning a machine
-  @directory_to_scan = File.expand_path(@directory_to_scan)
-  puts "Scanning #{@directory_to_scan}\n"
-  @walker.walk_dir( @directory_to_scan )
+  # This is the end of setup and the start of scanning a machine
+
+  # take a comma delimited --path option and scan each directory indepdendently
+  # this lets us handle multiple drives as in:  --path C:,E:,X: 
+  #
+  # or multiple paths such as:
+  #
+  # --path /usr/bin,/opt/apache2,/opt/local
+  #
+  # without making the user go through an exclusions filter, or having to enumerate windows drives
+  # which is problematic in Ruby for a cli app (pops up unexpected dialogs when accessing drives with no media.)
+
+  if ( @directories_to_scan.empty? )
+    @directories_to_scan << @directory_to_scan   # no --path was given so default the directory to scan from the config.yml file
+  end
+
+  # iterate through directories to scan, and walk each one
+  # and accumulate the results
+  #
+
+  @directories_to_scan.each do | directory |
+    directory = File.expand_path(directory)
+    puts "Scanning #{directory}\n"
+    @walker.walk_dir( directory )
+  end
 
   # mark the end of a scan
   @endtime = Time.new
@@ -231,36 +252,45 @@ def update_scan_rules()
 end
 
 def validate_directory_to_scan( dir )
-  
-  @directory_to_scan = normalize_dir(dir)
- 
-  dir_exists=true
-  
-  if ( !File.exist?(@directory_to_scan ) )
-    
-    # If it doesn't exist, it may be a weirdism with ruby turning c:\ into /c:/.  So 
-    # make that change and try again
-    
-    if ( @directory_to_scan =~ /:/ )
-      @directory_to_scan = @directory_to_scan[1..@directory_to_scan.length]
-      if ( !File.exist?(@directory_to_scan) )
-        dir_exists=false
+
+  dir_exists = true
+
+  # --path can now take comma delimited path names, so break it up first, and validate each
+  #
+  @directories_to_scan = dir.split(",")
+
+  dirindex = 0
+  @directories_to_scan.each do | directory |
+
+    directory = normalize_dir( directory )
+    if ( !File.exist?(directory) )
+      
+      # If it doesn't exist, it may be a weirdism with ruby turning c:\ into /c:/.  So 
+      # make that change and try again
+      
+      if ( directory =~ /:/ )
+	lastditch = directory[1..@directory_to_scan.length]
+	if ( !File.exist?(lastditch) )
+	  dir_exists=false
+	else
+	  dir_exists=true
+	end
       else
-        dir_exists=true
+	dir_exists=false
       end
-    else
-      dir_exists=false
     end
-    
+
+    if not dir_exists
+      printf("The given path to scan does not exist: %s\n", directory )
+      return false
+    end
+
+    @directories_to_scan[dirindex] = directory
+    dirindex += 1
+
   end
-  
-  if not dir_exists
-    printf("The given path to scan does not exist: %s\n", dir )
-    # printf("Expanded path does not exist: %s\n", @directory_to_scan )
-    return false
-  else
-    return true
-  end
+
+  return true
   
 end
  
@@ -553,13 +583,6 @@ rescue Exception => e
   end
   
   
-end
-
-# interpret any leftover arguments as the override path
-if ( ARGV.size > 0 )
-  if ( ARGV[0] != "" )
-    validate_directory_to_scan( ARGV[0] ) 
-  end
 end
 
 if defined? @deliver_results_immediately
