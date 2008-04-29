@@ -81,5 +81,15 @@ export OSSDISCOVERY_HOME
 
 cd "$OSSDISCOVERY_HOME"
 
+for i in $*
+do
+	if test $i = "--help"
+	then
+		cat help.txt
+		exit 0
+	fi
+done
+
+
 ruby "$OSSDISCOVERY_HOME/lib/discovery.rb" --progress 100 --human-results scanresults-local.txt --verbose $*
 

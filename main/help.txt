@@ -1,0 +1,59 @@
+Usage: discovery [options]
+
+The simplest usage of ossdiscovery is: ./discovery
+
+Options are not order dependent and may be one or more of:
+--conf,           -c the absolute or relative path and filename of the configuration file to use for the scan
+--deliver-batch   -D the absolute or relative path to a directory containing one or more scan results files to deliver
+--deliver-results -d existence says 'yes' deliver results to server. Server destination is configured in config/config.yml
+                     optionally --deliver-results can take a parameter which is a path to an existing scan results file to deliver
+--help,           -h print this help message
+--human-results,  -u the absolute or relative path and filename for the human readable results files.  The default is STDOUT
+--geography,      -Y geography code, if the scan is submitted to census server as an anonymous scan, this overrides
+                     value in the config.yml file.  This is an exception to order dependences and must occur before
+                     --deliver-results on the command line.
+--census-code,    -C the identifier code received at census registration time
+--inc-path,       -I include the path/location of detected package in machine scan results
+--list-excluded,  -e during a scan, print a list of files that are excluded and the filter that excluded each
+--list-files,     -f during a scan, print a list of all files that matched a rule or other criteria
+--list-filters,   -g print a list of generic filters that would be active during the next scan
+--list-foi,       -i print a list of files of interest ossdiscovery will be looking for
+--list-geos       -G print a list of geographies and their numeric codes
+--list-os,        -o list the operating system, version, and distro on which ossdiscovery is running
+--list-projects,  -j print a list of the projects that are capable of being discovered
+                     Optionally append 'verbose' to get verbose output.
+--list-md5-dupes, -M If the same MD5 digest is used in two or more match rule definitions, then the duplicated digests are printed.
+--list-tag,       -t print the machine ID (tag) that will be reported with scan results
+--machine-results,-m the absolute or relative path and filename for the machine readable results files.
+--nofollow,       -N don't follow symlinks, default is: Yes, follow symlinks
+--preview-results,-R This flag will dump the machine results file to the console when the scan is complete.
+--production-scan,-P This flag identifies the scan you run as a scan of a production machine in the results.
+--progress,       -x show progress indicator every X number of files scanned - X given by the parameter to --progress
+--path,           -p the absolute or relative path of the directory to scan, the default is /
+--rule-version,   -V print out rule version info and do nothing else (no scan performed)
+--throttle,       -T Enable throttling of the scanner so all system resources are not fully dedicated to running this tool.
+                     No arguments accepted for this option.  See the throttle_* properties in the configuration file.                                   
+--update-rules,   -r Gets updated scan rules from the server (discovery scan not performed).
+                     Providing an optional 'scan' argument (--update-rules scan) will first get the updated rules
+                     from the server and then go ahead and perform a discovery scan of the specified --path.
+--version,        -v print the version of ossdiscovery
+
+The default configuration file is conf/config.yml and can contain 
+all the parameters required for a scan.  Any command line parameter given will
+override what is found in the configuration file. 
+
+If no command line parameters are given, ossdiscovery will do a root directory scan and place the results 
+in the directory from which the scan was invoked.
+
+
+Examples:
+./discovery --path /home/lcox --machine-results /tmp/myscan_machine_results.txt --human-results /tmp/myscan_human_results.txt
+   scans the directory /home/lcox and places the results files in the /tmp directory.
+
+
+For geography codes used with --geography command line option or the geography config.yml property,
+see command line option --list-geos for a full listing of geographies
+
+ossdiscovery v2.0.1
+Copyright (C) 2007-2008 OpenLogic, Inc.
+License: Affero GPLv3
