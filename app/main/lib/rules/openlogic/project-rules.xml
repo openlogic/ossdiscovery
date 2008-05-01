@@ -5663,6 +5663,25 @@
       <match-rule name="1.0.4" type="MD5" version="1.0.4" filename="^shale-core.*jar$" md5sum="59fe81b0bff97465b5f74a7483501ac1"/>
     </match-rules>
   </project-rule>
+  <project-rule name="sharpdevelop" from="wild" os="windows">
+    <description>Looks for exe files with md5s.  If that fails, uses basic filename match with no version.</description>
+    <eval expression="md5s OR filename" speed="1"/>
+    <match-rules name="filename">
+      <result expression="OR-ALL"/>
+      <match-rule name="sharpdevelop" type="filename" filename="^SharpDevelop.exe$"/>
+    </match-rules>
+    <match-rules name="md5s">
+      <result expression="OR-ALL"/>
+      <match-rule name="sharpdevelop1102124" type="MD5" md5sum="87ab763c0647b865dc26275a8d01ffe9" filename="^SharpDevelop.exe$" version="1.1.0.2124"/>
+      <match-rule name="sharpdevelop2011710" type="MD5" md5sum="7069e63962f354bcf4ab37d87e730c3d" filename="^SharpDevelop.exe$" version="2.0.1.1710"/>
+      <match-rule name="sharpdevelop3002970" type="MD5" md5sum="f25667919b0582f6937bc37257f25200" filename="^SharpDevelop.exe$" version="3.0.0.2970"/>
+      <match-rule name="sharpdevelop2212648" type="MD5" md5sum="770eea98b0fdb2ae5de53b5df4d51e7f" filename="^SharpDevelop.exe$" version="2.2.1.2648"/>
+      <match-rule name="sharpdevelop1031768" type="MD5" md5sum="644d1de338db5206ad0af34ccdf8afef" filename="^SharpDevelop.exe$" version="1.0.3.1768"/>
+      <match-rule name="sharpdevelop2102376" type="MD5" md5sum="5a1f4a8713402650e2c6145d1e393dc6" filename="^SharpDevelop.exe$" version="2.1.0.2376"/>
+      <match-rule name="sharpdevelop2102429" type="MD5" md5sum="79501cef247715e57f12d8b210af4a69" filename="^SharpDevelop.exe$" version="2.1.0.2429"/>
+      <match-rule name="sharpdevelop2202595" type="MD5" md5sum="08c696b9e26a107adf93833a84b9dd35" filename="^SharpDevelop.exe$" version="2.2.0.2595"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="sjsxp" from="wild" os="all">
     <description>Assumes jars start with 'sjsxp' and uses md5 digests to find versions.</description>
     <eval expression="jar_md5 OR filename" speed="1"/>
