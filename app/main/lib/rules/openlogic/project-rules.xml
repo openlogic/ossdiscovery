@@ -4899,6 +4899,24 @@
       <match-rule name="nant086beta1" type="MD5" md5sum="e5e9ab78f3ec43f85cf195e97f35a9a9" filename="^NAnt.exe$" version="0.86-beta1"/>
     </match-rules>
   </project-rule>
+  <project-rule name="ndoc" from="wild" os="windows">
+    <description>Finds ndoc using ndoc core dll md5 or filename</description>
+    <eval expression="md5s OR filename" speed="1"/>
+    <match-rules name="filename">
+      <result expression="OR-ALL"/>
+      <match-rule name="ndoc" type="filename" filename="^NDoc.Core.dll$"/>
+    </match-rules>
+    <match-rules name="md5s">
+      <result expression="OR-ALL"/>
+      <match-rule name="ndoc12net11" type="MD5" md5sum="273681a15859e137c96cca954b1eace5" filename="^NDoc.Core.dll$" version="1.2"/>
+      <match-rule name="ndoc131mono" type="MD5" md5sum="5f6204f3717f2de1a7738b164b14e637" filename="^NDoc.Core.dll$" version="1.3.1"/>
+      <match-rule name="ndoc131net11" type="MD5" md5sum="918b583f1ed392243c1d7e0c7b4871db" filename="^NDoc.Core.dll$" version="1.3.1"/>
+      <match-rule name="ndoc131net10" type="MD5" md5sum="4da0f43a4ebcaf53420f48f10b309da7" filename="^NDoc.Core.dll$" version="1.3.1"/>
+      <match-rule name="ndoc13mono10" type="MD5" md5sum="bfe4035a18c62101e9fa9a676b50cacc" filename="^NDoc.Core.dll$" version="1.3"/>
+      <match-rule name="ndoc13net11" type="MD5" md5sum="a504807d9bc8f5ebd8804f05cac88059" filename="^NDoc.Core.dll$" version="1.3"/>
+      <match-rule name="ndoc13net10" type="MD5" md5sum="a2c6f4fe10da369119f44f3db4034184" filename="^NDoc.Core.dll$" version="1.3"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="netbeans" from="wild" os="all">
     <description>Checks md5 against netbeans\.jar or detects presence of file</description>
     <eval expression="netbeans_md5" speed="1"/>
