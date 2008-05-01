@@ -58,6 +58,28 @@
       <match-rule name="1.1.1" type="MD5" md5sum="c264c7a20fe37c9dc702ab8b0cf54f58" filename="^activation\.jar$" version="1.1.1"/>
     </match-rules>
   </project-rule>
+  <project-rule name="ajaxcontroltoolkit" from="wild" os="all">
+    <description>Looks for the dlls via md5, otherwise falls thru to name match.</description>
+    <eval expression="md5 OR filename" speed="1"/>
+    <match-rules name="filename">
+      <result expression="OR-ALL"/>
+      <match-rule name="ajaxcontroltoolkit" type="filename" filename="^AjaxControlToolkit.dll$"/>
+    </match-rules>
+    <match-rules name="md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="ajaxcontroltoolkit10301" type="MD5" md5sum="96ed6fd5dada35996947d17aa6f7bb55" filename="^AjaxControlToolkit.dll$" version="10301"/>
+      <match-rule name="ajaxcontroltoolkit10606" type="MD5" md5sum="e32bab8b0c9889d33783d24d6f666f14" filename="^AjaxControlToolkit.dll$" version="10606"/>
+      <match-rule name="ajaxcontroltoolkit10618" type="MD5" md5sum="59203344ce5150c9402ecf67da741028" filename="^AjaxControlToolkit.dll$" version="10618"/>
+      <match-rule name="ajaxcontroltoolkit10618b" type="MD5" md5sum="8e57cdf98b527c27b768e2aac7cfb891" filename="^AjaxControlToolkit.dll$" version="10618"/>
+      <match-rule name="ajaxcontroltoolkit10618c" type="MD5" md5sum="50d49f9c468886609763ae0ab1170c20" filename="^AjaxControlToolkit.dll$" version="10618"/>
+      <match-rule name="ajaxcontroltoolkit10920" type="MD5" md5sum="4ca9511dbdbb98edfbdef31cddf5589a" filename="^AjaxControlToolkit.dll$" version="10920"/>
+      <match-rule name="ajaxcontroltoolkit10920b" type="MD5" md5sum="9342f385d923d3ae7ab7898e56bac229" filename="^AjaxControlToolkit.dll$" version="10920"/>
+      <match-rule name="ajaxcontroltoolkit11119" type="MD5" md5sum="26661e22cafd88c68b8ecb4110ade74f" filename="^AjaxControlToolkit.dll$" version="11119"/>
+      <match-rule name="ajaxcontroltoolkit11119b" type="MD5" md5sum="cc12051ebc01622d07b89d454c3d550a" filename="^AjaxControlToolkit.dll$" version="11119"/>
+      <match-rule name="ajaxcontroltoolkit20229" type="MD5" md5sum="1a1a69341eee5bfcaf1a2315971de72c" filename="^AjaxControlToolkit.dll$" version="20229"/>
+      <match-rule name="ajaxcontroltoolkit20229b" type="MD5" md5sum="fa6c2f83025628541302d2bb4253c4ea" filename="^AjaxControlToolkit.dll$" version="20229"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="analog" from="wild" os="all">
     <description> </description>
     <eval expression="analog_bin" speed="1"/>
