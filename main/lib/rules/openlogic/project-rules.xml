@@ -2176,18 +2176,28 @@
     </match-rules>
   </project-rule>
   <project-rule name="firefox" from="wild" os="all">
-    <!-- this rule's a little different because there isn't one long version string to look for in firefox...
+    <eval expression="winversions OR nowinversions OR versions OR files" speed="1"/>
+    <match-rules name="nowinversions">
+      <result expression="AND-ALL"/>
+      <match-rule name="nwff3ini" type="binary" filename="^application.ini" regexp="Version=(.*?)$" />
+      <match-rule name="bin" type="filename" filename="^firefox-bin$"/>
+    </match-rules>
+    <match-rules name="winversions">
+      <result expression="AND-ALL"/>
+      <match-rule name="winff3ini" type="binary" filename="^application.ini" regexp="Version=(.*?)$" />
+      <match-rule name="exe" type="filename" filename="^firefox.exe$"/>
+    </match-rules>
+    <match-rules name="versions"> <!-- older versions -->
+      <!-- this rule's a little different because there isn't one long version string to look for in firefox...
       all the pieces are individual strings that are separated in the binary by a null byte (0x00). -->
-    <eval expression="files OR versions" speed="1"/>
+      <result expression="OR-ALL"/>
+      <match-rule name="ff1or2xbin" type="binary" filename="^firefox-bin$" regexp="Mozilla\000Firefox\000([1-2]\.[0-9]\.{0,1}([0-9]{0,2}\.*){0,2})"/>
+      <match-rule name="ff1or2xexe" type="binary" filename="^firefox.exe$" regexp="([1-2]\.[0-5]\.([0-9]{1,2}\.*{0,1}){0,2})\000{1,10}Firefox"/>
+    </match-rules>
     <match-rules name="files">
       <result expression="OR-ALL"/>
       <match-rule name="bin" type="filename" filename="^firefox-bin$"/>
       <match-rule name="exe" type="filename" filename="^firefox.exe$"/>
-    </match-rules>
-    <match-rules name="versions">
-      <result expression="OR-ALL"/>
-      <match-rule name="ff1or2xbin" type="binary" filename="^firefox-bin$" regexp="Mozilla\000Firefox\000([1-2]\.[0-9]\.{0,1}([0-9]{0,2}\.*){0,2})"/>
-      <match-rule name="ff1or2xexe" type="binary" filename="^firefox.exe$" regexp="([1-2]\.[0-5]\.([0-9]{1,2}\.*{0,1}){0,2})\000{1,10}Firefox"/>
     </match-rules>
   </project-rule>
   <project-rule name="fop" from="wild" os="all">
