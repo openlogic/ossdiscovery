@@ -5611,6 +5611,28 @@
     <match-rules name="scriptaculous_bin">
       <match-rule name="1-scriptaculous-version" type="binary" filename="^.*scriptaculous.*\.js$" regexp="^\s*version:\s*[\x27\x22](.+)[\x27\x22],$"/>
     </match-rules>
+  </project-rule>  
+  <project-rule name="scplugin" from="wild" os="macosx">
+    <!-- http://scplugin.tigris.org  -->
+    <description>Provides Subversion file-icon badging, and commands from the OS X Finder contextual menus</description>
+    <eval expression="md5s OR binary OR filename" speed="1"/>
+    <match-rules name="filename">
+      <result expression="OR-ALL"/>
+      <match-rule name="scpluginname" type="filename" filename="^SCPluginUIDaemon$"/>
+    </match-rules>
+    <match-rules name="binary">
+      <!-- This About-box string format has been in use since version 0.7.1  -->
+      <result expression="OR-ALL"/>
+      <match-rule name="daemonplussvn" type="binary" filename="^SCPluginUIDaemon$" regexp="([-.a-zA-Z0-9]*), SVN"/>
+    </match-rules>
+    <match-rules name="md5s">
+      <result expression="OR-ALL"/>
+      <!-- Earlier versions don't have any very recognizable pattern  -->
+      <match-rule name="scplugin07" type="MD5" md5sum="dedbe9e4a8971fe9efaea83921a12939" filename="^SCPluginUIDaemon$" version="0.7"/>
+      <match-rule name="scplugin0614" type="MD5" md5sum="4adcc08a4c58d96dee965b7595c3c2a2" filename="^SCPluginUIDaemon$" version="0.6-1.4"/>
+      <match-rule name="scplugin0613" type="MD5" md5sum="588b7a1b69b20942fce4bd7b5beeee0d" filename="^SCPluginUIDaemon$" version="0.6-1.3"/>
+      <!-- Even earlier versions should no longer be in use anyway  -->
+    </match-rules>
   </project-rule>
   <project-rule name="shale" from="wild" os="all">
     <description>Finds versions using MD5's.</description>
