@@ -702,6 +702,7 @@ def make_machine_id
     make_simple_machine_id   
   else  # every other platform including cygwin supports uname -a
     make_uname_based_machine_id platform
+    Digest::MD5.hexdigest( `date` )
   end
 end
 
@@ -1027,11 +1028,16 @@ def get_linux_version_str
       if ( distrofile == "/etc/debian_version" && File.exists?("/etc/lsb-release") )
         next
       end
- 
+
       content = File.new(distrofile, "r").readlines
 
       distro_bits = content[0].strip == nil ? content[0] : content[0].strip
       @os = distroname
+      
+      # special case for debian - pull the os version number from this file directly 
+      if ( distrofile == "/etc/debian_version" )
+        @os_version = distro_bits
+      end
 
       # for release files which match fedora-like strings:
       #  "Fedora release 8 (Werewolf)" 
