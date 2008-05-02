@@ -369,6 +369,14 @@
       <match-rule name="blatexe" type="binary" filename="^blat.exe$" regexp="F.i.l.e.V.e.r.s.i.o.n.....([0-9].\..[0-9].\..[0-9])"/>
     </match-rules>
   </project-rule>
+  <project-rule name="blogengine.net" from="wild" os="all">
+    <eval expression="versions" speed="1"/>
+    <match-rules name="versions">
+      <result expression="OR-ALL"/>
+      <!-- few files to work with on blogengine - none have the minor-minor version in them (1.3 vs 1.3.1) -->
+      <match-rule name="blogwelcome" type="binary" filename="^c3b491e5-59ac-4f6a-81e5-27e971b903ed.xml$" regexp="BlogEngine.NET ([0-9].[0-9]+)"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="bouncycastle-crypto" from="wild" os="all">
     <description>Finds versions using file names..</description>
     <eval expression="nameversion OR name" speed="1"/>
@@ -2201,15 +2209,16 @@
     <eval expression="winversions OR nowinversions OR versions OR files" speed="1"/>
     <match-rules name="nowinversions">
       <result expression="AND-ALL"/>
-      <match-rule name="nwff3ini" type="binary" filename="^application.ini" regexp="Version=(.*?)$" />
+      <match-rule name="nwff3ini" type="binary" filename="^application.ini" regexp="Version=(.*?)$"/>
       <match-rule name="bin" type="filename" filename="^firefox-bin$"/>
     </match-rules>
     <match-rules name="winversions">
       <result expression="AND-ALL"/>
-      <match-rule name="winff3ini" type="binary" filename="^application.ini" regexp="Version=(.*?)$" />
+      <match-rule name="winff3ini" type="binary" filename="^application.ini" regexp="Version=(.*?)$"/>
       <match-rule name="exe" type="filename" filename="^firefox.exe$"/>
     </match-rules>
-    <match-rules name="versions"> <!-- older versions -->
+    <match-rules name="versions">
+      <!-- older versions -->
       <!-- this rule's a little different because there isn't one long version string to look for in firefox...
       all the pieces are individual strings that are separated in the binary by a null byte (0x00). -->
       <result expression="OR-ALL"/>
@@ -5661,7 +5670,7 @@
     <match-rules name="scriptaculous_bin">
       <match-rule name="1-scriptaculous-version" type="binary" filename="^.*scriptaculous.*\.js$" regexp="^\s*version:\s*[\x27\x22](.+)[\x27\x22],$"/>
     </match-rules>
-  </project-rule>  
+  </project-rule>
   <project-rule name="scplugin" from="wild" os="macosx">
     <!-- http://scplugin.tigris.org  -->
     <description>Provides Subversion file-icon badging, and commands from the OS X Finder contextual menus</description>
