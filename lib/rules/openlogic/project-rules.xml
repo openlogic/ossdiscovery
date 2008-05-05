@@ -107,6 +107,38 @@
       <match-rule name="andromda.jar212" type="MD5" md5sum="76395213006959221ebf4b3f12f05332" filename="^andromda.jar$" version="2.12"/>
     </match-rules>
   </project-rule>
+  <project-rule name="ant" from="wild" os="all">
+    <description>Assumes jars start with 'ant' and uses md5 digests to find versions gte 1.1 and lte 1.7</description>
+    <eval expression="ant_filename or ant_md5" speed="1"/>
+    <match-rules name="ant_filename">
+      <result expression="OR-ALL"/>
+      <!-- explicit ant.jar -->
+      <match-rule name="ant" type="filename" filename="^ant\.jar$"/>
+      <!-- filename version match -->
+      <match-rule name="antver" type="filenameVersion" filename="^ant-([0-9].*?)\.jar$"/>
+    </match-rules>
+    <match-rules name="ant_md5">
+      <result expression="OR-ALL"/>
+      <!-- because so many people rename their ant.jar to ant-somethingelse.jar, make the filename match relatively liberal -->
+      <match-rule name="1-apache-ant-1.5.2-bin.zip-ant.jar" type="MD5" md5sum="e6787c38af96494f75a7ab2d658940ca" filename="^ant.*jar$" version="1.5.2"/>
+      <match-rule name="2-apache-ant-1.5.3-1-bin.zip-ant.jar" type="MD5" md5sum="ac15e4141c72ce0c948f7b9fc7c66c6f" filename="^ant.*jar$" version="1.5.3-1"/>
+      <match-rule name="3-apache-ant-1.5.4-bin.zip-ant.jar" type="MD5" md5sum="c29ce8b8988ad0d20a159d93cea0e17e" filename="^ant.*jar$" version="1.5.4"/>
+      <match-rule name="4-apache-ant-1.6.0-bin.tar.gz-ant.jar" type="MD5" md5sum="26167533b0d7a37501314cf96993b023" filename="^ant.*jar$" version="1.6.0"/>
+      <match-rule name="6-apache-ant-1.6.1-bin.zip-ant.jar" type="MD5" md5sum="e5b8225d63e12597811ddaf1e58263f6" filename="^ant.*jar$" version="1.6.1"/>
+      <match-rule name="7-apache-ant-1.6.2-bin.tar.gz-ant.jar" type="MD5" md5sum="4c0bf2a6b9d33ba96b81481560d80f6d" filename="^ant\.jar$" version="1.6.2"/>
+      <match-rule name="9-apache-ant-1.6.3-bin.tar.gz-ant.jar" type="MD5" md5sum="db02425bd97f6709c0db9143744ab758" filename="^ant.*jar$" version="1.6.3"/>
+      <match-rule name="11-apache-ant-1.6.4-bin.tar.gz-ant.jar" type="MD5" md5sum="a33f32b9667f97064b8bcbcae8edc5c6" filename="^ant.*jar$" version="1.6.4"/>
+      <match-rule name="13-apache-ant-1.6.5-bin.tar.gz-ant.jar" type="MD5" md5sum="c5c499f1eef9367c657e89bb881c69aa" filename="^ant.*jar$" version="1.6.5"/>
+      <match-rule name="15-apache-ant-1.7.0-bin.tar.gz-ant.jar" type="MD5" md5sum="133e8979e9c11450f557ca890177fe0a" filename="^ant.*jar$" version="1.7.0"/>
+      <match-rule name="17-jakarta-ant-1.1.zip-ant.jar" type="MD5" md5sum="79ffbef98897a4841feb4a7ef5050502" filename="^ant.*jar$" version="1.1"/>
+      <match-rule name="18-jakarta-ant-1.2-bin.zip-ant.jar" type="MD5" md5sum="343a60f88304f181b191791fb53ce1b4" filename="^ant.*jar$" version="1.2"/>
+      <match-rule name="19-jakarta-ant-1.3-bin.zip-ant.jar" type="MD5" md5sum="336a0fbd541275228a9cf697c508437c" filename="^ant.*jar$" version="1.3"/>
+      <match-rule name="20-jakarta-ant-1.4-bin.zip-ant.jar" type="MD5" md5sum="07915bb47c28d7c778ba9e7d0fbde9a3" filename="^ant.*jar$" version="1.4"/>
+      <match-rule name="21-jakarta-ant-1.4.1-bin.zip-ant.jar" type="MD5" md5sum="4dd8dfba17f9567f5a4dcc4005c7d6a7" filename="^ant.*jar$" version="1.4.1"/>
+      <match-rule name="22-jakarta-ant-1.5-bin.zip-ant.jar" type="MD5" md5sum="902a360ecad98a34b59863c1e65bcf71" filename="^ant.*jar$" version="1.5"/>
+      <match-rule name="23-jakarta-ant-1.5.1-bin.zip-ant.jar" type="MD5" md5sum="54d5b7b783fa0c282f6798fbe7384bc5" filename="^ant.*jar$" version="1.5.1"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="antlr" from="wild" os="all">
     <description>Assumes jars start with 'antlr' and uses md5 digests to find versions.</description>
     <eval expression="nameversion OR filename" speed="1"/>
@@ -181,38 +213,13 @@
       <match-rule name="apache-soap-2.3.1" type="MD5" md5sum="aa1845e01fee94fe4a63bbcaa55ad486" filename="^soap\.jar$" version="2.3.1"/>
     </match-rules>
   </project-rule>
-  <project-rule name="ant" from="wild" os="all">
-    <description>Assumes jars start with 'ant' and uses md5 digests to find versions gte 1.1 and lte 1.7</description>
-    <eval expression="ant_filename or ant_md5" speed="1"/>
-    <match-rules name="ant_filename">
+  <project-rule name="appcelerator" from="wild" os="all">
+    <description>Find Appcelerator using primary executable filename</description>
+    <eval expression="name" speed="1"/>
+    <match-rules name="name">
       <result expression="OR-ALL"/>
-      <!-- explicit ant.jar -->
-      <match-rule name="ant" type="filename" filename="^ant\.jar$"/>
-      <!-- filename version match -->
-      <match-rule name="antver" type="filenameVersion" filename="^ant-([0-9].*?)\.jar$"/>
+      <match-rule name="appcelerator" type="filename" filename="^appcelerator$"/>
     </match-rules>
-    <match-rules name="ant_md5">
-      <result expression="OR-ALL"/>
-      <!-- because so many people rename their ant.jar to ant-somethingelse.jar, make the filename match relatively liberal -->
-      <match-rule name="1-apache-ant-1.5.2-bin.zip-ant.jar" type="MD5" md5sum="e6787c38af96494f75a7ab2d658940ca" filename="^ant.*jar$" version="1.5.2"/>
-      <match-rule name="2-apache-ant-1.5.3-1-bin.zip-ant.jar" type="MD5" md5sum="ac15e4141c72ce0c948f7b9fc7c66c6f" filename="^ant.*jar$" version="1.5.3-1"/>
-      <match-rule name="3-apache-ant-1.5.4-bin.zip-ant.jar" type="MD5" md5sum="c29ce8b8988ad0d20a159d93cea0e17e" filename="^ant.*jar$" version="1.5.4"/>
-      <match-rule name="4-apache-ant-1.6.0-bin.tar.gz-ant.jar" type="MD5" md5sum="26167533b0d7a37501314cf96993b023" filename="^ant.*jar$" version="1.6.0"/>
-      <match-rule name="6-apache-ant-1.6.1-bin.zip-ant.jar" type="MD5" md5sum="e5b8225d63e12597811ddaf1e58263f6" filename="^ant.*jar$" version="1.6.1"/>
-      <match-rule name="7-apache-ant-1.6.2-bin.tar.gz-ant.jar" type="MD5" md5sum="4c0bf2a6b9d33ba96b81481560d80f6d" filename="^ant\.jar$" version="1.6.2"/>
-      <match-rule name="9-apache-ant-1.6.3-bin.tar.gz-ant.jar" type="MD5" md5sum="db02425bd97f6709c0db9143744ab758" filename="^ant.*jar$" version="1.6.3"/>
-      <match-rule name="11-apache-ant-1.6.4-bin.tar.gz-ant.jar" type="MD5" md5sum="a33f32b9667f97064b8bcbcae8edc5c6" filename="^ant.*jar$" version="1.6.4"/>
-      <match-rule name="13-apache-ant-1.6.5-bin.tar.gz-ant.jar" type="MD5" md5sum="c5c499f1eef9367c657e89bb881c69aa" filename="^ant.*jar$" version="1.6.5"/>
-      <match-rule name="15-apache-ant-1.7.0-bin.tar.gz-ant.jar" type="MD5" md5sum="133e8979e9c11450f557ca890177fe0a" filename="^ant.*jar$" version="1.7.0"/>
-      <match-rule name="17-jakarta-ant-1.1.zip-ant.jar" type="MD5" md5sum="79ffbef98897a4841feb4a7ef5050502" filename="^ant.*jar$" version="1.1"/>
-      <match-rule name="18-jakarta-ant-1.2-bin.zip-ant.jar" type="MD5" md5sum="343a60f88304f181b191791fb53ce1b4" filename="^ant.*jar$" version="1.2"/>
-      <match-rule name="19-jakarta-ant-1.3-bin.zip-ant.jar" type="MD5" md5sum="336a0fbd541275228a9cf697c508437c" filename="^ant.*jar$" version="1.3"/>
-      <match-rule name="20-jakarta-ant-1.4-bin.zip-ant.jar" type="MD5" md5sum="07915bb47c28d7c778ba9e7d0fbde9a3" filename="^ant.*jar$" version="1.4"/>
-      <match-rule name="21-jakarta-ant-1.4.1-bin.zip-ant.jar" type="MD5" md5sum="4dd8dfba17f9567f5a4dcc4005c7d6a7" filename="^ant.*jar$" version="1.4.1"/>
-      <match-rule name="22-jakarta-ant-1.5-bin.zip-ant.jar" type="MD5" md5sum="902a360ecad98a34b59863c1e65bcf71" filename="^ant.*jar$" version="1.5"/>
-      <match-rule name="23-jakarta-ant-1.5.1-bin.zip-ant.jar" type="MD5" md5sum="54d5b7b783fa0c282f6798fbe7384bc5" filename="^ant.*jar$" version="1.5.1"/>
-    </match-rules>
-    <!-- a speed level 3 match would be similar to speed 2 except it would look at all jars instead of those which start with "ant" -->
   </project-rule>
   <project-rule name="aurigadoc" from="wild" os="all">
     <description>Checks md5 against aurigadoc.jar or detects presence of file</description>
