@@ -5590,7 +5590,7 @@
     <eval expression="ruby_bin or ruby_filename" speed="1"/>
     <match-rules name="ruby_bin">
       <result expression="OR-ALL"/>
-      <match-rule name="standalone-ruby-18or9x" type="binary" filename="^ruby[0-9.]+$" regexp="\x00(1\.[7-9]\.[0-9]{1,2})\x00"/>
+      <match-rule name="standalone-ruby-18or9x" type="binary" filename="^ruby[0-9.]{0,3}$" regexp="\x00(1\.[7-9]\.[0-9]{1,2})\x00"/>
       <match-rule name="osx-ruby-18or9x" type="binary" filename="^libruby.*?dylib$" regexp="\x00(1\.[7-9]\.[0-9]{1,2})\x00"/>
       <match-rule name="osx-ruby-static-18or9x" type="binary" filename="^libruby-.*?.a$" regexp="\x00(1\.[7-9]\.[0-9]{1,2})\x00"/>
       <!-- looking for stuff like libruby1.8.so.1.8.6 -->
@@ -5598,7 +5598,7 @@
     </match-rules>
     <match-rules name="ruby_filename">
       <result expression="OR-ALL"/>
-      <match-rule name="ruby-fv" type="filenameVersion" filename="^ruby([0-9.]+)$"/>
+      <match-rule name="ruby-fv" type="filenameVersion" filename="^ruby[0-9.]{0,3}$" />
       <match-rule name="1-ruby-filename" type="filename" filename="^ruby$"/>
     </match-rules>
   </project-rule>
