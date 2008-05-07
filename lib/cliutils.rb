@@ -548,7 +548,9 @@ def deliver_results( result_file, overrides={} )
            client.get_params().set_parameter( Java::OrgApacheCommonsHttpclientAuth::AuthPolicy::AUTH_SCHEME_PRIORITY, authPrefs)
            
            if ( @proxy_user != nil && @proxy_password != nil )
-              credentials = org.apache.commons.httpclient.UsernamePasswordCredentials.new( @proxy_user, @proxy_password )
+              # since NTCredentials derives from standard username password credentials, it works for other authentication schemes like BASIC
+              #
+              credentials = org.apache.commons.httpclient.NTCredentials.new( @proxy_user, @proxy_password, Socket.gethostname , @proxy_ntlm_domain )
               client.get_state().set_proxy_credentials( scope, credentials ) 
               # proxy credentials created
            end
@@ -702,7 +704,6 @@ def make_machine_id
     make_simple_machine_id   
   else  # every other platform including cygwin supports uname -a
     make_uname_based_machine_id platform
-    Digest::MD5.hexdigest( `date` )
   end
 end
 
