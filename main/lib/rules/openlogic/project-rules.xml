@@ -5588,12 +5588,14 @@
   <project-rule name="ruby" from="wild" os="linux">
     <description>checks for the ruby executable</description>
     <eval expression="ruby_bin or ruby_filename" speed="1"/>
-    <match-rules name="ruby_filename">
-      <match-rule name="1-ruby-filename" type="filename" filename="^ruby$"/>
-    </match-rules>
     <match-rules name="ruby_bin">
       <result expression="OR-ALL"/>
-      <match-rule name="-ruby-1..x" type="binary" filename="^ruby$" regexp="\x00(1\.[7-9]\.[0-9]{1,2})\x00"/>
+      <match-rule name="standalone-ruby-18or9x" type="binary" filename="^ruby$" regexp="\x00(1\.[7-9]\.[0-9]{1,2})\x00"/>
+      <match-rule name="osx-ruby-18or9x" type="binary" filename="^libruby.*?dylib$" regexp="\x00(1\.[7-9]\.[0-9]{1,2})\x00"/>
+      <match-rule name="osx-ruby-static-18or9x" type="binary" filename="^libruby-.*?.a$" regexp="\x00(1\.[7-9]\.[0-9]{1,2})\x00"/>
+    </match-rules>
+    <match-rules name="ruby_filename">
+      <match-rule name="1-ruby-filename" type="filename" filename="^ruby$"/>
     </match-rules>
   </project-rule>
   <project-rule name="saaj" from="wild" os="all">
