@@ -5637,7 +5637,9 @@
       <!-- ubuntu and deb packages -->
       <match-rule name="ubdebsambabuild" type="binary" filename="^smbclient|smbd$" regexp="buildd/samba-(.*)/source"/>
       <!-- os x and others which have no build path in binary to key off of -->
-      <match-rule name="pureversion" type="binary" filename="^smbclient|smbd$" regexp="\x00\x00\x00(3\.0\..*?\x00)" /> 
+      <match-rule name="osxversion" type="binary" filename="^smbclient|smbd$" regexp="\x00\x00\x00(3\.0\..*?)\x00" /> 
+      <!-- suse 10 and others with a null character delimited standalone version string -->
+      <match-rule name="pureversion" type="binary" filename="^smbclient|smbd$" regexp="\x00(3\.0\..*?)\x00" /> 
       <!-- original rule -->
       <match-rule name="sambabuild" type="binary" filename="^smbclient|smbd$" regexp="/samba-(.*)/source"/>
     </match-rules>
