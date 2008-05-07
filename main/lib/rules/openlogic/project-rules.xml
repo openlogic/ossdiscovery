@@ -5676,11 +5676,14 @@
     </match-rules>
     <!-- older versions did not have a version string at all, newer versions have these patterns -->
     <match-rules name="scriptaculous_version">
-      <result expression="vcontrols or veffects or vdragdrop or vscriptaculous-main"/>
+      <result expression="OR-ALL"/>
       <match-rule name="vcontrols" type="binary" filename="^controls\.js$" regexp="script\.aculo\.us controls.js v(.*?)[ ,]" />
       <match-rule name="veffects" type="binary" filename="^effects\.js$"  regexp="script\.aculo\.us effects.js v(.*?)[ ,]" />
       <match-rule name="vdragdrop" type="binary" filename="^dragdrop\.js$"  regexp="script\.aculo\.us dragdrop.js v(.*?)[ ,]" />
       <match-rule name="vscriptaculous-main" type="binary" filename="^scriptaculous\.js$"  regexp="script\.aculo\.us scriptaculous.js v(.*?)[ ,]" />
+      <match-rule name="vslider" type="binary" filename="^controls\.js$" regexp="script\.aculo\.us slider.js v(.*?)[ ,]" />
+      <match-rule name="vsound" type="binary" filename="^controls\.js$" regexp="script\.aculo\.us sound.js v(.*?)[ ,]" />
+      <match-rule name="vunittest" type="binary" filename="^controls\.js$" regexp="script\.aculo\.us unittest.js v(.*?)[ ,]" />
     </match-rules>
 
     <match-rules name="scriptaculous_bin">
