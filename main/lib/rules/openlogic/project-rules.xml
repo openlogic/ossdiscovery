@@ -5666,7 +5666,7 @@
   </project-rule>
   <project-rule name="scriptaculous" from="wild" os="windows">
     <description>checks version number in scriptaculous.js file or detects presence of file</description>
-    <eval expression="scriptaculous_bin or scriptaculous_filename" speed="1"/>
+    <eval expression="scriptaculous_version or scriptaculous_bin or scriptaculous_filename" speed="1"/>
     <match-rules name="scriptaculous_filename">
       <result expression="(1-scriptaculous-controls and 2-scriptaculous-effects and 3-scriptaculous-dragdrop) or 4-scriptaculous-main"/>
       <match-rule name="1-scriptaculous-controls" type="filename" filename="^controls\.js$"/>
@@ -5674,6 +5674,15 @@
       <match-rule name="3-scriptaculous-dragdrop" type="filename" filename="^dragdrop\.js$"/>
       <match-rule name="4-scriptaculous-main" type="filename" filename="^scriptaculous\.js$"/>
     </match-rules>
+    <!-- older versions did not have a version string at all, newer versions have these patterns -->
+    <match-rules name="scriptaculous_version">
+      <result expression="vcontrols or veffects or vdragdrop or vscriptaculous-main"/>
+      <match-rule name="vcontrols" type="binary" filename="^controls\.js$" regexp="script\.aculo\.us controls.js v(.*?)[ ,]" />
+      <match-rule name="veffects" type="binary" filename="^effects\.js$"  regexp="script\.aculo\.us effects.js v(.*?)[ ,]" />
+      <match-rule name="vdragdrop" type="binary" filename="^dragdrop\.js$"  regexp="script\.aculo\.us dragdrop.js v(.*?)[ ,]" />
+      <match-rule name="vscriptaculous-main" type="binary" filename="^scriptaculous\.js$"  regexp="script\.aculo\.us scriptaculous.js v(.*?)[ ,]" />
+    </match-rules>
+
     <match-rules name="scriptaculous_bin">
       <match-rule name="1-scriptaculous-version" type="binary" filename="^.*scriptaculous.*\.js$" regexp="^\s*version:\s*[\x27\x22](.+)[\x27\x22],$"/>
     </match-rules>
