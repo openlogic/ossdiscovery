@@ -5642,6 +5642,8 @@
       <match-rule name="pureversion" type="binary" filename="^smbclient|smbd$" regexp="\x00(3\.0\..*?)\x00" /> 
       <!-- original rule -->
       <match-rule name="sambabuild" type="binary" filename="^smbclient|smbd$" regexp="/samba-(.*)/source"/>
+      <!-- last resort -->
+      <match-rule name="justfiles" type="filename" filename="^smbclient|smbd$" />
     </match-rules>
   </project-rule>
   <project-rule name="sax" from="wild" os="all">
