@@ -5471,7 +5471,7 @@
       <match-rule name="1-prototype-filename" type="filename" filename="^.*prototype.*\.js$"/>
     </match-rules>
     <match-rules name="prototype_bin">
-      <match-rule name="1-prototype-version" type="binary" filename="^.*prototype.*\.js$" regexp="^\s*version:\s*[\x27\x22](.+)[\x27\x22],$"/>
+      <match-rule name="1-prototype-version" type="binary" filename="^.*prototype.*\.js$" regexp="Prototype JavaScript framework, version (.*?)$"/>
     </match-rules>
   </project-rule>
   <project-rule name="putty" from="wild" os="windows">
