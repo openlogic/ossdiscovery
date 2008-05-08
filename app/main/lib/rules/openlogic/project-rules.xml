@@ -5617,14 +5617,24 @@
   </project-rule>
   <project-rule name="python" from="wild" os="linux">
     <description>checks for the python executable</description>
-    <eval expression="python_bin or python_filename" speed="1"/>
-    <match-rules name="python_filename">
-      <match-rule name="1-python-filename" type="filename" filename="^python$"/>
-    </match-rules>
+    <eval expression="python_bin or python_exe or python_filename" speed="1"/>
     <match-rules name="python_bin">
       <result expression="OR-ALL"/>
       <match-rule name="1-python" type="binary" filename="^python$" regexp="\x00([1-3]\.[0-9]\..*?)\x00"/>
       <match-rule name="2-python" type="binary" filename="^python[0-9]\.[0-9].*?$" regexp="\x00([1-3]\.[0-9]\..*?)\x00" />
+    </match-rules>
+    <match-rules name="python_exe">
+      <result expression="(pythonexe or pythonwexe) and readme"/>  
+      <!-- windows python doesn't have an easily identifiable version in the binary, so resort to a README for the version --> 
+      <match-rule name="pythonexe" type="filename" filename="^python.exe$" />
+      <match-rule name="pythonwexe" type="filename" filename="^pythonw.exe$" />
+      <match-rule name="readme" type="binary" filename="^README.txt$" regexp="This is Python version ([1-3]\.[0-9]\.[0-9a-z]+).*?$" /> -->
+    </match-rules>
+    <match-rules name="python_filename">
+      <result expression="OR-ALL"/>
+      <match-rule name="1-python-filename" type="filename" filename="^python$"/>
+      <match-rule name="2-python-filename" type="filename" filename="^pythonw.exe$"/>
+      <match-rule name="3-python-filename" type="filename" filename="^python.exe$"/>
     </match-rules>
   </project-rule>
   <project-rule name="quartz" from="wild" os="all">
