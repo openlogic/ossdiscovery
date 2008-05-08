@@ -5624,6 +5624,7 @@
     <match-rules name="python_bin">
       <result expression="OR-ALL"/>
       <match-rule name="1-python" type="binary" filename="^python$" regexp="\x00([1-3]\.[0-9]\..*?)\x00"/>
+      <match-rule name="2-python" type="binary" filename="^python[0-9]\.[0-9].*?$" regexp="\x00([1-3]\.[0-9]\..*?)\x00" />
     </match-rules>
   </project-rule>
   <project-rule name="quartz" from="wild" os="all">
