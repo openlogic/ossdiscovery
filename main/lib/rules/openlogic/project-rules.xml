@@ -464,6 +464,41 @@
       <match-rule name="blatexe" type="binary" filename="^blat.exe$" regexp="F.i.l.e.V.e.r.s.i.o.n.....([0-9].\..[0-9].\..[0-9])"/>
     </match-rules>
   </project-rule>
+  <project-rule name="blender" from="wild" os="windows">
+    <description>MD5s of exe files.</description>
+    <eval expression="md5 OR filename" speed="1"/>
+    <match-rules name="filename">
+      <result expression="OR-ALL"/>
+      <match-rule name="fn" type="filename" filename="^blender.exe$"/>
+    </match-rules>
+    <match-rules name="md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="1.80a" type="MD5" md5sum="3a358f86bc954a3de9d3f593d2c417df" filename="^blender.exe$" version="1.80a"/>
+      <match-rule name="2.04" type="MD5" md5sum="a3e0cde2004f0b7fefbe196882a75c1b" filename="^blender.exe$" version="2.04"/>
+      <match-rule name="2.26" type="MD5" md5sum="a9e429637c118bf3c23963c84b1af7bf" filename="^blender.exe$" version="2.26"/>
+      <match-rule name="2.27" type="MD5" md5sum="4f98d46dea181915d4c8b498fafae223" filename="^blender.exe$" version="2.27"/>
+      <match-rule name="2.27newpy" type="MD5" md5sum="915e02c12b0b97a35e42dfb7d9bf3f4f" filename="^blender.exe$" version="2.27"/>
+      <match-rule name="2.28a" type="MD5" md5sum="e6a3f232a11f7ae5c4ccb6bdfa50fc82" filename="^blender.exe$" version="2.28a"/>
+      <match-rule name="2.28c" type="MD5" md5sum="c148e574935d7eb551027f06d6b16630" filename="^blender.exe$" version="2.28c"/>
+      <match-rule name="2.28" type="MD5" md5sum="349a45cc18bfdc2491e2eaf33375b761" filename="^blender.exe$" version="2.28"/>
+      <match-rule name="2.34" type="MD5" md5sum="855ae029f312241935856b006276886d" filename="^blender.exe$" version="2.34"/>
+      <match-rule name="2.35a" type="MD5" md5sum="babf1e66b404103c77869ed8eaa5ac24" filename="^blender.exe$" version="2.35a"/>
+      <match-rule name="2.36" type="MD5" md5sum="b946981882bc7597d690c3cdcb0dc838" filename="^blender.exe$" version="2.36"/>
+      <match-rule name="2.37a" type="MD5" md5sum="a19179701e814ed7491537c431294f81" filename="^blender.exe$" version="2.37a"/>
+      <match-rule name="2.37" type="MD5" md5sum="04027945a8e49cd57386d4e2d42e5e79" filename="^blender.exe$" version="2.37"/>
+      <match-rule name="2.40-alpha1" type="MD5" md5sum="e14ee31d633ef9fe0aaee2e984db792f" filename="^blender.exe$" version="2.40-alpha1"/>
+      <match-rule name="2.40-alpha2" type="MD5" md5sum="55fc518e1d5093caf7295f7db1b87bf2" filename="^blender.exe$" version="2.40-alpha2"/>
+      <match-rule name="2.40" type="MD5" md5sum="433e4aae8e186adead1b58b40e6d7f14" filename="^blender.exe$" version="2.40"/>
+      <match-rule name="2.41" type="MD5" md5sum="0c5716948f98ccaddfbb3b5e967665af" filename="^blender.exe$" version="2.41"/>
+      <match-rule name="2.42a" type="MD5" md5sum="e3149a0b21f2491ce2a0c2f73f71c1b9" filename="^blender.exe$" version="2.42a"/>
+      <match-rule name="2.42" type="MD5" md5sum="fb7c06ee88476744bd84ff29a806b6bd" filename="^blender.exe$" version="2.42"/>
+      <match-rule name="2.43" type="MD5" md5sum="ce43bf53dea0debb5d4925078cfcf32a" filename="^blender.exe$" version="2.43"/>
+      <match-rule name="2.44" type="MD5" md5sum="6cb4b3ede25b0fcb13c47c75bda2a200" filename="^blender.exe$" version="2.44"/>
+      <match-rule name="2.45" type="MD5" md5sum="2e0d985fde8cabeb91c5665c6b5ce282" filename="^blender.exe$" version="2.45"/>
+      <match-rule name="2.46-RC3" type="MD5" md5sum="c4669473ac7e5e7887ca9002d1bc819b" filename="^blender.exe$" version="2.46-RC3"/>
+      <match-rule name="2.46-RC4" type="MD5" md5sum="64111cacc2015f145c3ddb53857efc89" filename="^blender.exe$" version="2.46-RC4"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="blogengine.net" from="wild" os="all">
     <eval expression="versions" speed="1"/>
     <match-rules name="versions">
