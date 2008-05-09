@@ -5635,8 +5635,9 @@ libpython2.5.so.1.0
     <match-rules name="python_filename">
       <result expression="OR-ALL"/>
       <match-rule name="1-python-filename" type="filename" filename="^python$"/>
-      <match-rule name="2-python-filename" type="filename" filename="^pythonw.exe$"/>
-      <match-rule name="3-python-filename" type="filename" filename="^python.exe$"/>
+      <match-rule name="2-python" type="filenameVersion" filename="^python([0-9]\.[0-9].*?)$" />
+      <match-rule name="3-python-filename" type="filename" filename="^pythonw.exe$"/>
+      <match-rule name="4-python-filename" type="filename" filename="^python.exe$"/>
     </match-rules>
   </project-rule>
   <project-rule name="quartz" from="wild" os="all">
