@@ -6292,16 +6292,23 @@ libpython2.5.so.1.0
     </match-rules>
   </project-rule>
   <project-rule name="subversion" from="wild" os="all">
-    <eval expression="version or svnfile" speed="1"/>
-    <match-rules name="version">
-      <result expression="svnbin OR svnexe"/>
+    <eval expression="bin or lib or svnfile" speed="1"/>
+    <match-rules name="bin">
+      <result expression="OR-ALL"/>
       <match-rule name="svnbin" type="binary" filename="^svn$" regexp="\x00(1\.[1-6]\..*?)\x00"/>
+      <match-rule name="svnadmbin" type="binary" filename="^svnadmin$" regexp="\x00(1\.[1-6]\..*?)\x00"/>
       <match-rule name="svnexe" type="binary" filename="^svn.exe$" regexp="subversion\-(1\.[1-6]\.[0-9]?)"/>
     </match-rules>
+    <match-rules name="lib">
+      <result expression="OR-ALL"/>
+      <match-rule name="svnlibdav" type="binary" filename="^libsvn_ra_dav.*?$" regexp="\x00(1\.[1-6]\..*?)\x00"/>
+      <match-rule name="svnlibsubr" type="binary" filename="^libsvn_subr.*?$" regexp="\x00(1\.[1-6]\..*?)\x00"/>
+    </match-rules>
     <match-rules name="svnfile">
-      <result expression="svn OR svnexe"/>
+      <result expression="OR-ALL"/>
       <match-rule name="svn" type="filename" filename="^svn$"/>
       <match-rule name="svnexe" type="filename" filename="^svn.exe$"/>
+      <match-rule name="svnadmexe" type="filename" filename="^svnadmin.exe$"/>
     </match-rules>
   </project-rule>
   <project-rule name="svnkit" from="wild" os="all">
