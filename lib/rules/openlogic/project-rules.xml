@@ -6290,7 +6290,7 @@ libpython2.5.so.1.0
     <description> </description>
     <eval expression="tcl_bin OR tcl_filename_version" speed="1"/>
     <match-rules name="tcl_filename_version">
-      <match-rule name="win-tclsh" type="filenameVersion" filename="^tclsh([0-9].*?)\.exe$"/>
+      <match-rule name="win-tcldll" type="binary" filename="^tcl[0-9].*?\.dll$" regexp="\x00([7-9]\.[0-9]\..*?)\x00" />
     </match-rules>
     <match-rules name="tcl_bin">
       <result expression="OR-ALL"/>
