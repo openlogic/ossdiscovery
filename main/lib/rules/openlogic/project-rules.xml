@@ -6345,16 +6345,6 @@ libpython2.5.so.1.0
       <match-rule name="tb1or2xexe" type="binary" filename="^thunderbird.exe$" regexp="([1-2]\.[0-9]\.([0-9]{1,2}\.*{0,1}){0,2})\000{1,10}Thunderbird"/>
     </match-rules>
   </project-rule>
-  <project-rule name="tkabber" from="wild" os="windows">
-    <description>checks for version inside tkabber.tcl or detects presence of file</description>
-    <eval expression="tkabber_filename or tkabber_bin" speed="1"/>
-    <match-rules name="tkabber_filename">
-      <match-rule name="1-tortoisecvs-file" type="filename" filename="^tkabber\.tcl$"/>
-    </match-rules>
-    <match-rules name="tkabber_bin"><match-rule name="1-tortoisecvs-version" type="binary" filename="^tkabber\.tcl$" regexp="^set\s*[tkaber_]*version\s*[\x22\x24]*([0-9\.\-a-za-z]+)[\x22\x24]*"/>
-			set version "0.9.9"
-		</match-rules>
-  </project-rule>
   <project-rule name="tinymce" from="wild" os="windows">
     <description>checks version number in primary library file tiny_mce.js or detects presence of that file without version</description>
     <eval expression="tinymce_filename or tinymce_bin" speed="1"/>
@@ -6379,14 +6369,26 @@ libpython2.5.so.1.0
     </match-rules>
   </project-rule>
   <project-rule name="tk" from="wild" os="all">
-    <description> </description>
-    <eval expression="tk_unix_filename_version OR tk_win_filename_version" speed="1"/>
+    <description>looks for tk-related libraries and executables </description>
+    <eval expression="tk_unix OR tk_win_filename_version" speed="1"/>
     <match-rules name="tk_win_filename_version">
-      <match-rule name="win-tksh" type="filenameVersion" filename="^wish([0-9].*?)\.exe$"/>
+      <match-rule name="win-tksh" type="filenameVersion" filename="^wish([7-9]\.[0-9].*?)\.exe$"/>
     </match-rules>
-    <match-rules name="tk_unix_filename_version">
-      <match-rule name="tk-name" type="filenameVersion" filename="^wish([0-9].*)$"/>
+    <match-rules name="tk_unix">
+      <result expression="OR-ALL" speed="1"/>
+      <match-rule name="tklib" type="binary" filename="libtk[7-9]\.[0-9].*?\.so\..*?$" regexp="\x00([7-9]\..*?)\x00" />
+      <match-rule name="tk-name" type="filenameVersion" filename="^wish([7-9]\.[0-9].*?)$"/>
     </match-rules>
+  </project-rule>
+  <project-rule name="tkabber" from="wild" os="windows">
+    <description>checks for version inside tkabber.tcl or detects presence of file</description>
+    <eval expression="tkabber_filename or tkabber_bin" speed="1"/>
+    <match-rules name="tkabber_filename">
+      <match-rule name="1-tortoisecvs-file" type="filename" filename="^tkabber\.tcl$"/>
+    </match-rules>
+    <match-rules name="tkabber_bin"><match-rule name="1-tortoisecvs-version" type="binary" filename="^tkabber\.tcl$" regexp="^set\s*[tkaber_]*version\s*[\x22\x24]*([0-9\.\-a-za-z]+)[\x22\x24]*"/>
+			set version "0.9.9"
+		</match-rules>
   </project-rule>
   <project-rule name="tobago" from="wild" os="all">
     <description>Finds versions using MD5's.</description>
