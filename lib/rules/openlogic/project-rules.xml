@@ -7143,7 +7143,8 @@ libpython2.5.so.1.0
       <match-rule name="29-Xerces-J-bin.2.9.0.zip-xercesImpl.jar" type="MD5" md5sum="33ec8d237cbaceeffb2c2a7f52afd79a" filename="^xerces.*jar$" version="2.9.0"/>
       <!-- xerces/extracted/Xerces-J-bin.2.9.0.zip.extracted/xerces-2_9_0/xercesImpl.jar -->
       <match-rule name="xerces_on_ubuntu_7.0.4_feisty" type="MD5" md5sum="975da361c84693892498d28c81d56099" filename="^xerces.*jar$" version="2.8.1"/>
-      <!-- xerces/extracted/Xerces-J-bin.2.8.1.zip.extracted/xerces-2_8_1/xercesImpl.jar -->
+
+      <match-rule name="291-Xerces-J-bin.2.9.1.jar" type="MD5" md5sum="f807f86d7d9db25edbfc782aca7ca2a9" filename="^xerces.*jar$" version="2.9.1"/>
     </match-rules>
   </project-rule>
   <project-rule name="xindice" from="wild" os="all">
