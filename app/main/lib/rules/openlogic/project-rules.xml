@@ -674,6 +674,34 @@
       <match-rule name="cigi-mpv-version" type="binary" filename="^libmpvcommon\.so\..*$" regexp="\/mpv[_|-](.*?)\/common.*"/>
     </match-rules>
   </project-rule>
+  <project-rule name="clamwin" from="wild" os="windows">
+    <description>MD5s of exe files.</description>
+    <eval expression="md5 OR filename" speed="1"/>
+    <match-rules name="filename">
+      <result expression="OR-ALL"/>
+      <match-rule name="fn" type="filename" filename="^clamwin.exe$"/>
+    </match-rules>
+    <match-rules name="md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="0.87.1" type="MD5" md5sum="c7cee5b03ef6f1d99669f6653fa91bed" filename="^clamwin.exe$" version="0.87.1"/>
+      <match-rule name="0.88.2.1" type="MD5" md5sum="6293fc8d554c490e5c3cab1642f60cef" filename="^clamwin.exe$" version="0.88.2.1"/>
+      <match-rule name="0.88.2.3" type="MD5" md5sum="e9641a1ca1d281c5241e94a73623fe6a" filename="^clamwin.exe$" version="0.88.2.3"/>
+      <match-rule name="0.88.3" type="MD5" md5sum="aab76476fddbbb8b55f2dca87f006a95" filename="^clamwin.exe$" version="0.88.3"/>
+      <match-rule name="0.88.4" type="MD5" md5sum="dcc5b7a70d1f1475c3acbfb8f4e45514" filename="^clamwin.exe$" version="0.88.4"/>
+      <match-rule name="0.88.5" type="MD5" md5sum="9cf36852d962e67a43bc721648e2e6d0" filename="^clamwin.exe$" version="0.88.5"/>
+      <match-rule name="0.88.7" type="MD5" md5sum="e7b147610f8d53ad81d7b7f90c25e514" filename="^clamwin.exe$" version="0.88.7"/>
+      <match-rule name="0.88" type="MD5" md5sum="0c4e7e7aeb3964ebe1042140e09b6c02" filename="^clamwin.exe$" version="0.88"/>
+      <match-rule name="0.90.1.1" type="MD5" md5sum="4365b76698a6b7dbd8ee56873848c9e0" filename="^clamwin.exe$" version="0.90.1.1"/>
+      <match-rule name="0.90.1" type="MD5" md5sum="df80a1971ff755f138837cc737332435" filename="^clamwin.exe$" version="0.90.1"/>
+      <match-rule name="0.90.2.1" type="MD5" md5sum="c02c89142c7b53c80486154e9895169d" filename="^clamwin.exe$" version="0.90.2.1"/>
+      <match-rule name="0.90.2" type="MD5" md5sum="15f4037657d5a0d81c65a6846af5dd33" filename="^clamwin.exe$" version="0.90.2"/>
+      <match-rule name="0.90" type="MD5" md5sum="aef444942a4ddeb536d2ff8673fd6700" filename="^clamwin.exe$" version="0.90"/>
+      <match-rule name="0.91.1" type="MD5" md5sum="1e566759b6e10eb57a4b7ccf278600e0" filename="^clamwin.exe$" version="0.91.1"/>
+      <match-rule name="0.91.2" type="MD5" md5sum="4b69edf09e894a0076a5ecf084e4ad08" filename="^clamwin.exe$" version="0.91.2"/>
+      <match-rule name="0.92" type="MD5" md5sum="69451d2a68f840c803795e29d98ee728" filename="^clamwin.exe$" version="0.92"/>
+      <match-rule name="0.93" type="MD5" md5sum="f1e196b90be0affcd8d7e4b7190f53f1" filename="^clamwin.exe$" version="0.93"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="cleanimports" from="wild" os="all">
     <description/>
     <eval expression="cleanimports_filename or cleanimports_md5" speed="1"/>
@@ -2306,6 +2334,35 @@
     <match-rules name="expat_md5">
       <result expression="OR-ALL"/>
       <match-rule name="expat-2.0.0" type="MD5" md5sum="d7bf7d6b6c30c4b00fc6226d1e3ccaa2" filename="^xmlwf$" version="2.0.0"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="filezilla" from="wild" os="windows">
+    <description>MD5s of exe files.</description>
+    <eval expression="md5 OR filename" speed="1"/>
+    <match-rules name="filename">
+      <result expression="OR-ALL"/>
+      <match-rule name="fn" type="filename" filename="^filezilla.exe$"/>
+    </match-rules>
+    <match-rules name="md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="2.2.32" type="MD5" md5sum="7795bd8b3c88e88a944eb16311f3c4d8" filename="^filezilla.exe$" version="2.2.32"/>
+      <match-rule name="3.0.0" type="MD5" md5sum="83141f4607d7a9b981be72289aa4684e" filename="^filezilla.exe$" version="3.0.0"/>
+      <match-rule name="3.0.1" type="MD5" md5sum="c22150022e1b3baba67cf1e802e94112" filename="^filezilla.exe$" version="3.0.1"/>
+      <match-rule name="3.0.2.1" type="MD5" md5sum="2608d0ded3a647355750b5a8f543d15a" filename="^filezilla.exe$" version="3.0.2.1"/>
+      <match-rule name="3.0.2" type="MD5" md5sum="f87e96adaad129d1926372a5659f3066" filename="^filezilla.exe$" version="3.0.2"/>
+      <match-rule name="3.0.3" type="MD5" md5sum="976a8e203f142a977f1f0a899159859d" filename="^filezilla.exe$" version="3.0.3"/>
+      <match-rule name="3.0.4.1" type="MD5" md5sum="c4bb9818e0b16bec176f13959f16be97" filename="^filezilla.exe$" version="3.0.4.1"/>
+      <match-rule name="3.0.5.1" type="MD5" md5sum="7ca4fe042dad9c2769caaf5d2c1fc3a4" filename="^filezilla.exe$" version="3.0.5.1"/>
+      <match-rule name="3.0.5.2" type="MD5" md5sum="cc564795aebdb02c804e176d1626927d" filename="^filezilla.exe$" version="3.0.5.2"/>
+      <match-rule name="3.0.5" type="MD5" md5sum="bdaf025cf7427a0ce0002a002ab856d4" filename="^filezilla.exe$" version="3.0.5"/>
+      <match-rule name="3.0.6" type="MD5" md5sum="f5e17676de7ea40e1a65648c386079d8" filename="^filezilla.exe$" version="3.0.6"/>
+      <match-rule name="3.0.7.1" type="MD5" md5sum="8fbaad79e900f2297f1cdc2bb5da07f3" filename="^filezilla.exe$" version="3.0.7.1"/>
+      <match-rule name="3.0.7" type="MD5" md5sum="b4d26d99d4cbb9eb64aeca4f79e61fcc" filename="^filezilla.exe$" version="3.0.7"/>
+      <match-rule name="3.0.8.1" type="MD5" md5sum="99c6c73e85073072d9d3023f3a533ca9" filename="^filezilla.exe$" version="3.0.8.1"/>
+      <match-rule name="3.0.8" type="MD5" md5sum="d9285ec26c3809cbf73bce0a24d65193" filename="^filezilla.exe$" version="3.0.8"/>
+      <match-rule name="3.0.9.1" type="MD5" md5sum="2c53ed66fc296c51c5723ef148319cb5" filename="^filezilla.exe$" version="3.0.9.1"/>
+      <match-rule name="3.0.9.2" type="MD5" md5sum="469e8b305e945e048b1c76b80f4d6650" filename="^filezilla.exe$" version="3.0.9.2"/>
+      <match-rule name="3.0.9.3" type="MD5" md5sum="6ecdd2c8d12d524b3af537aace157ebf" filename="^filezilla.exe$" version="3.0.9.3"/>
     </match-rules>
   </project-rule>
   <project-rule name="fast-md5" from="wild" os="all">
