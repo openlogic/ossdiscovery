@@ -5373,6 +5373,36 @@
       <match-rule name="pager-taglib-2.0.jar" type="MD5" md5sum="9c8c8df03f55a2f02d7e7c1497e126fb" filename="pager-taglib-.*\.war" version="2.0"/>
     </match-rules>
   </project-rule>
+  <project-rule name="paint.net" from="wild" os="windows">
+    <description>MD5s of exe files.</description>
+    <eval expression="md5 OR filename" speed="1"/>
+    <match-rules name="filename">
+      <result expression="OR-ALL"/>
+      <match-rule name="fn" type="filename" filename="^PaintDotNet.exe$"/>
+    </match-rules>
+    <match-rules name="md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="2.6" type="MD5" md5sum="2336148d8cb674197fd97879c99270ec" filename="^PaintDotNet.exe$" version="2.6"/>
+      <match-rule name="3.0" type="MD5" md5sum="d0635047232756f23ff26eb87b06e2e8" filename="^PaintDotNet.exe$" version="3.0"/>
+      <match-rule name="2.61" type="MD5" md5sum="aa05e0684493ec13b184277bc390db10" filename="^PaintDotNet.exe$" version="2.61"/>
+      <match-rule name="3.22" type="MD5" md5sum="84f078433e87c1b6e0e9df317ec8423e" filename="^PaintDotNet.exe$" version="3.22"/>
+      <match-rule name="3.07" type="MD5" md5sum="9f9de970e93e2093bd02d5c6525ba14d" filename="^PaintDotNet.exe$" version="3.07"/>
+      <match-rule name="2.1" type="MD5" md5sum="dd950c7c0da02e57d14255d509eb513f" filename="^PaintDotNet.exe$" version="2.1"/>
+      <match-rule name="2.64" type="MD5" md5sum="2db755322ca1a5181ad9ed9bd86d8928" filename="^PaintDotNet.exe$" version="2.64"/>
+      <match-rule name="3.20" type="MD5" md5sum="fae5de220b031cbe7fa5eb8ee79cddf1" filename="^PaintDotNet.exe$" version="3.20"/>
+      <match-rule name="2.72" type="MD5" md5sum="f85fb57a786b380e6747b229e7fd6aaf" filename="^PaintDotNet.exe$" version="2.72"/>
+      <match-rule name="3.08" type="MD5" md5sum="695e56bdeb5e2bdd3eef689d49e2f24d" filename="^PaintDotNet.exe$" version="3.08"/>
+      <match-rule name="3.05" type="MD5" md5sum="1e50acc38903a62bf4eee8faf47daed9" filename="^PaintDotNet.exe$" version="3.05"/>
+      <match-rule name="2.5" type="MD5" md5sum="bf8500f044362afcad75d2f0ac5319c4" filename="^PaintDotNet.exe$" version="2.5"/>
+      <match-rule name="3.30" type="MD5" md5sum="5c263bf5bd43a75317dadebd6b4bee68" filename="^PaintDotNet.exe$" version="3.30"/>
+      <match-rule name="3.10" type="MD5" md5sum="823181bccf3cd85887fffa200a00004f" filename="^PaintDotNet.exe$" version="3.10"/>
+      <match-rule name="3.31" type="MD5" md5sum="c7decf52c6bc1ccced308cd40e03f518" filename="^PaintDotNet.exe$" version="3.31"/>
+      <match-rule name="2.5_b1" type="MD5" md5sum="be846c14efb61a0896c27abc757a3f65" filename="^PaintDotNet.exe$" version="2.5_b1"/>
+      <match-rule name="2.62" type="MD5" md5sum="756212591968d01f10c55c6edddbf100" filename="^PaintDotNet.exe$" version="2.62"/>
+      <match-rule name="3.01" type="MD5" md5sum="a1c4935f5bb70c15a509ff1d6a3c0b84" filename="^PaintDotNet.exe$" version="3.01"/>
+      <match-rule name="2.63" type="MD5" md5sum="d8973d0a2c38ad5bdfb4e0c62d210264" filename="^PaintDotNet.exe$" version="2.63"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="perl" from="wild" os="all">
     <eval expression="version or perlfile" speed="1"/>
     <match-rules name="perlfile">
