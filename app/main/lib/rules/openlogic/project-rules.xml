@@ -6377,7 +6377,7 @@ libpython2.5.so.1.0
     <match-rules name="tk_unix">
       <result expression="OR-ALL" speed="1"/>
       <match-rule name="tklib" type="binary" filename="libtk[7-9]\.[0-9].*?\.so\..*?$" regexp="\x00([7-9]\..*?)\x00" />
-      <match-rule name="tk-name" type="filenameVersion" filename="^wish([7-9]\.[0-9].*?)$"/>
+      <match-rule name="tk-name" type="filenameVersion" filename="^wish([7-9]\.[0-9])$"/>
     </match-rules>
   </project-rule>
   <project-rule name="tkabber" from="wild" os="windows">
