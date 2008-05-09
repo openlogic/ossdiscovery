@@ -378,6 +378,24 @@
       <match-rule name="name" type="filename" filename="^backport-util-concurrent.*jar$"/>
     </match-rules>
   </project-rule>
+  <project-rule name="azureus" from="wild" os="all">
+    <description>MD5s of jar files.</description>
+    <eval expression="md5 OR filename" speed="1"/>
+    <match-rules name="filename">
+      <result expression="OR-ALL"/>
+      <match-rule name="fn" type="filename" filename="^Azureus.*\.jar$"/>
+    </match-rules>
+    <match-rules name="md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="2.5.0.4" type="MD5" md5sum="50d0109f016a925d16102b5c77ef1c84" filename="^Azureus.*\.jar$" version="2.5.0.4"/>
+      <match-rule name="3.0.3.0" type="MD5" md5sum="e5f799d8e2ee598d30f3811f835ed52f" filename="^Azureus.*\.jar$" version="3.0.3.0"/>
+      <match-rule name="3.0.3.4" type="MD5" md5sum="ffc341c571df37275064a33a435a47db" filename="^Azureus.*\.jar$" version="3.0.3.4"/>
+      <match-rule name="3.0.4.0" type="MD5" md5sum="f04ece46e60b4be9740d6df8980cb9ae" filename="^Azureus.*\.jar$" version="3.0.4.0"/>
+      <match-rule name="3.0.4.2" type="MD5" md5sum="6ff567e1025acadef35e8fedee3e09df" filename="^Azureus.*\.jar$" version="3.0.4.2"/>
+      <match-rule name="3.0.5.0" type="MD5" md5sum="ff0db14cbea47ba3a6e6ccae34268c76" filename="^Azureus.*\.jar$" version="3.0.5.0"/>
+      <match-rule name="3.0.5.2" type="MD5" md5sum="c7cd71c701d90bf24d95539082312ff2" filename="^Azureus.*\.jar$" version="3.0.5.2"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="base" from="wild" os="all">
     <description>Checks version number in file base_conf.php.dist </description>
     <eval expression="base_bin" speed="1"/>
