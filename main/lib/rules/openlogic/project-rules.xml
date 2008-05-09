@@ -6275,15 +6275,15 @@ libpython2.5.so.1.0
   </project-rule>
   <project-rule name="subversion" from="wild" os="all">
     <eval expression="version or svnfile" speed="1"/>
+    <match-rules name="version">
+      <result expression="svnbin OR svnexe"/>
+      <match-rule name="svnbin" type="binary" filename="^svn$" regexp="\x00(1\.[1-6]\..*?)\x00"/>
+      <match-rule name="svnexe" type="binary" filename="^svn.exe$" regexp="subversion\-(1\.[1-6]\.[0-9]?)"/>
+    </match-rules>
     <match-rules name="svnfile">
       <result expression="svn OR svnexe"/>
       <match-rule name="svn" type="filename" filename="^svn$"/>
       <match-rule name="svnexe" type="filename" filename="^svn.exe$"/>
-    </match-rules>
-    <match-rules name="version">
-      <result expression="svnbin OR svnexe"/>
-      <match-rule name="svnbin" type="binary" filename="^svn$" regexp="(1\.[1-6]\.[0-9]?)"/>
-      <match-rule name="svnexe" type="binary" filename="^svn.exe$" regexp="subversion\-(1\.[1-6]\.[0-9]?)"/>
     </match-rules>
   </project-rule>
   <project-rule name="svnkit" from="wild" os="all">
