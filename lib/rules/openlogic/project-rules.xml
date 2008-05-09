@@ -6372,7 +6372,9 @@ libpython2.5.so.1.0
     <description>looks for tk-related libraries and executables </description>
     <eval expression="tk_unix OR tk_win_filename_version" speed="1"/>
     <match-rules name="tk_win_filename_version">
-      <match-rule name="win-base" type="filenameVersion" filename="base-tk(.*?)\-thread\-win32\-ix86.exe$" />
+      <result expression="OR-ALL" speed="1"/>
+      <match-rule name="win-base" type="filenameVersion" filename="^base-tk(.*?)\-thread\-win32\-ix86.exe$" />
+      <match-rule name="win-dll" type="binary" filename="tk[7-9][0-9].dll" regexp="version=\x22([7-9].*?)\x22" />
     </match-rules>
     <match-rules name="tk_unix">
       <result expression="OR-ALL" speed="1"/>
