@@ -179,6 +179,7 @@ proxy_host: nil     # example: "192.168.10.211"
 proxy_port: nil     # 4545 # 3128
 proxy_user: nil     # example: corpusername
 proxy_password: nil # example: corppassword
+proxy_ntlm_domain: "" # typically left blank, but in case an NTLM-only proxy requires it, it's available for configuration
 
 update_rules: false
 update_rules_and_do_scan: false
