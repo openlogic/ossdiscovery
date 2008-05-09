@@ -6324,7 +6324,7 @@ libpython2.5.so.1.0
     </match-rules>
     <match-rules name="tcl_bin">
       <result expression="OR-ALL"/>
-      <match-rule name="tcl-bin" type="binary" filename="^tclsh.*$" regexp="\x00libtcl(.*?)\.so\."/>
+      <match-rule name="tcl-bin" type="binary" filename="^tclsh.*$" regexp="\x00libtcl(.*?)\.so"/>
       <match-rule name="tcl-lib" type="filenameVersion" filename="^libtcl([7-9]\.[0-9]).*?\.so.*?$" />
       <match-rule name="tcl-so" type="binary" filename="^tclsh.*$" regexp=".*libtcl(.*?)\.so.*"/>
       <!-- os x dynamic lib for tcl -->
