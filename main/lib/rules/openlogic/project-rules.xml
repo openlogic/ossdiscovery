@@ -256,15 +256,12 @@
   </project-rule>
   <project-rule name="appcelerator" from="wild" os="all">
     <description>Find Appcelerator or config.yml</description>
-    <eval expression="appfilename or configyml" speed="1"/>
+    <eval expression="configyml" speed="1"/>
     <match-rules name="configyml">
       <result expression="OR-ALL"/>
-      <!-- using config.yml as keyfile because without, appcelerator will not run, and it contains the version string -->
-      <match-rule name="configyml" type="binary" filename="^config.yml$" regexp="websdk.*?version\:([2-3]\..*?)$"/>
-    </match-rules>
-    <match-rules name="appfilename">
-      <result expression="OR-ALL"/>
-      <match-rule name="appcelerator" type="filename" filename="^appcelerator$"/>
+      <!-- using config.yml as keyfile because without it, appcelerator will not run correctly, and it 
+           contains the version string, using just appcelerator filename produces many unknown versions -->
+      <match-rule name="configyml" type="binary" filename="^config.yml$" regexp="websdk\n.*?version:.*?([2-3]\..*?)$"/>
     </match-rules>
   </project-rule>
   <project-rule name="audacity" from="wild" os="windows">
