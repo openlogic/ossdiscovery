@@ -1,7 +1,4 @@
-
-
-
-# generic-exclusions.rb
+# no-pkgs.rb
 #
 # LEGAL NOTICE
 # -------------
@@ -31,13 +28,11 @@
 # --------------------------------------------------------------------------------------------------
 #
 
-# exclusions
+# this is a example generic filter for ignoring ubuntu pkg info directories /var/lib/dpkg
 
-require "#{@filterdir}/no-hidden.rb"
-require "#{@filterdir}/no-tmp.rb"
-require "#{@filterdir}/no-system.rb"
-require "#{@filterdir}/no-pkgs.rb"
-require "#{@filterdir}/no-man.rb"
+# a filter is defined by its unique description as the key value to a filter hash table
+# the value is simply a regular expression or literal filename or basename of a directory to ignore
 
-#require "#{@filterdir}/no-media.rb"
+# these files are not binaries, but artifacts of installations
 
+@dir_exclusion_filters["No dpkg directories"] = '^/var/lib/dpkg'
