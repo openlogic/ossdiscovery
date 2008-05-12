@@ -2155,7 +2155,7 @@
     <match-rules name="pde_version">
       <result expression="OR-ALL"/>
       <match-rule name="pde_ver" type="binary" filename="^feature.xml$" regexp="pde.*?\n.*?label.*?\n.*?version=\&quot;(.+?)-.+?\&quot;"/>
-      <match-rule name="pde_shorter_ver" type="binary" filename="^feature.xml$" regexp="pde.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
+      <match-rule name="pde_shorter_ver" type="binary" filename="^feature.xml$" regexp="pde.*?\n.*?label.*?\n.*?version=\&quot;(.+?)-.*?\&quot;"/>
     </match-rules>
   </project-rule>
   <project-rule name="eclipseplugin-quantum" from="wild" os="all">
