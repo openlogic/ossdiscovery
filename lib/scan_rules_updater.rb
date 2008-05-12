@@ -185,7 +185,7 @@ class ScanRulesUpdater
   def download_file(file_to_download_path, dest_dir="") 
     file_to_download_path = ScanRulesUpdater.scrub_url_path(file_to_download_path)
     
-    File.open(File.join(dest_dir, File.basename(file_to_download_path)), "w") do |downloaded_file|
+    File.open(File.join(dest_dir, File.basename(file_to_download_path)), "wb") do |downloaded_file|
     
       if ( response_body = http_get_file( @rules_file_base_url + file_to_download_path ) )
         downloaded_file.write( response_body )
