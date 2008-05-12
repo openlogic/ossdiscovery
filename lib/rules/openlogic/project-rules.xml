@@ -2572,9 +2572,15 @@
       <match-rule name="2.3.8" type="MD5" version="2.3.8" filename="^freemarker\.jar$" md5sum="aee4731c601d208e23b99e7c75b9cf01"/>
       <match-rule name="2.3.9" type="MD5" version="2.3.9" filename="^freemarker\.jar$" md5sum="863e23ab67f7aa0bf5e82683daaace47"/>
     </match-rules>
-  </project-rule>
+  </project-rule>  
   <project-rule name="gaim" from="wild" os="all">
-    <eval expression="files" speed="1"/>
+    <eval expression="binary OR files" speed="1"/>
+    <match-rules name="binary">
+      <result expression="OR-ALL"/>
+      <match-rule name="gaim" type="binary" filename="^gaim.dll$" regexp="\000about\000Gaim v?([0-9a-zA-Z.]+)\000"/>
+      <match-rule name="gaimnewer" type="binary" filename="^gaim.dll$" regexp="\000([0-9a-zA-Z.]{2,10})\000+Gaim %s"/>
+      <match-rule name="gaimlinux" type="binary" filename="^gaim$" regexp="\000About .*(\d[0-9a-zA-Z.]{1,10})\000"/>
+    </match-rules>
     <match-rules name="files">
       <result expression="OR-ALL"/>
       <match-rule name="gaimexe" type="filename" filename="^gaim.exe$"/>
