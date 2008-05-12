@@ -702,6 +702,7 @@ def make_machine_id
   case platform
   when "windows", "jruby-windows"     
     make_simple_machine_id   
+    Digest::MD5.hexdigest( `time /t` )
   else  # every other platform including cygwin supports uname -a
     make_uname_based_machine_id platform
   end
