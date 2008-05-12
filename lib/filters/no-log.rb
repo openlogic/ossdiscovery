@@ -1,4 +1,4 @@
-# generic-exclusions.rb
+# no-log.rb
 #
 # LEGAL NOTICE
 # -------------
@@ -28,15 +28,11 @@
 # --------------------------------------------------------------------------------------------------
 #
 
-# exclusions
+# this is a example generic filter for ignoring /var/log directories
 
-require "#{@filterdir}/no-hidden.rb"
-require "#{@filterdir}/no-tmp.rb"
-require "#{@filterdir}/no-system.rb"
-require "#{@filterdir}/no-pkgs.rb"
-require "#{@filterdir}/no-man.rb"
-require "#{@filterdir}/no-apparmor.rb"
-require "#{@filterdir}/no-log.rb"
+# a filter is defined by its unique description as the key value to a filter hash table
+# the value is simply a regular expression or literal filename or basename of a directory to ignore
 
-#require "#{@filterdir}/no-media.rb"
+# these files are not binaries, but artifacts of installations
 
+@dir_exclusion_filters["No /var/log directories"] = '^/var/log'
