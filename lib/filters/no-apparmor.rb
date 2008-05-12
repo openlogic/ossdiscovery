@@ -37,4 +37,4 @@
 # matching because they name apparmor pascal ASCII files directly after the applications that will
 # match the binaries we're looking for
 
-@dir_exclusion_filters["No apparmor directories"] = '^/etc/apparmor.d'
+@dir_exclusion_filters["No apparmor directories"] = '^/etc/apparmor.d|^/var/lib/apparmor'
