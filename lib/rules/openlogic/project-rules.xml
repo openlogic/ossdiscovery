@@ -6989,6 +6989,19 @@ libpython2.5.so.1.0
       <match-rule name="vimexe" type="binary" filename="^vim.exe$" regexp="IMproved ([3-7]\.[0-9]?)"/>
     </match-rules>
   </project-rule>
+  <project-rule name="vlc" from="wild" os="all">
+    <eval expression="binary OR files" speed="1"/>
+    <match-rules name="binary">
+      <result expression="OR-ALL"/>
+      <match-rule name="vlcexe" type="binary" filename="^vlc.exe$" regexp="VideoLAN Client - version ([^\s]+)\s"/>
+      <match-rule name="vlcbin" type="binary" filename="^libvlc.so" regexp="VLC media player - version ([^\s]+)\s"/>
+    </match-rules>
+    <match-rules name="files">
+      <result expression="OR-ALL"/>
+      <match-rule name="vlcexe" type="filename" filename="^vlc.exe$"/>
+      <match-rule name="vlc" type="filename" filename="^libvlc.so"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="web services invocation framework (wsif)" from="wild" os="windows">
     <description>checks md5 against wsif jar or detects presence of file</description>
     <eval expression="wsif_filename or wsif_md5" speed="1"/>
