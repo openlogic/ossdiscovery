@@ -26,6 +26,15 @@
 
 -->
 <project-rules universal-version="20080411-094720">
+  <project-rule name="7-zip" from="wild" os="windows">
+    <description>searching binary</description>
+    <eval expression="bin" speed="1"/>
+    <match-rules name="bin">
+      <result expression="OR-ALL"/>
+      <match-rule name="exedll" type="binary" filename="^7z.exe|^7-zip.dll|^7zFM.exe|^7zG.exe$" regexp="V.e.r.s.i.o.n.*?([3-5].\..*?)\x00{3,5}"/>
+      <match-rule name="sadll" type="binary" filename="^7z.dll$" regexp="V.e.r.s.i.o.n.*?([3-5].\..*?)\("/>
+    </match-rules>
+  </project-rule>
   <project-rule name="abiword" from="wild" os="windows">
     <description>MD5s of exe files.</description>
     <eval expression="md5 OR filename" speed="1"/>
