@@ -7193,6 +7193,7 @@ libpython2.5.so.1.0
       <match-rule name="8-xalan-j.2.6.0-bin-2jars.zip-xsltc.jar" type="MD5" md5sum="240cb837f4001ff7b6a7e3e0d4c32a4c" filename="^xsltc.*jar$" version="2.6.0"/>
       <match-rule name="9-xalan-j.2.7.0-bin-2jars.zip-xsltc.jar" type="MD5" md5sum="7316bad5fcbeeca7e0a83636758faac5" filename="^xsltc.*jar$" version="2.7.0"/>
       <match-rule name="xalan_on_ubuntu_7.0.4_feisty" type="MD5" md5sum="a535faa9c0fc295cca9d45ef7e67d0f5" filename="^xalan.*jar$" version="2.7.0"/>
+      <match-rule name="xalan_on_ubuntu_7.10_gutsy" type="MD5" md5sum="b6dd321437efdf01b11c2cb2c087b373" filename="^xalan.*jar$" version="2.7.0"/>
     </match-rules>
   </project-rule>
   <project-rule name="xdoclet" from="wild" os="all">
@@ -7309,8 +7310,8 @@ libpython2.5.so.1.0
       <match-rule name="29-Xerces-J-bin.2.9.0.zip-xercesImpl.jar" type="MD5" md5sum="33ec8d237cbaceeffb2c2a7f52afd79a" filename="^xerces.*jar$" version="2.9.0"/>
       <!-- xerces/extracted/Xerces-J-bin.2.9.0.zip.extracted/xerces-2_9_0/xercesImpl.jar -->
       <match-rule name="xerces_on_ubuntu_7.0.4_feisty" type="MD5" md5sum="975da361c84693892498d28c81d56099" filename="^xerces.*jar$" version="2.8.1"/>
-
       <match-rule name="291-Xerces-J-bin.2.9.1.jar" type="MD5" md5sum="f807f86d7d9db25edbfc782aca7ca2a9" filename="^xerces.*jar$" version="2.9.1"/>
+      <match-rule name="281-xercesjar" type="MD5" md5sum="379b70b5bb61fab4852935a088053120" filename="^xercesImpl.jar$" version="2.8.1"/>
     </match-rules>
   </project-rule>
   <project-rule name="xindice" from="wild" os="all">
