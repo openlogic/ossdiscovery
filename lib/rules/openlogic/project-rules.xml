@@ -6823,6 +6823,9 @@ libpython2.5.so.1.0
       <!-- jakarta-tomcat-5.5.8.tar.gz.extracted/jakarta-tomcat-5.5.8/server/lib/tomcat-coyote.jar -->
       <match-rule name="169-jakarta-tomcat-5.5.9.bothzips-tomcat-coyote.jar" type="MD5" md5sum="eed1ea9a1240691bf6fda1304f263d81" filename="^tomcat-coyote\.jar$" version="5.5.9"/>
       <!-- jakarta-tomcat-5.5.9.tar.gz.extracted/jakarta-tomcat-5.5.9/server/lib/tomcat-coyote.jar -->
+      <!-- tomcat 5.5 found on ubuntu fiesty -->
+      <match-rule name="55catalinaubuntu" type="MD5" md5sum="3de4bb2a733493b39f14ce4fd0dab36d" filename="^catalina.jar$" version="5.5"/>
+      <match-rule name="55coyoteubuntu" type="MD5" md5sum="e09753fa0438a4d93fbc4e14a112b741" filename="^tomcat-coyote.jar$" version="5.5"/>
     </match-rules>
   </project-rule>
   <project-rule name="tortoisecvs" from="wild" os="windows">
