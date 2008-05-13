@@ -890,13 +890,6 @@
       <match-rule name="clover_jar" type="filenameVersion" filename="^clover-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="cocoon" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="cocoon_fv" speed="1"/>
-    <match-rules name="cocoon_fv">
-      <match-rule name="cocoon_jar" type="filenameVersion" filename="^cocoon-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="walding" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="walding_fv" speed="1"/>
@@ -1553,13 +1546,6 @@
     <eval expression="commons-pool_fv" speed="1"/>
     <match-rules name="commons-pool_fv">
       <match-rule name="commons-pool_jar" type="filenameVersion" filename="^commons-pool-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="commons-primitives" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="commons-primitives_fv" speed="1"/>
-    <match-rules name="commons-primitives_fv">
-      <match-rule name="commons-primitives_jar" type="filenameVersion" filename="^commons-primitives-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="commons-sql" from="wild" os="all">
