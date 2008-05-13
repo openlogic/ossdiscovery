@@ -6839,6 +6839,13 @@ libpython2.5.so.1.0
       <match-rule name="1-tortoisecvs-version" type="binary" filename="^tortoiseshell\.dll[_renamed]*$|^trtseshl\.dll$" regexp="p.r.o.d.u.c.t.v.e.r.s.i.o.n[\x00]+([0-9\x00]+\.[0-9\x00]+\.[0-9\x00]+)"/>
     </match-rules>
   </project-rule>
+  <project-rule name="tortoisesvn" from="wild" os="windows">
+    <description>checks for version inside dll or exe</description>
+    <eval expression="tortoisesvn_bin" speed="1"/>
+    <match-rules name="tortoisesvn_bin">
+      <match-rule name="tortoisesvn-version" type="binary" filename="TortoiseSVN.dll|TortoiseProc.exe" regexp="\\TortoiseSVN\-([1-2]\..*?)\\"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="tuscany-das" from="wild" os="linux">
     <description>checks md5 of tuscany-das jar</description>
     <eval expression="tuscany-das_md5 or tuscany-das_filename" speed="1"/>
