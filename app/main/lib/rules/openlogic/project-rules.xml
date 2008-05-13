@@ -187,6 +187,7 @@
       <match-rule name="21-jakarta-ant-1.4.1-bin.zip-ant.jar" type="MD5" md5sum="4dd8dfba17f9567f5a4dcc4005c7d6a7" filename="^ant.*jar$" version="1.4.1"/>
       <match-rule name="22-jakarta-ant-1.5-bin.zip-ant.jar" type="MD5" md5sum="902a360ecad98a34b59863c1e65bcf71" filename="^ant.*jar$" version="1.5"/>
       <match-rule name="23-jakarta-ant-1.5.1-bin.zip-ant.jar" type="MD5" md5sum="54d5b7b783fa0c282f6798fbe7384bc5" filename="^ant.*jar$" version="1.5.1"/>
+      <match-rule name="24-ant170jar" type="MD5" md5sum="57c2537855a06e61661169317fda5712" filename="^ant.*jar$" version="1.7.0"/>
     </match-rules>
   </project-rule>
   <project-rule name="antlr" from="wild" os="all">
