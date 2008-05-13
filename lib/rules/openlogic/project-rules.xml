@@ -5813,6 +5813,14 @@ libpython2.5.so.1.0
       <match-rule name="1-rails-find-rakefile" type="binary" filename="rakefile$" regexp="^\s*pkg_version\s*=\s*[\x22\x27]([0-9\.]+)[\x22\x27]"/>
     </match-rules>
   </project-rule>
+  <project-rule name="rapidsvn" from="wild" os="all">
+    <description>Finds version in executables</description>
+    <eval expression="bin" speed="1"/>
+    <match-rules name="bin">
+      <result expression="OR-ALL"/>
+      <match-rule name="exe" type="binary" filename="^rapidsvn.exe$" regexp="\x00([0-1].[0-9]{1,2}.[0-9]{1,2})\x00.*?R.a.p.i.d" /> -->
+    </match-rules>
+  </project-rule>
   <project-rule name="rhino" from="wild" os="all">
     <eval expression="md5s" speed="1"/>
     <match-rules name="md5s">
