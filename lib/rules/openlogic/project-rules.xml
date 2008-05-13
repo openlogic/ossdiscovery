@@ -5819,6 +5819,7 @@ libpython2.5.so.1.0
     <match-rules name="bin">
       <result expression="OR-ALL"/>
       <match-rule name="exe" type="binary" filename="^rapidsvn.exe$" regexp="\x00([0-1].[0-9]{1,2}.[0-9]{1,2})\x00.*?R.a.p.i.d" /> -->
+      <match-rule name="nixexe" type="binary" filename="^rapidsvn$" regexp="\x00([0-1].[0-9]{1,2}.[0-9]{1,2})\x00" /> -->
     </match-rules>
   </project-rule>
   <project-rule name="rhino" from="wild" os="all">
