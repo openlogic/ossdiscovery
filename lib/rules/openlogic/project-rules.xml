@@ -5213,6 +5213,13 @@
       <match-rule name="1.0.4.0" type="MD5" md5sum="21a764436e4e21a7b4fb57e99ea0c56e" filename="^NHibernate.dll$" version="1.0.4.0"/>
     </match-rules>
   </project-rule>
+  <project-rule name="nmap" from="wild" os="all">
+    <description>Finds nmap on various platforms</description>
+    <eval expression="bin" speed="1"/>
+    <match-rules name="bin">
+      <match-rule name="nmapgeneral" type="binary" filename="^nmap$" regexp="insecure.org\x00([3-5]\.[\d].*?)\x00"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="nunit" from="wild" os="all">
     <description>Finds NUnit</description>
     <eval expression="md5s OR filename" speed="1"/>
