@@ -6939,9 +6939,9 @@ libpython2.5.so.1.0
   <project-rule name="virtualbox" from="wild" os="all">
     <eval expression="binaries" speed="1"/>
     <match-rules name="binaries">
+      <!-- on osx, these are all found together in Applications, on ubuntu, many of these are scripts which 
+           point to exectuables of the same name in /usr/lib/virtualbox -->
       <result expression="OR-ALL"/>
-      <!-- on osx, these are all found together in Applications, on ubuntu, many of these are scripts which point to exectuables of the
-           same name in /usr/lib/virtualbox -->
       <match-rule name="vboxhl1" type="binary" filename="^VBoxHeadless$" regexp="\x00([1-2]\.[\d]\.[\d].*?)\x00" /> 
       <match-rule name="vboxmg1" type="binary" filename="^VBoxManage$" regexp="Version ([1-2]\.[\d].*?)\x0a" /> 
       <match-rule name="vboxsvc1" type="binary" filename="^VBoxSVC$" regexp="VBoxSVC-([1-2]\.[\d].*?)\x00" /> 
