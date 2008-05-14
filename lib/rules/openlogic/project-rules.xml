@@ -5218,7 +5218,7 @@
     <eval expression="bin" speed="1"/>
     <match-rules name="bin">
       <result expression="OR-ALL"/>
-      <match-rule name="nmapgeneral" type="binary" filename="^nmap$" regexp="insecure.org\x00([3-5]\.[\d].*?)\x00"/>
+      <match-rule name="nmapgeneral" type="binary" filename="^nmap$" regexp="insecure.org.*?\x00([3-5]\.[\d].*?)\x00"/>
       <match-rule name="nmapwin" type="binary" filename="^nmap.exe$" regexp="Nmap.*?\x00([3-5]\.[\d].*?)\x00.*?nmap\.org"/>
     </match-rules>
   </project-rule>
