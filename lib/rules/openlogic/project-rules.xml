@@ -6936,6 +6936,17 @@ libpython2.5.so.1.0
       <match-rule name="1-uddi4j-v2beta" type="MD5" md5sum="f560f5022ce28dfe090216f462868888" filename="^uddi4j\.jar$" version="v2beta"/>
     </match-rules>
   </project-rule>
+  <project-rule name="virtualbox" from="wild" os="all">
+    <eval expression="binaries" speed="1"/>
+    <match-rules name="binaries">
+      <result expression="OR-ALL"/>
+      <!-- on osx, these are all found together in Applications, on ubuntu, many of these are scripts which point to exectuables of the
+           same name in /usr/lib/virtualbox -->
+      <match-rule name="vboxhl1" type="binary" filename="^VBoxHeadless$" regexp="\x00([1-2]\.[\d]\.[\d].*?)\x00" /> 
+      <match-rule name="vboxmg1" type="binary" filename="^VBoxManage$" regexp="Version ([1-2]\.[\d].*?)\x0a" /> 
+      <match-rule name="vboxsvc1" type="binary" filename="^VBoxSVC$" regexp="VBoxSVC-([1-2]\.[\d].*?)\x00" /> 
+    </match-rules>
+  </project-rule>
   <project-rule name="velocity" from="wild" os="all">
     <!-- all velocity jars have the version name in their filenames -->
     <eval expression="velocityversions" speed="1"/>
