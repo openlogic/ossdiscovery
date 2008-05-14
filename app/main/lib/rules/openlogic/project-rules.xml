@@ -537,6 +537,16 @@
       <match-rule name="blogwelcome" type="binary" filename="^c3b491e5-59ac-4f6a-81e5-27e971b903ed.xml$" regexp="BlogEngine.NET ([0-9].[0-9]+)"/>
     </match-rules>
   </project-rule>
+  <project-rule name="bochs" from="wild" os="all">
+    <description>Bochs binary file</description>
+    <eval expression="bochs_bin OR bochs_filename" speed="1"/>
+    <match-rules name="bochs_filename">
+      <match-rule name="bochs_filename" type="filename" filename="^bochs((-bin)|(.exe))$"/>
+    </match-rules>
+    <match-rules name="bochs_bin">
+      <match-rule name="bochs_bin" type="binary" filename="^bochs((-bin)|(.exe))$" regexp="\000([\d.]+)\000{1,3}Bochs x86 Emulator %s"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="bouncycastle-crypto" from="wild" os="all">
     <description>Finds versions using file names..</description>
     <eval expression="nameversion OR name" speed="1"/>
@@ -1621,6 +1631,16 @@
       <result expression="OR-ALL"/>
       <match-rule name="cvs" type="binary" filename="^cvs$" regexp="\(CVS\) ([0-9]+.[0-9]+.[0-9]+)"/>
       <match-rule name="cvs_exe" type="binary" filename="^cvs.exe" regexp="cvs-([0-9]+.[0-9]+.[0-9]+)"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="cygwin" from="wild" os="windows">
+    <description>Binary rule on cygwin dll file</description>
+    <eval expression="cygwin_bin OR cygwin_filename" speed="1"/>
+    <match-rules name="cygwin_filename">
+      <match-rule name="1-cygwin-filename" type="filename" filename="^cygwin\d.dll$"/>
+    </match-rules>
+    <match-rules name="cygwin_bin">
+      <match-rule name="1-cygwin-bin" type="binary" filename="^cygwin\d.dll$" regexp="/cygwin-([^/]+)/"/>
     </match-rules>
   </project-rule>
   <project-rule name="db2xml" from="wild" os="all">
