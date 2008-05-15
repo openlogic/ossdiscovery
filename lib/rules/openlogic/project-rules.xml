@@ -25,7 +25,7 @@
  You can contact OpenLogic at info@openlogic.com.
 
 -->
-<project-rules universal-version="20080411-094720">
+<project-rules universal-version="20080515-165933">
   <project-rule name="7-zip" from="wild" os="windows">
     <description>searching binary</description>
     <eval expression="bin" speed="1"/>
