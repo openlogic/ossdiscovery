@@ -9,9 +9,8 @@ Options are not order dependent and may be one or more of:
                      optionally --deliver-results can take a parameter which is a path to an existing scan results file to deliver
 --help,           -h print this help message
 --human-results,  -u the absolute or relative path and filename for the human readable results files.  The default is STDOUT
---geography,      -Y geography code, if the scan is submitted to census server as an anonymous scan, this overrides
-                     value in the config.yml file.  This is an exception to order dependences and must occur before
-                     --deliver-results on the command line.
+--geography,      -Y geography code. If the scan is submitted to census server as an anonymous scan, this overrides
+                     value in the config.yml file.
 --census-code,    -C the identifier code received at census registration time
 --inc-path,       -I include the path/location of detected package in machine scan results
 --list-excluded,  -e during a scan, print a list of files that are excluded and the filter that excluded each
@@ -29,7 +28,8 @@ Options are not order dependent and may be one or more of:
 --preview-results,-R This flag will dump the machine results file to the console when the scan is complete.
 --production-scan,-P This flag identifies the scan you run as a scan of a production machine in the results.
 --progress,       -x show progress indicator every X number of files scanned - X given by the parameter to --progress
---path,           -p the absolute or relative path of the directory to scan, the default is /
+--path,           -p the absolute or relative path of the directory to scan, the default is /.  To scan multiple paths or drives
+                     comma-delimit the paths or drive names (no spaces after commas.)  Example:  --path x:\,c:\ 
 --rule-version,   -V print out rule version info and do nothing else (no scan performed)
 --throttle,       -T Enable throttling of the scanner so all system resources are not fully dedicated to running this tool.
                      No arguments accepted for this option.  See the throttle_* properties in the configuration file.                                   
