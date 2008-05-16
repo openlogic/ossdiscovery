@@ -1,11 +1,11 @@
 [Setup]
 AppName=Open Source Census
-AppVerName=Open Source Census Discovery Client 2.0
-AppVersion=2.0
+AppVerName=Open Source Census Discovery Client 2.0.2
+AppVersion=2.0.2
 AppPublisherURL={cm:CensusURL}
-DefaultDirName={pf}\OSSCensus-Discovery-2.0
+DefaultDirName={pf}\OSSCensus-Discovery-2.0.2
 AllowUNCPath=false
-OutputBaseFilename=OSSCensus-Discovery-2.0-Setup
+OutputBaseFilename=OSSCensus-Discovery-2.0.2-Setup
 PrivilegesRequired=none
 UsePreviousAppDir=false
 WizardSmallImageFile=census-small.bmp
