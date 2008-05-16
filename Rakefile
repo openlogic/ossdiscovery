@@ -32,6 +32,7 @@ namespace :release do
       cp_r "doc", "pkg/#{jruby_package_filename}/doc", :remove_destination=>true
       cp_r "log", "pkg/#{jruby_package_filename}/log", :remove_destination=>true
       cp "README.txt", "pkg/#{jruby_package_filename}/"      
+      cp "help.txt", "pkg/#{jruby_package_filename}/"      
       cp "discovery_jruby", "pkg/#{jruby_package_filename}/discovery"
       cp "discovery_jruby.bat", "pkg/#{jruby_package_filename}/discovery.bat"
       require 'find'
@@ -74,6 +75,7 @@ namespace :release do
       cp_r "doc", "#{dest_dir}/doc", :remove_destination=>true
       cp_r "jre/jre-1.5.0_07-windows-ia32", "#{dest_dir}/jre", :remove_destination=>true
       cp "README.txt", "#{dest_dir}"      
+      cp "help.txt", "#{dest_dir}"      
       cp "discovery_jre_windows.bat", "#{dest_dir}/discovery.bat"
       require 'find'
 
@@ -129,6 +131,7 @@ namespace :release do
       cp_r "doc", "#{dest_dir}/doc", :remove_destination=>true
       cp_r "jre/jre-1.5.0_07-linux-ia32", "#{dest_dir}/jre", :remove_destination=>true
       cp "README.txt", "#{dest_dir}"      
+      cp "help.txt", "#{dest_dir}"      
       cp "discovery_jre_linux", "#{dest_dir}/discovery"
       require 'find'
 
@@ -170,6 +173,7 @@ namespace :release do
       cp_r "doc", "#{dest_dir}/doc", :remove_destination=>true
       cp_r "jre/jre-1.5.0_10-b03-solaris-sparc32", "#{dest_dir}/jre", :remove_destination=>true
       cp "README.txt", "#{dest_dir}"      
+      cp "help.txt", "#{dest_dir}"      
       cp "discovery_jre_solaris", "#{dest_dir}/discovery"
       require 'find'
 
