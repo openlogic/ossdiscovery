@@ -54,6 +54,6 @@ Examples:
 For geography codes used with --geography command line option or the geography config.yml property,
 see command line option --list-geos for a full listing of geographies
 
-ossdiscovery v2.0.1
+ossdiscovery v2.0.2
 Copyright (C) 2007-2008 OpenLogic, Inc.
 License: Affero GPLv3
