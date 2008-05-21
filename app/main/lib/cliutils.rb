@@ -380,12 +380,11 @@ end
 =begin rdoc
   this method takes a result set and a hash of key/value pairs to override in the file, then replaces them and 
   recalculates the integrity check
-  
-  good reference:  http://www.ruby-doc.org/stdlib/libdoc/net/http/rdoc/classes/Net/HTTP.html
 =end
-def apply_overrides(results, overrides)
-  #The 'plugin' design is already completely broken and needs to be refactored, so whatever:
-  include CensusUtils
+
+def apply_override(results, overrides)
+
+  include CensusPlugin
   
   if verify_integrity_check(results)
     #Now let's override various parts of the results file and recalculate the integrity check
@@ -701,9 +700,9 @@ def make_machine_id
   
   case platform
   when "windows", "jruby-windows"     
-    make_simple_machine_id   
+    Integrity.iso7064( make_simple_machine_id )
   else  # every other platform including cygwin supports uname -a
-    make_uname_based_machine_id platform
+    Integrity.iso7064( make_uname_based_machine_id( platform ) )
   end
 end
 

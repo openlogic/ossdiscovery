@@ -96,6 +96,7 @@ require 'scan_rules_updater'
 @file_exclusion_filters = Hash.new
 @census_code = ""
 @inclusion_filters = Hash.new
+@plugins_list = Hash.new
 @@log = Config.prop(:log)
 
 # walker configuration parameter defaults
@@ -712,17 +713,19 @@ def make_reports
      @geography = ""
   end
 
-  # machine_report method is no longer defined in cliutils.rb -- see the 'TODO technical debt' in census_utils.rb
-  if (Object.respond_to?(:machine_report, true)) then
-    # deal with machine reports and sending results if allowed
+  @plugins_list.each do | plugin_name, aPlugin |
+    # if the plugin will respond to a machine report method, fire it off
+    if (aPlugin.respond_to?(:machine_report, false))
+      # deal with machine reports and sending results if allowed
 
-    machine_report(@machine_results, @packages, version, @machine_id,
-                 @walker.dir_ct, @walker.file_ct, @walker.sym_link_ct,
-                 @walker.permission_denied_ct, @walker.foi_ct,
-                 @starttime, @endtime, @distro, @os_family, @os,
-                 @os_version, @os_architecture, @kernel, @production_scan,
-                 @include_paths, @preview_results, @census_code,
-                 @universal_rules_md5, @universal_rules_version, @geography )
+      aPlugin.machine_report(@machine_results, @packages, version, @machine_id,
+			 @walker.dir_ct, @walker.file_ct, @walker.sym_link_ct,
+			 @walker.permission_denied_ct, @walker.foi_ct,
+			 @starttime, @endtime, @distro, @os_family, @os,
+			 @os_version, @os_architecture, @kernel, @production_scan,
+			 @include_paths, @preview_results, @census_code,
+			 @universal_rules_md5, @universal_rules_version, @geography )
+    end
   end
 end
 
