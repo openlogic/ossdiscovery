@@ -4,7 +4,7 @@ $:.unshift File.join(File.dirname(__FILE__), "..", "..", "..", "main", "lib", "p
 require 'test/unit'
 require 'cliutils'
 require 'conf/census_config'
-require 'census_utils'
+require 'census_plugin'
 
 class TcCensus < Test::Unit::TestCase
   
