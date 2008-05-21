@@ -5,6 +5,7 @@ require 'test/unit'
 require 'cliutils'
 require 'conf/census_config'
 require 'census_plugin'
+require 'integrity'
 
 class TcCensus < Test::Unit::TestCase
   
@@ -22,6 +23,6 @@ class TcCensus < Test::Unit::TestCase
     str = 'cafebabe'
     str_num_with_check = '340569158251'
     str_num_with_check_hex = '4f4b80f26b'
-    assert_equal str_num_with_check_hex, CensusPlugin.add_check_digits(str)
+    assert_equal str_num_with_check_hex, Integrity.add_check_digits(str)
   end
 end
