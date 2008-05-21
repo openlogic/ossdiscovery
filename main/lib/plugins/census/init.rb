@@ -32,3 +32,6 @@ require 'census_utils' if enabled
 
 CENSUS_PLUGIN_VERSION = "1.0"
 CENSUS_PLUGIN_VERSION_KEY = "29the23special46secret31".to_i(36).to_s(16)
+
+census_plugin = CensusPlugin.new
+@plugins_list["Census"] = census_plugin

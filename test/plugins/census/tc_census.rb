@@ -22,6 +22,6 @@ class TcCensus < Test::Unit::TestCase
     str = 'cafebabe'
     str_num_with_check = '340569158251'
     str_num_with_check_hex = '4f4b80f26b'
-    assert_equal str_num_with_check_hex, CensusUtils.add_check_digits(str)
+    assert_equal str_num_with_check_hex, CensusPlugin.add_check_digits(str)
   end
 end
