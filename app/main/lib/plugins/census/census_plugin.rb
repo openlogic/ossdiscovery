@@ -30,12 +30,33 @@ require 'digest/md5'
 require 'integrity'
 require 'scan_data'
 require "pathname"
+require 'getoptlong'
 
 class CensusPlugin
 
   def initialize
   end
 
+  #--- mandatory methods for a plugin ---
+  #
+
+  def cli_options
+    clioptions_array = Array.new
+     
+    clioptions_array << [ "--geography", "-Y", GetoptLong::REQUIRED_ARGUMENT ]      # geography code 
+    clioptions_array << [ "--census-code","-C", GetoptLong::REQUIRED_ARGUMENT ]     # identifier representing the census code
+    clioptions_array << [ "--production-scan","-P", GetoptLong::NO_ARGUMENT ]       # This flag identifies the scan you run as a scan of a production machine in the results.
+
+  end
+
+  def process_cli_options( option, argument )
+    # all plugins will have the chance to process any command line option, not just their own additions
+    # this allows plugins to gather any state if they need from the command line
+
+  end
+  #--------------------------------------------------
+  
+  #--- optional methods for a plugin ---
   def machine_report_filename()
     return CensusConfig.machine_report
   end

@@ -30,12 +30,27 @@ require 'digest/md5'
 require 'integrity'
 require 'scan_data'
 require "pathname"
+require 'getoptlong'
 
 class InventoryPlugin
 
   def initialize
   end
+  
+  #--- mandatory methods for a plugin ---
+  def cli_options
+    clioptions_array = Array.new
 
+  end
+
+  def process_cli_options( option, argument )
+    # all plugins will have the chance to process any command line option, not just their own additions
+    # this allows plugins to gather any state if they need from the command line
+
+  end
+  #--------------------------------------------------
+
+  #--- optional methods for a plugin ---
   def machine_report_filename()
     return InventoryConfig.machine_report
   end
@@ -47,6 +62,7 @@ class InventoryPlugin
   def human_report_filename()
     return InventoryConfig.results
   end
+
 
 =begin rdoc
   Output the report we'll submit to the census.

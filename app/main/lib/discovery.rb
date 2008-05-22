@@ -301,40 +301,46 @@ end
 #----------------------------- command line parsing ------------------------------------------
 options = GetoptLong.new()
 options.quiet = true
-options.set_options(
+options_array = Array.new
+options_array << [ "--conf", "-c", GetoptLong::REQUIRED_ARGUMENT ]     # specific conf file
+options_array << [ "--deliver-results", "-d", GetoptLong::OPTIONAL_ARGUMENT ] # existence says 'yes' deliver results to server, followed by a filename sends that file to the server  
+options_array << [ "--deliver-batch", "-D", GetoptLong::REQUIRED_ARGUMENT ]   # argument points to a directory of scan results files to submit
+options_array << [ "--help", "-h", GetoptLong::NO_ARGUMENT ]                 # get help, then exit
+options_array << [ "--human-results","-u", GetoptLong::REQUIRED_ARGUMENT ]   # path to results file
+options_array << [ "--list-os","-o", GetoptLong::NO_ARGUMENT ] 
+options_array << [ "--list-excluded", "-e", GetoptLong::NO_ARGUMENT]         # show excluded filenames during scan
+options_array << [ "--list-files", "-l", GetoptLong::NO_ARGUMENT ]           # show encountered filenames during scan
+options_array << [ "--list-filters", "-g", GetoptLong::NO_ARGUMENT ]         # show list of filters, then exit
+options_array << [ "--list-foi", "-i", GetoptLong::NO_ARGUMENT ]             # show a list of files of interest derived from scan rules, then exit
+options_array << [ "--list-geos", "-G", GetoptLong::NO_ARGUMENT ]            # shows a list of geographies and their codes
+options_array << [ "--list-plugins","-N", GetoptLong::NO_ARGUMENT ]          # list any plugins that are enabled
+options_array << [ "--list-projects", "-j", GetoptLong::OPTIONAL_ARGUMENT ]  # show a list projects discovery is capable of finding
+options_array << [ "--list-md5-dupes", "-M", GetoptLong::NO_ARGUMENT ] # 
+options_array << [ "--list-tag", "-t", GetoptLong::NO_ARGUMENT ]             # dump the MD5 hash which is the machine id tag 
+options_array << [ "--machine-results","-m", GetoptLong::REQUIRED_ARGUMENT ] # path to results file
+options_array << [ "--nofollow", "-S", GetoptLong::NO_ARGUMENT ]             # follow symlinks?  presence of this flag says "No" don't follow
+options_array << [ "--inc-path", "-I", GetoptLong::NO_ARGUMENT ]             # existence of this flag says to include location (path) in results
+options_array << [ "--path", "-p", GetoptLong::REQUIRED_ARGUMENT ]           # scan explicit path
+options_array << [ "--progress", "-x", GetoptLong::OPTIONAL_ARGUMENT ]       # show a progress indication every X files scanned
+options_array << [ "--preview-results","-R", GetoptLong::OPTIONAL_ARGUMENT ] # the existence of this flag will cause discovery to print to stdout the machine results file when scan is completed 
+options_array << [ "--rule-version", "-V", GetoptLong::NO_ARGUMENT ]         # print out rule version info and do nothing else (no scan performed)
+options_array << [ "--throttle", "-T", GetoptLong::NO_ARGUMENT ]             # enable production throttling (by default it is disabled)
+options_array << [ "--update-rules", "-r", GetoptLong::OPTIONAL_ARGUMENT ]   # get update scan rules, and optionally perform the scan after getting them
+options_array << [ "--verbose", "-b", GetoptLong::OPTIONAL_ARGUMENT ]        # be verbose while scanning - every X files scanned  
+options_array << [ "--version", "-v", GetoptLong::OPTIONAL_ARGUMENT ]         # print version, then exit
 
-  # please maintain these in alphabetical order
-  [ "--conf", "-c", GetoptLong::REQUIRED_ARGUMENT ],           # specific conf file
-  [ "--deliver-results", "-d", GetoptLong::OPTIONAL_ARGUMENT ],# existence says 'yes' deliver results to server, followed by a filename sends that file to the server  
-  [ "--deliver-batch", "-D", GetoptLong::REQUIRED_ARGUMENT ],  # argument points to a directory of scan results files to submit
-  [ "--help", "-h", GetoptLong::NO_ARGUMENT ],                 # get help, then exit
-  [ "--geography", "-Y", GetoptLong::REQUIRED_ARGUMENT ],      # geography code 
-  [ "--census-code","-C", GetoptLong::REQUIRED_ARGUMENT ],     # identifier representing the census code
-  [ "--human-results","-u", GetoptLong::REQUIRED_ARGUMENT ],   # path to results file
-  [ "--list-os","-o", GetoptLong::NO_ARGUMENT ],               # returns the same os string that will be reported with machine scan results
-  [ "--list-excluded", "-e", GetoptLong::NO_ARGUMENT],         # show excluded filenames during scan
-  [ "--list-files", "-l", GetoptLong::NO_ARGUMENT ],           # show encountered filenames during scan
-  [ "--list-filters", "-g", GetoptLong::NO_ARGUMENT ],         # show list of filters, then exit
-  [ "--list-foi", "-i", GetoptLong::NO_ARGUMENT ],             # show a list of files of interest derived from scan rules, then exit
-  [ "--list-geos", "-G", GetoptLong::NO_ARGUMENT ],            # shows a list of geographies and their codes
-  [ "--list-projects", "-j", GetoptLong::OPTIONAL_ARGUMENT ],  # show a list projects discovery is capable of finding
-  [ "--list-md5-dupes", "-M", GetoptLong::NO_ARGUMENT ], # 
-  [ "--list-tag", "-t", GetoptLong::NO_ARGUMENT ],             # dump the MD5 hash which is the machine id tag 
-  [ "--machine-results","-m", GetoptLong::REQUIRED_ARGUMENT ], # path to results file
-  [ "--nofollow", "-S", GetoptLong::NO_ARGUMENT ],             # follow symlinks?  presence of this flag says "No" don't follow
-  [ "--inc-path", "-I", GetoptLong::NO_ARGUMENT ],             # existence of this flag says to include location (path) in results
-  [ "--path", "-p", GetoptLong::REQUIRED_ARGUMENT ],           # scan explicit path
-  [ "--progress", "-x", GetoptLong::OPTIONAL_ARGUMENT ],       # show a progress indication every X files scanned
-  [ "--preview-results","-R", GetoptLong::OPTIONAL_ARGUMENT ], # the existence of this flag will cause discovery to print to stdout the machine results file when scan is completed 
-  [ "--production-scan","-P", GetoptLong::NO_ARGUMENT ],       # This flag identifies the scan you run as a scan of a production machine in the results.
-  # future [ "--speed", "-s", GetoptLong::REQUIRED_ARGUMENT ], # speed hint - how much analysis to do, which rules to use
-  [ "--rule-version", "-V", GetoptLong::NO_ARGUMENT ],         # print out rule version info and do nothing else (no scan performed)
-  [ "--throttle", "-T", GetoptLong::NO_ARGUMENT ],             # enable production throttling (by default it is disabled)
-  [ "--update-rules", "-r", GetoptLong::OPTIONAL_ARGUMENT ],   # get update scan rules, and optionally perform the scan after getting them
-  [ "--verbose", "-b", GetoptLong::OPTIONAL_ARGUMENT ],        # be verbose while scanning - every X files scanned  
-  [ "--version", "-v", GetoptLong::OPTIONAL_ARGUMENT ]         # print version, then exit
+# now add any plugin command line options to the list
 
-)
+# TODO - before plugins were allowed to add cli opts, we had a hardwired help.txt file which contained cli options in order
+# to give help without executing the program....that needs to change back now that cli options are dynamic.
+# or the shell scripts need a way to pull plugin help files without executing the ruby/jruby app
+
+@plugins_list.each do | plugin_name, aPlugin |
+  options_array.concat( aPlugin.cli_options )
+end
+
+options.set_options( *options_array )
+
 
 begin
    
@@ -460,6 +466,15 @@ begin
   
     when "--list-geos"    
       puts show_geographies_long()
+      exit 0
+ 
+    when "--list-plugins"    
+
+      puts "Enabled plugins:"
+      @plugins_list.each do | plugin_name, aPlugin |
+        puts plugin_name   		
+      end
+
       exit 0
  
     when "--list-md5-dupes"
