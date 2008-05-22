@@ -606,8 +606,16 @@ end
   this code is responsible for generating a unique and static machine id
 =end
 def make_machine_id
+
+  # allow plugins to supply machine id instead of the default - first plugin to have make_machine_id wins
+  @plugins_list.each do | plugin_name, aPlugin |
+    if (aPlugin.respond_to?( :make_machine_id, false ) )
+      return aPlugin.make_machine_id
+    end
+  end
+
+  # otherwise, no plugin supplies machine_id, so do the normal machine id generation
   # for non-windows machines, everything else is u*ix like and should support uname
-  
   platform = major_platform
   
   case platform

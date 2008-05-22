@@ -334,8 +334,6 @@ options.set_options(
   [ "--verbose", "-b", GetoptLong::OPTIONAL_ARGUMENT ],        # be verbose while scanning - every X files scanned  
   [ "--version", "-v", GetoptLong::OPTIONAL_ARGUMENT ]         # print version, then exit
 
-  # TODO - would be nice to override the filter-list.rb file from the CLI
-  # TODO - need to be able to throttle the scan rate so it doesn't soak CPU cycles on production boxes
 )
 
 begin
@@ -743,16 +741,16 @@ def make_reports
 
     if (aPlugin.respond_to?( :report, false ) )
         # human readable report
-	aPlugin.report( @results, @packages, scandata )
+	aPlugin.report( aPlugin.local_report_filename(), @packages, scandata )
     end
 
     # if the plugin will respond to a machine report method, fire it off
     if (aPlugin.respond_to?(:machine_report, false))
-      aPlugin.machine_report(@machine_results, @packages, scandata )
+      aPlugin.machine_report(aPlugin.machine_report_filename(), @packages, scandata )
 
-      if @preview_results && @machine_results != STDOUT
+      if @preview_results && aPlugin.machine_report_filename() != STDOUT
         printf("\nThese are the actual machine scan results from the file, %s, that would be delivered by --deliver-results option\n", destination)
-        puts File.new(@machine_results).read
+        puts File.new(aPlugin.machine_report_filename()).read
       end
     end
   end
@@ -780,7 +778,7 @@ end
 msg =  "\nDiscovery has completed a scan of your machine or specified directory.\n"
 
 msg << "\n"
-msg << "Results with directory location information can be found in the scanresults-local.txt file\n"
+msg << "Results with directory location information can be found in the #{@results} file\n"
 msg << "located in the OSS Discovery installation directory."
 puts msg
 exit 0
