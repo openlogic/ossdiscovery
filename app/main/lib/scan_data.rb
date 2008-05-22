@@ -61,7 +61,7 @@ class ScanData
     @os_version = ""
     @os_architecture = ""
     @kernel = ""
-    @production_scan = ""
+    @production_scan = false
     @census_code = ""
 	  @universal_rules_md5 = ""
     @universal_rules_version = ""

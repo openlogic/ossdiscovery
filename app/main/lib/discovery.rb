@@ -301,32 +301,36 @@ end
 #----------------------------- command line parsing ------------------------------------------
 options = GetoptLong.new()
 options.quiet = true
+
 options_array = Array.new
-options_array << [ "--conf", "-c", GetoptLong::REQUIRED_ARGUMENT ]     # specific conf file
+
+# TODO - refactor --human-results and --machine-results to be census and inventory plugin options that are
+# specific to each 
+
+options_array << [ "--conf", "-c", GetoptLong::REQUIRED_ARGUMENT ]            # specific conf file
 options_array << [ "--deliver-results", "-d", GetoptLong::OPTIONAL_ARGUMENT ] # existence says 'yes' deliver results to server, followed by a filename sends that file to the server  
 options_array << [ "--deliver-batch", "-D", GetoptLong::REQUIRED_ARGUMENT ]   # argument points to a directory of scan results files to submit
-options_array << [ "--help", "-h", GetoptLong::NO_ARGUMENT ]                 # get help, then exit
-options_array << [ "--human-results","-u", GetoptLong::REQUIRED_ARGUMENT ]   # path to results file
+options_array << [ "--help", "-h", GetoptLong::NO_ARGUMENT ]                  # get help, then exit
+options_array << [ "--human-results","-u", GetoptLong::REQUIRED_ARGUMENT ]    # path to results file
 options_array << [ "--list-os","-o", GetoptLong::NO_ARGUMENT ] 
-options_array << [ "--list-excluded", "-e", GetoptLong::NO_ARGUMENT]         # show excluded filenames during scan
-options_array << [ "--list-files", "-l", GetoptLong::NO_ARGUMENT ]           # show encountered filenames during scan
-options_array << [ "--list-filters", "-g", GetoptLong::NO_ARGUMENT ]         # show list of filters, then exit
-options_array << [ "--list-foi", "-i", GetoptLong::NO_ARGUMENT ]             # show a list of files of interest derived from scan rules, then exit
-options_array << [ "--list-geos", "-G", GetoptLong::NO_ARGUMENT ]            # shows a list of geographies and their codes
-options_array << [ "--list-plugins","-N", GetoptLong::NO_ARGUMENT ]          # list any plugins that are enabled
-options_array << [ "--list-projects", "-j", GetoptLong::OPTIONAL_ARGUMENT ]  # show a list projects discovery is capable of finding
-options_array << [ "--list-md5-dupes", "-M", GetoptLong::NO_ARGUMENT ] # 
-options_array << [ "--list-tag", "-t", GetoptLong::NO_ARGUMENT ]             # dump the MD5 hash which is the machine id tag 
-options_array << [ "--machine-results","-m", GetoptLong::REQUIRED_ARGUMENT ] # path to results file
-options_array << [ "--nofollow", "-S", GetoptLong::NO_ARGUMENT ]             # follow symlinks?  presence of this flag says "No" don't follow
-options_array << [ "--inc-path", "-I", GetoptLong::NO_ARGUMENT ]             # existence of this flag says to include location (path) in results
-options_array << [ "--path", "-p", GetoptLong::REQUIRED_ARGUMENT ]           # scan explicit path
-options_array << [ "--progress", "-x", GetoptLong::OPTIONAL_ARGUMENT ]       # show a progress indication every X files scanned
-options_array << [ "--preview-results","-R", GetoptLong::OPTIONAL_ARGUMENT ] # the existence of this flag will cause discovery to print to stdout the machine results file when scan is completed 
-options_array << [ "--rule-version", "-V", GetoptLong::NO_ARGUMENT ]         # print out rule version info and do nothing else (no scan performed)
-options_array << [ "--throttle", "-T", GetoptLong::NO_ARGUMENT ]             # enable production throttling (by default it is disabled)
-options_array << [ "--update-rules", "-r", GetoptLong::OPTIONAL_ARGUMENT ]   # get update scan rules, and optionally perform the scan after getting them
-options_array << [ "--verbose", "-b", GetoptLong::OPTIONAL_ARGUMENT ]        # be verbose while scanning - every X files scanned  
+options_array << [ "--list-excluded", "-e", GetoptLong::NO_ARGUMENT]          # show excluded filenames during scan
+options_array << [ "--list-files", "-l", GetoptLong::NO_ARGUMENT ]            # show encountered filenames during scan
+options_array << [ "--list-filters", "-g", GetoptLong::NO_ARGUMENT ]          # show list of filters, then exit
+options_array << [ "--list-foi", "-i", GetoptLong::NO_ARGUMENT ]              # show a list of files of interest derived from scan rules, then exit
+options_array << [ "--list-plugins","-N", GetoptLong::NO_ARGUMENT ]           # list any plugins that are enabled
+options_array << [ "--list-projects", "-j", GetoptLong::OPTIONAL_ARGUMENT ]   # show a list projects discovery is capable of finding
+options_array << [ "--list-md5-dupes", "-M", GetoptLong::NO_ARGUMENT ]  
+options_array << [ "--list-tag", "-t", GetoptLong::NO_ARGUMENT ]              # dump the MD5 hash which is the machine id tag 
+options_array << [ "--machine-results","-m", GetoptLong::REQUIRED_ARGUMENT ]  # path to results file
+options_array << [ "--nofollow", "-S", GetoptLong::NO_ARGUMENT ]              # follow symlinks?  presence of this flag says "No" don't follow
+options_array << [ "--inc-path", "-I", GetoptLong::NO_ARGUMENT ]              # existence of this flag says to include location (path) in results
+options_array << [ "--path", "-p", GetoptLong::REQUIRED_ARGUMENT ]            # scan explicit path
+options_array << [ "--progress", "-x", GetoptLong::OPTIONAL_ARGUMENT ]        # show a progress indication every X files scanned
+options_array << [ "--preview-results","-R", GetoptLong::OPTIONAL_ARGUMENT ]  # the existence of this flag will cause discovery to print to stdout the machine results file when scan is completed 
+options_array << [ "--rule-version", "-V", GetoptLong::NO_ARGUMENT ]          # print out rule version info and do nothing else (no scan performed)
+options_array << [ "--throttle", "-T", GetoptLong::NO_ARGUMENT ]              # enable production throttling (by default it is disabled)
+options_array << [ "--update-rules", "-r", GetoptLong::OPTIONAL_ARGUMENT ]    # get update scan rules, and optionally perform the scan after getting them
+options_array << [ "--verbose", "-b", GetoptLong::OPTIONAL_ARGUMENT ]         # be verbose while scanning - every X files scanned  
 options_array << [ "--version", "-v", GetoptLong::OPTIONAL_ARGUMENT ]         # print version, then exit
 
 # now add any plugin command line options to the list
@@ -356,6 +360,11 @@ begin
   # generate a unique and static machine id
   @machine_id = make_machine_id
   
+  @scandata = ScanData.new
+  # defaults from config
+  @scandata.geography = @geography
+  @scandata.census_code = @census_code
+
   options.each do | opt, arg |
   
     case opt
@@ -429,24 +438,6 @@ begin
          exit 0
        end
 
-    when "--geography"
-       @geography = arg
- 
-       if ( @geography.to_i < 1 || @geography.to_i > MAX_GEO_NUM )
-          printf("Invalid geography #{@geography}\n")
-          printf(show_geographies_long())
-          exit 1
-       end
-
-    when "--census-code"
-        @census_code = arg
-        # TODO - validation of census code format
-
-	# if geography is undefined and a census_code is supplied, geography should be empty
-        if ( @geography.to_i < 1 || @geography.to_i > 9 )
-          @geography = ""  
-        end
-
     when "--list-os"
       printf("%s, arch: %s, kernel: %s\n", get_os_version_str(), @os_architecture, @kernel )
       exit 0
@@ -464,10 +455,6 @@ begin
     when "--list-foi"    
       @list_foi = true
   
-    when "--list-geos"    
-      puts show_geographies_long()
-      exit 0
- 
     when "--list-plugins"    
 
       puts "Enabled plugins:"
@@ -580,6 +567,14 @@ begin
       printf("%s\n", version() )
       exit 0
     end   # case
+
+    # now give each plugin a whack at any command line option that was offered so it can collect 
+    # additional state if needs to, not just processing it's own specific options
+
+    @plugins_list.each do | plugin_name, aPlugin |
+      aPlugin.process_cli_options( opt, arg, @scandata )
+    end
+
   end # options do
 
 rescue Exception => e
@@ -616,8 +611,8 @@ if defined? @deliver_results_immediately
   # have already been validated.  Also, if the scan_results geography is invalid, the server
   # will reject the scan
   
-  unless @census_code.nil? or @census_code==""
-    deliver_results( @deliver_results_immediately, :group_code=>@census_code )
+  unless @scandata.census_code.nil? or @scandata.census_code==""
+    deliver_results( @deliver_results_immediately, :group_code=>@scandata.census_code )
   else 
     deliver_results( @deliver_results_immediately )
   end
@@ -628,7 +623,9 @@ end
 
 if @send_results
   # if deliverying anonymous results (no group passcode), then the geography option is required
-  if ( (@census_code == nil || @census_code == "") && (@geography == nil || (@geography.to_i < 1 || @geography.to_i > MAX_GEO_NUM)) )
+  if ( (@scandata.census_code == nil || 
+        @scandata.census_code == "") && 
+       (@scandata.geography == nil || (@scandata.geography.to_i < 1 || @scandata.geography.to_i > MAX_GEO_NUM)) )
     printf("\nScan not completed\n")
     printf("\nWhen delivering anonymous results to the OSSCensus server, the geography must be defined\n")
     printf("  use --geography to specify the geography code or \n")
@@ -638,19 +635,12 @@ if @send_results
     printf("\nIf you are registered with the OSSCensus site and have a group passcode or token, you should set that \n")
     printf("on the command line or add it to your config.yml file.\n")
     exit 1
-  elsif ( @census_code != nil && @census_code != "" && @geography == 9999 )
+  elsif ( @scandata.census_code != nil && @scandata.census_code != "" && @scandata.geography == 9999 )
     # default the geography to "" if group passcode is supplied but geography was not overridden
     # geography will be associated on the server side using the census-code
-    @geography = ""
+    @scandata.geography = ""
   end
 end
-
-begin
-  File.open(@machine_results, "w") {|file|}      
-rescue Exception => e
-  puts "ERROR: Unable to access file: '#{@machine_results}'"
-  exit 1
-end  
 
 #----------------------------- do the business -------------------------------------
 
@@ -663,6 +653,7 @@ end
 #  puts "Java Version: #{java.lang.System.getProperty('java.version')}"
 #end
 
+# TODO _ need to refactor this so all results files permissions are checked - iterate through plugins files
 # Immediately check to see if the machine results output file is writeable.  If it is not, don't be a hack and do the scan anyway.
 begin
   File.open(@machine_results, "w") {|file|}      
@@ -726,44 +717,40 @@ def make_reports
      @geography = ""
   end
 
-  scandata = ScanData.new
-
-  scandata.client_version = version
-  scandata.machine_id = @machine_id
-  scandata.hostname = Socket.gethostname
-  scandata.ipaddress = IPSocket.getaddress(scandata.hostname)
-  scandata.dir_ct = @walker.dir_ct
-  scandata.file_ct = @walker.file_ct
-  scandata.sym_link_ct = @walker.sym_link_ct
-  scandata.not_followed_ct = @walker.not_followed_ct
-  scandata.permission_denied_ct = @walker.permission_denied_ct
-  scandata.foi_ct = @walker.foi_ct
-  scandata.starttime = @starttime
-  scandata.endtime = @endtime
-  scandata.distro = @distro
-  scandata.os_family = @os_family
-  scandata.os = @os
-  scandata.os_version = @os_version
-  scandata.os_architecture = @os_architecture
-  scandata.kernel = @kernel
-  scandata.production_scan = @production_scan
-  scandata.census_code = @census_code
-  scandata.universal_rules_md5 = @universal_rules_md5
-  scandata.universal_rules_version = @universal_rules_version
-  scandata.geography = @geography
-  scandata.throttling_enabled = @walker.throttling_enabled
-  scandata.total_seconds_paused_for_throttling =@walker.total_seconds_paused_for_throttling
+  @scandata.client_version = version
+  @scandata.machine_id = @machine_id
+  @scandata.hostname = Socket.gethostname
+  @scandata.ipaddress = IPSocket.getaddress(@scandata.hostname)
+  @scandata.dir_ct = @walker.dir_ct
+  @scandata.file_ct = @walker.file_ct
+  @scandata.sym_link_ct = @walker.sym_link_ct
+  @scandata.not_followed_ct = @walker.not_followed_ct
+  @scandata.permission_denied_ct = @walker.permission_denied_ct
+  @scandata.foi_ct = @walker.foi_ct
+  @scandata.starttime = @starttime
+  @scandata.endtime = @endtime
+  @scandata.distro = @distro
+  @scandata.os_family = @os_family
+  @scandata.os = @os
+  @scandata.os_version = @os_version
+  @scandata.os_architecture = @os_architecture
+  @scandata.kernel = @kernel
+  @scandata.production_scan = @production_scan
+  @scandata.universal_rules_md5 = @universal_rules_md5
+  @scandata.universal_rules_version = @universal_rules_version
+  @scandata.throttling_enabled = @walker.throttling_enabled
+  @scandata.total_seconds_paused_for_throttling =@walker.total_seconds_paused_for_throttling
 
   @plugins_list.each do | plugin_name, aPlugin |
 
     if (aPlugin.respond_to?( :report, false ) )
         # human readable report
-	aPlugin.report( aPlugin.local_report_filename(), @packages, scandata )
+	aPlugin.report( aPlugin.local_report_filename(), @packages, @scandata )
     end
 
     # if the plugin will respond to a machine report method, fire it off
     if (aPlugin.respond_to?(:machine_report, false))
-      aPlugin.machine_report(aPlugin.machine_report_filename(), @packages, scandata )
+      aPlugin.machine_report(aPlugin.machine_report_filename(), @packages, @scandata )
 
       if @preview_results && aPlugin.machine_report_filename() != STDOUT
         printf("\nThese are the actual machine scan results from the file, %s, that would be delivered by --deliver-results option\n", destination)

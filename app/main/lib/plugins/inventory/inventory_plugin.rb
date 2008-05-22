@@ -43,7 +43,7 @@ class InventoryPlugin
 
   end
 
-  def process_cli_options( option, argument )
+  def process_cli_options( opt, arg, scandata )
     # all plugins will have the chance to process any command line option, not just their own additions
     # this allows plugins to gather any state if they need from the command line
 
