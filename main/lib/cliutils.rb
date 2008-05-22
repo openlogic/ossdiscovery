@@ -1370,3 +1370,17 @@ def check_network_connectivity( url )
      return false
   end
 end
+
+def build_options_parameter_list( param_array )
+
+  optstr = "options.set_options("
+
+  param_array.each do | str |
+     optstr << str
+     optstr << "\n"
+  end
+
+  optstr << ")\n"
+
+end
+
