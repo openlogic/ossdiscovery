@@ -1,10 +1,10 @@
-# census_config.yml
+# inventory_config.rb
 #
 # LEGAL NOTICE
 # -------------
 # 
 # OSS Discovery is a tool that finds installed open source software.
-#    Copyright (C) 2007 OpenLogic, Inc.
+#    Copyright (C) 2007-2008 OpenLogic, Inc.
 #  
 # OSS Discovery is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License version 3 as 
@@ -24,16 +24,24 @@
 # You can contact OpenLogic at info@openlogic.com.
 #
 #--------------------------------------------------------------------------------------------------
-# 
 
-################################################################################
+require 'yaml'
 
-#--------------------------------------------------------------------------------------
-# To allow this discovery client to participate in the Open Source Census (osscensus.org),
-# make sure the following value is set to 'true'.  If this value is set to 'false',
-# no other parameters in this file will be used.
-census_enabled: true
+class InventoryConfig
+  def self.[](key)
+    value = (@@configs ||= load)[key.to_s]
+    if value == nil
+      raise("A property does not exist for the key arg '#{key}'. Valid keys: #{@@configs.keys.inspect}")
+    else
+      value
+    end
+  end
+  
+  def self.load
+    YAML::load_file(File.join(File.dirname(__FILE__), 'inventory_config.yml'))
+  end
 
-machine_report: scanresults-census.txt
-local_report: scanresults-local.txt
-results: STDOUT
+  def self.method_missing(method)
+    self[method.to_s]
+  end
+end

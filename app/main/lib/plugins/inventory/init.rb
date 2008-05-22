@@ -1,10 +1,10 @@
-# census_config.yml
+# init.rb
 #
 # LEGAL NOTICE
 # -------------
 # 
 # OSS Discovery is a tool that finds installed open source software.
-#    Copyright (C) 2007 OpenLogic, Inc.
+#    Copyright (C) 2007-2008 OpenLogic, Inc.
 #  
 # OSS Discovery is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License version 3 as 
@@ -24,16 +24,15 @@
 # You can contact OpenLogic at info@openlogic.com.
 #
 #--------------------------------------------------------------------------------------------------
-# 
 
-################################################################################
 
-#--------------------------------------------------------------------------------------
-# To allow this discovery client to participate in the Open Source Census (osscensus.org),
-# make sure the following value is set to 'true'.  If this value is set to 'false',
-# no other parameters in this file will be used.
-census_enabled: true
+$:.unshift File.dirname(__FILE__)
+require 'conf/inventory_config'
 
-machine_report: scanresults-census.txt
-local_report: scanresults-local.txt
-results: STDOUT
+if ( InventoryConfig.inventory_enabled )
+   require 'inventory_plugin'
+
+   # create the plugin and register it with the ossdiscovery plugin framework
+   inventory_plugin = InventoryPlugin.new
+   @plugins_list["Inventory"] = inventory_plugin  # registers the plugin
+end

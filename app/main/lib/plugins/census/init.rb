@@ -27,11 +27,14 @@
 
 $:.unshift File.dirname(__FILE__)
 require 'conf/census_config'
-enabled = CensusConfig.census_enabled
-require 'census_plugin' if enabled
 
-CENSUS_PLUGIN_VERSION = "1.0"
-CENSUS_PLUGIN_VERSION_KEY = "29the23special46secret31".to_i(36).to_s(16)
+if ( CensusConfig.census_enabled )
+   require 'census_plugin'
 
-census_plugin = CensusPlugin.new
-@plugins_list["Census"] = census_plugin
+   CENSUS_PLUGIN_VERSION = "1.0"
+   CENSUS_PLUGIN_VERSION_KEY = "29the23special46secret31".to_i(36).to_s(16)
+
+   # create the plugin and register it with the ossdiscovery plugin framework
+   census_plugin = CensusPlugin.new
+   @plugins_list["Census"] = census_plugin  # registers the plugin
+end

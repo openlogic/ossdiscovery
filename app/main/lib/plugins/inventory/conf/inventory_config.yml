@@ -1,4 +1,4 @@
-# census_config.yml
+# inventory_config.yml
 #
 # LEGAL NOTICE
 # -------------
@@ -28,12 +28,8 @@
 
 ################################################################################
 
-#--------------------------------------------------------------------------------------
-# To allow this discovery client to participate in the Open Source Census (osscensus.org),
-# make sure the following value is set to 'true'.  If this value is set to 'false',
-# no other parameters in this file will be used.
-census_enabled: true
+inventory_enabled: true
 
-machine_report: scanresults-census.txt
-local_report: scanresults-local.txt
+machine_report: scanresults-inventory.txt
+local_report: scanresults-local-inventory.txt
 results: STDOUT

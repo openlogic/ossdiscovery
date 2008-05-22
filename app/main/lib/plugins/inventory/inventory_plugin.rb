@@ -1,4 +1,4 @@
-# census_plugin.rb
+# inventory_plugin.rb
 #
 # LEGAL NOTICE
 # -------------
@@ -31,23 +31,22 @@ require 'integrity'
 require 'scan_data'
 require "pathname"
 
-class CensusPlugin
+class InventoryPlugin
 
   def initialize
   end
 
   def machine_report_filename()
-    return CensusConfig.machine_report
+    return InventoryConfig.machine_report
   end
 
   def local_report_filename()
-    return CensusConfig.local_report
+    return InventoryConfig.local_report
   end
 
   def human_report_filename()
-    return CensusConfig.results
+    return InventoryConfig.results
   end
-
 
 =begin rdoc
   Output the report we'll submit to the census.
@@ -72,8 +71,7 @@ class CensusPlugin
     end
 
     template = %{
-      report_type:             census
-      census_plugin_version:   <%= CENSUS_PLUGIN_VERSION %>
+      report_type:             inventory
       client_version:          <%= scandata.client_version %>
       machine_id:              <%= scandata.machine_id %>
       directory_count:         <%= scandata.dir_ct %>
