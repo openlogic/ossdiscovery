@@ -720,6 +720,7 @@ def make_reports
   scandata.dir_ct = @walker.dir_ct
   scandata.file_ct = @walker.file_ct
   scandata.sym_link_ct = @walker.sym_link_ct
+  scandata.not_followed_ct = @walker.not_followed_ct
   scandata.permission_denied_ct = @walker.permission_denied_ct
   scandata.foi_ct = @walker.foi_ct
   scandata.starttime = @starttime
