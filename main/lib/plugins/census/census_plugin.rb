@@ -43,15 +43,39 @@ class CensusPlugin
   def cli_options
     clioptions_array = Array.new
      
-    clioptions_array << [ "--geography", "-Y", GetoptLong::REQUIRED_ARGUMENT ]      # geography code 
-    clioptions_array << [ "--census-code","-C", GetoptLong::REQUIRED_ARGUMENT ]     # identifier representing the census code
-    clioptions_array << [ "--production-scan","-P", GetoptLong::NO_ARGUMENT ]       # This flag identifies the scan you run as a scan of a production machine in the results.
+    clioptions_array << [ "--geography", "-Y", GetoptLong::REQUIRED_ARGUMENT ]  # geography code 
+    clioptions_array << [ "--census-code","-C", GetoptLong::REQUIRED_ARGUMENT ] # identifier representing the census code
+    clioptions_array << [ "--list-geos", "-G", GetoptLong::NO_ARGUMENT ]        # shows a list of geographies and their codes
+    clioptions_array << [ "--production-scan","-P", GetoptLong::NO_ARGUMENT ]   # This flag identifies the scan you run as a scan of a production machine in the results.
 
   end
 
-  def process_cli_options( option, argument )
+  def process_cli_options( opt, arg, scandata )
     # all plugins will have the chance to process any command line option, not just their own additions
     # this allows plugins to gather any state if they need from the command line
+
+    case opt
+
+    when "--geography"
+       @geography = arg
+       scandata.geography = @geography
+ 
+       if ( @geography.to_i < 1 || @geography.to_i > MAX_GEO_NUM )
+          printf("Invalid geography #{@geography}\n")
+          printf(show_geographies_long())
+          exit 1
+       end
+
+    when "--census-code"
+      scandata.census_code = arg
+
+    when "--list-geos"
+      show_geographies_long()
+      exit 0
+
+    when "--production-scan"
+      scandata.production_scan = true
+    end
 
   end
   #--------------------------------------------------
@@ -233,6 +257,210 @@ class CensusPlugin
       result_txt = File.open(destination,"r").read
       puts result_txt
     end
+  end
+
+  def show_geographies_short()
+    "see command line option --list-geos for a full listing of geographies"
+  end
+
+  def show_geographies_long()
+  puts "
+  1,AFGHANISTAN
+  2,ALBANIA
+  3,ALGERIA
+  4,ANDORRA
+  5,ANGOLA
+  6,ANTIGUA_AND_BARBUDA
+  7,ARGENTINA
+  8,ARMENIA
+  9,AUSTRALIA
+  10,AUSTRIA
+  11,AZERBAIJAN
+  12,BAHAMAS
+  13,BAHRAIN
+  14,BANGLADESH
+  15,BARBADOS
+  16,BELARUS
+  17,BELGIUM
+  18,BELIZE
+  19,BENIN
+  20,BHUTAN
+  21,BOLIVIA
+  22,BOSNIA_AND_HERZEGOVINA
+  23,BOTSWANA
+  24,BRAZIL
+  25,BRUNEI
+  26,BULGARIA
+  27,BURKINA_FASO
+  28,BURMA_MYANMAR
+  29,BURUNDI
+  30,CAMBODIA
+  31,CAMEROON
+  32,CANADA
+  33,CAPE_VERDE
+  34,CENTRAL_AFRICAN_REPUBLIC
+  35,CHAD
+  36,CHILE
+  37,CHINA
+  38,COLOMBIA
+  39,COMOROS
+  40,CONGO
+  41,CONGO_DEMOCRATIC_REPUBLIC_OF
+  42,COSTA_RICA
+  43,COTE_D_IVOIRE_IVORY_COAST
+  44,CROATIA
+  45,CUBA
+  46,CYPRUS
+  47,CZECH_REPUBLIC
+  48,DENMARK
+  49,DJIBOUTI
+  50,DOMINICA
+  51,DOMINICAN_REPUBLIC
+  52,EAST_TIMOR
+  53,ECUADOR
+  54,EGYPT
+  55,EL_SALVADOR
+  56,EQUATORIAL_GUINEA
+  57,ERITREA
+  58,ESTONIA
+  59,ETHIOPIA
+  60,FIJI
+  61,FINLAND
+  62,FRANCE
+  63,GABON
+  64,GAMBIA
+  65,GEORGIA
+  66,GERMANY
+  67,GHANA
+  68,GREECE
+  69,GRENADA
+  70,GUATEMALA
+  71,GUINEA
+  72,GUINEA_BISSAU
+  73,GUYANA
+  74,HAITI
+  75,HONDURAS
+  76,HUNGARY
+  77,ICELAND
+  78,INDIA
+  79,INDONESIA
+  80,IRAN
+  81,IRAQ
+  82,IRELAND
+  83,ISRAEL
+  84,ITALY
+  85,JAMAICA
+  86,JAPAN
+  87,JORDAN
+  88,KAZAKSTAN
+  89,KENYA
+  90,KIRIBATI
+  91,NORTH_KOREA
+  92,SOUTH_KOREA
+  93,KUWAIT
+  94,KYRGYZSTAN
+  95,LAOS
+  96,LATVIA
+  97,LEBANON
+  98,LESOTHO
+  99,LIBERIA
+  100,LIBYA
+  101,LIECHTENSTEIN
+  102,LITHUANIA
+  103,LUXEMBOURG
+  104,MACEDONIA
+  105,MADAGASCAR
+  106,MALAWI
+  107,MALAYSIA
+  108,MALDIVES
+  109,MALI
+  110,MALTA
+  111,MARSHALL_ISLANDS
+  112,MAURITANIA
+  113,MAURITIUS
+  114,MEXICO
+  115,MICRONESIA
+  116,MOLDOVA
+  117,MONACO
+  118,MONGOLIA
+  119,MONTENEGRO
+  120,MOROCCO
+  121,MOZAMBIQUE
+  122,NAMIBIA
+  123,NAURU
+  124,NEPAL
+  125,NETHERLANDS
+  126,NEW_ZEALAND
+  127,NICARAGUA
+  128,NIGER
+  129,NIGERIA
+  130,NORWAY
+  131,OMAN
+  132,PAKISTAN
+  133,PALAU
+  134,PANAMA
+  135,PAPUA_NEW_GUINEA
+  136,PARAGUAY
+  137,PERU
+  138,PHILIPPINES
+  139,POLAND
+  140,PORTUGAL
+  141,QATAR
+  142,ROMANIA
+  143,RUSSIAN_FEDERATION
+  144,RWANDA
+  145,SAINT_KITTS_AND_NEVIS
+  146,SAINT_LUCIA
+  147,SAINT_VINCENT_AND_THE_GRENADINES
+  148,SAMOA
+  149,SAN_MARINO
+  150,SAO_TOME_AND_PRINCIPE
+  151,SAUDI_ARABIA
+  152,SENEGAL
+  153,SERBIA
+  154,SEYCHELLES
+  155,SIERRA_LEONE
+  156,SINGAPORE
+  157,SLOVAKIA
+  158,SLOVENIA
+  159,SOLOMON_ISLANDS
+  160,SOMALIA
+  161,SOUTH_AFRICA
+  162,SPAIN
+  163,SRI_LANKA
+  164,SUDAN
+  165,SURINAME
+  166,SWAZILAND
+  167,SWEDEN
+  168,SWITZERLAND
+  169,SYRIA
+  170,TAJIKISTAN
+  171,TANZANIA
+  172,TAIWAN
+  173,THAILAND
+  174,TOGO
+  175,TONGA
+  176,TRINIDAD_AND_TOBAGO
+  177,TUNISIA
+  178,TURKEY
+  179,TURKMENISTAN
+  180,TUVALU
+  181,UGANDA
+  182,UKRAINE
+  183,UNITED_ARAB_EMIRATES
+  184,UNITED_KINGDOM
+  185,UNITED_STATES
+  186,URUGUAY
+  187,UZBEKISTAN
+  188,VANUATU
+  189,VATICAN
+  190,VENEZUELA
+  191,VIETNAM
+  192,YEMEN
+  193,ZAMBIA
+  194,ZIMBABWE
+  195,OTHER
+  "
   end
 
 end
