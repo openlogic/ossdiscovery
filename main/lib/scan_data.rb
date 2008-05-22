@@ -32,11 +32,11 @@ class ScanData
   attr_accessor :client_version, :machine_id, :hostname, :ipaddress
   attr_accessor :file_ct, :dir_ct, :sym_link_ct, :bad_link_ct, :permission_denied_ct, :foi_ct, :not_found_ct, :not_followed_ct
   attr_accessor :starttime, :endtime, :total_seconds_paused_for_throttling
-	attr_accessor :distro, :os_family, :os, :os_version, :os_architecture, :kernel, :production_scan
-	attr_accessor :census_code
-	attr_accessor :universal_rules_md5, :universal_rules_version
+  attr_accessor :distro, :os_family, :os, :os_version, :os_architecture, :kernel, :production_scan
+  attr_accessor :census_code
+  attr_accessor :universal_rules_md5, :universal_rules_version
   attr_accessor :geography 
-	attr_accessor :throttling_enabled
+  attr_accessor :throttling_enabled
 
   def initialize
 

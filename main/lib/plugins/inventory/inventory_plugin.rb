@@ -73,6 +73,8 @@ class InventoryPlugin
     template = %{
       report_type:             inventory
       client_version:          <%= scandata.client_version %>
+      ipaddress:               <%= scandata.ipaddress %>
+      hostname:                <%= scandata.hostname %>
       machine_id:              <%= scandata.machine_id %>
       directory_count:         <%= scandata.dir_ct %>
       file_count:              <%= scandata.file_ct %>
@@ -154,6 +156,9 @@ class InventoryPlugin
     end_of_line = "\r\n"
 
     printf(io, end_of_line)
+    printf(io, "client_version        : #{scandata.client_version}#{end_of_line}" )
+    printf(io, "ip address            : #{scandata.ipaddress}#{end_of_line}" )
+    printf(io, "hostname              : #{scandata.hostname}#{end_of_line}" )
     printf(io, "directories walked    : %d#{end_of_line}", scandata.dir_ct )
     printf(io, "files encountered     : %d#{end_of_line}", scandata.file_ct )
     printf(io, "symlinks found        : %d#{end_of_line}", scandata.sym_link_ct )
