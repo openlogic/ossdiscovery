@@ -715,6 +715,8 @@ def make_reports
 
   scandata.client_version = version
   scandata.machine_id = @machine_id
+  scandata.hostname = Socket.gethostname
+  scandata.ipaddress = IPSocket.getaddress(scandata.hostname)
   scandata.dir_ct = @walker.dir_ct
   scandata.file_ct = @walker.file_ct
   scandata.sym_link_ct = @walker.sym_link_ct
