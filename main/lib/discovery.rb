@@ -109,6 +109,8 @@ require 'scan_rules_updater'
 @os_architecture = "Unknown"   # i386, x86_64, sparc, etc
 @os_version = "Unknown"        # 5.04, 10.4, etc
 
+@production_scan = false
+
 @show_every = 1000
 @show_progress = false
 @show_verbose = false
@@ -702,8 +704,6 @@ execute
 @packages = @rule_engine.scan_complete
 
 def make_reports
-  # human readable report
-  report @packages
 
   if @produce_match_audit_records
     report_audit_records @rule_engine.audit_records
@@ -713,18 +713,46 @@ def make_reports
      @geography = ""
   end
 
+  scandata = ScanData.new
+
+  scandata.client_version = version
+  scandata.machine_id = @machine_id
+  scandata.dir_ct = @walker.dir_ct
+  scandata.file_ct = @walker.file_ct
+  scandata.sym_link_ct = @walker.sym_link_ct
+  scandata.permission_denied_ct = @walker.permission_denied_ct
+  scandata.foi_ct = @walker.foi_ct
+  scandata.starttime = @starttime
+  scandata.endtime = @endtime
+  scandata.distro = @distro
+  scandata.os_family = @os_family
+  scandata.os = @os
+  scandata.os_version = @os_version
+  scandata.os_architecture = @os_architecture
+  scandata.kernel = @kernel
+  scandata.production_scan = @production_scan
+  scandata.census_code = @census_code
+  scandata.universal_rules_md5 = @universal_rules_md5
+  scandata.universal_rules_version = @universal_rules_version
+  scandata.geography = @geography
+  scandata.throttling_enabled = @walker.throttling_enabled
+  scandata.total_seconds_paused_for_throttling =@walker.total_seconds_paused_for_throttling
+
   @plugins_list.each do | plugin_name, aPlugin |
+
+    if (aPlugin.respond_to?( :report, false ) )
+        # human readable report
+	aPlugin.report( @results, @packages, scandata )
+    end
+
     # if the plugin will respond to a machine report method, fire it off
     if (aPlugin.respond_to?(:machine_report, false))
-      # deal with machine reports and sending results if allowed
+      aPlugin.machine_report(@machine_results, @packages, scandata )
 
-      aPlugin.machine_report(@machine_results, @packages, version, @machine_id,
-			 @walker.dir_ct, @walker.file_ct, @walker.sym_link_ct,
-			 @walker.permission_denied_ct, @walker.foi_ct,
-			 @starttime, @endtime, @distro, @os_family, @os,
-			 @os_version, @os_architecture, @kernel, @production_scan,
-			 @include_paths, @preview_results, @census_code,
-			 @universal_rules_md5, @universal_rules_version, @geography )
+      if @preview_results && @machine_results != STDOUT
+        printf("\nThese are the actual machine scan results from the file, %s, that would be delivered by --deliver-results option\n", destination)
+        puts File.new(@machine_results).read
+      end
     end
   end
 end
