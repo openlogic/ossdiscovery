@@ -28,6 +28,7 @@
 require 'erb'
 require 'digest/md5'
 require 'integrity'
+require 'scan_data'
 require "pathname"
 
 class CensusPlugin
@@ -38,13 +39,8 @@ class CensusPlugin
 =begin rdoc
   Output the report we'll submit to the census.
 =end
-  def machine_report(destination, packages, client_version, machine_id,
-                     directory_count, file_count, sym_link_count,
-                     permission_denied_count, files_of_interest_count,
-                     start_time, end_time, distro, os_family, os,
-		     os_version, machine_architecture, kernel, 
-		     production_scan, include_paths, preview_results, census_code,
-                     universal_rules_md5, universal_rules_version, geography)
+  def machine_report(destination, packages, scandata )
+
     io = nil
     if (destination == STDOUT) then
       io = STDOUT
@@ -62,34 +58,32 @@ class CensusPlugin
       return
     end
 
-    production_scan = false unless production_scan == true
-
     template = %{
       report_type:             census
       census_plugin_version:   <%= CENSUS_PLUGIN_VERSION %>
-      client_version:          <%= client_version %>
-      machine_id:              <%= machine_id %>
-      directory_count:         <%= directory_count %>
-      file_count:              <%= file_count %>
-      sym_link_count:          <%= sym_link_count %>
-      permission_denied_count: <%= permission_denied_count %>
-      files_of_interest:       <%= files_of_interest_count %>
-      start_time:              <%= start_time.to_i %>
-      end_time:                <%= end_time.to_i %>
-      elapsed_time:            <%= end_time - start_time %>
+      client_version:          <%= scandata.client_version %>
+      machine_id:              <%= scandata.machine_id %>
+      directory_count:         <%= scandata.dir_ct %>
+      file_count:              <%= scandata.file_ct %>
+      sym_link_count:          <%= scandata.sym_link_ct %>
+      permission_denied_count: <%= scandata.permission_denied_ct %>
+      files_of_interest:       <%= scandata.foi_ct %>
+      start_time:              <%= scandata.starttime.to_i %>
+      end_time:                <%= scandata.endtime.to_i %>
+      elapsed_time:            <%= scandata.endtime - scandata.starttime %>
       packages_found_count:    <%= packages.length %>
-      distro:                  <%= distro %>
-      os_family:               <%= os_family %>
-      os:                      <%= os %>
-      os_version:              <%= os_version %>
-      machine_architecture:    <%= machine_architecture %>
-      kernel:                  <%= kernel %>
+      distro:                  <%= scandata.distro %>
+      os_family:               <%= scandata.os_family %>
+      os:                      <%= scandata.os %>
+      os_version:              <%= scandata.os_version %>
+      machine_architecture:    <%= scandata.os_architecture %>
+      kernel:                  <%= scandata.kernel %>
       ruby_platform:           <%= RUBY_PLATFORM %>
-      production_scan:         <%= production_scan %>
-      group_code:              <%= census_code %>
-      geography:               <%= geography %>
-      universal_rules_md5:     <%= universal_rules_md5 %>
-      universal_rules_version: <%= universal_rules_version %>
+      production_scan:         <%= scandata.production_scan %>
+      group_code:              <%= scandata.census_code %>
+      geography:               <%= scandata.geography %>
+      universal_rules_md5:     <%= scandata.universal_rules_md5 %>
+      universal_rules_version: <%= scandata.universal_rules_version %>
       package,version
       % if packages.length > 0
       %   packages.sort.each do |package|
@@ -107,9 +101,7 @@ class CensusPlugin
     template = template.gsub(/^\s+/, "").squeeze(" ")
     text = ERB.new(template, 0, "%").result(binding)
 
-    # in RodC's code, the above "\n" was being appended after the integrity check which hoses up the server side computation
-
-    printf(io, "integrity_check: #{Integrity.create_integrity_check(text,universal_rules_md5,CENSUS_PLUGIN_VERSION_KEY)}\n")
+    printf(io, "integrity_check: #{Integrity.create_integrity_check(text,scandata.universal_rules_md5,CENSUS_PLUGIN_VERSION_KEY)}\n")
 
     # TODO - when a rogue rule runs afoul and matches too much text on a package, it will blow chunks here
     begin
@@ -120,9 +112,93 @@ class CensusPlugin
     
     io.close unless io == STDOUT
   
-    if preview_results && io != STDOUT
-      printf("\nThese are the actual machine scan results from the file, %s, that would be delivered by --deliver-results option\n", destination)
-      puts File.new(destination).read
+  end
+
+=begin rdoc
+    dumps a simple ASCII text report to the console
+=end
+
+  def report( destination, packages, scandata  )
+
+    io = nil
+    if ( destination == STDOUT) then
+      io = STDOUT
+    else 
+      io = File.new( destination, "w")
+    end
+
+    scan_ftime = scandata.endtime - scandata.starttime  # seconds
+    scan_hours = (scan_ftime/3600).to_i
+    scan_min = ((scan_ftime -  (scan_hours*3600))/60).to_i
+    scan_sec = scan_ftime - (scan_hours*3600) - (scan_min*60)
+
+    # pull the stats from the walker for a simple report
+    
+    throttling_enabled_or_disabled = nil
+    if ( scandata.throttling_enabled) then
+      throttling_enabled_or_disabled = 'enabled'
+    else
+      throttling_enabled_or_disabled = 'disabled'
+    end
+    end_of_line = "\r\n"
+
+    printf(io, end_of_line)
+    printf(io, "directories walked    : %d#{end_of_line}", scandata.dir_ct )
+    printf(io, "files encountered     : %d#{end_of_line}", scandata.file_ct )
+    printf(io, "symlinks found        : %d#{end_of_line}", scandata.sym_link_ct )
+    printf(io, "symlinks not followed : %d#{end_of_line}", scandata.not_followed_ct )  
+    printf(io, "bad symlinks found    : %d#{end_of_line}", scandata.bad_link_ct )
+    printf(io, "permission denied     : %d#{end_of_line}", scandata.permission_denied_ct )
+    printf(io, "files examined        : %d#{end_of_line}", scandata.foi_ct )
+    printf(io, "start time            : %s#{end_of_line}", scandata.starttime.asctime )
+    printf(io, "end time              : %s#{end_of_line}", scandata.endtime.asctime )
+    printf(io, "scan time             : %02d:%02d:%02d (hh:mm:ss)#{end_of_line}", scan_hours, scan_min, scan_sec )
+    printf(io, "distro                : %s#{end_of_line}", scandata.distro )
+    printf(io, "kernel                : %s#{end_of_line}", scandata.kernel )
+    printf(io, "anonymous machine hash: %s#{end_of_line}", scandata.machine_id )
+    printf(io, "")
+    printf(io, "packages found        : %d#{end_of_line}", packages.length )
+    printf(io, "throttling            : #{throttling_enabled_or_disabled} (total seconds paused: #{scandata.total_seconds_paused_for_throttling})#{end_of_line}" )
+    printf(io, "production machine    : %s#{end_of_line}",  scandata.production_scan)
+    
+    max_version_length = 32
+    
+    if ( packages.length > 0 )
+      # Format the output by making sure the columns are lined up so it's easier to read.
+      longest_name = "Package Name".length
+      longest_version = "Version".length
+      
+      packages.each do |package| 
+        if ( package.version.length < max_version_length )
+          longest_name = package.name.length if (package.name.length > longest_name)
+          longest_version = package.version.length if (package.version.length > longest_version)
+        end
+      end # of packages.each
+      
+      printf(io, %{#{"Package Name".ljust(longest_name)} #{"Version".ljust(longest_version)} Location#{end_of_line}})
+      printf(io, %{#{"============".ljust(longest_name)} #{"=======".ljust(longest_version)} ========#{end_of_line}})
+      
+      packages.to_a.sort!.each do | package |
+        begin 
+
+          if ( package.version.size > max_version_length )
+            printf(io, "Possible error in rule: #{package.name} ... matched version text was too large (#{package.version.size} characters)#{end_of_line}")
+            @@log.error("Possible error in rule: #{package.name} ... matched version text was too large (#{package.version.size} characters) - matched version: '#{package.version}'")
+          else
+            printf(io, "#{package.name.ljust(longest_name)} #{package.version.ljust(longest_version)} #{package.found_at}#{end_of_line}")
+          end
+        rescue Exception => e
+          printf(io, "Possible error in rule: #{package.name}#{end_of_line}")
+        end
+      end # of packages.each
+    end
+    
+    if (io != STDOUT)  
+      io.close 
+      # now echo final results to console also
+      result_txt = File.open(destination,"r").read
+      puts result_txt
     end
   end
+
 end
