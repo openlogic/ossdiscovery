@@ -9,21 +9,18 @@ Options are not order dependent and may be one or more of:
                      optionally --deliver-results can take a parameter which is a path to an existing scan results file to deliver
 --help,           -h print this help message
 --human-results,  -u the absolute or relative path and filename for the human readable results files.  The default is STDOUT
---geography,      -Y geography code. If the scan is submitted to census server as an anonymous scan, this overrides
-                     value in the config.yml file.
 --census-code,    -C the identifier code received at census registration time
 --inc-path,       -I include the path/location of detected package in machine scan results
 --list-excluded,  -e during a scan, print a list of files that are excluded and the filter that excluded each
 --list-files,     -f during a scan, print a list of all files that matched a rule or other criteria
 --list-filters,   -g print a list of generic filters that would be active during the next scan
 --list-foi,       -i print a list of files of interest ossdiscovery will be looking for
---list-geos       -G print a list of geographies and their numeric codes
 --list-os,        -o list the operating system, version, and distro on which ossdiscovery is running
+--list-plugins,   -N lists just the enabled plugins, not all plugins installed
 --list-projects,  -j print a list of the projects that are capable of being discovered
                      Optionally append 'verbose' to get verbose output.
 --list-md5-dupes, -M If the same MD5 digest is used in two or more match rule definitions, then the duplicated digests are printed.
 --list-tag,       -t print the machine ID (tag) that will be reported with scan results
---machine-results,-m the absolute or relative path and filename for the machine readable results files.
 --nofollow,       -N don't follow symlinks, default is: Yes, follow symlinks
 --preview-results,-R This flag will dump the machine results file to the console when the scan is complete.
 --production-scan,-P This flag identifies the scan you run as a scan of a production machine in the results.
@@ -45,11 +42,10 @@ override what is found in the configuration file.
 If no command line parameters are given, ossdiscovery will do a root directory scan and place the results 
 in the directory from which the scan was invoked.
 
+Examples (assumes the OSSCensus plugin is installed and enabled):
+./discovery --path /home/lcox --census-results /tmp/myscan_machine_results.txt --census-local /tmp/myscan_human_results.txt
 
-Examples:
-./discovery --path /home/lcox --machine-results /tmp/myscan_machine_results.txt --human-results /tmp/myscan_human_results.txt
-   scans the directory /home/lcox and places the results files in the /tmp directory.
-
+   Explanation: scans the directory /home/lcox and places the results files in the /tmp directory.
 
 For geography codes used with --geography command line option or the geography config.yml property,
 see command line option --list-geos for a full listing of geographies

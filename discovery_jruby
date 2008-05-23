@@ -86,6 +86,10 @@ do
 	if test $i = "--help"
 	then
 		cat help.txt
+
+                # help for plugins 
+                echo Command line options for plugins follows:
+                find $OSSDISCOVERYHOME/lib/plugins -name "help.txt" -exec cat {} \;
 		exit 0
 	fi
 done
