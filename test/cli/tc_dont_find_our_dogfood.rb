@@ -20,25 +20,10 @@ class TcDontFindOurDogfood < Test::Unit::TestCase
     
     dir_scanned = output.match(/^Scanning\s+(.*)$/)[1]
     assert_equal(normalize_dir(app_home), normalize_dir(dir_scanned))
-    
-    lines = Array.new
-    output.each_line do |line|
-      lines << line
-    end
-    
-    str = 'Discovery has completed a scan'
-    index = 0
-    lines.each_with_index do |line, i|
-      if (line.include?(str)) then
-        index = i
-      end      
-    end
-    
-    assert(index != 0, "Expecting the string '#{str}' to exist somewhere in the output")
-    
-    # This assertion means that nothing was found (aka... no found packages were listed between the 'production scan' line and the 'Discovery has completed a scan' line
-    assert(lines[index - 2].include?('production machine')) # [index - 2] because there's a line of whitespace in there
-    
+ 
+    # this is less fragile than the former tests that relied on precise output line order and whitespace    
+    assert( output.match("packages found.*?: 0" ) )
+
   end
   
 end
