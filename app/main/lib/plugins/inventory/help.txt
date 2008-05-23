@@ -1,0 +1,6 @@
+
+Inventory Plugin v1.0 --help
+--list-plugins,   -N lists just the enabled plugins, not all plugins installed
+
+Copyright (C) 2007-2008 OpenLogic, Inc.
+License: Affero GPLv3
