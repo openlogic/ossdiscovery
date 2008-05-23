@@ -63,6 +63,9 @@ class InventoryPlugin
     return InventoryConfig.results
   end
 
+  def deliver?
+    return true
+  end
 
 =begin rdoc
   Output the report we'll submit to the census.

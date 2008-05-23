@@ -311,7 +311,6 @@ options_array << [ "--conf", "-c", GetoptLong::REQUIRED_ARGUMENT ]            # 
 options_array << [ "--deliver-results", "-d", GetoptLong::OPTIONAL_ARGUMENT ] # existence says 'yes' deliver results to server, followed by a filename sends that file to the server  
 options_array << [ "--deliver-batch", "-D", GetoptLong::REQUIRED_ARGUMENT ]   # argument points to a directory of scan results files to submit
 options_array << [ "--help", "-h", GetoptLong::NO_ARGUMENT ]                  # get help, then exit
-options_array << [ "--human-results","-u", GetoptLong::REQUIRED_ARGUMENT ]    # path to results file
 options_array << [ "--list-os","-o", GetoptLong::NO_ARGUMENT ] 
 options_array << [ "--list-excluded", "-e", GetoptLong::NO_ARGUMENT]          # show excluded filenames during scan
 options_array << [ "--list-files", "-l", GetoptLong::NO_ARGUMENT ]            # show encountered filenames during scan
@@ -321,7 +320,6 @@ options_array << [ "--list-plugins","-N", GetoptLong::NO_ARGUMENT ]           # 
 options_array << [ "--list-projects", "-j", GetoptLong::OPTIONAL_ARGUMENT ]   # show a list projects discovery is capable of finding
 options_array << [ "--list-md5-dupes", "-M", GetoptLong::NO_ARGUMENT ]  
 options_array << [ "--list-tag", "-t", GetoptLong::NO_ARGUMENT ]              # dump the MD5 hash which is the machine id tag 
-options_array << [ "--machine-results","-m", GetoptLong::REQUIRED_ARGUMENT ]  # path to results file
 options_array << [ "--nofollow", "-S", GetoptLong::NO_ARGUMENT ]              # follow symlinks?  presence of this flag says "No" don't follow
 options_array << [ "--inc-path", "-I", GetoptLong::NO_ARGUMENT ]              # existence of this flag says to include location (path) in results
 options_array << [ "--path", "-p", GetoptLong::REQUIRED_ARGUMENT ]            # scan explicit path
@@ -417,27 +415,6 @@ begin
     when "--inc-path"
       @include_paths = true      
     
-    when "--human-results"
-       # Test access to the results directory/filename before performing 
-       # any scan.  This meets one of the requirements for disco 2 which is to not perform
-       # a huge scan and then bomb at the end because the results can't be written
-
-       # need to do a test file create/write - if it succeeds, proceed
-       # if it fails, bail now so you don't end up running a scan when there's no place
-       # to put the results
-
-       @results = arg
-       begin
-         # Issue 34: only open as append in this test so we do not blow away an existing results file
-         File.open(@results, "a") {|file|}      
-       rescue Exception => e
-         puts "ERROR: Unable to write to file: '#{@results}'\n"
-         if ( !(File.directory?( File.dirname(@results) ) ) )
-           puts "The directory " + File.dirname( @results ) + " does not exist\n"
-         end
-         exit 0
-       end
-
     when "--list-os"
       printf("%s, arch: %s, kernel: %s\n", get_os_version_str(), @os_architecture, @kernel )
       exit 0
@@ -488,26 +465,6 @@ begin
     when "--list-tag"
       printf("Unique Machine Tag (ID): %s\n", @machine_id )
       exit 0
-    
-    when "--machine-results"
-       # Test access to the results directory/filename before performing 
-       # any scan.  This meets one of the requirements for disco 2 which is to not perform
-       # a huge scan and then bomb at the end because the results can't be written
-
-       # need to do a test file create/write - if it succeeds, proceed
-       # if it fails, bail now so you don't end up running a scan when there's no place
-       # to put the results
-
-       @machine_results = arg
-       begin
-         File.open(@machine_results, "a") {|file|}      
-       rescue Exception => e
-         puts "ERROR: Unable to write to file: '#{@machine_results}'"
-         if ( !(File.directory?( File.dirname(@machine_results) ) ) )
-           puts"The directory " + File.dirname( @machine_results ) + " does not exist\n"
-         end
-         exit 0
-       end  
      
     when "--nofollow"   
       @follow_symlinks = false
@@ -653,27 +610,24 @@ end
 #  puts "Java Version: #{java.lang.System.getProperty('java.version')}"
 #end
 
-# TODO _ need to refactor this so all results files permissions are checked - iterate through plugins files
-# Immediately check to see if the machine results output file is writeable.  If it is not, don't be a hack and do the scan anyway.
-begin
-  File.open(@machine_results, "w") {|file|}      
-rescue Exception => e
-  puts "ERROR: Unable to write to machine results file: '#{@machine_results}'. This file must be writeable before a scan can be performed."
-  exit 1
+# make sure all files are writable so we don't scan first and then blow out on writing results
+@plugins_list.each do | plugin_name, aPlugin |
+  if ( aPlugin.respond_to?(:test_file_permissions, false) )
+    aPlugin.test_file_permissions()
+  end
 end
-
       
 # test access to the destination_url for posting to make sure we can get out ok
 
 # pre-check and warn if server cannot be reached
-if ( @send_results && (check_network_connectivity(@destination_server_url) == false) )    # checks to see if www.osscensus.org is reachable.
-	 puts "\nOSS Discovery could not contact the OSS Census server.   It's likely that you are operating behind a proxy.  "
-	 puts "The scan will continue, but you will need to manually post your scan results, #{@machine_results} to:\n"
-	 puts "#{@upload_url}\n\n"
+if ( @send_results && (check_network_connectivity(@destination_server_url) == false) )  # checks to see if scan results post server is reachable.
+  puts "\nOSS Discovery could not contact the OSS Census server.   It's likely that you are operating behind a proxy.  "
+  puts "The scan will continue, but you will need to manually post your scan results to:\n"
+  puts "#{@upload_url}\n\n"
 end
       
 
-if (@update_rules) then
+if ( @update_rules ) then
   do_a_scan = "Finished getting the updated rules, going on to perform a scan.\n"
   just_update_rules = "Finished getting the updated rules, no scan being performed.\n"
   
@@ -745,7 +699,7 @@ def make_reports
 
     if (aPlugin.respond_to?( :report, false ) )
         # human readable report
-	aPlugin.report( aPlugin.local_report_filename(), @packages, @scandata )
+	      aPlugin.report( aPlugin.local_report_filename(), @packages, @scandata )
     end
 
     # if the plugin will respond to a machine report method, fire it off
@@ -760,30 +714,33 @@ def make_reports
   end
 end
 
+
 make_reports
 
 if @send_results
   # test access to the destination_url for posting to make sure we can get out ok
   # post-check and warn if server cannot be reached
-	if ( check_network_connectivity(@destination_server_url) == false )    # checks to see if www.osscensus.org is reachable.
-		 puts "\nOSS Discovery could not contact the OSS Census server.   It's likely that you are operating behind a proxy. "
-		 puts "The scan has run successfully, but you will need to manually post your scan results file, #{@machine_results}, to:\n\n"
-		 puts "#{@upload_url}\n"
-		 exit 1
-	end
-	
-  deliver_results @machine_results
 
+	# TODO - need to move destination server URL bits to plugin configuration file
+  if ( check_network_connectivity(@destination_server_url) == false )    # checks to see if www.osscensus.org is reachable.
+    puts "\nOSS Discovery could not contact the OSS Census server.   It's likely that you are operating behind a proxy. "
+    puts "The scan has run successfully, but you will need to manually post your scan results file, #{@machine_results}, to:\n\n"
+    puts "#{@upload_url}\n"
+    exit 1
+  end
+
+  @plugins_list.each do | plugin_name, aPlugin |
+     if (aPlugin.respond_to?( :machine_report_filename, false ) && aPlugin.respond_to?( :deliver? ) ) 
+			 if ( aPlugin.deliver? )
+	       deliver_results aPlugin.machine_report_filename()
+		   end
+     end
+  end
+
+	# TODO - this needs to be refactored to use the census URL instead of being hardwired here
   # since results were sent, prompt with the url to the OSS Census site
   puts "\nResults may be viewed at https://www.osscensus.org.\n"
 
 end
 
-msg =  "\nDiscovery has completed a scan of your machine or specified directory.\n"
-
-msg << "\n"
-msg << "Results with directory location information can be found in the #{@results} file\n"
-msg << "located in the OSS Discovery installation directory."
-puts msg
-exit 0
-
+puts "\nDiscovery has completed a scan of your machine or specified directory.\n"
