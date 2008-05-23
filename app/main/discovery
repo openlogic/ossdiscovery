@@ -91,5 +91,5 @@ do
 done
 
 
-ruby "$OSSDISCOVERY_HOME/lib/discovery.rb" --progress 100 --human-results scanresults-local.txt --verbose $*
+ruby "$OSSDISCOVERY_HOME/lib/discovery.rb" --progress 100 --census-local scanresults-local.txt --verbose $*
 

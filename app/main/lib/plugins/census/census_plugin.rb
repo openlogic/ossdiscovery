@@ -35,6 +35,8 @@ require 'getoptlong'
 class CensusPlugin
 
   def initialize
+    @census_local_file = CensusConfig.local_report
+    @census_machine_file = CensusConfig.machine_report
   end
 
   #--- mandatory methods for a plugin ---
@@ -43,10 +45,12 @@ class CensusPlugin
   def cli_options
     clioptions_array = Array.new
      
-    clioptions_array << [ "--geography", "-Y", GetoptLong::REQUIRED_ARGUMENT ]  # geography code 
-    clioptions_array << [ "--census-code","-C", GetoptLong::REQUIRED_ARGUMENT ] # identifier representing the census code
-    clioptions_array << [ "--list-geos", "-G", GetoptLong::NO_ARGUMENT ]        # shows a list of geographies and their codes
-    clioptions_array << [ "--production-scan","-P", GetoptLong::NO_ARGUMENT ]   # This flag identifies the scan you run as a scan of a production machine in the results.
+    clioptions_array << [ "--geography", "-Y", GetoptLong::REQUIRED_ARGUMENT ]     # geography code 
+    clioptions_array << [ "--census-code","-C", GetoptLong::REQUIRED_ARGUMENT ]    # identifier representing the census code
+    clioptions_array << [ "--census-local","-u", GetoptLong::REQUIRED_ARGUMENT ]   # formerly --human-results
+    clioptions_array << [ "--census-results","-m", GetoptLong::REQUIRED_ARGUMENT ] # formerly --machine-results
+    clioptions_array << [ "--list-geos", "-G", GetoptLong::NO_ARGUMENT ]           # shows a list of geographies and their codes
+    clioptions_array << [ "--production-scan","-P", GetoptLong::NO_ARGUMENT ]      # This flag identifies the scan you run as a scan of a production machine in the results.
 
   end
 
@@ -73,6 +77,48 @@ class CensusPlugin
       show_geographies_long()
       exit 0
 
+    when "--census-local"
+       # Test access to the results directory/filename before performing 
+       # any scan.  This meets one of the requirements for disco 2 which is to not perform
+       # a huge scan and then bomb at the end because the results can't be written
+
+       # need to do a test file create/write - if it succeeds, proceed
+       # if it fails, bail now so you don't end up running a scan when there's no place
+       # to put the results
+
+       @census_local_file = arg
+       begin
+         # Issue 34: only open as append in this test so we do not blow away an existing results file
+         File.open(@census_local_file, "a") {|file|}      
+       rescue Exception => e
+         puts "ERROR: Unable to write to file: '#{@census_local_file}'\n"
+         if ( !(File.directory?( File.dirname(@census_local_file) ) ) )
+           puts "The directory " + File.dirname(@census_local_file) + " does not exist\n"
+         end
+         exit 0
+       end
+
+    when "--census-results"
+       # Test access to the results directory/filename before performing 
+       # any scan.  This meets one of the requirements for disco 2 which is to not perform
+       # a huge scan and then bomb at the end because the results can't be written
+
+       # need to do a test file create/write - if it succeeds, proceed
+       # if it fails, bail now so you don't end up running a scan when there's no place
+       # to put the results
+
+       @census_machine_file = arg
+       begin
+         # Issue 34: only open as append in this test so we do not blow away an existing results file
+         File.open(@census_machine_file, "a") {|file|}      
+       rescue Exception => e
+         puts "ERROR: Unable to write to file: '#{@census_machine_file}'\n"
+         if ( !(File.directory?( File.dirname(@census_machine_file) ) ) )
+           puts "The directory " + File.dirname(@census_machine_file) + " does not exist\n"
+         end
+         exit 0
+       end
+
     when "--production-scan"
       scandata.production_scan = true
     end
@@ -82,17 +128,41 @@ class CensusPlugin
   
   #--- optional methods for a plugin ---
   def machine_report_filename()
-    return CensusConfig.machine_report
+    return @census_machine_file
   end
 
   def local_report_filename()
-    return CensusConfig.local_report
+    return @census_local_file 
   end
 
-  def human_report_filename()
-    return CensusConfig.results
+  def deliver?
+    return true
   end
 
+  def test_file_permissions()
+
+   begin
+     # Issue 34: only open as append in this test so we do not blow away an existing results file
+     File.open(@census_local_file, "a") {|file|}      
+   rescue Exception => e
+     puts "ERROR: Unable to write to file: '#{@census_local_file}'\n"
+     if ( !(File.directory?( File.dirname(@census_local_file) ) ) )
+       puts "The directory " + File.dirname(@census_local_file) + " does not exist\n"
+     end
+     exit 1
+   end
+
+   begin
+     # Issue 34: only open as append in this test so we do not blow away an existing results file
+     File.open(@census_machine_file, "a") {|file|}      
+   rescue Exception => e
+     puts "ERROR: Unable to write to file: '#{@census_machine_file}'\n"
+     if ( !(File.directory?( File.dirname(@census_machine_file) ) ) )
+       puts "The directory " + File.dirname(@census_machine_file) + " does not exist\n"
+     end
+     exit 1
+   end
+  end
 
 =begin rdoc
   Output the report we'll submit to the census.
@@ -257,6 +327,12 @@ class CensusPlugin
       result_txt = File.open(destination,"r").read
       puts result_txt
     end
+
+    @msg = "\nCensus results with directory location information can be found in the #{@census_local_file} file\n"
+    @msg << "located in the OSS Discovery installation directory."
+
+    puts @msg
+
   end
 
   def show_geographies_short()

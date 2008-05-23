@@ -37,7 +37,7 @@ GOTO RUN
 TYPE help.txt
 goto END
 :RUN
-ruby "%OSSDISCOVERY_HOME%\lib\discovery.rb" --progress 100 --human-results scanresults-local.txt --verbose %*
+ruby "%OSSDISCOVERY_HOME%\lib\discovery.rb" --progress 100 --census-results scanresults-local.txt --verbose %*
 
 :END
 

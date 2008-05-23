@@ -36,4 +36,3 @@ census_enabled: true
 
 machine_report: scanresults-census.txt
 local_report: scanresults-local.txt
-results: STDOUT
