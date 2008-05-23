@@ -41,6 +41,6 @@ GOTO RUN
 TYPE help.txt
 goto END
 :RUN
-"%OSSDISCOVERY_HOME%\jruby\bin\jruby.bat" -J-Xmx512m -J-Xms512m -J-client "%OSSDISCOVERY_HOME%\lib\discovery.rb" --progress 100 --human-results scanresults-local.txt --verbose %*
+"%OSSDISCOVERY_HOME%\jruby\bin\jruby.bat" -J-Xmx512m -J-Xms512m -J-client "%OSSDISCOVERY_HOME%\lib\discovery.rb" --progress 100 --census-results scanresults-local.txt --verbose %*
 
 :END
