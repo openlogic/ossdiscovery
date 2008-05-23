@@ -4,3 +4,4 @@ Inventory Plugin v1.0 --help
 
 Copyright (C) 2007-2008 OpenLogic, Inc.
 License: Affero GPLv3
+

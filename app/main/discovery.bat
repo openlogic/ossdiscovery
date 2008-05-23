@@ -35,9 +35,11 @@ FOR %%A IN (%*) DO IF /I "%%A" EQU "--help" GOTO HELP
 GOTO RUN
 :HELP
 TYPE help.txt
+if exist lib\plugins\census\help.txt type lib\plugins\census\help.txt
+if exist lib\plugins\inventory\help.txt type lib\plugins\inventory\help.txt
 goto END
 :RUN
-ruby "%OSSDISCOVERY_HOME%\lib\discovery.rb" --progress 100 --census-results scanresults-local.txt --verbose %*
+ruby "%OSSDISCOVERY_HOME%\lib\discovery.rb" --progress 100 --census-local scanresults-local.txt --verbose %*
 
 :END
 
