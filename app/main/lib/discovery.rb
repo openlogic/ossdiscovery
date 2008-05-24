@@ -86,7 +86,7 @@ require 'scan_rules_updater'
 @basedir = File.expand_path(File.dirname(__FILE__))
 @config = 'conf/config.rb'
 @copyright = "Copyright (C) 2007-2008 OpenLogic, Inc."
-@discovery_version = "2.0.2"
+@discovery_version = "2.1.0"
 @discovery_name = "ossdiscovery"
 @discovery_license = "GNU Affero General Public License version 3"
 @discovery_license_shortname = "Affero GPLv3" 
@@ -298,14 +298,65 @@ def validate_directory_to_scan( dir )
 end
  
 
+def make_reports
+
+  if @produce_match_audit_records
+    report_audit_records @rule_engine.audit_records
+  end
+
+  if ( @geography.to_i < 1 || @geography.to_i > MAX_GEO_NUM )
+     @geography = ""
+  end
+
+  @scandata.client_version = version
+  @scandata.machine_id = @machine_id
+  @scandata.hostname = Socket.gethostname
+  @scandata.ipaddress = IPSocket.getaddress(@scandata.hostname)
+  @scandata.dir_ct = @walker.dir_ct
+  @scandata.file_ct = @walker.file_ct
+  @scandata.sym_link_ct = @walker.sym_link_ct
+  @scandata.not_followed_ct = @walker.not_followed_ct
+  @scandata.permission_denied_ct = @walker.permission_denied_ct
+  @scandata.foi_ct = @walker.foi_ct
+  @scandata.starttime = @starttime
+  @scandata.endtime = @endtime
+  @scandata.distro = @distro
+  @scandata.os_family = @os_family
+  @scandata.os = @os
+  @scandata.os_version = @os_version
+  @scandata.os_architecture = @os_architecture
+  @scandata.kernel = @kernel
+  @scandata.production_scan = @production_scan
+  @scandata.universal_rules_md5 = @universal_rules_md5
+  @scandata.universal_rules_version = @universal_rules_version
+  @scandata.throttling_enabled = @walker.throttling_enabled
+  @scandata.total_seconds_paused_for_throttling =@walker.total_seconds_paused_for_throttling
+
+  @plugins_list.each do | plugin_name, aPlugin |
+
+    if (aPlugin.respond_to?( :report, false ) )
+        # human readable report
+	      aPlugin.report( aPlugin.local_report_filename(), @packages, @scandata )
+    end
+
+    # if the plugin will respond to a machine report method, fire it off
+    if (aPlugin.respond_to?(:machine_report, false))
+      aPlugin.machine_report(aPlugin.machine_report_filename(), @packages, @scandata )
+
+      if @preview_results && aPlugin.machine_report_filename() != STDOUT
+        printf("\nThese are the actual machine scan results from the file, %s, that would be delivered by --deliver-results option\n", destination)
+        puts File.new(aPlugin.machine_report_filename()).read
+      end
+    end
+  end
+end
+
+
 #----------------------------- command line parsing ------------------------------------------
 options = GetoptLong.new()
 options.quiet = true
 
 options_array = Array.new
-
-# TODO - refactor --human-results and --machine-results to be census and inventory plugin options that are
-# specific to each 
 
 options_array << [ "--conf", "-c", GetoptLong::REQUIRED_ARGUMENT ]            # specific conf file
 options_array << [ "--deliver-results", "-d", GetoptLong::OPTIONAL_ARGUMENT ] # existence says 'yes' deliver results to server, followed by a filename sends that file to the server  
@@ -331,11 +382,7 @@ options_array << [ "--update-rules", "-r", GetoptLong::OPTIONAL_ARGUMENT ]    # 
 options_array << [ "--verbose", "-b", GetoptLong::OPTIONAL_ARGUMENT ]         # be verbose while scanning - every X files scanned  
 options_array << [ "--version", "-v", GetoptLong::OPTIONAL_ARGUMENT ]         # print version, then exit
 
-# now add any plugin command line options to the list
-
-# TODO - before plugins were allowed to add cli opts, we had a hardwired help.txt file which contained cli options in order
-# to give help without executing the program....that needs to change back now that cli options are dynamic.
-# or the shell scripts need a way to pull plugin help files without executing the ruby/jruby app
+# now add any plugin specific command line options to the list
 
 @plugins_list.each do | plugin_name, aPlugin |
   options_array.concat( aPlugin.cli_options )
@@ -381,6 +428,7 @@ begin
         exit 1
       end
 
+      # ------- TODO - refactor in terms of plugin architecture
       deliver_batch( arg )
       exit 0
   
@@ -400,9 +448,9 @@ begin
         # the results file to post when the scan is complete
 
         if ( File.exists?(arg) )
-          @deliver_results_immediately = arg
+          @immediate_filename = arg
         else
-          puts "The file you specified to be delivered to the census server does not exist."
+          puts "The file, #{@immediate_filename} does not exist."
           puts File.expand_path(arg)
           exit 1
         end
@@ -553,51 +601,19 @@ rescue Exception => e
   
 end
 
-if defined? @deliver_results_immediately
-  printf("Immediately delivering the results file: #{@deliver_results_immediately} ...\n")
-  # test access to the destination_url for posting to make sure we can get out ok
-  
-  # post-check and warn if server cannot be reached
-	if ( check_network_connectivity( @destination_server_url ) == false )    # checks to see if www.osscensus.org is reachable.
-	   # pre-check has already happened, and since this is immediate and not printing out any intermediate text,
-	   # just exit now with no additional warning.
-		 exit 1
-	end
-	
-  # don't need to enforce geography check on cli because by delivering files, that geography would
-  # have already been validated.  Also, if the scan_results geography is invalid, the server
-  # will reject the scan
-  
-  unless @scandata.census_code.nil? or @scandata.census_code==""
-    deliver_results( @deliver_results_immediately, :group_code=>@scandata.census_code )
-  else 
-    deliver_results( @deliver_results_immediately )
+if defined? @immediate_filename
+  printf("Immediately delivering the results file: #{@immediate_filename} ...\n")
+
+  # plugins are responsible for determining if this file is of the type it can 
+  @plugins_list.each do | plugin_name, aPlugin |
+    if ( aPlugin.can_deliver? )
+      aPlugin.send_file( @immeidate_filename )
+    end
   end
-  
+
   exit 0
 end
 
-
-if @send_results
-  # if deliverying anonymous results (no group passcode), then the geography option is required
-  if ( (@scandata.census_code == nil || 
-        @scandata.census_code == "") && 
-       (@scandata.geography == nil || (@scandata.geography.to_i < 1 || @scandata.geography.to_i > MAX_GEO_NUM)) )
-    printf("\nScan not completed\n")
-    printf("\nWhen delivering anonymous results to the OSSCensus server, the geography must be defined\n")
-    printf("  use --geography to specify the geography code or \n")
-    printf("  modify the geography property in the config.yml file\n")
-    printf("\nTo see the list of geographies, run discovery with the --list-geos option.\n")
-    printf("\nNote: --geography is an order dependent parameter and must be used before the --deliver-results parameter\n")
-    printf("\nIf you are registered with the OSSCensus site and have a group passcode or token, you should set that \n")
-    printf("on the command line or add it to your config.yml file.\n")
-    exit 1
-  elsif ( @scandata.census_code != nil && @scandata.census_code != "" && @scandata.geography == 9999 )
-    # default the geography to "" if group passcode is supplied but geography was not overridden
-    # geography will be associated on the server side using the census-code
-    @scandata.geography = ""
-  end
-end
 
 #----------------------------- do the business -------------------------------------
 
@@ -618,14 +634,19 @@ end
 end
       
 # test access to the destination_url for posting to make sure we can get out ok
-
 # pre-check and warn if server cannot be reached
-if ( @send_results && (check_network_connectivity(@destination_server_url) == false) )  # checks to see if scan results post server is reachable.
-  puts "\nOSS Discovery could not contact the OSS Census server.   It's likely that you are operating behind a proxy.  "
-  puts "The scan will continue, but you will need to manually post your scan results to:\n"
-  puts "#{@upload_url}\n\n"
+if ( @send_results )
+  @plugins_list.each do | plugin_name, aPlugin |
+    if ( aPlugin.can_deliver? && (check_network_connectivity(aPlugin.destination_server_url) == false) ) # checks to see if scan results post server is reachable.
+      puts "\nOSS Discovery could not contact the #{aPlugin.class} server.   It's likely that you are operating behind a proxy.  "
+      puts "The scan will continue, but you will need to manually post your scan results.\n"
+      if ( aPlugin.upload_url != nil )
+        puts "Manual upload URL: #{aPlugin.upload_url}\n\n"
+      end
+      puts "Could not reach destination URL: #{aPlugin.destination_server_url}"
+    end
+  end
 end
-      
 
 if ( @update_rules ) then
   do_a_scan = "Finished getting the updated rules, going on to perform a scan.\n"
@@ -658,89 +679,22 @@ end
 # execute a scan
 execute
 
-# scan is complete, do a simple report based projects evaluated by the rule engine - this 'report' method is in cliutils.rb
+# scan is complete, tell rule engine
 @packages = @rule_engine.scan_complete
 
-def make_reports
-
-  if @produce_match_audit_records
-    report_audit_records @rule_engine.audit_records
-  end
-
-  if ( @geography.to_i < 1 || @geography.to_i > MAX_GEO_NUM )
-     @geography = ""
-  end
-
-  @scandata.client_version = version
-  @scandata.machine_id = @machine_id
-  @scandata.hostname = Socket.gethostname
-  @scandata.ipaddress = IPSocket.getaddress(@scandata.hostname)
-  @scandata.dir_ct = @walker.dir_ct
-  @scandata.file_ct = @walker.file_ct
-  @scandata.sym_link_ct = @walker.sym_link_ct
-  @scandata.not_followed_ct = @walker.not_followed_ct
-  @scandata.permission_denied_ct = @walker.permission_denied_ct
-  @scandata.foi_ct = @walker.foi_ct
-  @scandata.starttime = @starttime
-  @scandata.endtime = @endtime
-  @scandata.distro = @distro
-  @scandata.os_family = @os_family
-  @scandata.os = @os
-  @scandata.os_version = @os_version
-  @scandata.os_architecture = @os_architecture
-  @scandata.kernel = @kernel
-  @scandata.production_scan = @production_scan
-  @scandata.universal_rules_md5 = @universal_rules_md5
-  @scandata.universal_rules_version = @universal_rules_version
-  @scandata.throttling_enabled = @walker.throttling_enabled
-  @scandata.total_seconds_paused_for_throttling =@walker.total_seconds_paused_for_throttling
-
-  @plugins_list.each do | plugin_name, aPlugin |
-
-    if (aPlugin.respond_to?( :report, false ) )
-        # human readable report
-	      aPlugin.report( aPlugin.local_report_filename(), @packages, @scandata )
-    end
-
-    # if the plugin will respond to a machine report method, fire it off
-    if (aPlugin.respond_to?(:machine_report, false))
-      aPlugin.machine_report(aPlugin.machine_report_filename(), @packages, @scandata )
-
-      if @preview_results && aPlugin.machine_report_filename() != STDOUT
-        printf("\nThese are the actual machine scan results from the file, %s, that would be delivered by --deliver-results option\n", destination)
-        puts File.new(aPlugin.machine_report_filename()).read
-      end
-    end
-  end
-end
-
-
+# pass all the scan data to plugins to build their reports files
 make_reports
 
+# now all reports will live in their own files based on plugin configurations
+# if --deliver-results is active ask each plugin to post their results files
+
 if @send_results
-  # test access to the destination_url for posting to make sure we can get out ok
-  # post-check and warn if server cannot be reached
-
-	# TODO - need to move destination server URL bits to plugin configuration file
-  if ( check_network_connectivity(@destination_server_url) == false )    # checks to see if www.osscensus.org is reachable.
-    puts "\nOSS Discovery could not contact the OSS Census server.   It's likely that you are operating behind a proxy. "
-    puts "The scan has run successfully, but you will need to manually post your scan results file, #{@machine_results}, to:\n\n"
-    puts "#{@upload_url}\n"
-    exit 1
-  end
-
   @plugins_list.each do | plugin_name, aPlugin |
-     if (aPlugin.respond_to?( :machine_report_filename, false ) && aPlugin.respond_to?( :deliver? ) ) 
-			 if ( aPlugin.deliver? )
-	       deliver_results aPlugin.machine_report_filename()
-		   end
+    if ( aPlugin.can_deliver?)
+      aPlugin.send_results()
      end
   end
-
-	# TODO - this needs to be refactored to use the census URL instead of being hardwired here
-  # since results were sent, prompt with the url to the OSS Census site
-  puts "\nResults may be viewed at https://www.osscensus.org.\n"
-
 end
 
-puts "\nDiscovery has completed a scan of your machine or specified directory.\n"
+puts "\nOSS Discovery has completed the scan\n"
+

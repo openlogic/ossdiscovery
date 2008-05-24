@@ -33,7 +33,7 @@ class TcCLI < Test::Unit::TestCase
   
   def test_cli_version
     test = `ruby #{DISCOVERY_RB} --version`
-    expected_version = "ossdiscovery v2.0"
+    expected_version = "ossdiscovery v2.1.0"
     
     if ( test.match( expected_version ) == nil )
       fail "Did not find the expected version of: #{expected_version}"

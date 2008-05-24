@@ -36,13 +36,6 @@ class TcConfig < Test::Unit::TestCase
     actually_ends_with = actual[(actual.length - expected_to_end_with.length)..actual.length]
     assert_equal(expected_to_end_with, actually_ends_with, "The dropins rules dir value in the configs is hosed.")
     
-#    actual = Config.prop(:speedhint)
-#    expected = 1
-#    assert_equal(expected, actual, "The speedhint value in the configs is hosed.")
-    
-    actual = Config.prop(:username)
-    assert_nil(actual)
-    
     actual = Config.prop(:rules_dirs)
     assert_equal(2, actual.size)
     actual.each do |rules_dir|
