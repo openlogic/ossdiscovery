@@ -309,33 +309,41 @@ end
   good reference:  http://www.ruby-doc.org/stdlib/libdoc/net/http/rdoc/classes/Net/HTTP.html
 =end
 
-def deliver_results( result_file, overrides={} )
-  printf("\nPosting results file, #{@machine_results}, to: %s ...please wait\n", @destination_server_url )
-  results = File.new( result_file ).read
+def deliver_results( aPlugin, optional_filename = nil, overrides={} )
+
+
+  if ( optional_filename != nil )
+    printf("\nPosting results file, #{optional_filename}, to: %s ...please wait\n", aPlugin.destination_server_url )
+    results = File.new( optional_filename ).read
+  else
+    # take the file to deliver from the given plugin
+    printf("\nPosting results file, #{aPlugin.machine_report_filename()}, to: %s ...please wait\n", aPlugin.destination_server_url )
+    results = File.new( aPlugin.machine_report_filename ).read
+  end
   
-  if overrides.size > 0
+  if overrides != nil && overrides.size > 0
    results=apply_overrides(results,overrides)
   end
   
   begin
     
-    if not @destination_server_url.match("^https:")
+    if not aPlugin.destination_server_url.match("^https:")
       # The Open Source Census doesn't allow sending via regular HTTP for security reasons unless explicitly given the override
 
-      if defined?(CENSUS_PLUGIN_VERSION) && (@override_https == nil || @override_https == false)
-        puts "For security reasons, the Open Source Census requires HTTPS."
-        puts "Please update the value of destination_server_url in conf/config.yml to the proper HTTPS URL."
+      if aPlugin.override_https == nil || aPlugin.override_https == false
+        puts "For security reasons,  #{aPlugin.class} requires HTTPS."
+        puts "Please update the value of destination_server_url in plugin's config.yml to the proper HTTPS URL."
 
         return
       else
         # if the delivery URL is not HTTPS, use this simple form of posting scan results    
         # Since Net::HTTP.Proxy returns Net::HTTP itself when proxy_addr is nil, there‘s no need to change code if there‘s proxy or not.
 
-        if ( @override_https != nil && @override_https )
+        if ( aPlugin.override_https != nil && aPlugin.override_https )
           puts "WARNING:  The HTTPS delivery restriction is currently being overridden for ease-of-test purposes" 
         end
 
-        response = Net::HTTP.Proxy( @proxy_host, @proxy_port, @proxy_user, @proxy_password ).post_form(URI.parse(@destination_server_url),    
+        response = Net::HTTP.Proxy( aPlugin.proxy_host, aPlugin.proxy_port, aPlugin.proxy_user, aPlugin.proxy_password ).post_form(URI.parse(aPlugin.destination_server_url),    
                                   {'scan[scan_results]' => results} )
 
         response_headers = response.to_hash()
@@ -351,7 +359,7 @@ def deliver_results( result_file, overrides={} )
       # irb(main):006:0> URI.split("https://192.168.10.211:443/cgi-bin/scanpost.rb?test=this")
       # => ["https", nil, "192.168.10.211", "443", nil, "/cgi-bin/scanpost.rb", nil, "test=this", nil]
       
-      parts = URI.split(@destination_server_url)
+      parts = URI.split(aPlugin.destination_server_url)
       protocol = parts[0]
       host = parts[2]
       port = parts[3]
@@ -371,9 +379,9 @@ def deliver_results( result_file, overrides={} )
       if !JAVA_HTTPS_AVAILABLE && RUBY_HTTPS_AVAILABLE
 
         # TODO - HTTPS will not yet work through a proxy when using ruby's Net classes - all HTTPS deliveries must be direct for now
-	# TODO - tell override option to use HTTP instead of HTTPS
+	      # TODO - tell override option to use HTTP instead of HTTPS
 
-        if ( @proxy_host != nil )
+        if ( aPlugin.proxy_host != nil )
            puts "HTTPS posts through a proxy is not supported when running under the Ruby Net classes.  Try JRuby instead"
            return
         else
@@ -388,13 +396,13 @@ def deliver_results( result_file, overrides={} )
       else # do it the Java way because for HTTPS through a proxy this will work in addition to the standard HTTPS post
 
         client = org.apache.commons.httpclient.HttpClient.new
-        post = org.apache.commons.httpclient.methods.PostMethod.new( @destination_server_url )
+        post = org.apache.commons.httpclient.methods.PostMethod.new( aPlugin.destination_server_url )
         post.set_do_authentication( true )
         # post method created
 
-        if ( @proxy_host != nil )
+        if ( aPlugin.proxy_host != nil )
            # setting up proxy
-           client.get_host_configuration().set_proxy(@proxy_host, @proxy_port)
+           client.get_host_configuration().set_proxy( aPlugin.proxy_host, aPlugin.proxy_port)
            scope = Java::OrgApacheCommonsHttpclientAuth::AuthScope::ANY
            
            # it's necessary to change the authentication scheme preference so that NTLM is not the first choice...
@@ -409,10 +417,13 @@ def deliver_results( result_file, overrides={} )
            
            client.get_params().set_parameter( Java::OrgApacheCommonsHttpclientAuth::AuthPolicy::AUTH_SCHEME_PRIORITY, authPrefs)
            
-           if ( @proxy_user != nil && @proxy_password != nil )
+           if ( aPlugin.proxy_user != nil && aPlugin.proxy_password != nil )
               # since NTCredentials derives from standard username password credentials, it works for other authentication schemes like BASIC
               #
-              credentials = org.apache.commons.httpclient.NTCredentials.new( @proxy_user, @proxy_password, Socket.gethostname , @proxy_ntlm_domain )
+              credentials = org.apache.commons.httpclient.NTCredentials.new( aPlugin.proxy_user, 
+                                                                             aPlugin.proxy_password, 
+                                                                             Socket.gethostname , 
+                                                                             aPlugin.proxy_ntlm_domain )
               client.get_state().set_proxy_credentials( scope, credentials ) 
               # proxy credentials created
            end
@@ -434,7 +445,7 @@ def deliver_results( result_file, overrides={} )
         # get response
         response_line = post.get_status_line()
 
-	# DEBUG 
+        # DEBUG 
         # puts response_line   # HTTP/1.1 200 OK
         # puts post.get_response_header("disco")
 
@@ -453,7 +464,7 @@ def deliver_results( result_file, overrides={} )
         post.release_connection()
       end
     else 
-      puts("Can't submit scan results to secure server: #{@destination_server_url} because we can't find OpenSSL and we're not running in JRuby")
+      puts("Can't submit scan results to secure server: #{aPlugin.destination_server_url} because we can't find OpenSSL and we're not running in JRuby")
       response = { "disco" => "0, OpenSSL not found" }
     end
  
@@ -484,9 +495,8 @@ def deliver_results( result_file, overrides={} )
     response["disco"] = "0, Improper or unexpected destination server response.  Check your destination URL to make sure it's correct"    
   end
    
-  # request by Customer to strip disco status code from output and put in referrer message
   if ( response["disco"].match("^100") )  # look for success code from discovery server
-    printf("Result: Success! View reports at http://www.osscensus.org\n") # DIS-825
+    printf("Result: Success! View reports at #{aPlugin.viewing_url}\n") 
     return true
   else
     printf("Result: %s\n", response["disco"].gsub(/^[0-9]+, /, "") )
@@ -502,6 +512,10 @@ end
 =begin rdoc
   given a directory of scan results, pick off scans and deliver them
 =end
+
+# --------- TODO - refactor in terms of plugin architecture
+# plugins are to be built so that they can determine if the file is a report type they "own" and should send
+# otherwise they just pass
 
 def deliver_batch( result_directory )
   
@@ -529,9 +543,14 @@ def deliver_batch( result_directory )
             next
           end # of if
 
-          success = deliver_results( results_fname ) 
-          if (!success) then
-            failed_deliveries << File.expand_path(results_fname)
+          # TODO - refactor
+
+          @plugins_list.each do | plugin_name, aPlugin |
+            puts plugin_name   		
+            success = aPlugin.send_file( results_fname )
+            if (!success) then
+              failed_deliveries << File.expand_path(results_fname)
+            end
           end
       end # of case
     rescue Errno::EACCES, Errno::EPERM

@@ -34,8 +34,7 @@
 
 
 ################################################################################
-##### General properties
-
+# General properties
 #--------------------------------------------------------------------------------------
 # Set to true to allow plugins found in the 'plugins' directory to be loaded.
 # For example, Open Source Census integration is provided as a plugin, and 
@@ -80,31 +79,47 @@ throttle_seconds_to_pause: 2.5
 # A sample scan on my machine ran in 15 minutes, and showed 451499 total files encountered.
 # The above defaults add just over an hour of wait time which is roughly 4x the original 
 # throttling-disabled run time; a few of us decided 4x sounded good enough for a default on irc.
+################################################################################
 
 
 ################################################################################
-##### Logging properties
-
+# Logging properties
 # Arg that will be passed to Logger.new().  From the rdoc: This is a filename (String) or IO object (typically STDOUT, STDERR, or an open file).
 log_device: <% File.expand_path( File.join( ENV['OSSDISCOVERY_HOME'], 'log', 'discovery.log')) %>
 
 # Valid options are: FATAL, ERROR, WARN, INFO, DEBUG - 'WARN' is the recommended setting for 
 # productions runs, it shouldn't give you too much output, but you also won't miss importatnt warnings.
 log_level: <% Logger::INFO %>
+################################################################################
 
 
 ################################################################################
-##### Debugging/Developer-oriented properties
-
+# Debugging/Developer-oriented properties
+#
 # Set this property to true if you'd like an auditable list of all the files of interested that triggered successful 
 # matches to be printed out.  If it is set to true, the human readable results files will contain data that will be
 # useful for a rule writer in terms of auditing all the key files that were matched against during the discovery run.
 produce_match_audit_records: false
+################################################################################
+
+################################################################################
+# Rules update configuration
+#
+# since OSSDiscovery will not be configurable to work on rule sets provided by various plugins
+# this is a global setting regardless of what plugins are installed.  If you are maintaining your
+# own rule set separate from the census rulesets, change these values to match your configuration
+server_base_url: https://www.osscensus.org/service  # osscensus official
+rules_files_url_path: rules_files.xml
+rules_file_base_url: https://www.osscensus.org 
+update_rules: false
+update_rules_and_do_scan: false
+# When you navigate in a browser to 'server_base_url + rules_files_url_path' (eg... http://localhost:3000/rules_files.xml), 
+# you should see an xml file that specifies all the scan rules files available on the server.
+################################################################################
 
 
 ################################################################################
-##### Output properties
-
+#Output properties
 #--------------------------------------------------------------------------------------
 # where the results should go by default, both of these may be overridden by command
 # line options.
@@ -112,97 +127,32 @@ produce_match_audit_records: false
 # whether to include location (paths) in the machine scan results file.
 include_paths: false
 
-# machine readable results file
-machine_results: scanresults-census.txt  
-
 # whether or not to show the machine scan results after the scan is complete
 preview_results: false
 
-# human readable
+# default to not send, can be overridden on command line. see: --deliver-results
+send_results: false 
+
+# used for audit output of rules engine
 results: STDOUT
 
+# all other output properties such as results filename defaults are kept in the lib/plugins/*/conf/*.yml files
+# on a per plugin basis
+################################################################################
 
 ################################################################################
-##### Rules properties
+# Rules properties
 
-#--------------------------------------------------------------------------------------
 # where to pick up the default scan rules
+#  TODO - change "openlogic" to "census" to make this more generic
 rules_openlogic: <% File.expand_path(File.join( ENV['OSSDISCOVERY_HOME'], 'lib','rules', 'openlogic')) %>
 rules_drop_ins: <% File.expand_path(File.join( ENV['OSSDISCOVERY_HOME'], 'lib','rules', 'drop_ins')) %>
 
 rules_dirs: <% ['rules_openlogic', 'rules_drop_ins'] %>
+
 # If you only want to run the tool with your custom written rules, you would put them in the 'drop_ins' dir and change the previous line to:
 #   rules_dirs: <% ['rules_drop_ins'] %>
-
-
 ################################################################################
-##### Server properties
-
-#--------------------------------------------------------------------------------------
-# these items describe where and how scan results are sent
-# 
-send_results: false                                             # default to not send, can be overridden on command line
-
-# Note that destination_server_url and server_base_url can neither be localhost urls if proxying is being 
-# used or tested.  You can't proxy a localhost URL.
-#destination_server_url: http://localhost:3000/scans/scanpost   # change to OL disco production server
-#destination_server_url: https://192.168.10.11/service/scans/scanpost  # dummy dev location
-destination_server_url: https://www.osscensus.org/service/scans/scanpost  # osscensus official
-
-# in some cases, ie: just can't get around a proxy configuration or protocol to programmatically submit results,
-# it's still possible to submit results by going to this URL in your browser and uploading the machine results file
-upload_url: https://www.osscensus.org/service/upload  # manually upload scanresults-census.txt, use this URL
-
-# WARNING - osscensus production will not accept scans unless this is false
-override_https: false
-
-# Configurable options for scan rules updating.  TODO findme: clean this up, combining where possible with the 'destination_server_url' 
-# for delivering results above. Note: On hold until the server-side of things has been firmed up.
-
-# TODO - IMPORTANT: This Default/Standard URL needs to point to OpenLogic's Disco 2 server when this goes to production
-# localhost URLs won't work if testing or using a proxy - this URL must be changed the real server URL
-#server_base_url: http://192.168.10.11/service  # dummy dev location
-server_base_url: https://www.osscensus.org/service  # osscensus official
-rules_files_url_path: rules_files.xml
-rules_file_base_url: https://www.osscensus.org 
-# When you navigate in a browser to 'server_base_url + rules_files_url_path' (eg... http://localhost:3000/rules_files.xml), 
-# you should see an xml file that specifies all the scan rules files available on the server.
-
-# username password of server submission, should be nil if no authentication is in use
-username: nil
-password: nil 
-
-# IMPORTANT: proxy data needs to be nil'd out if no proxy is used. 
-# Any proxy value not specified (used) is required to be nil
-
-proxy_host: nil     # example: "192.168.10.211"
-proxy_port: nil     # 4545 # 3128
-proxy_user: nil     # example: corpusername
-proxy_password: nil # example: corppassword
-proxy_ntlm_domain: "" # typically left blank, but in case an NTLM-only proxy requires it, it's available for configuration
-
-update_rules: false
-update_rules_and_do_scan: false
-
-# geography - used when user wants to submit an anonymous scan to the census
-# geography is the minimal data required for the submission
-#   geography should be one of the following values:
-# 
-#  This value can be overridden on the command line with the --geography
-#
-# in order to see the numeric value to supply for this property, run ossdiscovery --list-geos
-# 9999 is an invalid geography, it must be overridden to submit a scan anonymously
-
-geography: 9999
-
-#--------------------------------------------------------------------------------------
-# Census code is how the census groups multiple machines together for unified reporting purposes.
-# In other words, you can see an aggregated report for all machines using the same census code.
-#
-# If you already have a census code from registering with the census, you can
-# insert the value below or pass it on the command-line.
-
-census_code: 
 
 # end of config
 
