@@ -34,9 +34,21 @@ require 'getoptlong'
 
 class CensusPlugin
 
+  attr_accessor :census_machine_file, :census_local_file
+  attr_accessor :destination_server_url, :viewing_url, :override_https
+  attr_accessor :proxy_host, :proxy_port, :proxy_user, :proxy_password, :proxy_ntlm_domain
+    
   def initialize
-    @census_local_file = CensusConfig.local_report
     @census_machine_file = CensusConfig.machine_report
+    @census_local_file = CensusConfig.local_report
+    @destination_server_url = CensusConfig.destination_server_url
+    @viewing_url = CensusConfig.viewing_url
+    @override_https = CensusConfig.override_https
+    @proxy_host = CensusConfig.proxy_host
+    @proxy_port = CensusConfig.proxy_port
+    @proxy_user = CensusConfig.proxy_user
+    @proxy_password = CensusConfig.proxy_password
+    @proxy_ntlm_domain = CensusConfig.proxy_ntlm_domain
   end
 
   #--- mandatory methods for a plugin ---
@@ -135,9 +147,33 @@ class CensusPlugin
     return @census_local_file 
   end
 
-  def deliver?
+  # if deliver is supported, then all the destination and proxy methods must be also
+  def can_deliver?
     return true
   end
+
+  # this is a callback from the framework after reports have been built to give the plugin an opportunity to send the report if it wants to
+  # it's only called if the --deliver-results option is active in the framework
+  def send_results()
+    return deliver_results( self, nil, nil )
+  end
+
+  def send_file( filename, overrides={} )
+
+    # validate this is a report type for this plugin
+    results = File.new( filename ).read
+
+    if ( results.match("report_type: census") )
+      unless scandata.census_code.nil? || scandata.census_code=="" 
+        return deliver_results( self, filename, {:group_code=>scandata.census_code} )
+      else
+        return deliver_results( self, filename )
+      end
+    end
+
+    return false
+  end
+
 
   def test_file_permissions()
 

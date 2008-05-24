@@ -33,3 +33,5 @@ inventory_enabled: true
 machine_report: scanresults-inventory.txt
 local_report: scanresults-local-inventory.txt
 results: STDOUT
+
+# TODO - need to fill this out similar to census yml

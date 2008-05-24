@@ -63,7 +63,7 @@ class InventoryPlugin
     return InventoryConfig.results
   end
 
-  def deliver?
+  def can_deliver?
     return true
   end
 
@@ -234,6 +234,16 @@ class InventoryPlugin
       result_txt = File.open(destination,"r").read
       puts result_txt
     end
+  end
+
+  # this is a callback from the framework after reports have been built to give the plugin an opportunity to send the report if it wants to
+  # it's only called if the --deliver-results option is active in the framework
+  def send_results()
+
+  end
+
+  def send_file( filename )
+    # only send if report type is of inventory
   end
 
 end
