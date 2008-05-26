@@ -33,7 +33,7 @@ class InventoryConfig
     if value == nil
       raise("A property does not exist for the key arg '#{key}'. Valid keys: #{@@configs.keys.inspect}")
     else
-      value
+      value == "nil"?  nil : value
     end
   end
   
