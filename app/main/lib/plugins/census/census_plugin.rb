@@ -37,6 +37,7 @@ class CensusPlugin
   attr_accessor :census_machine_file, :census_local_file
   attr_accessor :destination_server_url, :viewing_url, :override_https
   attr_accessor :proxy_host, :proxy_port, :proxy_user, :proxy_password, :proxy_ntlm_domain
+  attr_accessor :upload_url
     
   def initialize
     @census_machine_file = CensusConfig.machine_report
@@ -49,6 +50,7 @@ class CensusPlugin
     @proxy_user = CensusConfig.proxy_user
     @proxy_password = CensusConfig.proxy_password
     @proxy_ntlm_domain = CensusConfig.proxy_ntlm_domain
+    @upload_url = CensusConfig.upload_url
   end
 
   #--- mandatory methods for a plugin ---

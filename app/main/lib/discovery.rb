@@ -640,6 +640,7 @@ if ( @send_results )
     if ( aPlugin.can_deliver? && (check_network_connectivity(aPlugin.destination_server_url) == false) ) # checks to see if scan results post server is reachable.
       puts "\nOSS Discovery could not contact the #{aPlugin.class} server.   It's likely that you are operating behind a proxy.  "
       puts "The scan will continue, but you will need to manually post your scan results.\n"
+      puts "The URL used to contact the server is: #{aPlugin.destination_server_url}"
       if ( aPlugin.upload_url != nil )
         puts "Manual upload URL: #{aPlugin.upload_url}\n\n"
       end
