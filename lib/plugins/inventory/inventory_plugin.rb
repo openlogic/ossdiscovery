@@ -34,6 +34,27 @@ require 'getoptlong'
 
 class InventoryPlugin
 
+  attr_accessor :inv_machine_file, :inv_local_file
+  attr_accessor :destination_server_url, :viewing_url, :override_https
+  attr_accessor :proxy_host, :proxy_port, :proxy_user, :proxy_password, :proxy_ntlm_domain
+  attr_accessor :upload_url
+    
+  def initialize
+
+    @inv_machine_file = InventoryConfig.machine_report 
+    @inv_local_file = InventoryConfig.local_report
+    @destination_server_url = CensusConfig.destination_server_url
+    @viewing_url = CensusConfig.viewing_url
+    @override_https = CensusConfig.override_https
+    @proxy_host = CensusConfig.proxy_host
+    @proxy_port = CensusConfig.proxy_port
+    @proxy_user = CensusConfig.proxy_user
+    @proxy_password = CensusConfig.proxy_password
+    @proxy_ntlm_domain = CensusConfig.proxy_ntlm_domain
+    @upload_url = CensusConfig.upload_url
+
+  end 
+
   def initialize
   end
   
