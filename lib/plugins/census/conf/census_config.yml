@@ -46,8 +46,11 @@ local_report: scanresults-local.txt
 
 # Note that destination_server_url and server_base_url can neither be localhost urls if proxying is being 
 # used or tested.  You can't proxy a localhost URL.
-destination_server_url: https://www.osscensus.org/service/scans/scanpost  # osscensus official
-viewing_url: https://www.osscensus.org
+#destination_server_url: https://www.osscensus.org/service/scans/scanpost  # osscensus official
+
+destination_server_url: https://census-integration.openlogic.com/service/scans/scanpost
+
+viewing_url: https://census-integration.openlogic.com
 
 # set this to true this if for some reason your network is not allowing HTTPS posts
 # also change the destination_server_url to http from https, if this is the case
@@ -55,7 +58,7 @@ override_https: false
 
 # in some cases, ie: just can't get around a proxy configuration or protocol to programmatically submit results,
 # it's still possible to submit results by going to this URL in your browser and uploading the machine results file
-upload_url: https://www.osscensus.org/service/upload  # manually upload scanresults-census.txt, use this URL
+upload_url: https://census-integration.openlogic.com/service/upload  # manually upload scanresults-census.txt, use this URL
 
 # username password of server submission, should be nil if no authentication is in use
 username: nil
