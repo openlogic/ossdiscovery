@@ -62,8 +62,8 @@ class InventoryPlugin
   def cli_options
     clioptions_array = Array.new
 
-    clioptions_array << [ "--inventory-local","-u", GetoptLong::REQUIRED_ARGUMENT ]   # formerly --human-results
-    clioptions_array << [ "--inventory-results","-m", GetoptLong::REQUIRED_ARGUMENT ] # formerly --machine-results
+    clioptions_array << [ "--inventory-local","-A", GetoptLong::REQUIRED_ARGUMENT ]   # formerly --human-results
+    clioptions_array << [ "--inventory-results","-B", GetoptLong::REQUIRED_ARGUMENT ] # formerly --machine-results
 
   end
 
