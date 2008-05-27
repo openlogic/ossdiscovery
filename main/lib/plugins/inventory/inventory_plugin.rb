@@ -62,11 +62,59 @@ class InventoryPlugin
   def cli_options
     clioptions_array = Array.new
 
+    clioptions_array << [ "--inventory-local","-u", GetoptLong::REQUIRED_ARGUMENT ]   # formerly --human-results
+    clioptions_array << [ "--inventory-results","-m", GetoptLong::REQUIRED_ARGUMENT ] # formerly --machine-results
+
   end
 
   def process_cli_options( opt, arg, scandata )
     # all plugins will have the chance to process any command line option, not just their own additions
     # this allows plugins to gather any state if they need from the command line
+
+    case opt
+
+    when "--inventory-local"
+       # Test access to the results directory/filename before performing 
+       # any scan.  This meets one of the requirements for disco 2 which is to not perform
+       # a huge scan and then bomb at the end because the results can't be written
+
+       # need to do a test file create/write - if it succeeds, proceed
+       # if it fails, bail now so you don't end up running a scan when there's no place
+       # to put the results
+
+       @inv_local_file = arg
+       begin
+         # Issue 34: only open as append in this test so we do not blow away an existing results file
+         File.open(@inv_local_file, "a") {|file|}      
+       rescue Exception => e
+         puts "ERROR: Unable to write to file: '#{@inv_local_file}'\n"
+         if ( !(File.directory?( File.dirname(@inv_local_file) ) ) )
+           puts "The directory " + File.dirname(@inv_local_file) + " does not exist\n"
+         end
+         exit 0
+       end
+
+    when "--inventory-results"
+       # Test access to the results directory/filename before performing 
+       # any scan.  This meets one of the requirements for disco 2 which is to not perform
+       # a huge scan and then bomb at the end because the results can't be written
+
+       # need to do a test file create/write - if it succeeds, proceed
+       # if it fails, bail now so you don't end up running a scan when there's no place
+       # to put the results
+
+       @inv_machine_file = arg
+       begin
+         # Issue 34: only open as append in this test so we do not blow away an existing results file
+         File.open(@inv_machine_file, "a") {|file|}      
+       rescue Exception => e
+         puts "ERROR: Unable to write to file: '#{@inv_machine_file}'\n"
+         if ( !(File.directory?( File.dirname(@inv_machine_file) ) ) )
+           puts "The directory " + File.dirname(@inv_machine_file) + " does not exist\n"
+         end
+         exit 0
+       end
+    end
 
   end
   #--------------------------------------------------
@@ -132,9 +180,7 @@ class InventoryPlugin
       machine_architecture:    <%= scandata.os_architecture %>
       kernel:                  <%= scandata.kernel %>
       ruby_platform:           <%= RUBY_PLATFORM %>
-      production_scan:         <%= scandata.production_scan %>
       group_code:              <%= scandata.census_code %>
-      geography:               <%= scandata.geography %>
       universal_rules_md5:     <%= scandata.universal_rules_md5 %>
       universal_rules_version: <%= scandata.universal_rules_version %>
       package,version
@@ -143,7 +189,7 @@ class InventoryPlugin
       %     package.version.split(",").sort.each do |version|
       %       version.gsub!(" ", "")
       %       version.tr!("\0", "")
-              <%= package.name %>,<%= version %>
+              <%= package.name %>,<%= version %>,<%= package.found_at %>
       %     end
       %   end
       % end
@@ -154,7 +200,7 @@ class InventoryPlugin
     template = template.gsub(/^\s+/, "").squeeze(" ")
     text = ERB.new(template, 0, "%").result(binding)
 
-    printf(io, "integrity_check: #{Integrity.create_integrity_check(text,scandata.universal_rules_md5,CENSUS_PLUGIN_VERSION_KEY)}\n")
+    printf(io, "integrity_check: #{Integrity.create_integrity_check(text,scandata.universal_rules_md5,INVENTORY_PLUGIN_VERSION_KEY)}\n")
 
     # TODO - when a rogue rule runs afoul and matches too much text on a package, it will blow chunks here
     begin
@@ -260,11 +306,19 @@ class InventoryPlugin
   # this is a callback from the framework after reports have been built to give the plugin an opportunity to send the report if it wants to
   # it's only called if the --deliver-results option is active in the framework
   def send_results()
-
+    return deliver_results( self, nil, nil )
   end
 
-  def send_file( filename )
-    # only send if report type is of inventory
+  def send_file( filename, overrides={} )
+
+    # validate this is a report type for this plugin
+    results = File.new( filename ).read
+
+    if ( results.match("report_type: inventory") )
+      return deliver_results( self, filename )
+    end
+
+    return false
   end
 
 end
