@@ -40,6 +40,8 @@ require 'net/http'
 require 'pp'
 require 'rbconfig'
 require 'uri'
+require 'integrity'
+require 'scan_data'
 
 MAX_GEO_NUM = 195
 
