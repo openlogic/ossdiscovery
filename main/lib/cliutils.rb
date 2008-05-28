@@ -314,6 +314,8 @@ end
 def deliver_results( aPlugin, optional_filename = nil, overrides={} )
 
 
+  puts "DEBUG - aPlugin: #{aPlugin.class}"
+
   if ( optional_filename != nil )
     printf("\nPosting results file, #{optional_filename}, to: %s ...please wait\n", aPlugin.destination_server_url )
     results = File.new( optional_filename ).read
@@ -328,7 +330,7 @@ def deliver_results( aPlugin, optional_filename = nil, overrides={} )
   end
   
   begin
-    
+
     if not aPlugin.destination_server_url.match("^https:")
       # The Open Source Census doesn't allow sending via regular HTTP for security reasons unless explicitly given the override
 
@@ -345,10 +347,11 @@ def deliver_results( aPlugin, optional_filename = nil, overrides={} )
           puts "WARNING:  The HTTPS delivery restriction is currently being overridden for ease-of-test purposes" 
         end
 
-        response = Net::HTTP.Proxy( aPlugin.proxy_host, aPlugin.proxy_port, aPlugin.proxy_user, aPlugin.proxy_password ).post_form(URI.parse(aPlugin.destination_server_url),    
+        response = Net::HTTP.Proxy( aPlugin.proxy_host, aPlugin.proxy_port, aPlugin.proxy_user, aPlugin.proxy_password ).post_form(URI.parse(aPlugin.destination_server_url),
                                   {'scan[scan_results]' => results} )
 
         response_headers = response.to_hash()
+        response_headers["status"] = "#{response.class} #{response.code}"
       end
 
     elsif HTTPS_AVAILABLE
@@ -393,6 +396,7 @@ def deliver_results( aPlugin, optional_filename = nil, overrides={} )
           response = http.request_post( path, "scan[scan_results]=#{results}", headers)
 
           response_headers = response.to_hash()
+          response_headers["status"] = "#{response.class} #{response.code}"
         end
 
       else # do it the Java way because for HTTPS through a proxy this will work in addition to the standard HTTPS post
@@ -471,15 +475,14 @@ def deliver_results( aPlugin, optional_filename = nil, overrides={} )
     end
  
     # homogenize JRuby/java.net and Ruby Net::HTTP responses into a response header hash
-
     if ( !response_headers["status"].to_s.match("200") )
       printf("Error submitting the scan results\n")
       response["disco"] = "0, Bad response from server while posting results. #{response_headers['status']}"
     end
- 
+
   rescue Errno::ECONNREFUSED, Errno::EBADF, OpenSSL::SSL::SSLError, Timeout::Error, Errno::EHOSTUNREACH
     printf("Can't submit scan. The connection was refused or server did not respond when trying to deliver the scan results.\nPlease check your network connection or contact the administrator for the server at: %s\n", @destination_server_url )
-    printf("\nYour machine readable results can be found in the file: %s\n", result_file )
+    printf("\nYour machine readable results can be found in the file: %s\n", aPlugin.machine_report_filename )
     response = Hash.new
     response["disco"] = "0, Connection Refused or Server did not respond"
   rescue Exception => e
