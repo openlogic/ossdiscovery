@@ -43,21 +43,18 @@ class InventoryPlugin
 
     @inv_machine_file = InventoryConfig.machine_report 
     @inv_local_file = InventoryConfig.local_report
-    @destination_server_url = CensusConfig.destination_server_url
-    @viewing_url = CensusConfig.viewing_url
-    @override_https = CensusConfig.override_https
-    @proxy_host = CensusConfig.proxy_host
-    @proxy_port = CensusConfig.proxy_port
-    @proxy_user = CensusConfig.proxy_user
-    @proxy_password = CensusConfig.proxy_password
-    @proxy_ntlm_domain = CensusConfig.proxy_ntlm_domain
-    @upload_url = CensusConfig.upload_url
+    @destination_server_url = InventoryConfig.destination_server_url
+    @viewing_url = InventoryConfig.viewing_url
+    @override_https = InventoryConfig.override_https
+    @proxy_host = InventoryConfig.proxy_host
+    @proxy_port = InventoryConfig.proxy_port
+    @proxy_user = InventoryConfig.proxy_user
+    @proxy_password = InventoryConfig.proxy_password
+    @proxy_ntlm_domain = InventoryConfig.proxy_ntlm_domain
+    @upload_url = InventoryConfig.upload_url
 
   end 
 
-  def initialize
-  end
-  
   #--- mandatory methods for a plugin ---
   def cli_options
     clioptions_array = Array.new
