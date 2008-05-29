@@ -607,7 +607,7 @@ if defined? @immediate_filename
   # plugins are responsible for determining if this file is of the type it can 
   @plugins_list.each do | plugin_name, aPlugin |
     if ( aPlugin.can_deliver? )
-      aPlugin.send_file( @immeidate_filename )
+      aPlugin.send_file( @immediate_filename )
     end
   end
 
