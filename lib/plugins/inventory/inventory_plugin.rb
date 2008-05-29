@@ -314,6 +314,8 @@ class InventoryPlugin
 
     if ( results.match("report_type: inventory") )
       return deliver_results( self, filename )
+    else
+      puts "#{filename} was not sent by #{self.class} since it is not an inventory report."
     end
 
     return false
