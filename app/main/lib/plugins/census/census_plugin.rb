@@ -171,6 +171,8 @@ class CensusPlugin
       else
         return deliver_results( self, filename )
       end
+    else
+      puts "#{filename} was not sent by #{self.class} since it is not a census report."
     end
 
     return false
