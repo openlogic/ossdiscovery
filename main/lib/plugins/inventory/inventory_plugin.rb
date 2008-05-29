@@ -134,7 +134,7 @@ class InventoryPlugin
   end
 
 =begin rdoc
-  Output the report we'll submit to the census.
+  Output the report we'll submit to the inventory server.
 =end
   def machine_report(destination, packages, scandata )
 
@@ -157,6 +157,7 @@ class InventoryPlugin
 
     template = %{
       report_type:             inventory
+      inventory_plugin_version:   <%= INVENTORY_PLUGIN_VERSION %>
       client_version:          <%= scandata.client_version %>
       ipaddress:               <%= scandata.ipaddress %>
       hostname:                <%= scandata.hostname %>
