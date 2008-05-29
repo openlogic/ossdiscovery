@@ -33,7 +33,7 @@ if ( InventoryConfig.inventory_enabled )
    require 'inventory_plugin'
 
    INVENTORY_PLUGIN_VERSION = "1.0"
-   INVENTORY_PLUGIN_VERSION_KEY = "12the47special47sauce".to_i(36).to_s(16)
+   INVENTORY_PLUGIN_VERSION_KEY =  "29the23special46secret31".to_i(36).to_s(16)
 
    # create the plugin and register it with the ossdiscovery plugin framework
    inventory_plugin = InventoryPlugin.new

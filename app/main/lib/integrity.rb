@@ -98,12 +98,14 @@ class Integrity
       mac = hexify(raw_mac)
     end
 
-    # printf("integrity_text size: #{text.size}\n")
-    # printf("mac before adding check digits:\n#{mac}, #{mac.size}\n")
+    #printf("DEBUG - universal_rules_md5: #{universal_rules_md5}")
+    #printf("DEBUG - version_key: #{version_key}")
+    #printf("DEBUG - integrity_text size: #{text.size}\n")
+    #printf("DEBUG - mac before adding check digits:\n#{mac}, #{mac.size}\n")
 
     result = add_check_digits(mac)
 
-    # printf("results: #{result}, #{result.size}\n")
+    #printf("DEBUG results: #{result}, #{result.size}\n")
 
     return result
   end
