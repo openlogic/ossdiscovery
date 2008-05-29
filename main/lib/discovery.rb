@@ -135,7 +135,7 @@ def load_plugins
   Dir.glob(plugin_files) { |path| require path }
 end
 
-load_plugins if Config.prop(:load_plugins)
+load_plugins    # always load whatever plugins are found and enabled.
 
 =begin rdoc
  This is the main executive controller of discovery

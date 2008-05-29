@@ -35,11 +35,6 @@
 
 ################################################################################
 # General properties
-#--------------------------------------------------------------------------------------
-# Set to true to allow plugins found in the 'plugins' directory to be loaded.
-# For example, Open Source Census integration is provided as a plugin, and 
-# therefore is only available if the following value is 'true'.
-load_plugins: true
 
 #--------------------------------------------------------------------------------------
 # what directory to walk if no other directories are specified in the inclusion filter
