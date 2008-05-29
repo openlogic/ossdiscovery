@@ -595,21 +595,28 @@ def make_machine_id
   
   case platform
   when "windows", "jruby-windows"     
-    Integrity.iso7064( make_simple_machine_id )
+    Integrity.iso7064( make_windows_machine_id )
   else  # every other platform including cygwin supports uname -a
     Integrity.iso7064( make_uname_based_machine_id( platform ) )
   end
 end
 
 =begin rdoc
+  creates a machine id from hostname, ipaddress, mac address and distro
+  assumes callers of this know this is a windows machine
   return a hashed machine id composed of only hostname, IP address, and distro string
 =end
-def make_simple_machine_id
+def make_windows_machine_id
 
   hostname = Socket.gethostname
   ipaddr = IPSocket.getaddress(hostname)
+
+  # assumes callers of this know this is a windows machine
+  ipconfig = `ipconfig /all`
+
+  macaddr = ipconfig.match("Physical Address.*?: (.*?)$")[1]
   
-  @machine_id = Digest::MD5.hexdigest(hostname + ipaddr + @distro)
+  @machine_id = Digest::MD5.hexdigest(hostname + ipaddr + macaddr + @distro)
 end
 
 def make_uname_based_machine_id(platform)
