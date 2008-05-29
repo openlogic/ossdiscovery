@@ -5,8 +5,8 @@ The simplest usage of ossdiscovery is: ./discovery
 Options are not order dependent and may be one or more of:
 --conf,           -c the absolute or relative path and filename of the configuration file to use for the scan
 --deliver-batch   -D the absolute or relative path to a directory containing one or more scan results files to deliver
---deliver-results -d existence says 'yes' deliver results to server. Server destination is configured in config/config.yml
-                     optionally --deliver-results can take a parameter which is a path to an existing scan results file to deliver
+--deliver-results -d existence says 'yes' deliver results to server. Server destination is configured in lib/plugin config.yml files.
+                     --deliver-results can take an optional parameter which is a path to an existing scan results file to deliver
 --help,           -h print this help message
 --human-results,  -u the absolute or relative path and filename for the human readable results files.  The default is STDOUT
 --census-code,    -C the identifier code received at census registration time
