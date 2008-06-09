@@ -256,6 +256,7 @@ class CensusPlugin
       % if packages.length > 0
       %   packages.sort.each do |package|
       %     package.version.split(",").sort.each do |version|
+      %       version.gsub!(" ", "")
       %       version.gsub!(/[<!&\->]/, "")   # strip xml type chars out
       %       version.tr!("\0", "")
               <%= package.name %>,<%= version %>
