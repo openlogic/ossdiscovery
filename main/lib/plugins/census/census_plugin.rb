@@ -256,7 +256,7 @@ class CensusPlugin
       % if packages.length > 0
       %   packages.sort.each do |package|
       %     package.version.split(",").sort.each do |version|
-      %       version.gsub!(" ", "")
+      %       version.gsub!(/[<!&\->]/, "")   # strip xml type chars out
       %       version.tr!("\0", "")
               <%= package.name %>,<%= version %>
       %     end
@@ -271,11 +271,10 @@ class CensusPlugin
 
     printf(io, "integrity_check: #{Integrity.create_integrity_check(text,scandata.universal_rules_md5,CENSUS_PLUGIN_VERSION_KEY)}\n")
 
-    # TODO - when a rogue rule runs afoul and matches too much text on a package, it will blow chunks here
     begin
       printf(io, text )
     rescue Exception => e
-      printf(io, "Possible bad rule matching too much text.  Sorry, can't write the machine report\n")
+      printf("Sorry, can't write the machine report\n#{e.to_s}\n")
     end
     
     io.close unless io == STDOUT
