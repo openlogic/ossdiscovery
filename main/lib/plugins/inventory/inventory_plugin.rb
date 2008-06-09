@@ -186,6 +186,7 @@ class InventoryPlugin
       %   packages.sort.each do |package|
       %     package.version.split(",").sort.each do |version|
       %       version.gsub!(" ", "")
+      %       version.gsub!(/[<!&\->]/, "")   # strip xml type chars out
       %       version.tr!("\0", "")
               <%= package.name %>,<%= version %>,<%= package.found_at %>
       %     end
@@ -204,7 +205,7 @@ class InventoryPlugin
     begin
       printf(io, text )
     rescue Exception => e
-      printf(io, "Possible bad rule matching too much text.  Sorry, can't write the machine report\n")
+      printf("Sorry, can't write the machine report\n#{e.to_s}\n")
     end
     
     io.close unless io == STDOUT
