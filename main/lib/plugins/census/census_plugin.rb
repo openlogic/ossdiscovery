@@ -255,14 +255,15 @@ class CensusPlugin
       package,version
       % if packages.length > 0
       %   packages.sort.each do |package|
-      %     package.version.split(",").sort.each do |version|
-      %       version.gsub!(" ", "")
-      %       version.gsub!(/[<!&\->]/, "")   # strip xml type chars out
-      %       version.tr!("\0", "")
-              <%= package.name %>,<%= version %>
+      %     package.version.gsub!(" ", "")
+      %     if ( package.version.to_s.match(/[<!,&>]/) != nil )
+      %       package.version.gsub!(/[<!,&>]/, "")   # strip xml or csv type chars out
       %     end
+      %     package.version.tr!("\0", "")
+          <%= package.name %>,<%= package.version %>
       %   end
       % end
+      
     }
 
     # strip off leading whitespace and compress all other spaces in 
