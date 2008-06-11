@@ -887,7 +887,7 @@ def get_linux_version_str
       "/etc/conectiva-release" => "Conectiva", 
       "/etc/debian_release" => "Debian", 
       "/etc/debian_version" => "Debian",       
-      "/etc/fedora-release" => "Fedora Core", 
+      "/etc/fedora-release" => "Fedora", 
       "/etc/gentoo-release" => "Gentoo Linux",
       "/etc/immunix-release" => "Immunix",
       "/etc/knoppix_version" => "Knoppix",
