@@ -28,7 +28,7 @@
 
 ################################################################################
 
-inventory_enabled: true
+inventory_enabled: false
 
 machine_report: scanresults-inventory.txt
 local_report: scanresults-local-inventory.txt
@@ -73,3 +73,7 @@ proxy_user: nil     # example: corpusername
 proxy_password: nil # example: corppassword
 
 proxy_ntlm_domain: "" # typically left blank, but in case an NTLM-only proxy requires it, it's available for configuration
+
+group_code: nil
+
+
