@@ -37,7 +37,7 @@ class InventoryPlugin
   attr_accessor :inv_machine_file, :inv_local_file
   attr_accessor :destination_server_url, :viewing_url, :override_https
   attr_accessor :proxy_host, :proxy_port, :proxy_user, :proxy_password, :proxy_ntlm_domain
-  attr_accessor :upload_url
+  attr_accessor :upload_url, :group_code
     
   def initialize
 
@@ -52,6 +52,7 @@ class InventoryPlugin
     @proxy_password = InventoryConfig.proxy_password
     @proxy_ntlm_domain = InventoryConfig.proxy_ntlm_domain
     @upload_url = InventoryConfig.upload_url
+    @group_code = InventoryConfig.group_code
 
   end 
 
@@ -72,7 +73,6 @@ class InventoryPlugin
     case opt
 
     when "--group-code"
-      scandata.census_code = arg
       scandata.group_code = arg
 
     when "--inventory-local"
@@ -183,7 +183,7 @@ class InventoryPlugin
       machine_architecture:    <%= scandata.os_architecture %>
       kernel:                  <%= scandata.kernel %>
       ruby_platform:           <%= RUBY_PLATFORM %>
-      group_code:              <%= scandata.group_code %>
+      group_code:              <%= scandata.group_code != nil ? scandata.group_code : InventoryConfig.group_code %>
       universal_rules_md5:     <%= scandata.universal_rules_md5 %>
       universal_rules_version: <%= scandata.universal_rules_version %>
       package,version
