@@ -372,7 +372,6 @@ options_array << [ "--list-projects", "-j", GetoptLong::OPTIONAL_ARGUMENT ]   # 
 options_array << [ "--list-md5-dupes", "-M", GetoptLong::NO_ARGUMENT ]  
 options_array << [ "--list-tag", "-t", GetoptLong::NO_ARGUMENT ]              # dump the MD5 hash which is the machine id tag 
 options_array << [ "--nofollow", "-S", GetoptLong::NO_ARGUMENT ]              # follow symlinks?  presence of this flag says "No" don't follow
-options_array << [ "--inc-path", "-I", GetoptLong::NO_ARGUMENT ]              # existence of this flag says to include location (path) in results
 options_array << [ "--path", "-p", GetoptLong::REQUIRED_ARGUMENT ]            # scan explicit path
 options_array << [ "--progress", "-x", GetoptLong::OPTIONAL_ARGUMENT ]        # show a progress indication every X files scanned
 options_array << [ "--preview-results","-R", GetoptLong::OPTIONAL_ARGUMENT ]  # the existence of this flag will cause discovery to print to stdout the machine results file when scan is completed 
@@ -393,9 +392,11 @@ options.set_options( *options_array )
 
 begin
    
+
   # Every property from the config.yml file is loaded as an instance variable of self.
   # This is done so that this file can have default values for all of these properties, and then 
   # change them if necessary based on a cli option that was specified.
+
   configs = Config.configs  
   configs.each_pair {|key, value|
     self.instance_variable_set("@" + key.to_s, value)
@@ -405,10 +406,11 @@ begin
   # generate a unique and static machine id
   @machine_id = make_machine_id
   
-  @scandata = ScanData.new
   # defaults from config
+  @scandata = ScanData.new
   @scandata.geography = @geography
   @scandata.census_code = @census_code
+  @scandata.group_code = @group_code
 
   options.each do | opt, arg |
   
@@ -460,9 +462,6 @@ begin
       help()
       exit 0
       
-    when "--inc-path"
-      @include_paths = true      
-    
     when "--list-os"
       printf("%s, arch: %s, kernel: %s\n", get_os_version_str(), @os_architecture, @kernel )
       exit 0
