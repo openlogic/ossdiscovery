@@ -59,6 +59,7 @@ class InventoryPlugin
   def cli_options
     clioptions_array = Array.new
 
+    clioptions_array << [ "--group-code","-C", GetoptLong::REQUIRED_ARGUMENT ]    # identifier representing the group code
     clioptions_array << [ "--inventory-local","-A", GetoptLong::REQUIRED_ARGUMENT ]   # formerly --human-results
     clioptions_array << [ "--inventory-results","-B", GetoptLong::REQUIRED_ARGUMENT ] # formerly --machine-results
 
@@ -69,6 +70,10 @@ class InventoryPlugin
     # this allows plugins to gather any state if they need from the command line
 
     case opt
+
+    when "--group-code"
+      scandata.census_code = arg
+      scandata.group_code = arg
 
     when "--inventory-local"
        # Test access to the results directory/filename before performing 
@@ -178,7 +183,7 @@ class InventoryPlugin
       machine_architecture:    <%= scandata.os_architecture %>
       kernel:                  <%= scandata.kernel %>
       ruby_platform:           <%= RUBY_PLATFORM %>
-      group_code:              <%= scandata.census_code %>
+      group_code:              <%= scandata.group_code %>
       universal_rules_md5:     <%= scandata.universal_rules_md5 %>
       universal_rules_version: <%= scandata.universal_rules_version %>
       package,version
