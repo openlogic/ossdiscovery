@@ -92,4 +92,6 @@ geography: 9999
 # If you already have a census code from registering with the census, you can
 # insert the value below or pass it on the command-line.
 
-census_code: 
+census_code: nil
+
+
