@@ -53,8 +53,13 @@ class InventoryPlugin
     @proxy_ntlm_domain = InventoryConfig.proxy_ntlm_domain
     @upload_url = InventoryConfig.upload_url
     @group_code = InventoryConfig.group_code
+    @plugin_version = INVENTORY_PLUGIN_VERSION_KEY
 
   end 
+
+  def plugin_version
+    return @plugin_version
+  end
 
   #--- mandatory methods for a plugin ---
   def cli_options
