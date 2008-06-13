@@ -54,7 +54,12 @@ class CensusPlugin
     @upload_url = CensusConfig.upload_url
     @census_code = CensusConfig.census_code
     @geography = CensusConfig.geography
+    @plugin_version = CENSUS_PLUGIN_VERSION_KEY 
 
+  end
+
+  def plugin_version
+    return @plugin_version
   end
 
   #--- mandatory methods for a plugin ---
@@ -171,8 +176,8 @@ class CensusPlugin
     results = File.new( filename ).read
 
     if ( results.match("report_type: census") )
-      unless scandata.census_code.nil? || scandata.census_code=="" 
-        return deliver_results( self, filename, {:group_code=>scandata.census_code} )
+      unless @census_code.nil? 
+        return deliver_results( self, filename, {:group_code=>@census_code} )
       else
         return deliver_results( self, filename )
       end
