@@ -35,7 +35,7 @@ end
 SHA256_AVAILABLE = RUBY_SHA256_AVAILABLE || JAVA_SHA256_AVAILABLE
 
 class Integrity
-  
+
   def initialize
   end
 
@@ -108,6 +108,43 @@ class Integrity
     #printf("DEBUG results: #{result}, #{result.size}\n")
 
     return result
+  end
+
+=begin rdoc
+  verifies that the integrity check in a results file is correct
+=end
+
+  def self.verify_integrity_check(results, version_key)
+
+    rcvd_integrity_check = results.match(/integrity_check:\s*(.*)/)[1]
+    universal_rules_md5 = results.match(/universal_rules_md5:\s*(.*)/)[1]
+
+    if ( rcvd_integrity_check == nil || rcvd_integrity_check == "")
+      return false        
+    end
+      
+    integrity_check_value = rcvd_integrity_check.hex
+
+    if ( rcvd_integrity_check.size < 60 && rcvd_integrity_check.size > 68 )  
+      return false        
+    end
+
+    if ( integrity_check_value < 100000000 )
+      return false        
+    end
+
+    if ( (integrity_check_value % 97) != 1)
+      return false        
+    end
+
+    #Remove the integrity check from the file and recalculate the integrity check
+    integrity_check = create_integrity_check(results.sub(/\n*integrity_check:.*\n/,""),universal_rules_md5, version_key )
+
+    unless rcvd_integrity_check == integrity_check 
+      return false        
+    end
+    
+    return true
   end
 
   # turn a raw array of bytes into a hex string

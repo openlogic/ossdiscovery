@@ -247,11 +247,9 @@ end
   recalculates the integrity check
 =end
 
-def apply_override(results, overrides)
+def apply_override(results, overrides, version_key)
 
-  include CensusPlugin
-  
-  if verify_integrity_check(results)
+  if Integrity.verify_integrity_check(results, version_key)
     #Now let's override various parts of the results file and recalculate the integrity check
     
     overrides.each do |key, value|
@@ -260,7 +258,8 @@ def apply_override(results, overrides)
    
     #Get rid of the existing check
     results=results.sub(/\n*integrity_check:.*\n/,"")
-    integrity_check=create_integrity_check(results, results.match(/universal_rules_md5:\s*(.*)/)[1])
+    universal_rules_md5 = results.match(/universal_rules_md5:\s*(.*)/)[1]
+    integrity_check=Integrity.create_integrity_check(results, universal_rules_md5, version_key )
     results="integrity_check: #{integrity_check}\n#{results}"
   else
     puts "Tried to override results value but original integrity check was invalid"
@@ -269,41 +268,6 @@ def apply_override(results, overrides)
 end
 
 
-=begin rdoc
-  verifies that the integrity check in a results file is correct
-=end
-def verify_integrity_check(results)
-
-  rcvd_integrity_check = results.match(/integrity_check:\s*(.*)/)[1]
-  universal_rules_md5 = results.match(/universal_rules_md5:\s*(.*)/)[1]
-
-  if ( rcvd_integrity_check == nil || rcvd_integrity_check == "")
-    return false        
-  end
-    
-  integrity_check_value = rcvd_integrity_check.hex
-
-  if ( rcvd_integrity_check.size < 60 && rcvd_integrity_check.size > 68 )  
-    return false        
-  end
-
-  if ( integrity_check_value < 100000000 )
-    return false        
-  end
-
-  if ( (integrity_check_value % 97) != 1)
-    return false        
-  end
-
-  #Remove the integrity check from the file and recalculate the integrity check
-  integrity_check = create_integrity_check(results.sub(/\n*integrity_check:.*\n/,""),universal_rules_md5 )
-
-  unless rcvd_integrity_check == integrity_check 
-    return false        
-  end
-  
-  return true
-end
 
 =begin rdoc
   this method posts the machine scan results back to the discovery server using the Net classes in stdlib
@@ -326,7 +290,7 @@ def deliver_results( aPlugin, optional_filename = nil, overrides={} )
   end
   
   if overrides != nil && overrides.size > 0
-   results=apply_overrides(results,overrides)
+   results=apply_override(results,overrides, aPlugin.plugin_version() )
   end
   
   begin
