@@ -123,15 +123,11 @@ class InventoryPlugin
 
   #--- optional methods for a plugin ---
   def machine_report_filename()
-    return InventoryConfig.machine_report
+    return @inv_machine_file
   end
 
   def local_report_filename()
-    return InventoryConfig.local_report
-  end
-
-  def human_report_filename()
-    return InventoryConfig.results
+    return @inv_local_file 
   end
 
   def can_deliver?
