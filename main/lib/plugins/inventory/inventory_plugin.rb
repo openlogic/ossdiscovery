@@ -74,6 +74,7 @@ class InventoryPlugin
 
     when "--group-code"
       scandata.group_code = arg
+      @group_code = arg
 
     when "--inventory-local"
        # Test access to the results directory/filename before performing 
@@ -179,7 +180,7 @@ class InventoryPlugin
       machine_architecture:    <%= scandata.os_architecture %>
       kernel:                  <%= scandata.kernel %>
       ruby_platform:           <%= RUBY_PLATFORM %>
-      group_code:              <%= scandata.group_code != nil ? scandata.group_code : InventoryConfig.group_code %>
+      group_code:              <%= @group_code %>
       universal_rules_md5:     <%= scandata.universal_rules_md5 %>
       universal_rules_version: <%= scandata.universal_rules_version %>
       package,version

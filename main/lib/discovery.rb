@@ -408,9 +408,6 @@ begin
   
   # defaults from config
   @scandata = ScanData.new
-  @scandata.geography = @geography
-  @scandata.census_code = @census_code
-  @scandata.group_code = @group_code
 
   options.each do | opt, arg |
   
