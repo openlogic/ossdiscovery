@@ -37,9 +37,10 @@ class CensusPlugin
   attr_accessor :census_machine_file, :census_local_file
   attr_accessor :destination_server_url, :viewing_url, :override_https
   attr_accessor :proxy_host, :proxy_port, :proxy_user, :proxy_password, :proxy_ntlm_domain
-  attr_accessor :upload_url,:census_code
+  attr_accessor :upload_url,:census_code,:geography
     
   def initialize
+
     @census_machine_file = CensusConfig.machine_report
     @census_local_file = CensusConfig.local_report
     @destination_server_url = CensusConfig.destination_server_url
@@ -52,6 +53,8 @@ class CensusPlugin
     @proxy_ntlm_domain = CensusConfig.proxy_ntlm_domain
     @upload_url = CensusConfig.upload_url
     @census_code = CensusConfig.census_code
+    @geography = CensusConfig.geography
+
   end
 
   #--- mandatory methods for a plugin ---
@@ -87,6 +90,7 @@ class CensusPlugin
 
     when "--census-code"
       scandata.census_code = arg
+      @census_code = arg
 
     when "--list-geos"
       show_geographies_long()
@@ -249,8 +253,8 @@ class CensusPlugin
       kernel:                  <%= scandata.kernel %>
       ruby_platform:           <%= RUBY_PLATFORM %>
       production_scan:         <%= scandata.production_scan %>
-      group_code:              <%= scandata.census_code %>
-      geography:               <%= scandata.geography %>
+      group_code:              <%= @census_code %>
+      geography:               <%= @geography %>
       universal_rules_md5:     <%= scandata.universal_rules_md5 %>
       universal_rules_version: <%= scandata.universal_rules_version %>
       package,version
