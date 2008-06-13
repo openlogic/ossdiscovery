@@ -119,9 +119,6 @@ update_rules_and_do_scan: false
 # where the results should go by default, both of these may be overridden by command
 # line options.
 
-# whether to include location (paths) in the machine scan results file.
-include_paths: false
-
 # whether or not to show the machine scan results after the scan is complete
 preview_results: false
 
