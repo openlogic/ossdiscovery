@@ -140,11 +140,12 @@ module CensusUtils
       package,version
       % if packages.length > 0
       %   packages.sort.each do |package|
-      %     package.version.split(",").sort.each do |version|
-      %       version.gsub!(" ", "")
-      %       version.tr!("\0", "")
-              <%= package.name %>,<%= version %>
+      %     package.version.gsub!(" ", "")
+      %     if ( package.version.to_s.match(/[<!,&>]/) != nil )
+      %       package.version.gsub!(/[<!,&>]/, "")   # strip xml or csv type chars out
       %     end
+      %     package.version.tr!("\0", "")
+          <%= package.name %>,<%= package.version %>
       %   end
       % end
     }
