@@ -1,16 +1,36 @@
 require 'rake/packagetask'
 
-PACKAGE_NAME=ENV["NAME"] || "ossdiscovery"
-PACKAGE_VERSION=ENV["VERSION"] || "2.0.2"
+if ( ENV['plugin'].nil? )
+
+  puts "\nWarning: You need to define the plugin environment to package!"
+  puts "ie) rake release:all:distributions plugin=inventory"
+  puts "ie) rake release:all:distributions plugin=census"
+  puts "\n\n"
+
+end
+
 
 namespace :release do
+
+  PACKAGE_NAME= ( ENV["NAME"] || "ossdiscovery" ) + "-" + (ENV['plugin'].nil? ? "error" : ENV['plugin'])
+  PACKAGE_VERSION=ENV["VERSION"] || "2.1.0"
+
+  puts "Cleaning up discovery.log files"
+  `find . -name "discovery.log" -exec rm {} \\;`
+
   namespace :ruby do 
   
     Rake::PackageTask.new(PACKAGE_NAME, PACKAGE_VERSION) do |p|
       p.need_tar_gz = true
       p.need_zip = true
       p.package_files.include("lib/**/*", "doc/*", "log/*", "log", "license/*", "README*", "discovery", "discovery.bat", "help.txt" )
-      p.package_files.exclude("lib/**/*.jar")
+
+      if ( ENV['plugin'] == "inventory")  # then exclude census and vica versa
+        p.package_files.exclude("lib/**/*.jar", "lib/plugins/census" )
+      elsif ( ENV['plugin'].nil? || ENV['plugin'] == "census" )
+        p.package_files.exclude("lib/**/*.jar", "lib/plugins/inventory")
+      end
+
     end
 
     desc "Build the distribution files for the Native Ruby version of OSS Discovery"
@@ -19,7 +39,8 @@ namespace :release do
   end
 
   namespace :jruby do 
-    
+  
+    plugin = ENV['plugin']    
     jruby_package_name="#{PACKAGE_NAME}-jruby"
     jruby_package_filename="#{jruby_package_name}-#{PACKAGE_VERSION}"
 
@@ -27,6 +48,13 @@ namespace :release do
     task :prepare => "release:jruby:clean" do
       mkdir_p "pkg/#{jruby_package_filename}"
       cp_r "lib", "pkg/#{jruby_package_filename}/lib", :remove_destination=>true
+
+      if ( plugin == "inventory" )
+        rm_r "pkg/#{jruby_package_filename}/lib/plugins/census"
+      elsif ( plugin == "census" )
+        rm_r "pkg/#{jruby_package_filename}/lib/plugins/inventory"
+      end
+
       cp_r "jruby", "pkg/#{jruby_package_filename}/jruby", :remove_destination=>true
       cp_r "license", "pkg/#{jruby_package_filename}/license", :remove_destination=>true
       cp_r "doc", "pkg/#{jruby_package_filename}/doc", :remove_destination=>true
@@ -59,8 +87,10 @@ namespace :release do
   end
 
   namespace :windows do 
-    
+   
+    plugin = ENV['plugin']    
     package_name="#{PACKAGE_NAME}-windows"
+
     package_filename="#{package_name}-#{PACKAGE_VERSION}"
     dest_dir="pkg/#{package_filename}"
 
@@ -69,6 +99,13 @@ namespace :release do
       mkdir_p "#{dest_dir}"
       mkdir_p "#{dest_dir}/jre/"
       cp_r "lib", "#{dest_dir}/lib", :remove_destination=>true
+
+      if ( plugin == "inventory" )
+        rm_r "pkg/#{package_filename}/lib/plugins/census"
+      elsif ( plugin == "census")
+        rm_r "pkg/#{package_filename}/lib/plugins/inventory"
+      end
+
       cp_r "jruby", "#{dest_dir}/jruby", :remove_destination=>true
       cp_r "license", "#{dest_dir}/license", :remove_destination=>true
       cp_r "log", "#{dest_dir}/log", :remove_destination=>true
@@ -115,7 +152,8 @@ namespace :release do
   end
 
   namespace :linux do 
-    
+
+    plugin = ENV['plugin']    
     package_name="#{PACKAGE_NAME}-linux"
     package_filename="#{package_name}-#{PACKAGE_VERSION}"
     dest_dir="pkg/#{package_filename}"
@@ -125,6 +163,13 @@ namespace :release do
       mkdir_p "#{dest_dir}"
       mkdir_p "#{dest_dir}/jre/"
       cp_r "lib", "#{dest_dir}/lib", :remove_destination=>true
+
+      if ( plugin == "inventory" )
+        rm_r "pkg/#{package_filename}/lib/plugins/census"
+      elsif ( plugin == "census")
+        rm_r "pkg/#{package_filename}/lib/plugins/inventory"
+      end
+
       cp_r "jruby", "#{dest_dir}/jruby", :remove_destination=>true
       cp_r "license", "#{dest_dir}/license", :remove_destination=>true
       cp_r "log", "#{dest_dir}/log", :remove_destination=>true
@@ -157,7 +202,8 @@ namespace :release do
   end
 
   namespace :solaris do 
-    
+
+    plugin = ENV['plugin']    
     package_name="#{PACKAGE_NAME}-solaris"
     package_filename="#{package_name}-#{PACKAGE_VERSION}"
     dest_dir="pkg/#{package_filename}"
@@ -167,6 +213,13 @@ namespace :release do
       mkdir_p "#{dest_dir}"
       mkdir_p "#{dest_dir}/jre/"
       cp_r "lib", "#{dest_dir}/lib", :remove_destination=>true
+
+      if ( plugin == "inventory" )
+        rm_r "pkg/#{package_filename}/lib/plugins/census"
+      elsif ( plugin == "census")
+        rm_r "pkg/#{package_filename}/lib/plugins/inventory"
+      end
+
       cp_r "jruby", "#{dest_dir}/jruby", :remove_destination=>true
       cp_r "license", "#{dest_dir}/license", :remove_destination=>true
       cp_r "log", "#{dest_dir}/log", :remove_destination=>true
