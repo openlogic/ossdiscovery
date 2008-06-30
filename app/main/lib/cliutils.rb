@@ -109,6 +109,9 @@ def help()
   puts File.new("#{ENV['OSSDISCOVERY_HOME']}/help.txt","r").read
 
   # read and dump the help.txt file for each of the plugins if the plugin is enabled
+  @plugins_list.each do | plugin_name, aPlugin |
+    puts File.new("#{ENV['OSSDISCOVERY_HOME']}/lib/plugins/#{plugin_name.downcase}/help.txt").read
+  end
 
 end
 
