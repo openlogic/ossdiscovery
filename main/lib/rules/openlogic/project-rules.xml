@@ -31,8 +31,8 @@
     <eval expression="bin" speed="1"/>
     <match-rules name="bin">
       <result expression="OR-ALL"/>
-      <match-rule name="exedll" type="binary" filename="^7z.exe|^7-zip.dll|^7zFM.exe|^7zG.exe$" regexp="P.r.o.d.u.c.t.V.e.r.s.i.o.n\x00{3}([3-5].\..*?)\x00{3}"/>
-      <match-rule name="sadll" type="binary" filename="^7z.dll$" regexp="P.r.o.d.u.c.t.V.e.r.s.i.o.n.*?([3-5].\..*?)\("/>
+      <match-rule name="exedll" type="binary" filename="^7z.exe|^7-zip.dll|^7zFM.exe|^7zG.exe$" regexp="V.e.r.s.i.o.n.*?([3-5].\..*?)\x00{3,5}"/>
+      <match-rule name="sadll" type="binary" filename="^7z.dll$" regexp="V.e.r.s.i.o.n.*?([3-5].\..*?)\("/>
     </match-rules>
   </project-rule>
   <project-rule name="abiword" from="wild" os="windows">
@@ -2445,9 +2445,11 @@
   <project-rule name="firefox" from="wild" os="all">
     <eval expression="winversions OR nowinversions OR versions OR files" speed="1"/>
     <match-rules name="nowinversions">
-      <result expression="AND-ALL"/>
+      <result expression="nwff3ini AND (bin OR ver OR elf)"/>
       <match-rule name="nwff3ini" type="binary" filename="^application.ini" regexp="Version=(.*?)$"/>
       <match-rule name="bin" type="filename" filename="^firefox-bin$"/>
+      <match-rule name="elf" type="filename" filename="^firefox$"/>
+      <match-rule name="ver" type="filename" filename="^firefox-3.*?$"/>
     </match-rules>
     <match-rules name="winversions">
       <result expression="AND-ALL"/>
