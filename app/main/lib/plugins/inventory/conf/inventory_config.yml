@@ -28,7 +28,7 @@
 
 ################################################################################
 
-inventory_enabled: false
+inventory_enabled: true
 
 machine_report: scanresults-inventory.txt
 local_report: scanresults-local-inventory.txt
@@ -54,7 +54,7 @@ override_https: false
 
 # in some cases, ie: just can't get around a proxy configuration or protocol to programmatically submit results,
 # it's still possible to submit results by going to this URL in your browser and uploading the machine results file
-upload_url: https://<inventory>.openlogic.com/service/upload  # manually upload scanresults-census.txt, use this URL
+upload_url: https://inventory.openlogic.com/upload  # manually upload scanresults-inventory.txt, use this URL
 
 # username password of server submission, should be nil if no authentication is in use
 username: nil
