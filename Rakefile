@@ -1,40 +1,70 @@
 require 'rake/packagetask'
 
-if ( ENV['plugin'].nil? )
-
-  puts "\nWarning: You need to define the plugin environment to package!"
-  puts "ie) rake release:all:distributions plugin=inventory"
-  puts "ie) rake release:all:distributions plugin=census"
-  puts "\n\n"
-
-end
-
 
 namespace :release do
 
   PACKAGE_NAME= ( ENV["NAME"] || "ossdiscovery" ) + "-" + (ENV['plugin'].nil? ? "error" : ENV['plugin'])
   PACKAGE_VERSION=ENV["VERSION"] || "2.1.0"
 
-  puts "Cleaning up discovery.log files"
-  `find . -name "discovery.log" -exec rm {} \\;`
+
+  def prep_dir
+
+    if ( ENV['plugin'].nil? )
+      puts "\nWarning: You need to define the plugin environment to package!"
+      puts "ie) rake release:all:distributions plugin=inventory"
+      puts "ie) rake release:all:distributions plugin=census"
+      puts "\n\n"
+    end
+
+    puts "Cleaning up discovery.log files"
+    `find . -name "discovery.log" -exec rm {} \\;`
+
+    # if inventory, then dynamically enable the plugin - by default it's disabled because census test cases
+    # are the ones active in CCrb and consequently, it tries to load both plugins which have colliding command  line parameters
+    # so inventory is disabled so cli params don't collide.  
+
+    if ( ENV['plugin'] == "inventory")
+      inventory_yml = File.open("lib/plugins/inventory/conf/inventory_config.yml").read
+      inventory_yml.gsub!("inventory_enabled: false", "inventory_enabled: true")
+      puts inventory_yml
+      if ( !inventory_yml.nil? )
+        yml_fd = File.open("lib/plugins/inventory/conf/inventory_config.yml","w")
+        yml_fd.write(inventory_yml)
+        yml_fd.close
+      end
+    end
+
+  end
+
+  def cleanup
+    if ENV['plugin'] == "inventory"
+       # revert the temporary enabling of the inventory plugin 
+       puts "reverting inventory_config.yml"
+       `svn revert lib/plugins/inventory/conf/inventory_config.yml`
+    end
+  end
 
   namespace :ruby do 
-  
+
     Rake::PackageTask.new(PACKAGE_NAME, PACKAGE_VERSION) do |p|
+  
       p.need_tar_gz = true
       p.need_zip = true
       p.package_files.include("lib/**/*", "doc/*", "log/*", "log", "license/*", "README*", "discovery", "discovery.bat", "help.txt" )
 
       if ( ENV['plugin'] == "inventory")  # then exclude census and vica versa
         p.package_files.exclude("lib/**/*.jar", "lib/plugins/census" )
-      elsif ( ENV['plugin'].nil? || ENV['plugin'] == "census" )
+      elsif ( ENV['plugin'] == "census" )
         p.package_files.exclude("lib/**/*.jar", "lib/plugins/inventory")
       end
 
     end
 
     desc "Build the distribution files for the Native Ruby version of OSS Discovery"
-    task :distributions =>"release:ruby:package"
+    task :distributions => ["release:ruby:prepare", "release:ruby:package"]
+    task :prepare do
+      prep_dir
+    end
 
   end
 
@@ -46,6 +76,7 @@ namespace :release do
 
     desc "Prepare the Discovery/JRuby distribution package"
     task :prepare => "release:jruby:clean" do
+      prep_dir
       mkdir_p "pkg/#{jruby_package_filename}"
       cp_r "lib", "pkg/#{jruby_package_filename}/lib", :remove_destination=>true
 
@@ -96,6 +127,7 @@ namespace :release do
 
     desc "Prepare the Windows Discovery distribution package"
     task :prepare => "release:windows:clean" do
+      prep_dir
       mkdir_p "#{dest_dir}"
       mkdir_p "#{dest_dir}/jre/"
       cp_r "lib", "#{dest_dir}/lib", :remove_destination=>true
@@ -160,6 +192,7 @@ namespace :release do
 
     desc "Prepare the Linux Discovery distribution package"
     task :prepare => "release:linux:clean" do
+      prep_dir
       mkdir_p "#{dest_dir}"
       mkdir_p "#{dest_dir}/jre/"
       cp_r "lib", "#{dest_dir}/lib", :remove_destination=>true
@@ -210,6 +243,7 @@ namespace :release do
 
     desc "Prepare the Solaris Discovery distribution package"
     task :prepare => "release:solaris:clean" do
+      prep_dir
       mkdir_p "#{dest_dir}"
       mkdir_p "#{dest_dir}/jre/"
       cp_r "lib", "#{dest_dir}/lib", :remove_destination=>true
@@ -255,4 +289,9 @@ namespace :release do
     desc "Build the distribution files for the all versions of OSS Discovery"
     task :distributions =>["release:ruby:distributions", "release:jruby:distributions", "release:windows:distribution", "release:linux:distribution", "release:solaris:distribution"]
   end
+
 end
+
+
+
+
