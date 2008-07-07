@@ -28,7 +28,7 @@
 
 ################################################################################
 
-inventory_enabled: true
+inventory_enabled: false
 
 machine_report: scanresults-inventory.txt
 local_report: scanresults-local-inventory.txt
