@@ -28,13 +28,11 @@
 
 ################################################################################
 
-inventory_enabled: false
+inventory_enabled: true
 
 machine_report: scanresults-inventory.txt
 local_report: scanresults-local-inventory.txt
 results: STDOUT
-
-# TODO - need to fill this out similar to census yml
 
 ################################################################################
 ##### Server properties
@@ -45,12 +43,10 @@ results: STDOUT
 
 # Note that destination_server_url and server_base_url can neither be localhost urls if proxying is being 
 # used or tested.  You can't proxy a localhost URL.
-#destination_server_url: https://www.osscensus.org/service/scans/scanpost  # osscensus official
 
-# DBUG _ this needs to change to an inventory server
-destination_server_url: https://<inventory>.openlogic.com/service/scans/scanpost
+destination_server_url: https://inventory.openlogic.com/scans/scanpost
 
-viewing_url: https://<inventory>.openlogic.com
+viewing_url: https://inventory.openlogic.com
 
 # set this to true this if for some reason your network is not allowing HTTPS posts
 # also change the destination_server_url to http from https, if this is the case
