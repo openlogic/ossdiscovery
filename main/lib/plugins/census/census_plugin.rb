@@ -268,6 +268,7 @@ class CensusPlugin
       %     package.version.gsub!(" ", "")
       %     if ( package.version.to_s.match(/[<!,&>]/) != nil )
       %       package.version.gsub!(/[<!,&>]/, "")   # strip xml or csv type chars out
+      %       package.version.chomp!                 # strip any carriage return from version string
       %     end
       %     package.version.tr!("\0", "")
           <%= package.name %>,<%= package.version %>
