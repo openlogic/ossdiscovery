@@ -2445,11 +2445,9 @@
   <project-rule name="firefox" from="wild" os="all">
     <eval expression="winversions OR nowinversions OR versions OR files" speed="1"/>
     <match-rules name="nowinversions">
-      <result expression="nwff3ini AND (bin OR ver OR elf)"/>
+      <result expression="AND-ALL"/>
       <match-rule name="nwff3ini" type="binary" filename="^application.ini" regexp="Version=(.*?)$"/>
       <match-rule name="bin" type="filename" filename="^firefox-bin$"/>
-      <match-rule name="elf" type="filename" filename="^firefox$"/>
-      <match-rule name="ver" type="filename" filename="^firefox-3.*?$"/>
     </match-rules>
     <match-rules name="winversions">
       <result expression="AND-ALL"/>
