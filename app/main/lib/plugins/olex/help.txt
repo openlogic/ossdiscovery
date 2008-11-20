@@ -1,0 +1,9 @@
+
+Olex Plugin v1.0 --help
+--olex-local,   -u the absolute or relative path and filename for the human readable results file.  The default is STDOUT
+--olex-results, -m the absolute or relative path and filename for the machine readable results file that can be uploaded to the OLEX Server
+--list-plugins, -N lists just the enabled plugins, not all plugins installed
+
+Copyright (C) 2007-2008 OpenLogic, Inc.
+License: Affero GPLv3
+
