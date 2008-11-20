@@ -13,6 +13,7 @@ namespace :release do
       puts "\nWarning: You need to define the plugin environment to package!"
       puts "ie) rake release:all:distributions plugin=inventory"
       puts "ie) rake release:all:distributions plugin=census"
+      puts "ie) rake release:all:distributions plugin=olex"
       puts "\n\n"
     end
 
@@ -32,6 +33,16 @@ namespace :release do
         yml_fd.write(inventory_yml)
         yml_fd.close
       end
+
+    elsif ( ENV['plugin'] == "olex")
+      olex_yml = File.open("lib/plugins/olex/conf/olex_config.yml").read
+      olex_yml.gsub!("olex_enabled: false", "olex_enabled: true")
+      puts olex_yml
+      if ( !olex_yml.nil? )
+        yml_fd = File.open("lib/plugins/olex/conf/olex_config.yml","w")
+        yml_fd.write(olex_yml)
+        yml_fd.close
+      end
     end
 
   end
@@ -41,6 +52,10 @@ namespace :release do
        # revert the temporary enabling of the inventory plugin 
        puts "reverting inventory_config.yml"
        `svn revert lib/plugins/inventory/conf/inventory_config.yml`
+    elsif ENV['plugin'] == "olex"
+       # revert the temporary enabling of the olex plugin 
+       puts "reverting olex_config.yml"
+       `svn revert lib/plugins/olex/conf/olex_config.yml`
     end
   end
 
@@ -54,8 +69,13 @@ namespace :release do
 
       if ( ENV['plugin'] == "inventory")  # then exclude census and vica versa
         p.package_files.exclude("lib/**/*.jar", "lib/plugins/census" )
+        p.package_files.exclude("lib/**/*.jar", "lib/plugins/olex" )
       elsif ( ENV['plugin'] == "census" )
         p.package_files.exclude("lib/**/*.jar", "lib/plugins/inventory")
+        p.package_files.exclude("lib/**/*.jar", "lib/plugins/olex")
+      elsif ( ENV['plugin'] == "olex" )
+        p.package_files.exclude("lib/**/*.jar", "lib/plugins/inventory")
+        p.package_files.exclude("lib/**/*.jar", "lib/plugins/census")
       end
 
     end
@@ -82,8 +102,13 @@ namespace :release do
 
       if ( plugin == "inventory" )
         rm_r "pkg/#{jruby_package_filename}/lib/plugins/census"
+        rm_r "pkg/#{jruby_package_filename}/lib/plugins/olex"
       elsif ( plugin == "census" )
         rm_r "pkg/#{jruby_package_filename}/lib/plugins/inventory"
+        rm_r "pkg/#{jruby_package_filename}/lib/plugins/olex"
+      elsif ( plugin == "olex" )
+        rm_r "pkg/#{jruby_package_filename}/lib/plugins/inventory"
+        rm_r "pkg/#{jruby_package_filename}/lib/plugins/census"
       end
 
       cp_r "jruby", "pkg/#{jruby_package_filename}/jruby", :remove_destination=>true
@@ -134,8 +159,13 @@ namespace :release do
 
       if ( plugin == "inventory" )
         rm_r "pkg/#{package_filename}/lib/plugins/census"
+        rm_r "pkg/#{package_filename}/lib/plugins/olex"
       elsif ( plugin == "census")
         rm_r "pkg/#{package_filename}/lib/plugins/inventory"
+        rm_r "pkg/#{package_filename}/lib/plugins/olex"
+      elsif ( plugin == "olex")
+        rm_r "pkg/#{package_filename}/lib/plugins/inventory"
+        rm_r "pkg/#{package_filename}/lib/plugins/census"
       end
 
       cp_r "jruby", "#{dest_dir}/jruby", :remove_destination=>true
@@ -199,8 +229,13 @@ namespace :release do
 
       if ( plugin == "inventory" )
         rm_r "pkg/#{package_filename}/lib/plugins/census"
+        rm_r "pkg/#{package_filename}/lib/plugins/olex"
       elsif ( plugin == "census")
         rm_r "pkg/#{package_filename}/lib/plugins/inventory"
+        rm_r "pkg/#{package_filename}/lib/plugins/olex"
+      elsif ( plugin == "olex")
+        rm_r "pkg/#{package_filename}/lib/plugins/inventory"
+        rm_r "pkg/#{package_filename}/lib/plugins/census"
       end
 
       cp_r "jruby", "#{dest_dir}/jruby", :remove_destination=>true
@@ -250,8 +285,13 @@ namespace :release do
 
       if ( plugin == "inventory" )
         rm_r "pkg/#{package_filename}/lib/plugins/census"
+        rm_r "pkg/#{package_filename}/lib/plugins/olex"
       elsif ( plugin == "census")
         rm_r "pkg/#{package_filename}/lib/plugins/inventory"
+        rm_r "pkg/#{package_filename}/lib/plugins/olex"
+      elsif ( plugin == "olex")
+        rm_r "pkg/#{package_filename}/lib/plugins/inventory"
+        rm_r "pkg/#{package_filename}/lib/plugins/census"
       end
 
       cp_r "jruby", "#{dest_dir}/jruby", :remove_destination=>true

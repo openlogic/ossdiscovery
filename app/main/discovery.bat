@@ -37,6 +37,7 @@ GOTO RUN
 TYPE help.txt
 if exist lib\plugins\census\help.txt type lib\plugins\census\help.txt
 if exist lib\plugins\inventory\help.txt type lib\plugins\inventory\help.txt
+if exist lib\plugins\olex\help.txt type lib\plugins\olex\help.txt
 goto END
 :RUN
 ruby "%OSSDISCOVERY_HOME%\lib\discovery.rb" --progress 100 --verbose %*
