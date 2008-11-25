@@ -188,7 +188,7 @@ class OlexPlugin
     template = template.gsub(/^\s+/, "").squeeze(" ")
     text = ERB.new(template, 0, "%").result(binding)
 
-    printf(io, "integrity_check: #{Integrity.create_integrity_check(text,scandata.universal_rules_md5,OLEX_PLUGIN_VERSION_KEY)}\n")
+    printf(io, "integrity_check: #{Integrity.create_integrity_check(text,"",OLEX_PLUGIN_VERSION_KEY)}\n")
 
     # TODO - when a rogue rule runs afoul and matches too much text on a package, it will blow chunks here
     begin
