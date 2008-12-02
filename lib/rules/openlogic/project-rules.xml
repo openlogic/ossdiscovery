@@ -108,6 +108,48 @@
       <match-rule name="1.1.1" type="MD5" md5sum="c264c7a20fe37c9dc702ab8b0cf54f58" filename="^activation\.jar$" version="1.1.1"/>
     </match-rules>
   </project-rule>
+  <project-rule name="agilewiki" from="wild" os="all">
+    <description>Search for a agilewiki jar file. It's not possible to detect the software version.</description>
+    <eval expression="awserver" speed="1"/>
+    <match-rules name="awserver">
+      <result expression="OR-ALL"/>
+      <match-rule name="01-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.5.0.12" md5sum="337701a8d3c9ab3c2118b5e9ecdcc791" />
+      <match-rule name="02-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.5.0.11" md5sum="671cd0f2e4a479c50d156874d65b7575" />
+      <match-rule name="03-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.5.0.10" md5sum="e83293a90eee8254675d78aea02ea39a" />
+      <match-rule name="04-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.5.0.9" md5sum="622b398dae183cd1f877696248ef3be5" />
+      <match-rule name="05-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.5.0.8" md5sum="2d5bc2e45f279f440f6afa2319f1a573" />
+      <match-rule name="06-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.5.0.7" md5sum="9cb88ffc7ba8ef4b659722552e09ad6b" />
+      <match-rule name="07-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.5.0.6" md5sum="a39a944b541791bc17ab9f74d632c2ab" />
+      <match-rule name="08-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.5.0.5" md5sum="7d2278dbc5ab373bae52736ef2d1b741" />
+      <match-rule name="09-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.5.0.4" md5sum="12d2141b94c6c68fce540a8897702a2f" />
+      <match-rule name="10-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.5.0.3" md5sum="14b5d31609f086faacde660f7bb6be58" />
+      <match-rule name="11-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.5.0.2" md5sum="4a1343fc4c75cf31aeee7628a902590f" />
+      <match-rule name="12-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.5.0.1" md5sum="500c7d256c8a7a4a89518aa92d9b5f7a" />
+      <match-rule name="13-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.5.0.0" md5sum="610e119737a3cf52a5bef911f4726945" />
+      <match-rule name="14-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.4.3.0" md5sum="2eac571050123db91b0d15caeaffd14a" />
+      <match-rule name="15-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.4.2.1" md5sum="238134f1a48834a2a2235d712f7378e5" />
+      <match-rule name="16-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.4.2.0" md5sum="a7996d415e6e8b2eae65b8ba1c4a049f" />
+      <match-rule name="17-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.4.1.3" md5sum="711da858e50a90cf4cec0514e6ee6e85" />
+      <match-rule name="18-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.4.1.2" md5sum="a7e28af6cf23dc9ddabc291c9390b74f" />
+      <match-rule name="19-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.4.1.1" md5sum="cb5f614728d85be6550b3cc753d0e44a" />
+      <match-rule name="20-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.4.1.0" md5sum="ba714b55e73ece114c0b31d3e78c9e5b" />
+      <match-rule name="21-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.4.0.0" md5sum="ad180e982e479eae63e4d51b3915ec44" />
+      <match-rule name="22-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.3.2.0" md5sum="e89077205554db6ff1bc6c2e5e499b8f" />
+      <match-rule name="23-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.3.1.1" md5sum="b7473a7ba11f7064f21c3adabc593200" />
+      <match-rule name="24-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.3.1.0" md5sum="805330b40e826df0439c667d9a23d618" />
+      <match-rule name="25-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.3.0.0" md5sum="87f7f10109b3abc391eb0ae750d44f45" />
+      <match-rule name="26-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.2.3.0" md5sum="553ba2445ab8bb971a75cd77a2bc1556" />
+      <match-rule name="27-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.2.2.0" md5sum="28f51becaddb7c791c3e0f6405052031" />
+      <match-rule name="28-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.2.1.0" md5sum="2bb7acbf15bc9f8b03a9da049e09bef5" />
+      <match-rule name="29-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.2.0.0" md5sum="837732fa71672ecc6db5f014a565703d" />
+      <match-rule name="30-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.1.4.0" md5sum="a6c7bac803e7878177d0e1a42df4596f" />
+      <match-rule name="31-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.1.3.0" md5sum="e47786638b90390823d3c2416d099e22" />
+      <match-rule name="32-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.1.2.0" md5sum="71f16eb139f90dfc21f304a1b310dc44" />
+      <match-rule name="33-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.1.1.0" md5sum="9cba7b2b91544e4a8e4fdbd26afe120b" />
+      <match-rule name="34-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.0.1.0" md5sum="f7ed75b24432489ee8c9ed3234ca00d6" />
+      <match-rule name="35-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.0.0.1" md5sum="4dfe0f9bf43528179b7e159f12960142" />
+    </match-rules>
+  </project-rule>
   <project-rule name="ajaxcontroltoolkit" from="wild" os="all">
     <description>Looks for the dlls via md5, otherwise falls thru to name match.</description>
     <eval expression="md5 OR filename" speed="1"/>
@@ -226,7 +268,7 @@
       <match-rule name="httpd_exe" type="binary" filename="^httpd.exe" regexp="build.([0-9]\.[0-9]+\.[0-9]+)"/>
       <!-- for Apache.exe 2.0.x files the identifying characteristic is this build string pattern -->
       <!-- for Apache.exe 1.3.x files the identifying characteristic is this build string pattern. it's like apache2 but uses an underscore,
-			     so the regex using a build. will match either - or _ and pull both cases of a 1.3.39 and a 2.0.46 .exe for example  -->
+              so the regex using a build. will match either - or _ and pull both cases of a 1.3.39 and a 2.0.46 .exe for example  -->
       <match-rule name="apache2_exe" type="binary" filename="^Apache.exe" regexp="build.([0-9]\.[0-9]+\.[0-9]+)"/>
     </match-rules>
   </project-rule>
@@ -1561,6 +1603,21 @@
       <match-rule name="pmd_jar" type="filenameVersion" filename="^pmd-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
+  <project-rule name="crimson" from="wild" os="all">
+    <eval expression="crimson_filename or crimson_md5" speed="1"/>
+    <match-rules name="crimson_filename">
+      <result expression="OR-ALL"/>
+      <match-rule name="crimson_name" type="filename" filename="^crimson\.jar$"/>
+      <match-rule name="crimson_version" type="filenameVersion" filename="^crimson-([\d\.]+[\w]*)\.jar$"/> 
+    </match-rules>
+    <match-rules name="crimson_md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="1.1" type="MD5" md5sum="025be93e5893065024270ed57297ddba" filename="^crimson.*jar$" version="1.1"/>
+      <match-rule name="1.1.1" type="MD5" md5sum="f464c24166534ab1022b8dc9f9087aee" filename="^crimson.*jar$" version="1.1.1"/>
+      <match-rule name="1.1.3" type="MD5" md5sum="c705743a5e27289c2377520cccbd03d0" filename="^crimson.*jar$" version="1.1.3"/>
+      <match-rule name="1.1.3_" type="MD5" md5sum="bad5c2ea1434205c6644f8c0e87cb210" filename="^crimson.*jar$" version="1.1.3_"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="cruisecontrol" from="wild" os="all">
     <description>Finds cruisecontrol based on MD5 or by filename-version</description>
     <eval expression="ccrules" speed="1"/>
@@ -1992,7 +2049,7 @@
     <eval expression="birt_version" speed="1"/>
     <match-rules name="birt_version">
       <result expression="OR-ALL"/>
-      <match-rule name="birt_ver" type="binary" filename="^feature.xml$" regexp="birt.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
+      <match-rule name="birt_ver" type="binary" filename="^feature.xml$" regexp="birt.*?\n.*?label.*?\n.*?version=\&quot;(.+?)[-\&quot;]+"/>
     </match-rules>
   </project-rule>
   <project-rule name="eclipseplugin-cdt" from="wild" os="all">
@@ -2104,7 +2161,7 @@
     <eval expression="gef_version" speed="1"/>
     <match-rules name="gef_version">
       <result expression="OR-ALL"/>
-      <match-rule name="gef_ver" type="binary" filename="^feature.xml$" regexp="gef.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
+      <match-rule name="gef_ver" type="binary" filename="^feature.xml$" regexp="gef.*?\n.*?label.*?\n.*?version=\&quot;(.+?)[-\&quot;]+"/>
     </match-rules>
   </project-rule>
   <project-rule name="eclipseplugin-jem" from="wild" os="all">
@@ -2299,7 +2356,7 @@
     <eval expression="wtp_version" speed="1"/>
     <match-rules name="wtp_version">
       <result expression="OR-ALL"/>
-      <match-rule name="wtp_ver" type="binary" filename="^feature.xml$" regexp="eclipse.wst.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
+      <match-rule name="wtp_ver" type="binary" filename="^feature.xml$" regexp="eclipse.wst.*?\n.*?label.*?\n.*?version=\&quot;(.+?)[-\&quot;]+"/>
     </match-rules>
   </project-rule>
   <project-rule name="eclipseplugin-wtp-database" from="wild" os="all">
@@ -2382,6 +2439,19 @@
     <match-rules name="expat_md5">
       <result expression="OR-ALL"/>
       <match-rule name="expat-2.0.0" type="MD5" md5sum="d7bf7d6b6c30c4b00fc6226d1e3ccaa2" filename="^xmlwf$" version="2.0.0"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="fckez" from="wild" os="all">
+    <eval expression="fckez_filename or fckez_md5" speed="1"/>
+    <match-rules name="fckez_filename">
+      <result expression="OR-ALL"/>
+      <match-rule name="fckez_version" type="filenameVersion" filename="^fckez-([\d\.]+[\d\-]+[\d])\.jar$"/> 
+    </match-rules>
+    <match-rules name="fckez_md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="fckez-2.3-1" type="MD5" md5sum="04ca3ae96fdb9e2d5874302495092abc" filename="^fckez.*jar$" version="2.3-1"/>
+      <match-rule name="fckez-2.3-2" type="MD5" md5sum="c9f8f1b1a35898a30aa8bffc52c8039c" filename="^fckez.*jar$" version="2.3-2"/>
+      <match-rule name="fckez-2.3-3" type="MD5" md5sum="9f336ec2c9102cc61eb8961c3e5fad7a" filename="^fckez.*jar$" version="2.3-3"/>
     </match-rules>
   </project-rule>
   <project-rule name="filezilla" from="wild" os="windows">
@@ -4496,6 +4566,29 @@
       <match-rule name="jwebunit" type="filename" filename="^jwebunit.*jar$"/>
     </match-rules>
   </project-rule>
+  <project-rule name="jython" from="wild" os="all">
+    <description>It tries to find the version in the file name and also checking the md5</description>
+    <eval expression="jython_files or jython_md5" speed="1"/>
+    <match-rules name="jython_files">
+      <result expression="OR-ALL" />
+      <match-rule name="jython-version" type="filenameVersion" filename="^jython-([\d\.]+[\w]*)\.jar$"/> 
+      <match-rule name="jython-jar" type="filename" filename="^jython\.jar$"/> 
+    </match-rules>
+    <match-rules name="jython_md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="2.1.0" type="MD5" md5sum="075d330ccf66f6bf00de44581c86aeae" filename="^jython.*jar$" version="2.1.0"/>
+      <match-rule name="2.2alpha1" type="MD5" md5sum="f6eef1f565bb2978ce522add3aa15f8e" filename="^jython.*jar$" version="2.2alpha1"/>
+      <match-rule name="2.2beta1" type="MD5" md5sum="578a48f669fcdeface903603c067d5c9" filename="^jython.*jar$" version="2.2beta1"/>
+      <match-rule name="2.2beta2" type="MD5" md5sum="0bab0e8d653e4fb5f5bffc05fd7bee61" filename="^jython.*jar$" version="2.2beta2"/>
+      <match-rule name="2.2rc1" type="MD5" md5sum="c2479e7b9410450c1343f519ca92b6c3" filename="^jython.*jar$" version="2.2rc1"/>
+      <match-rule name="2.2rc2" type="MD5" md5sum="70c37fbcbe4bd03088f1c5342372dc3d" filename="^jython.*jar$" version="2.2rc2"/>
+      <match-rule name="2.2rc3" type="MD5" md5sum="5956ebdb6f5dce01b3430bc37eb4101c" filename="^jython.*jar$" version="2.2rc3"/>
+      <match-rule name="2.2" type="MD5" md5sum="5c26e66d6398455f0567f1eabebc199a" filename="^jython.*jar$" version="2.2"/>
+      <match-rule name="2.2.1rc1" type="MD5" md5sum="357dc904eedc6c5397c1cd7e03df87a1" filename="^jython.*jar$" version="2.2.1rc1"/>
+      <match-rule name="2.2.1rc2" type="MD5" md5sum="184265145764a830627d1264594b92b5" filename="^jython.*jar$" version="2.2.1rc2"/>
+      <match-rule name="2.2.1" type="MD5" md5sum="6d4fb0b8ed925084610ac49d37808e48" filename="^jython.*jar$" version="2.2.1"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="l2fprod-common" from="wild" os="all">
     <description>rules for l2fprod-common - date created : 01/28/2008 dpm</description>
     <eval expression="l2fprod_filename or l2fprod_md5" speed="1"/>
@@ -4800,6 +4893,27 @@
       <match-rule name="log4net-1.2.10-sscli-1.0-release" type="MD5" md5sum="7314017b12c7f273278db36e9dbfdb61" filename="^log4net.*dll$" version="1.2.10"/>
     </match-rules>
   </project-rule>
+  <project-rule name="lucene" from="wild" os="all">
+    <eval expression="lucene_filename or lucene_md5" speed="1"/>
+    <match-rules name="lucene_filename">
+      <result expression="OR-ALL"/>
+      <match-rule name="lucene_name" type="filename" filename="^lucene\.jar$"/>
+      <match-rule name="lucene_version" type="filenameVersion" filename="^lucene-([\d\.]+[\w]*)\.jar$"/> 
+    </match-rules>
+    <match-rules name="lucene_md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="lucene-1.4.3" type="MD5" md5sum="9e63f898d71be8e7f79c0aab62cf6b36" filename="^lucene-.*\.jar$" version="1.4.3"/>
+      <match-rule name="lucene-1.4.3_2" type="MD5" md5sum="1dbad817d6c558e053d8a9ee6d51d77f" filename="^lucene-.*\.jar$" version="1.4.3"/>
+      <match-rule name="lucene-1.9" type="MD5" md5sum="f447c1e1ac292c608facf9f4dacd3a55" filename="^lucene-.*\.jar$" version="1.9"/>
+      <match-rule name="lucene-1.9.1" type="MD5" md5sum="2ca832538d596dfac9a37b462811ee78" filename="^lucene-core-.*\.jar$" version="1.9.1"/>
+      <match-rule name="lucene-2.0.0" type="MD5" md5sum="fdfedd65f24353529d084dba73e2e9c2" filename="^lucene-core-.*\.jar$" version="2.0.0"/>
+      <match-rule name="lucene-2.1.0" type="MD5" md5sum="324510a92c138a1c701ac241c40234e2" filename="^lucene-core-.*\.jar$" version="2.1.0"/>
+      <match-rule name="lucene-2.2.0" type="MD5" md5sum="d5a0dc499df4df7e5abdb36cf9329225" filename="^lucene-core-.*\.jar$" version="2.2.0"/>
+      <match-rule name="lucene-2.3.0" type="MD5" md5sum="07654e7bdccd36964d84623728ebf960" filename="^lucene-core-.*\.jar$" version="2.3.0"/>
+      <match-rule name="lucene-2.3.1" type="MD5" md5sum="784d262afc2bc259cd9b8e458f051ec7" filename="^lucene-core-.*\.jar$" version="2.3.1"/>
+      <match-rule name="lucene-2.3.2" type="MD5" md5sum="545c81eace47fe506acde304b6d1542c" filename="^lucene-core-.*\.jar$" version="2.3.2"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="maven" from="wild" os="all">
     <eval expression="mavenfilemd5 or mavenfile" speed="1"/>
     <match-rules name="mavenfile">
@@ -4863,9 +4977,9 @@
       <match-rule name="mcube_match-rule" type="filename" filename="^mcube.*"/>
     </match-rules>
   </project-rule>
-  <project-rule name="mediawiki" from="wild" os="windows">
+  <project-rule name="mediawiki" from="wild" os="all">
     <description>checks version number in global variables file defaultsettings.php or detects presence of multiple files</description>
-    <eval expression="mediawiki_filename or mediawiki_bin" speed="1"/>
+    <eval expression="mediawiki_filename or mediawiki_bin or mediawiki_include" speed="1"/>
     <match-rules name="mediawiki_filename">
       <result expression="1-wiki and 2-wiki-error"/>
       <match-rule name="1-wiki" type="filename" filename="^wiki\.php$"/>
@@ -4873,6 +4987,16 @@
     </match-rules>
     <match-rules name="mediawiki_bin">
       <match-rule name="mediawiki-bin-version" type="binary" filename="^defaultsettings\.php$" regexp="^\s*\$wgversion\s*=\s*[\x22\x27](.+)[\x22\x27]\;"/>
+    </match-rules>
+    <match-rules name="mediawiki_include">
+      <result expression="AND-ALL" />
+      <match-rule name="1-DefaultSettings-php" type="binary" filename="^DefaultSettings\.php$" regexp="\$wgVersion.*?([012]\.[0-9]\.[0-9])" />
+      <match-rule name="2-Article-php" type="filename" filename="^Article\.php$" />
+      <match-rule name="3-Block-php" type="filename" filename="^Block\.php$" />
+      <match-rule name="4-DifferenceEngine-php" type="filename" filename="^DifferenceEngine\.php$" />
+      <match-rule name="5-OutputPage-php" type="filename" filename="^OutputPage\.php$" />
+      <match-rule name="6-SearchEngine-php" type="filename" filename="^SearchEngine\.php$" />
+      <match-rule name="7-EditPage-php" type="filename" filename="^EditPage\.php$" />
     </match-rules>
   </project-rule>
   <project-rule name="middlegen" from="wild" os="all">
@@ -5080,8 +5204,8 @@
     <match-rules name="version">
       <result expression="OR-ALL"/>
       <!-- there are lots of different version strings in a mysql binary that are related to output strings referring to older 
-			versions, so these regex's need to not match anything with a - or space preceding the version string.  if the [^\- ] is
-			there, it will match a 5.0.45, for example, even though 4.1.1 lives in the same binary  -->
+         versions, so these regex's need to not match anything with a - or space preceding the version string.  if the [^\- ] is
+         there, it will match a 5.0.45, for example, even though 4.1.1 lives in the same binary  -->
       <match-rule name="mysqldbin" type="binary" filename="^mysqld$" regexp="[^\- ]([4-5]\.[0-9]\.[0-9]+)"/>
       <match-rule name="mysqlbin" type="binary" filename="^mysql$" regexp="[^\- ]([4-5]\.[0-9]\.[0-9]+)"/>
       <match-rule name="mysqlexe" type="binary" filename="^mysql.exe$" regexp="mysql-([4-5]\.[0-9]\.[0-9]+)"/>
@@ -5466,6 +5590,18 @@
       <match-rule name="2.63" type="MD5" md5sum="d8973d0a2c38ad5bdfb4e0c62d210264" filename="^PaintDotNet.exe$" version="2.63"/>
     </match-rules>
   </project-rule>
+  <project-rule name="pentaho bi-server" from="wild" os="all">
+    <description>Search for a set of pentaho jar files</description>
+    <eval expression="pentaho-lib-files" speed="1"/>
+    <match-rules name="pentaho-lib-files">
+      <result expression="AND-ALL"/>
+      <match-rule name="1-lib-file" type="filenameVersion" filename="^pentaho-core-([0-9]\.[0-9].*?)\.jar$"/>
+      <match-rule name="2-lib-file" type="filename" filename="^pentaho-data-[0-9]\.[0-9].*?\.jar$"/>
+      <match-rule name="3-lib-file" type="filename" filename="^pentaho-messages-[0-9]\.[0-9].*?\.jar$"/>
+      <match-rule name="4-lib-file" type="filename" filename="^pentaho-publisher-[0-9]\.[0-9].*?\.jar$"/>
+      <match-rule name="5-lib-file" type="filename" filename="^pentaho-repository-[0-9]\.[0-9].*?\.jar$"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="perl" from="wild" os="all">
     <eval expression="version or perlfile" speed="1"/>
     <match-rules name="perlfile">
@@ -5549,6 +5685,26 @@
       <match-rule name="2-defines-lib" type="binary" filename="^defines\.lib\.php3$" regexp="^\s*define\s*\(\s*[\x22\x27]pma_version[\x22\x27]\s*,\s*[\x22\x27](.+)[\x22\x27]\)\;"/>
     </match-rules>
   </project-rule>
+  <project-rule name="phpwiki" from="wild" os="all">
+    <description>Search for a set of phpwiki files. The version 1.2.x can not be detected.</description>
+   <eval expression="lib_1_2 OR lib_1_3" speed="1"/>
+    <match-rules name="lib_1_2">
+      <result expression="AND-ALL"/>
+      <match-rule name="1-lib-file" type="filename" filename="^setupwiki\.php$"/>
+      <match-rule name="2-lib-file" type="filename" filename="^backlinks\.php$"/>
+      <match-rule name="3-lib-file" type="filename" filename="^db_filesystem\.php$"/>
+      <match-rule name="4-lib-file" type="filename" filename="^transform\.php$"/>
+      <match-rule name="5-lib-file" type="filename" filename="^fullsearch\.php$"/>
+    </match-rules>
+    <match-rules name="lib_1_3">
+      <result expression="AND-ALL"/>
+      <match-rule name="1-lib-file" type="binary" filename="^prepend\.php$" regexp="define\(\'PHPWIKI_VERSION\'.*?\'(.*?)\'\)"/>
+      <match-rule name="2-lib-file" type="filename" filename="^PageList\.php$"/>
+      <match-rule name="3-lib-file" type="filename" filename="^RssWriter\.php$"/>
+      <match-rule name="4-lib-file" type="filename" filename="^WikiDB\.php$"/>
+      <match-rule name="5-lib-file" type="filename" filename="^WikiUser\.php$"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="pidgin" from="wild" os="all">
     <eval expression="versions OR files" speed="1"/>
     <match-rules name="files">
@@ -5563,6 +5719,22 @@
       <match-rule name="pidgin" type="binary" filename="^pidgin$" regexp="Pidgin\ ([0-9]\.[0-9]\.[0-9])"/>
       <match-rule name="pidginlower" type="binary" filename="^pidgin$" regexp="pidgin\ ([0-9]\.[0-9]\.[0-9])"/>
       <match-rule name="pidgin_dev_tag" type="binary" filename="^pidgin$" regexp="([0-9]\.[0-9]\.[0-9]).Current"/>
+    </match-rules>
+  </project-rule>
+  <project-rule name="plandora" from="wild" os="all">
+    <description>Assumes wars start with 'plandora' and uses md5 digests to find versions.</description>
+    <eval expression="md5 OR filename" speed="1"/>
+    <match-rules name="md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="1-warfile" type="MD5" version="0.5.3" filename="^pl?andora\.war$" md5sum="4a5496f2121e7c4f9e4fd2f19872a78e"/>
+      <match-rule name="2-warfile" type="MD5" version="0.8.7" filename="^pl?andora\.war$" md5sum="a928608d05850c31d2ce6fce61257d71"/>
+      <match-rule name="3-warfile" type="MD5" version="0.8.9a" filename="^pl?andora\.war$" md5sum="dd5faf54a428ef2ce9b77ed6a86f7284"/>
+      <match-rule name="4-warfile" type="MD5" version="0.9.1" filename="^pl?andora\.war$" md5sum="74c7d1ec5d2dbdcea9a78c1bfb1e4903"/>
+      <match-rule name="5-warfile" type="MD5" version="1.0.0" filename="^pl?andora\.war$" md5sum="f516c10df58f8e5a7bd3f8f6d97a09e6"/>
+      <match-rule name="6-warfile" type="MD5" version="1.1.0" filename="^pl?andora\.war$" md5sum="6792709f4199512c2bdfd9a91b95f112"/>
+    </match-rules>
+    <match-rules name="filename">
+      <match-rule name="filename" type="filename" filename="^pl?andora\.war$"/>
     </match-rules>
   </project-rule>
   <project-rule name="pmw" from="wild" os="all">
@@ -6004,7 +6176,6 @@ libpython2.5.so.1.0
       <match-rule name="vsound" type="binary" filename="^controls\.js$" regexp="script\.aculo\.us sound.js v(.*?)[ ,]" />
       <match-rule name="vunittest" type="binary" filename="^controls\.js$" regexp="script\.aculo\.us unittest.js v(.*?)[ ,]" />
     </match-rules>
-
     <match-rules name="scriptaculous_bin">
       <match-rule name="1-scriptaculous-version" type="binary" filename="^.*scriptaculous.*\.js$" regexp="^\s*version:\s*[\x27\x22](.+)[\x27\x22],$"/>
     </match-rules>
@@ -6265,6 +6436,21 @@ libpython2.5.so.1.0
       <match-rule name="13-squirrel-sql-2.6.4" type="MD5" md5sum="c9c5c09f46e04860983d5e82b7b80588" filename="^squirrel-sql.*\.jar$" version="2.6.4"/>
     </match-rules>
   </project-rule>
+  <project-rule name="sshtools" from="wild" os="all">
+    <eval expression="sshtools_files or sshtools_md5" speed="1"/>
+    <match-rules name="sshtools_files">
+      <result expression="AND-ALL"/>
+      <match-rule name="j2ssh-ant" type="filenameVersion" filename="^j2ssh-ant-([0-9].*?).jar$"/>
+      <match-rule name="j2ssh-core" type="filenameVersion" filename="^j2ssh-core-([0-9].*?).jar$"/>
+      <match-rule name="j2ssh-common" type="filenameVersion" filename="^j2ssh-common-([0-9].*?).jar$"/>
+      <match-rule name="j2ssh-dameon" type="filenameVersion" filename="^j2ssh-dameon-([0-9].*?).jar$"/>
+    </match-rules>
+    <match-rules name="sshtools_md5">
+      <result expression="OR-ALL"/>
+      <match-rule name="j2ssh-core-0.2.8" type="MD5" md5sum="1505d882ecaa59171c953caac91d7597" filename="j2ssh-core-.*$" version="0.2.8"/>
+      <match-rule name="j2ssh-core-0.2.9" type="MD5" md5sum="cba05c92ac88d98692993d83b4a79943" filename="j2ssh-core-.*$" version="0.2.9"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="sslext" from="wild" os="linux">
     <description>Checks for md5 of jar or finds filename</description>
     <eval expression="sslext_filename OR sslext_md5" speed="1"/>
@@ -6428,6 +6614,15 @@ libpython2.5.so.1.0
       <match-rule name="tcl-Tcldylib" type="binary" filename="^Tcl$" regexp="\x00([7-9]\.[0-9].*?)\x00"/>
     </match-rules>
   </project-rule>
+  <project-rule name="tcpmon" from="wild" os="all">
+	 <eval expression="tcpmon_file OR tcpmon_md5" speed="1"/>
+	 <match-rules name="tcpmon_file">
+      <match-rule name="tcpmon-jar" type="filename" filename="^tcpmon.jar$"/>
+    </match-rules>
+    <match-rules name="tcpmon_md5">
+      <match-rule name="tcpmon-1.1" type="MD5" md5sum="e32d97ae03e50243669d9483fbc1fbcd" filename="^tcpmon.*jar$" version="1.1"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="teatrove-beandoc" from="wild" os="all">
     <description>Assumes jars start with 'BeanDoc' and uses md5 digests to find versions.</description>
     <eval expression="md5 OR filename" speed="1"/>
@@ -6466,8 +6661,8 @@ libpython2.5.so.1.0
   </project-rule>
   <project-rule name="thunderbird" from="wild" os="all">
     <!-- this rule's a little different because there isn't one long version string to look for in thunderbird...all the pieces are
-	       individual strings that are separated in the binary by a null byte (0x00).
-	    -->
+          individual strings that are separated in the binary by a null byte (0x00).
+       -->
     <eval expression="versions" speed="1"/>
     <match-rules name="versions">
       <result expression="OR-ALL"/>
@@ -6520,8 +6715,8 @@ libpython2.5.so.1.0
       <match-rule name="1-tortoisecvs-file" type="filename" filename="^tkabber\.tcl$"/>
     </match-rules>
     <match-rules name="tkabber_bin"><match-rule name="1-tortoisecvs-version" type="binary" filename="^tkabber\.tcl$" regexp="^set\s*[tkaber_]*version\s*[\x22\x24]*([0-9\.\-a-za-z]+)[\x22\x24]*"/>
-			set version "0.9.9"
-		</match-rules>
+         set version "0.9.9"
+      </match-rules>
   </project-rule>
   <project-rule name="tobago" from="wild" os="all">
     <description>Finds versions using MD5's.</description>
