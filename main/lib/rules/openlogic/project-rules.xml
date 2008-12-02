@@ -5811,11 +5811,9 @@ libpython2.5.so.1.0
   </project-rule>
   <project-rule name="rails" from="wild" os="linux">
     <description>checks md5 of version.rb and verifies that the version file contains the rails module or looks in rakefile</description>
-    <eval expression="rails_md5 or rails_bin or rails_rakefile_bin" speed="1"/>
-    <match-rules name="rails_bin">
-      <match-rule name="1-rails-find-module" type="binary" filename="version\.rb$" regexp="^\s*module\s+rails\s*$"/>
-    </match-rules>
-    <match-rules name="rails_md5">
+    <eval expression="railsmd5 or railsbin" speed="1"/>
+    <match-rules name="railsmd5">
+      <result expression="OR-ALL"/>
       <match-rule name="1-rails-0.14.1" type="MD5" md5sum="f9729afdc2649511ade4d21676c8d6b7" filename="version\.rb$" version="0.14.1"/>
       <match-rule name="2-rails-0.14.2" type="MD5" md5sum="b2fa7e152a7423f9d56646ae81c83ec0" filename="version\.rb$" version="0.14.2"/>
       <match-rule name="3-rails-0.14.3" type="MD5" md5sum="e2b80ac8c858ceb3165737e8bd73fbfc" filename="version\.rb$" version="0.14.3"/>
@@ -5838,9 +5836,13 @@ libpython2.5.so.1.0
       <match-rule name="20-rails-2.0.1" type="MD5" md5sum="3e48614a88e1027b45481ef5bec492aa" filename="version\.rb$" version="2.0.1"/>
       <match-rule name="21-rails-2.0.2" type="MD5" md5sum="8c2da254daaf7bbb62782d5031149fa1" filename="version\.rb$" version="2.0.2"/>
     </match-rules>
-    <match-rules name="rails_rakefile_bin">
-      <match-rule name="1-rails-find-rakefile" type="binary" filename="rakefile$" regexp="^\s*pkg_version\s*=\s*[\x22\x27]([0-9\.]+)[\x22\x27]"/>
+    <match-rules name="railsbin">
+      <!-- the grouping in the regexp is a hack to fix a limitation in the binary matcher.  The version will report Rails instead of unknown as we would want" -->
+      <match-rule name="1-rails-find-module" type="binary" filename=".*ersion\.rb$" regexp="^\s*module\s*(Rails)\s*$"/>
     </match-rules>
+    <!--match-rules name="railsrakefilebin">
+      <match-rule name="1-rails-find-rakefile" type="binary" filename="rakefile$" regexp="^\s*pkg_version\s*=\s*[\x22\x27]([0-9\.]+)[\x22\x27]"/>
+    </match-rules-->
   </project-rule>
   <project-rule name="rapidsvn" from="wild" os="all">
     <description>Finds version in executables</description>
