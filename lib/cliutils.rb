@@ -758,12 +758,12 @@ def get_windows_version_str
     # Localization=English  
     # ServicePackNumber=0
 
-    product = content.match('Product=(.*?)[\r\n]$')[1]
+    product = content.match('Product=(.*?)[\r\n]$')[1].strip
 
     @os = product
     @os_family = "windows"
     # pick of 2nd Version= which is the one for Windows, the first Version=1.0 is for SMS
-    @os_version = content.match('Version=([3-6].*?)$')[1]
+    @os_version = content.match('Version=([3-6].*?)$')[1].strip
     @kernel = "#{product} #{@os_version}"
 
     return "Windows: #{product}"

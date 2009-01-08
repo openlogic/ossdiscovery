@@ -4,7 +4,7 @@
 # -------------
 # 
 # OSS Discovery is a tool that finds installed open source software.
-#    Copyright (C) 2007-2008 OpenLogic, Inc.
+#    Copyright (C) 2007-2009 OpenLogic, Inc.
 #  
 # OSS Discovery is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License version 3 as 
@@ -85,8 +85,8 @@ require 'scan_rules_updater'
 
 @basedir = File.expand_path(File.dirname(__FILE__))
 @config = 'conf/config.rb'
-@copyright = "Copyright (C) 2007-2008 OpenLogic, Inc."
-@discovery_version = "2.1.0"
+@copyright = "Copyright (C) 2007-2009 OpenLogic, Inc."
+@discovery_version = "2.1.1"
 @discovery_name = "ossdiscovery"
 @discovery_license = "GNU Affero General Public License version 3"
 @discovery_license_shortname = "Affero GPLv3" 
