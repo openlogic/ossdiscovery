@@ -155,7 +155,7 @@ class Package
             if (version == nil || version == "") then
               version = VERSION_UNKNOWN
             end
-            version_set << version
+            version_set << version.strip
           end # of found_versions.each
         end
         

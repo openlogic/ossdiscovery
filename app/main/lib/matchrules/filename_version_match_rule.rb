@@ -75,7 +75,7 @@ class FilenameVersionMatchRule < FilenameMatchRule
     match_set = @matched_against[location]
     if (match_set != nil) then
       match_set.each { |match_val|
-        versions << match_val
+        versions << match_val.strip
       }
     end
     return versions
