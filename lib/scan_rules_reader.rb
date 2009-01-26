@@ -45,6 +45,7 @@ require 'project_rule'
 require 'match_rule_set'
 require 'matchrules/binary_match_rule'
 require 'matchrules/filename_match_rule'
+require 'matchrules/filename_list_match_rule'
 require 'matchrules/filename_version_match_rule'
 require 'matchrules/md5_match_rule'
 

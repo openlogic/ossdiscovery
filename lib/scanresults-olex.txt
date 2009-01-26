@@ -1,0 +1,27 @@
+integrity_check: 47ec9043cc9680ec755155b71b6e378c04a542b2a31c608edf5d234699ddba4a89
+report_type: olex
+olex_plugin_version: 1.0
+client_version: ossdiscovery v2.1.1
+ipaddress: 127.0.1.1
+hostname: rod-desktop
+machine_id: 5f09418fca716324b0ae0a9fdf496ca19e
+directory_count: 2258
+file_count: 14568
+sym_link_count: 0
+permission_denied_count: 0
+files_of_interest: 14568
+start_time: 1232987935
+end_time: 1232988101
+elapsed_time: 166.444158
+packages_found_count: 0
+distro: Ubuntu: Ubuntu 8.10 (intrepid)
+os_family: linux
+os: Ubuntu intrepid
+os_version: 8.10
+machine_architecture: i686
+kernel: 2.6.27-9-generic #1
+ruby_platform: java
+group_code: 
+universal_rules_md5: 6f4267c74185f78f0dc65850b744ee8e
+universal_rules_version: 20080515-165933
+package,version

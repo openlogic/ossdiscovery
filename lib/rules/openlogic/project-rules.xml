@@ -26,6 +26,14 @@
 
 -->
 <project-rules universal-version="20080515-165933">
+  <project-rule name="fast-file-name-matcher" from="wild" os="all">
+    <description>Looks for file name matches as defined in projects.txt</description>
+    <eval expression="all" speed="1"/>
+    <match-rules name="all">
+      <result expression="ternarytree"/>
+      <match-rule name="ternarytree" type="filenameList" filename=".*" projectfile="projects.txt"/>
+    </match-rules>
+  </project-rule>
   <project-rule name="7-zip" from="wild" os="windows">
     <description>searching binary</description>
     <eval expression="bin" speed="1"/>
@@ -2005,7 +2013,7 @@
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="easymock_fv or easymock_md5" speed="1"/>
     <match-rules name="easymock_fv">
-      <match-rule name="easymock_jar" type="filenameVersion" filename="^easymock.jar$"/>
+      <match-rule name="easymock_jar" type="filename" filename="^easymock.jar$"/>
     </match-rules>
     <match-rules name="easymock_md5">
       <result expression="OR-ALL"/>
@@ -2110,9 +2118,9 @@
     <!-- ************** rule to catch 3.1.0 as collection of plugins ************** -->
     <match-rules name="tools_all">
       <result expression="AND-ALL"/>
-      <match-rule name="emf_ver" type="filenameVersion" filename="^org.eclipse.emf_2.1.0.jar$"/>
-      <match-rule name="ecore_ver" type="filenameVersion" filename="^org.eclipse.emf.ecore.sdo_2.1.0.jar$"/>
-      <match-rule name="xsd_ver" type="filenameVersion" filename="^org.eclipse.xsd_2.1.0.jar$"/>
+      <match-rule name="emf_ver" type="filename" filename="^org.eclipse.emf_2.1.0.jar$"/>
+      <match-rule name="ecore_ver" type="filename" filename="^org.eclipse.emf.ecore.sdo_2.1.0.jar$"/>
+      <match-rule name="xsd_ver" type="filename" filename="^org.eclipse.xsd_2.1.0.jar$"/>
       <match-rule name="gef_ver" type="filenameVersion" filename="^org.eclipse.gef_(3.1.0).jar$"/>
     </match-rules>
   </project-rule>

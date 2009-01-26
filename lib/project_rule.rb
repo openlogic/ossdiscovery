@@ -82,8 +82,6 @@ class ProjectRule
   it's hierarchy.
 =end
   def build_packages()
-    results = Array.new
-    
     locations = evaluate()
     results = Package.create_instances(locations, self)
     

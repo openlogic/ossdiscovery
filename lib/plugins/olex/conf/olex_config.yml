@@ -28,7 +28,7 @@
 
 ################################################################################
 
-olex_enabled: false
+olex_enabled: true
 
 machine_report: scanresults-olex.txt
 local_report: scanresults-local-olex.txt

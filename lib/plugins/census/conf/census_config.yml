@@ -32,7 +32,7 @@
 # To allow this discovery client to participate in the Open Source Census (osscensus.org),
 # make sure the following value is set to 'true'.  If this value is set to 'false',
 # no other parameters in this file will be used.
-census_enabled: true
+census_enabled: false
 
 machine_report: scanresults-census.txt
 local_report: scanresults-local.txt

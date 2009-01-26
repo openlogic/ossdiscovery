@@ -63,20 +63,14 @@ class MD5MatchRule < FilenameMatchRule
 =end  
   def match?(actual_filepath, actual_filepath_digest=nil)
     @match_attempts = @match_attempts + 1
-    if (actual_filepath_digest == nil) then
-      actual_digest = MD5MatchRule.get_digest_for(actual_filepath)
-    else
-      actual_digest = actual_filepath_digest
-    end
+    match_val, digest = MD5MatchRule.match?(@defined_filename, @defined_digest, actual_filepath, actual_filepath_digest)
     
-    match_val = MD5MatchRule.match?(@defined_filename, @defined_digest, actual_filepath, actual_digest)
-    
-    if (match_val) then
+    if match_val
       @matched_against[File.dirname(actual_filepath)] = actual_filepath
       @latest_match_val = @version
     end
     
-    return match_val
+    [match_val, digest]
   end
 
   
@@ -103,17 +97,17 @@ class MD5MatchRule < FilenameMatchRule
   end
   
   def MD5MatchRule.match?(defined_filename, defined_digest, actual_filepath, actual_digest)
-    val = false
-    filename_match = FilenameMatchRule.match?(defined_filename, actual_filepath)
-    if (filename_match) then
-      val = (defined_digest == actual_digest)
-    else
-      val = false
+    unless FilenameMatchRule.match?(defined_filename, actual_filepath)
+      return [false, nil]
     end
-    return val
+
+    digest = actual_digest || MD5MatchRule.get_digest_for(actual_filepath)
+
+    [defined_digest == digest, digest]
   end
   
   def MD5MatchRule.get_digest_for(filepath)
+    puts "digesting #{filepath}"
     file = File.new( filepath )
     file.binmode
     digest = Digest::MD5.hexdigest( file.read )
