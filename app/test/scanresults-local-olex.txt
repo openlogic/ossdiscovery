@@ -1,0 +1,20 @@
+
+client_version        : ossdiscovery v2.1.1
+ip address            : 127.0.1.1
+hostname              : rod-desktop
+directories walked    : 7
+files encountered     : 5
+symlinks found        : 5
+symlinks not followed : 5
+bad symlinks found    : 0
+permission denied     : 0
+files examined        : 3
+start time            : Mon Jan 26 12:03:35 2009
+end time              : Mon Jan 26 12:03:54 2009
+scan time             : 00:00:18 (hh:mm:ss)
+distro                : Ubuntu: Ubuntu 8.10 (intrepid)
+kernel                : 2.6.27-9-generic #1
+anonymous machine hash: 5f09418fca716324b0ae0a9fdf496ca19e
+packages found        : 0
+throttling            : disabled (total seconds paused: 0)
+production machine    : false

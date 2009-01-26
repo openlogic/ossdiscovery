@@ -76,12 +76,12 @@ class TcPackage < Test::Unit::TestCase
     
     project = ProjectRule.new('spring')
     
-    packages = Package.make_packages_with_bad_unknowns_removed(packages, project)
+    packages = Package.make_packages_with_bad_unknowns_removed(packages)
     assert_equal(1, packages.size)
     packages.each {|pkg| assert_equal('2.0', pkg.version)}
   end
   
-  def test_spacheship_operator
+  def test_spaceship_operator
     p1 = Package.new
     p1.name = 'alligator'
     p1.version = '1.0'
