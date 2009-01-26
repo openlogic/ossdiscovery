@@ -94,5 +94,5 @@ do
 	fi
 done
 
-"$OSSDISCOVERY_HOME/jruby/bin/jruby" -J-Xmx512m -J-Xms512m -J-client "$OSSDISCOVERY_HOME/lib/discovery.rb" --progress 100 --verbose $*
+"$OSSDISCOVERY_HOME/jruby/bin/jruby" -J-Xmx512m -J-Xms512m -J-server "$OSSDISCOVERY_HOME/lib/discovery.rb" --progress 100 --verbose $*
 
