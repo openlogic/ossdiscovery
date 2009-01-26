@@ -86,7 +86,7 @@ require 'scan_rules_updater'
 @basedir = File.expand_path(File.dirname(__FILE__))
 @config = 'conf/config.rb'
 @copyright = "Copyright (C) 2007-2009 OpenLogic, Inc."
-@discovery_version = "2.1.1"
+@discovery_version = "2.2.0"
 @discovery_name = "ossdiscovery"
 @discovery_license = "GNU Affero General Public License version 3"
 @discovery_license_shortname = "Affero GPLv3" 
@@ -170,6 +170,8 @@ def execute()
   @walker.list_exclusions = @list_exclusions
   @walker.list_files = @list_files
   @walker.show_permission_denied = @show_permission_denied
+  @walker.open_archives = @open_archives
+  @walker.archive_extensions = @archive_extensions
   @walker.show_every = @show_every.to_i
   @walker.show_progress = @show_progress
   @walker.show_verbose = @show_verbose  
@@ -188,7 +190,7 @@ def execute()
   
   unless @list_foi 
     msg << "OSS Discovery is preparing to scan your machine or specified directory.\n"
-    msg << "If the directory or drive being scanned contains many files this will take awhile.\n"
+    msg << "If the directory or drive being scanned contains many files this will take some time.\n"
     msg << "You can continue to work on your machine while the scan proceeds.\n"
   end
   
@@ -202,9 +204,13 @@ def execute()
   # interest determined by scan rules expressions
   
   if ( @list_foi )
-    printf("Files of interest:\n")
+    puts "Files of interest:"
     @walker.get_files_of_interest.each { | foi |
-      printf("%s\n", foi.source)
+      if foi.respond_to?('source')
+        puts foi.source
+      else
+        puts foi
+      end
     }
     exit 0
   end

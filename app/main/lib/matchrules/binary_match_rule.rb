@@ -50,7 +50,7 @@ class BinaryMatchRule < FilenameMatchRule
   def match?(actual_filepath, actual_filepath_binary_content=nil)
     @match_attempts = @match_attempts + 1
     val = false
-    match_value = BinaryMatchRule.get_match_value(@defined_filename, @defined_regexp, actual_filepath, actual_filepath_binary_content)
+    match_value, binary_content = BinaryMatchRule.get_match_value(@defined_filename, @defined_regexp, actual_filepath, actual_filepath_binary_content)
     if (match_value != nil) then
       val = true
       match_set = Set.new
@@ -68,7 +68,7 @@ class BinaryMatchRule < FilenameMatchRule
       @matched_against[File.dirname(actual_filepath)] = match_set
     end
     
-    return val;    
+    [val, binary_content]
   end
   
 =begin rdoc
@@ -91,6 +91,7 @@ class BinaryMatchRule < FilenameMatchRule
     binary_content = nil
     if (FilenameMatchRule.match?(defined_filename, actual_filepath))
       if (actual_filepath_binary_content == nil) then
+        puts "getting binary content for #{actual_filepath}"
         binary_content = get_binary_content_for(actual_filepath)
       else
         binary_content = actual_filepath_binary_content
@@ -101,10 +102,10 @@ class BinaryMatchRule < FilenameMatchRule
       rescue
         $stderr.printf("\nregular expression match error:\n%s in match rule: %s\n", $!, name )
         $stderr.printf("defined_filename: %s, defined_regexp: %s, actual_filepath: %s\n", defined_filename, defined_regexp, actual_filepath )
-        raise
+        raise "couldn't match binary content"
       end
     end
-    return match_value
+    [match_value, binary_content]
   end
   
   def BinaryMatchRule.get_binary_content_for(actual_filepath) 
@@ -112,11 +113,10 @@ class BinaryMatchRule < FilenameMatchRule
     binary_file.binmode
     binary_content = binary_file.read
     binary_file.close
-    return binary_content
+    binary_content
   end
   
   def BinaryMatchRule.create(attributes)
-    bmr = BinaryMatchRule.new(attributes['name'], attributes['filename'], attributes['regexp'])  
-    return bmr
+    BinaryMatchRule.new(attributes['name'], attributes['filename'], attributes['regexp'])  
   end
 end

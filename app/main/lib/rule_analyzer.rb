@@ -80,16 +80,7 @@ class RuleAnalyzer
     # The rule from file B identified spring version '2.0' installed in location X as well.
     #
     # We only want to report version 2.0 as installed.
-    allpackages = Set.new
-    project_rules.each do | project_rule |
-      packages_for_project = Package.make_packages_with_bad_unknowns_removed(allpackages_with_unknowns, project_rule)
-      allpackages.merge( packages_for_project )
-      
-      if ( $DEBUG )
-        printf("project has %d packages in it\n", packages_for_project.length )
-        printf("project %s, all packages length: %d\n", project_rule.name, allpackages.length )
-      end
-    end # of project_rules.each
+    allpackages = Package.make_packages_with_bad_unknowns_removed(allpackages_with_unknowns)
     
     allpackages = self.remove_our_dogfood(allpackages)
     return allpackages

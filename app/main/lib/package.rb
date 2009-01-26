@@ -1,39 +1,38 @@
-# package.rb
+# project_rule.rb
 #
 # LEGAL NOTICE
 # -------------
-# 
+#
 # OSS Discovery is a tool that finds installed open source software.
 #    Copyright (C) 2007-2008 OpenLogic, Inc.
-#  
+#
 # OSS Discovery is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License version 3 as 
-# published by the Free Software Foundation.  
-#  
-# 
+# it under the terms of the GNU Affero General Public License version 3 as
+# published by the Free Software Foundation.
+#
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License version 3 (discovery2-client/license/OSSDiscoveryLicense.txt) 
+# GNU Affero General Public License version 3 (discovery2-client/license/OSSDiscoveryLicense.txt)
 # for more details.
-#  
-# You should have received a copy of the GNU Affero General Public License along with this program.  
+#
+# You should have received a copy of the GNU Affero General Public License along with this program.
 # If not, see http://www.gnu.org/licenses/
-#  
+#
 # You can learn more about OSSDiscovery, report bugs and get the latest versions at www.ossdiscovery.org.
 # You can contact the OSS Discovery team at info@ossdiscovery.org.
 # You can contact OpenLogic at info@openlogic.com.
 
-
 # --------------------------------------------------------------------------------------------------
 #
 =begin rdoc
-  This class essentially represents a simple, flattened rendition of what packages were discovered 
-  by the tool.  In addition to package names, versions and locations where they were found are 
+  This class essentially represents a simple, flattened rendition of what packages were discovered
+  by the tool.  In addition to package names, versions and locations where they were found are
   encapsulated here.  The class doesn't come into play until the scan itself is complete, and the
   process is on the stage of rolling up and analyzing results.
 
-  There are also a few class methods that are used by the RuleAnalyzer to help roll up the results 
+  There are also a few class methods that are used by the RuleAnalyzer to help roll up the results
   of MatchRule states.  Namely, create_instances and make_packages_with_bad_unknowns_removed.
 =end 
 
@@ -46,7 +45,7 @@ class Package
   attr_accessor :name, :version, :found_at
   
 =begin rdoc
-  I don't know why they call this the 'spaceship' operator.  It looks more like 
+  I don't know why they call this the 'spaceship' operator.  It looks more like
   a mouth to me, so I'm calling it the 'mouth' operator.
 =end  
   def <=>(other)
@@ -79,27 +78,59 @@ class Package
   def ==(other)
     val = false
     if ((other.name == @name) && 
-        (other.version == @version) &&
-        (other.found_at == @found_at)) then
+          (other.version == @version) &&
+          (other.found_at == @found_at)) then
       val = true
     end
     return val
   end
   
   def hash
-    val = 0
-    val += @name.size
-    val += @version.size
-    val += @found_at.size
+    val = 17
+    val += 37 * @name.hash
+    val += 37 * @version.hash
+    val += 37 * @found_at.hash
     
     return val
   end
-  
-  def Package.make_packages_with_bad_unknowns_removed(packages, project)
+
+  def Package.make_packages_with_bad_unknowns_removed(packages)
     no_unknowns = Set.new
     only_unknowns = Set.new
     packages.each do |pkg|
-      if (pkg.name == project.name) then
+      if (pkg.version != VERSION_UNKNOWN)
+        no_unknowns << pkg
+      else
+        only_unknowns << pkg
+      end
+    end
+
+    valid_packages = Set.new
+    valid_packages.merge(no_unknowns)
+
+    only_unknowns.each do |upkg|
+      valid_unknown = true
+      no_unknowns.each do |vpkg|
+        if (vpkg.name == upkg.name && vpkg.found_at == upkg.found_at)
+          valid_unknown = false
+          break
+        end
+      end # of no_unknowns.each
+      if valid_unknown
+        valid_packages << upkg
+      end
+    end
+
+    valid_packages
+  end
+  
+  def Package.make_packages_with_bad_unknowns_removed_old(packages, project)
+    no_unknowns = Set.new
+    only_unknowns = Set.new
+    packages.each do |pkg|
+      # hack to support fast-file-name-matcher because that's a special rule
+      # that can find many different packages
+      if (pkg.name == project.name || project.name == "fast-file-name-matcher") then
         if (pkg.version != VERSION_UNKNOWN) then
           no_unknowns << pkg
         else
@@ -128,28 +159,33 @@ class Package
   end
   
 =begin rdoc
-  Return an Array of Package instances.  For all given locations (directories), and one given 
-  ProjectRule, take the informational state of the ProjectRule hierarchy (the real info is found 
-  by calling the 'get_found_versions' method on various MatchRule objects).  This method has an 
-  internal client, so it is safe to assume that all the given 'locations' are actually locations 
+  Return a set of Package instances.  For all given locations (directories), and one given
+  ProjectRule, take the informational state of the ProjectRule hierarchy (the real info is found
+  by calling the 'get_found_versions' method on various MatchRule objects).  This method has an
+  internal client, so it is safe to assume that all the given 'locations' are actually locations
   where something has been found, as opposed to some arbitrary list of directories on the machine.
 
   A specific point about what this method does with 'unknown' versions:
     - If "unknown" was the only hit for a given location, report that.
-    - If we hit on "unknown" and some actual version, the "unknown" probably 
-      only exists as kruft left around from an AND of two match rules (One that 
-      could get us part of the way there, telling us the package existed, but not 
-      knowing which version, and one that finished the job by telling us the version as well.)  
+    - If we hit on "unknown" and some actual version, the "unknown" probably
+      only exists as kruft left around from an AND of two match rules (One that
+      could get us part of the way there, telling us the package existed, but not
+      knowing which version, and one that finished the job by telling us the version as well.)
 =end 
   def Package.create_instances(locations, project_rule)
     
-    instances = Array.new
+    instances = Set.new
     
-    locations.each do |location|
+    locations.each_with_index do |location, index|
 
+      project_names = nil
       version_set = Set.new
       project_rule.rulesets.each do |ruleset|
         ruleset.match_rules.each do |match_rule|
+          # hack for filename_list rules
+          if match_rule.type == MatchRule::TYPE_FILENAME_LIST
+            project_names = match_rule.get_project_names(location)
+          end
           found_versions = match_rule.get_found_versions(location)
           found_versions.each do |version|
             if (version == nil || version == "") then
@@ -159,24 +195,38 @@ class Package
           end # of found_versions.each
         end
         
-        # See the note in this method's rdoc about 'unknown' versions for an explanation of what's going on here.
+        # See the note in this method's rdoc about 'unknown' versions for an
+        # explanation of what's going on here.
         if (version_set.size > 1) then
-          version_set.delete_if() {|version| version == VERSION_UNKNOWN}
+          version_set.delete_if {|version| version == VERSION_UNKNOWN}
         end
       end # of project_rule.rulesets.each
-      version_set.each do |version|
+
+      # hack for filename_list rules that can produce a list of found projects
+      # in a single directory
+      if project_names
+        project_names.each do |project_name|
+          package = Package.new
+          package.name = project_name
+          package.version = VERSION_UNKNOWN
+          package.found_at = location
+          instances << package
+        end
+      else
+        version_set.each do |version|
           package = Package.new
           package.name = project_rule.name
           package.found_at = location
-          # Doing this gsub because we ran into a scenario when using a hex binary match where the version looked like this: 2^@.^@3
+          # Doing this gsub because we ran into a scenario when using a hex
+          # binary match where the version looked like this: 2^@.^@3
           package.version = version.gsub("\0", "")
           
           instances << package
-      end # of version_set.each
+        end # of version_set.each
+      end
     end # of locations.each
     
-    return instances
-    
+    instances
   end
   
 end

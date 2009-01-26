@@ -119,24 +119,16 @@ class RuleEngine
                 # an optimization, if the rule is a bunch of OR's, we know one true will be enough to make the whole thing true, so there's no point in calling match? again
                 break
               else
-                if (digest_of_found_file == nil && match_rule.type == MatchRule::TYPE_MD5) then
-                  # an optimization - only compute the digest once for any given FOI
-                  digest_of_found_file = MD5MatchRule.get_digest_for(location + "/" + filename)
-                end
-                if (binary_content_of_found_file == nil && match_rule.type == MatchRule::TYPE_BINARY) then
-                  # an optimization - only read the binary content once for any given FOI
-                  binary_content_of_found_file = BinaryMatchRule.get_binary_content_for(location + "/" + filename)
-                end
                 begin
                   if (has_md5_match_occurred && match_rule.type == MatchRule::TYPE_MD5) then
                     # an optimization, don't call 'match_rule.match?', it's not necessary
                     next
                   else
                     if (match_rule.type == MatchRule::TYPE_MD5) then
-                      match_or_not = match_rule.match?(location + "/" + filename, digest_of_found_file)
+                      match_or_not, digest_of_found_file = match_rule.match?(location + "/" + filename, digest_of_found_file)
                       has_md5_match_occurred = match_or_not ? true : false
                     elsif (match_rule.type == MatchRule::TYPE_BINARY) then
-                      match_or_not = match_rule.match?(location + "/" + filename, binary_content_of_found_file)
+                      match_or_not, binary_content_of_found_file = match_rule.match?(location + "/" + filename, binary_content_of_found_file)
                     else
                       match_or_not = match_rule.match?(location + "/" + filename)
                     end

@@ -59,6 +59,7 @@ class MatchRule
   TYPE_MD5              = 2 unless defined?(TYPE_MD5)
   TYPE_BINARY           = 3 unless defined?(TYPE_BINARY)
   TYPE_FILENAME_VERSION = 4 unless defined?(TYPE_FILENAME_VERSION)
+  TYPE_FILENAME_LIST    = 5 unless defined?(TYPE_FILENAME_LIST)
   
   attr_accessor :name, :type
   attr_reader :matched_against, :version, :match_attempts

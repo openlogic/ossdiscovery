@@ -2,33 +2,33 @@
 #
 # LEGAL NOTICE
 # -------------
-# 
+#
 # OSS Discovery is a tool that finds installed open source software.
 #    Copyright (C) 2007 OpenLogic, Inc.
-#  
+#
 # OSS Discovery is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License version 3 as 
-# published by the Free Software Foundation.  
-#  
-# 
+# it under the terms of the GNU Affero General Public License version 3 as
+# published by the Free Software Foundation.
+#
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License version 3 (discovery2-client/license/OSSDiscoveryLicense.txt) 
+# GNU Affero General Public License version 3 (discovery2-client/license/OSSDiscoveryLicense.txt)
 # for more details.
-#  
-# You should have received a copy of the GNU Affero General Public License along with this program.  
+#
+# You should have received a copy of the GNU Affero General Public License along with this program.
 # If not, see http://www.gnu.org/licenses/
-#  
+#
 # You can learn more about OSSDiscovery or contact the team at www.ossdiscovery.com.
 # You can contact OpenLogic at info@openlogic.com.
 #
 #--------------------------------------------------------------------------------------------------
-# 
-# The properties defined in this file, can, for the most part, be organized into some kind of 
+#
+# The properties defined in this file, can, for the most part, be organized into some kind of
 # topical group.  'General' is the catch-all group for properties that don't really lend themselves
 # to being organized any better than that.  The 'General' group appears first, and after that all
-# of the remaining properties are organized alphabetically by their group.  This 'group' has no 
+# of the remaining properties are organized alphabetically by their group.  This 'group' has no
 # bearing whatsoever on how the properties get used, it just serves as a way to keep the list of
 # properties in this file in some sane, organized manner.
 
@@ -43,7 +43,7 @@
 # this path will be used to scan
 
 # The default directory to scan is whatever the path is up to the first \ or / in the
-# current working directory.  This results in / for unix-based environments and c:\ 
+# current working directory.  This results in / for unix-based environments and c:\
 # for windows (or whatever drive discovery is running from)
 directory_to_scan: <% ENV['OSSDISCOVERY_HOME'].match(/^.*?[\\\/]/)[0] %>
 
@@ -56,23 +56,39 @@ generic_filters: /filters/filters-list.rb
 show_permission_denied: false
 
 #--------------------------------------------------------------------------------------
-# decide whether to scan symlink'd files and directories 
+# decide whether to scan symlink'd files and directories
 # by default it's true because symlinks are so commonly used
-follow_symlinks: true
+follow_symlinks: false
 # maximum number of indirections to follow through symlinks
 symlink_depth: 5
 
 #--------------------------------------------------------------------------------------
-# When a scan is performed on a production machine, the person performing the scan does 
-# not want the scanner to take all system resources. Below are the parameters that will 
+# Open archives (e.g., zip files) to scan their contents?
+# NOTE: nested archive files will also be examined, along with their nested archives, etc.
+open_archives: false
+
+#--------------------------------------------------------------------------------------
+# Where archives are temporarily unpacked for scanning
+# NOTE: set to 'nil' (without quotes) to use the operating system default temp dir
+#archive_temp_dir: /my/special/temp/dir
+archive_temp_dir: nil
+
+#--------------------------------------------------------------------------------------
+# Which file extensions signify an archive to open if the open_archives flag is set?
+# NOTE:  these must currently be files stored in the 'zip' format only.
+archive_extensions: <% [ '.zip', '.war', '.ear' ] %>
+
+#--------------------------------------------------------------------------------------
+# When a scan is performed on a production machine, the person performing the scan does
+# not want the scanner to take all system resources. Below are the parameters that will
 # throttle the max amount of system resources that the scanner will consume.
 #
-# Every x number of files, pause for y number of seconds. 
+# Every x number of files, pause for y number of seconds.
 throttle_number_of_files: 300
 throttle_seconds_to_pause: 2.5
 # The defaults are 300 and 2 respectively. Here's how these defaults were arrived at.
 # A sample scan on my machine ran in 15 minutes, and showed 451499 total files encountered.
-# The above defaults add just over an hour of wait time which is roughly 4x the original 
+# The above defaults add just over an hour of wait time which is roughly 4x the original
 # throttling-disabled run time; a few of us decided 4x sounded good enough for a default on irc.
 ################################################################################
 
@@ -82,7 +98,7 @@ throttle_seconds_to_pause: 2.5
 # Arg that will be passed to Logger.new().  From the rdoc: This is a filename (String) or IO object (typically STDOUT, STDERR, or an open file).
 log_device: <% File.expand_path( File.join( ENV['OSSDISCOVERY_HOME'], 'log', 'discovery.log')) %>
 
-# Valid options are: FATAL, ERROR, WARN, INFO, DEBUG - 'WARN' is the recommended setting for 
+# Valid options are: FATAL, ERROR, WARN, INFO, DEBUG - 'WARN' is the recommended setting for
 # productions runs, it shouldn't give you too much output, but you also won't miss importatnt warnings.
 log_level: <% Logger::INFO %>
 ################################################################################
@@ -91,7 +107,7 @@ log_level: <% Logger::INFO %>
 ################################################################################
 # Debugging/Developer-oriented properties
 #
-# Set this property to true if you'd like an auditable list of all the files of interested that triggered successful 
+# Set this property to true if you'd like an auditable list of all the files of interested that triggered successful
 # matches to be printed out.  If it is set to true, the human readable results files will contain data that will be
 # useful for a rule writer in terms of auditing all the key files that were matched against during the discovery run.
 produce_match_audit_records: false
@@ -105,10 +121,10 @@ produce_match_audit_records: false
 # own rule set separate from the census rulesets, change these values to match your configuration
 server_base_url: https://www.osscensus.org/service  # osscensus official
 rules_files_url_path: rules_files.xml
-rules_file_base_url: https://www.osscensus.org 
+rules_file_base_url: https://www.osscensus.org
 update_rules: false
 update_rules_and_do_scan: false
-# When you navigate in a browser to 'server_base_url + rules_files_url_path' (eg... http://localhost:3000/rules_files.xml), 
+# When you navigate in a browser to 'server_base_url + rules_files_url_path' (eg... http://localhost:3000/rules_files.xml),
 # you should see an xml file that specifies all the scan rules files available on the server.
 ################################################################################
 
@@ -123,7 +139,7 @@ update_rules_and_do_scan: false
 preview_results: false
 
 # default to not send, can be overridden on command line. see: --deliver-results
-send_results: false 
+send_results: false
 
 # used for audit output of rules engine
 results: STDOUT

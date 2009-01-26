@@ -28,7 +28,8 @@
 # --------------------------------------------------------------------------------------------------
 #
 
-# this is a example generic filter for ignoring /var/log directories
+# this is a example generic filter for ignoring /var/log directories and log
+# files
 
 # a filter is defined by its unique description as the key value to a filter hash table
 # the value is simply a regular expression or literal filename or basename of a directory to ignore
@@ -36,3 +37,4 @@
 # these files are not binaries, but artifacts of installations
 
 @dir_exclusion_filters["No /var/log directories"] = '^/var/log'
+@file_exclusion_filters["No log files"] = '\.log$'
