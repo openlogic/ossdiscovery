@@ -171,6 +171,7 @@ def execute()
   @walker.list_files = @list_files
   @walker.show_permission_denied = @show_permission_denied
   @walker.open_archives = @open_archives
+  @walker.archive_temp_dir = @archive_temp_dir
   @walker.archive_extensions = @archive_extensions
   @walker.show_every = @show_every.to_i
   @walker.show_progress = @show_progress
