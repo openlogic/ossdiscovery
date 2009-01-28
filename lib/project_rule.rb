@@ -38,7 +38,7 @@ class ProjectRule
   def initialize(name, from="wild", operating_systems=Set["all"]) 
     @name = name
     @from = from
-    if (operating_systems != nil) then
+    if operating_systems
       @operating_systems = operating_systems.to_set
     else 
       @operating_systems = nil
@@ -50,7 +50,7 @@ class ProjectRule
   end
   
   def eql?(other)
-    if ((self.==(other)) && (self.class == other.class)) then
+    if ((self.==(other)) && (self.class == other.class))
       return true
     else
       return false
@@ -61,19 +61,19 @@ class ProjectRule
     val = false
     if ((other.name == @name) && 
         (other.from == @from) &&
-        (other.operating_systems == @operating_systems)) then
+        (other.operating_systems == @operating_systems))
       val = true
     end
-    return val
+    val
   end
   
   def hash
-    val = 0
-    val = val + @name.size
-    val = val + @from.size
-    @operating_systems.each {|os| val = val + os.size}
+    val = 17
+    val += 37 * @name.hash
+    val += 37 * @from.hash
+    @operating_systems.each {|os| val += 37 * os.hash}
     
-    return val
+    val
   end
 
 =begin rdoc
@@ -81,24 +81,22 @@ class ProjectRule
   aggregation of the state of all MatchRule instances underneath this object in 
   it's hierarchy.
 =end
-  def build_packages()
-    locations = evaluate()
+  def build_packages
+    locations = evaluate
     results = Package.create_instances(locations, self)
-    
-    return results
   end
 
 =begin rdoc
   Returns a set of locations (directories) this Project's EvalRule evaluates to true for.
 =end
-  def evaluate()
+  def evaluate
     
     location_to_rulesets_outcome_hash = get_location_to_rulesets_hash
     
     results = Set.new
     
-    if (location_to_rulesets_outcome_hash == nil || location_to_rulesets_outcome_hash.size == 0) then
-        return results
+    if (location_to_rulesets_outcome_hash == nil || location_to_rulesets_outcome_hash.size == 0)
+      return results
     end
     
     location_to_rulesets_outcome_hash.each { |location, ruleset_hash| 
@@ -108,7 +106,7 @@ class ProjectRule
       }
       e = BooleanExpression.new
       val = e.evaluate(@eval_rule.expression, name_value_pairs)
-      if (val) then
+      if val
         results << location
       end
     }
@@ -120,7 +118,7 @@ class ProjectRule
 =begin rdoc
   Returns a Hash: (key = directory location) => (value = another Hash where the key = ruleset name and the value is [true|false])
 =end 
-  def get_location_to_rulesets_hash()
+  def get_location_to_rulesets_hash
     all_possible_locations = Set.new
     
     # (key = ruleset name) => (value = Set of locations that evaluated to true for the ruleset)    
@@ -138,7 +136,7 @@ class ProjectRule
     all_possible_locations.each { |location|
       ruleset_names = Set.new
       ruleset_to_locations.each { |ruleset, location_set|
-        if (location_set.include?(location)) then
+        if (location_set.include?(location))
           ruleset_names << ruleset
         end
       }
@@ -149,14 +147,14 @@ class ProjectRule
     
     location_to_rulesets.each { |location, true_rulesets| 
     
-      if (true_rulesets == nil || true_rulesets.size == 0) then
+      if (true_rulesets == nil || true_rulesets.size == 0)
         @rulesets.each { |rs|
           location_to_rulesets_outcome_hash[location] =  Hash[rs.name => false]
         }
       else
         rsname_to_boolean_hash = Hash.new
         @rulesets.each { |rs|
-          if (true_rulesets.include?(rs.name)) then
+          if (true_rulesets.include?(rs.name))
             rsname_to_boolean_hash[rs.name] = true
           else
             rsname_to_boolean_hash[rs.name] = false

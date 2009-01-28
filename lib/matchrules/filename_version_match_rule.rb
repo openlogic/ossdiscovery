@@ -46,14 +46,14 @@ class FilenameVersionMatchRule < FilenameMatchRule
     @matched_against = Hash.new
   end
   
-  def match?(actual_filepath)
+  def match?(actual_filepath, archive_parents)
     @match_attempts = @match_attempts + 1
     val = false    
     match_val = FilenameVersionMatchRule.match?(@defined_filename, actual_filepath)
-    if (match_val != nil) then
+    if match_val
       val = true
       match_set = Set.new
-      if (@matched_against.has_key?(File.dirname(actual_filepath))) then
+      if @matched_against.has_key?(File.dirname(actual_filepath))
         match_set = @matched_against[File.dirname(actual_filepath)]
         @@log.debug('FilenameVersionMatchRule') {"Multiple versions of the same project likely exist in the same directory. MatchRule name: '#{@name}', version: '#{@version}', defined filename: '#{@defined_filename}', defined_regexp: '#{@defined_regexp}'"}
       end
@@ -62,7 +62,7 @@ class FilenameVersionMatchRule < FilenameMatchRule
         @@log.info('FilenameVersionMatchRule') {"Got a nil match value when matching #{@defined_filename} against #{actual_filepath}.  Probably a filenameVersion rule with a regex to capture the version." }
         mv = "unknown"
       end
-      match_set << mv
+      match_set << [mv.strip, archive_parents]
       @latest_match_val = mv
       @matched_against[File.dirname(actual_filepath)] = match_set
     end
@@ -76,14 +76,7 @@ class FilenameVersionMatchRule < FilenameMatchRule
   previously running matches over a set of files with this MatchRule.
 =end   
   def get_found_versions(location)
-    versions = Set.new
-    match_set = @matched_against[location]
-    if (match_set != nil) then
-      match_set.each { |match_val|
-        versions << match_val.strip
-      }
-    end
-    return versions
+    @matched_against[location] || []
   end
   
   def FilenameVersionMatchRule.match?(defined_filename, actual_filepath)

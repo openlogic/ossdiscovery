@@ -4,7 +4,7 @@ require 'rake/packagetask'
 namespace :release do
 
   PACKAGE_NAME= ( ENV["NAME"] || "ossdiscovery" ) + "-" + (ENV['plugin'].nil? ? "error" : ENV['plugin'])
-  PACKAGE_VERSION=ENV["VERSION"] || "2.1.1"
+  PACKAGE_VERSION=ENV["VERSION"] || "2.2.0"
 
 
   def prep_dir

@@ -60,12 +60,12 @@ class FilenameListMatchRule < MatchRule
     puts "done loading rules in #{Time.now - start} seconds."
   end
   
-  def match?(actual_filepath)
+  def match?(actual_filepath, archive_parents)
     @match_attempts = @match_attempts + 1
     val = FilenameListMatchRule.match?(actual_filepath)
     
     if val
-      (@matched_against[File.dirname(actual_filepath)] ||= Set.new) << val
+      (@matched_against[File.dirname(actual_filepath)] ||= Set.new) << [val, archive_parents]
       @latest_match_val = Package::VERSION_UNKNOWN
     end
     
@@ -74,12 +74,7 @@ class FilenameListMatchRule < MatchRule
 
   # we don't do versions
   def get_found_versions(location)
-    [Package::VERSION_UNKNOWN]
-  end
-
-  # return the projects found in the given directory
-  def get_project_names(location)
-    @matched_against[location]
+    @matched_against[location] || []
   end
   
   # look up path in our ternary search tree

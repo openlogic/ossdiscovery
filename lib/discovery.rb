@@ -246,7 +246,7 @@ def execute()
 
 end
 
-def update_scan_rules()
+def update_scan_rules
   updater = ScanRulesUpdater.new(@server_base_url, @rules_file_base_url)
   updater.proxy_host = @proxy_host
   updater.proxy_port = @proxy_port
@@ -260,8 +260,7 @@ def update_scan_rules()
   end
 end
 
-def validate_directory_to_scan( dir )
-
+def validate_directory_to_scan(dir)
   dir_exists = true
 
   # --path can now take comma delimited path names, so break it up first, and validate each
@@ -270,54 +269,65 @@ def validate_directory_to_scan( dir )
 
   dirindex = 0
   @directories_to_scan.each do | directory |
-
     directory = normalize_dir( directory )
     if ( !File.exist?(directory) )
-      
-      # If it doesn't exist, it may be a weirdism with ruby turning c:\ into /c:/.  So 
+
+      # If it doesn't exist, it may be a weirdism with ruby turning c:\ into /c:/.  So
       # make that change and try again
       
       if ( directory =~ /:/ )
-	lastditch = directory[1..@directory_to_scan.length]
-	if ( !File.exist?(lastditch) )
-	  dir_exists=false
-	else
-	  dir_exists=true
-	end
+  	    lastditch = directory[1..@directory_to_scan.length]
+  	    if ( !File.exist?(lastditch) )
+          dir_exists=false
+        else
+          dir_exists=true
+        end
       else
-	dir_exists=false
+          dir_exists=false
       end
     end
 
-    if not dir_exists
+    unless dir_exists
       printf("The given path to scan does not exist: %s\n", directory )
       return false
     end
-
     @directories_to_scan[dirindex] = directory
     dirindex += 1
-
   end
 
-  return true
-  
+  true
 end
- 
+
+# Do a little trick to get the 'real' local IP address.  The trick is
+# to create a UDPSocket that intends to connect to the openlogic.com
+# IP address.  It doesn't actually connect, but forces the networking
+# stack to figure out which local IP address is actually bound for
+# external traffic.  We then ask for that IP address.
+def get_local_ip  
+  # turn off reverse DNS resolution temporarily
+  orig, Socket.do_not_reverse_lookup = Socket.do_not_reverse_lookup, true
+
+  UDPSocket.open do |s|
+    s.connect '216.24.133.139', 1
+    s.addr.last
+  end
+ensure
+  Socket.do_not_reverse_lookup = orig
+end
 
 def make_reports
-
   if @produce_match_audit_records
     report_audit_records @rule_engine.audit_records
   end
 
-  if ( @geography.to_i < 1 || @geography.to_i > MAX_GEO_NUM )
-     @geography = ""
+  if @geography.to_i < 1 || @geography.to_i > MAX_GEO_NUM
+    @geography = ""
   end
 
   @scandata.client_version = version
   @scandata.machine_id = @machine_id
   @scandata.hostname = Socket.gethostname
-  @scandata.ipaddress = IPSocket.getaddress(@scandata.hostname)
+  @scandata.ipaddress = get_local_ip
   @scandata.dir_ct = @walker.dir_ct
   @scandata.file_ct = @walker.file_ct
   @scandata.sym_link_ct = @walker.sym_link_ct
@@ -339,19 +349,18 @@ def make_reports
   @scandata.total_seconds_paused_for_throttling =@walker.total_seconds_paused_for_throttling
 
   @plugins_list.each do | plugin_name, aPlugin |
-
-    if (aPlugin.respond_to?( :report, false ) )
-        # human readable report
-	      aPlugin.report( aPlugin.local_report_filename(), @packages, @scandata )
+    if aPlugin.respond_to?(:report, false)
+      # human readable report
+	    aPlugin.report(aPlugin.local_report_filename, @packages, @scandata)
     end
 
     # if the plugin will respond to a machine report method, fire it off
-    if (aPlugin.respond_to?(:machine_report, false))
-      aPlugin.machine_report(aPlugin.machine_report_filename(), @packages, @scandata )
+    if aPlugin.respond_to?(:machine_report, false)
+      aPlugin.machine_report(aPlugin.machine_report_filename, @packages, @scandata)
 
-      if @preview_results && aPlugin.machine_report_filename() != STDOUT
+      if @preview_results && aPlugin.machine_report_filename != STDOUT
         printf("\nThese are the actual machine scan results from the file, %s, that would be delivered by --deliver-results option\n", destination)
-        puts File.new(aPlugin.machine_report_filename()).read
+        puts File.new(aPlugin.machine_report_filename).read
       end
     end
   end

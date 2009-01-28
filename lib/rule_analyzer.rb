@@ -64,8 +64,8 @@ class RuleAnalyzer
     #   as part of the multiple scan rule scenario described above).
     allpackages_with_unknowns = Set.new
     project_rules.each do | project_rule |
-      packages_for_project = project_rule.build_packages()
-      allpackages_with_unknowns.merge( packages_for_project )
+      packages_for_project = project_rule.build_packages
+      allpackages_with_unknowns.merge(packages_for_project)
     end # of project_rules.each
     
     # We have to go through a similar step here since we allow multiple 'project-rule' definitions.  
@@ -82,8 +82,7 @@ class RuleAnalyzer
     # We only want to report version 2.0 as installed.
     allpackages = Package.make_packages_with_bad_unknowns_removed(allpackages_with_unknowns)
     
-    allpackages = self.remove_our_dogfood(allpackages)
-    return allpackages
+    self.remove_our_dogfood(allpackages)
   end
   
   def self.remove_our_dogfood(allpackages)    

@@ -93,22 +93,23 @@ class RuleEngine
     
     Since multiple rules may match the same file, the rule_used is mainly a diagnostic
     or hint which can tell the RuleEngine how the walker is picking stuff up
-    
-    TODO - need to implement found file
+
+    The archive parents parameter is a potentially empty list of archive
+    files that contains the found file.
 =end
 
-  def found_file( location, filename, filter_used )
+  def found_file(location, filename, filter_used, archive_parents)
   
-    if ( $DEBUG )
-      printf("found_file %s, %s, %s\n", location, filename, filter_used )
+    if $DEBUG
+      printf("found_file %s, %s, %s in %s\n", location, filename, filter_used, archive_parents.join('!'))
     end
     
     digest_of_found_file = nil
     binary_content_of_found_file = nil
     produce_match_audit_records = Config.prop(:produce_match_audit_records)
-    
+
     # each project_rule object contains a collection of rulesets.  each ruleset contains a collection of match rules
-    
+
     @project_rules.each do | project_rule |
       project_rule.rulesets.each do | ruleset | 
         has_md5_match_occurred = false
@@ -125,12 +126,14 @@ class RuleEngine
                     next
                   else
                     if (match_rule.type == MatchRule::TYPE_MD5) then
-                      match_or_not, digest_of_found_file = match_rule.match?(location + "/" + filename, digest_of_found_file)
+                      match_or_not, digest_of_found_file = match_rule.match?(location + "/" + filename, digest_of_found_file, archive_parents)
+                      print_stuff = true if digest_of_found_file
                       has_md5_match_occurred = match_or_not ? true : false
                     elsif (match_rule.type == MatchRule::TYPE_BINARY) then
-                      match_or_not, binary_content_of_found_file = match_rule.match?(location + "/" + filename, binary_content_of_found_file)
+                      match_or_not, binary_content_of_found_file = match_rule.match?(location + "/" + filename, binary_content_of_found_file, archive_parents)
+                      print_stuff = true if binary_content_of_found_file
                     else
-                      match_or_not = match_rule.match?(location + "/" + filename)
+                      match_or_not = match_rule.match?(location + "/" + filename, archive_parents)
                     end
                     # For debugging purposes
                     if (produce_match_audit_records && match_or_not)
@@ -154,31 +157,27 @@ class RuleEngine
   this method is a call back from the Framework.  It's job is to now evaluate the ruleset combinations for 
   all the projects and return an aggregated list of packages that were found during the scan
 =end 
-  def scan_complete()
+  def scan_complete
     @analysis_start = Time.new    
     @all_packages = RuleAnalyzer.aggregate_matches(@project_rules)
     @analysis_stop = Time.new  
     @analysis_elapsed = @analysis_stop - @analysis_start
-    return @all_packages 
+    @all_packages 
   end
 
 =begin rdoc 
     reads the scan rules XML file, scan_rules_filename, loads the projects and rulesets
     into the engine
 =end
-  def load_scan_rules()
-    
+  def load_scan_rules
     @project_rules = ScanRulesReader.setup_project_rules(@scan_rules_dirs, @speed)    
-  
-    register_with_walker()
+    register_with_walker
   end
 
-  def register_with_walker()
- 
+  def register_with_walker
    # register for a callback from the walker when a file of interst is found
    # tell the walker what the list of files of interest are
    @walker.set_files_of_interest( self, files_of_interest() )
- 
   end
      
 =begin rdoc
@@ -186,7 +185,7 @@ class RuleEngine
   be able to detect.  This list of files should contain no duplicates and may 
   consist of regular expressions that can match basenames or literal filenames.
 =end
-  def files_of_interest()
+  def files_of_interest
     files = Set.new
     @project_rules.each { |prule|
       prule.rulesets.each { |ruleset|
@@ -207,7 +206,7 @@ class RuleEngine
     2 - Medium   (package and usually vesion)
     3 - Slow     (looks for matches on a wider array of files of interest - less strict file of interest filter)
 =end
-  def speed=( speedhint )
+  def speed=(speedhint)
     @speed = speedhint
   end
 end

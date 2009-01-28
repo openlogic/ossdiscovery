@@ -109,23 +109,22 @@ class OlexPlugin
   #--------------------------------------------------
 
   #--- optional methods for a plugin ---
-  def machine_report_filename()
-    return @olex_machine_file
+  def machine_report_filename
+    @olex_machine_file
   end
 
-  def local_report_filename()
-    return @olex_local_file 
+  def local_report_filename
+    @olex_local_file 
   end
 
   def can_deliver?
-    return false
+    false
   end
 
 =begin rdoc
   Output the report we'll submit to the olex server.
 =end
   def machine_report(destination, packages, scandata )
-
     io = nil
     if (destination == STDOUT) then
       io = STDOUT
@@ -145,7 +144,7 @@ class OlexPlugin
 
     template = %{
       report_type:             olex
-      olex_plugin_version:   <%= OLEX_PLUGIN_VERSION %>
+      olex_plugin_version:     <%= OLEX_PLUGIN_VERSION %>
       client_version:          <%= scandata.client_version %>
       ipaddress:               <%= scandata.ipaddress %>
       hostname:                <%= scandata.hostname %>
@@ -169,7 +168,7 @@ class OlexPlugin
       group_code:              <%= @group_code %>
       universal_rules_md5:     <%= scandata.universal_rules_md5 %>
       universal_rules_version: <%= scandata.universal_rules_version %>
-      package,version
+      package,version,location
       % if packages.length > 0
       %   packages.sort.each do |package|
       %     package.version.gsub!(" ", "")

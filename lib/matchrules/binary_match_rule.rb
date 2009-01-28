@@ -47,14 +47,14 @@ class BinaryMatchRule < FilenameMatchRule
     @matched_against = Hash.new
   end
   
-  def match?(actual_filepath, actual_filepath_binary_content=nil)
+  def match?(actual_filepath, actual_filepath_binary_content, archive_parents)
     @match_attempts = @match_attempts + 1
     val = false
     match_value, binary_content = BinaryMatchRule.get_match_value(@defined_filename, @defined_regexp, actual_filepath, actual_filepath_binary_content)
-    if (match_value != nil) then
+    if match_value
       val = true
       match_set = Set.new
-      if (@matched_against.has_key?(File.dirname(actual_filepath))) then
+      if @matched_against.has_key?(File.dirname(actual_filepath))
         match_set = @matched_against[File.dirname(actual_filepath)]
         @@log.debug('BinaryMatchRule') {"Multiple versions of the same project likely exist in the same directory. MatchRule name: '#{@name}', version: '#{@version}', defined filename: '#{@defined_filename}', defined_regexp: '#{@defined_regexp}'"}
       end
@@ -62,7 +62,7 @@ class BinaryMatchRule < FilenameMatchRule
       start, finish = match_value.offset(1)
       s = match_value.string
       mv = (start...finish).inject("") { |all, character| all << s[character] }
-      match_set << mv
+      match_set << [mv.strip, archive_parents]
       @latest_match_val = mv
       
       @matched_against[File.dirname(actual_filepath)] = match_set
@@ -76,25 +76,15 @@ class BinaryMatchRule < FilenameMatchRule
   previously running matches over a set of files with this MatchRule.
 =end   
   def get_found_versions(location)
-    versions = Set.new
-    match_set = @matched_against[location]
-    if (match_set != nil) then
-      match_set.each { |match_val|
-        versions << match_val
-      }
-    end
-    return versions
+    @matched_against[location] || []
   end
   
   def BinaryMatchRule.get_match_value(defined_filename, defined_regexp, actual_filepath, actual_filepath_binary_content=nil)
     match_value = nil
-    binary_content = nil
+    binary_content = actual_filepath_binary_content
     if (FilenameMatchRule.match?(defined_filename, actual_filepath))
-      if (actual_filepath_binary_content == nil) then
-        puts "getting binary content for #{actual_filepath}"
+      if (binary_content == nil) then
         binary_content = get_binary_content_for(actual_filepath)
-      else
-        binary_content = actual_filepath_binary_content
       end
       
       begin
