@@ -51,3 +51,7 @@
 @file_exclusion_filters["Name Rules Exceptions version"] = '^version\..*$'
 @file_exclusion_filters["Name Rules Exceptions types"] = '^types\..*$'
 @file_exclusion_filters["Name Rules Exceptions tag"] = '^tag\..*$'
+@file_exclusion_filters["Name Rules Exceptions .o"] = '^\.o$'
+@file_exclusion_filters["Name Rules Exceptions .lo"] = '^\.lo$'
+@file_exclusion_filters["Name Rules Exceptions .so"] = '^\.so$'
+@file_exclusion_filters["Name Rules Exceptions .c"] = '^\.c$'
