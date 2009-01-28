@@ -55,3 +55,5 @@
 @file_exclusion_filters["Name Rules Exceptions .lo"] = '^\.lo$'
 @file_exclusion_filters["Name Rules Exceptions .so"] = '^\.so$'
 @file_exclusion_filters["Name Rules Exceptions .c"] = '^\.c$'
+@file_exclusion_filters["Name Rules Exceptions .vim"] = '^\.vim$'
+@file_exclusion_filters["Name Rules Exceptions .txt"] = '^\.t[ext|xt]$'
