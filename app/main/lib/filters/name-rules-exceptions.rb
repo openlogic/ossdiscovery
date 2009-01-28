@@ -42,7 +42,7 @@
 @file_exclusion_filters["Name Rules Exceptions nice"] = '^config\..*$'
 @file_exclusion_filters["Name Rules Exceptions html"] = '\.htm.?$'
 @file_exclusion_filters["Name Rules Exceptions autorun"] = '^autorun\..*$'
-@file_exclusion_filters["Name Rules Exceptions manpages"] = '\.(0-9)$'
+@file_exclusion_filters["Name Rules Exceptions manpages"] = '\.[0-9]$'
 @file_exclusion_filters["Name Rules Exceptions pdf"] = '\.pdf$'
 @file_exclusion_filters["Name Rules Exceptions template"] = '^template\..*$'
 @file_exclusion_filters["Name Rules Exceptions snippet"] = '^snippet\..*$'
