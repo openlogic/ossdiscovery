@@ -82,7 +82,7 @@ class Package
           (other.found_at == @found_at)) then
       val = true
     end
-    return val
+    val
   end
   
   def hash
@@ -91,10 +91,10 @@ class Package
     val += 37 * @version.hash
     val += 37 * @found_at.hash
     
-    return val
+    val
   end
 
-  def Package.make_packages_with_bad_unknowns_removed(packages)
+  def self.make_packages_with_bad_unknowns_removed(packages)
     no_unknowns = Set.new
     only_unknowns = Set.new
     packages.each do |pkg|
@@ -124,7 +124,7 @@ class Package
     valid_packages
   end
   
-  def Package.make_packages_with_bad_unknowns_removed_old(packages, project)
+  def self.make_packages_with_bad_unknowns_removed_old(packages, project)
     no_unknowns = Set.new
     only_unknowns = Set.new
     packages.each do |pkg|
@@ -172,54 +172,57 @@ class Package
       could get us part of the way there, telling us the package existed, but not
       knowing which version, and one that finished the job by telling us the version as well.)
 =end 
-  def Package.create_instances(locations, project_rule)
+  def self.create_instances(locations, project_rule)
     
     instances = Set.new
     
     locations.each_with_index do |location, index|
 
-      project_names = nil
-      version_set = Set.new
+      project_names_and_archive_parents  = nil
+      version_and_archive_parents_set = Set.new
       project_rule.rulesets.each do |ruleset|
         ruleset.match_rules.each do |match_rule|
           # hack for filename_list rules
           if match_rule.type == MatchRule::TYPE_FILENAME_LIST
-            project_names = match_rule.get_project_names(location)
+            project_names_and_archive_parents = match_rule.get_found_versions(location)
+            versions_and_archive_parents = project_names_and_archive_parents.collect { |pnaap| [VERSION_UNKNOWN, pnaap[1]] }
+          else
+            versions_and_archive_parents = match_rule.get_found_versions(location)
           end
-          found_versions = match_rule.get_found_versions(location)
-          found_versions.each do |version|
-            if (version == nil || version == "") then
-              version = VERSION_UNKNOWN
+          versions_and_archive_parents.each do |version_and_archive_parents|
+            if (version_and_archive_parents[0] == nil || version_and_archive_parents[0] == "")
+              version_and_archive_parents[0] = VERSION_UNKNOWN
             end
-            version_set << version.strip
+            version_and_archive_parents_set << version_and_archive_parents
           end # of found_versions.each
         end
         
         # See the note in this method's rdoc about 'unknown' versions for an
         # explanation of what's going on here.
-        if (version_set.size > 1) then
-          version_set.delete_if {|version| version == VERSION_UNKNOWN}
+        if (version_and_archive_parents_set.size > 1) then
+          version_and_archive_parents_set.delete_if {|vaap| vaap[0] == VERSION_UNKNOWN}
         end
       end # of project_rule.rulesets.each
 
       # hack for filename_list rules that can produce a list of found projects
       # in a single directory
-      if project_names
-        project_names.each do |project_name|
+      if project_names_and_archive_parents
+        project_names_and_archive_parents.each do |pnaap|
           package = Package.new
-          package.name = project_name
+          package.name = pnaap[0]
           package.version = VERSION_UNKNOWN
-          package.found_at = location
+          #puts "#{package.name}, location = #{location}, pnaap[1] = #{pnaap[1].inspect}"
+          package.found_at = reportable_location(location, pnaap[1])
           instances << package
         end
       else
-        version_set.each do |version|
+        version_and_archive_parents_set.each do |vaap|
           package = Package.new
           package.name = project_rule.name
-          package.found_at = location
+          package.found_at = reportable_location(location, vaap[1])
           # Doing this gsub because we ran into a scenario when using a hex
           # binary match where the version looked like this: 2^@.^@3
-          package.version = version.gsub("\0", "")
+          package.version = vaap[0].gsub("\0", "")
           
           instances << package
         end # of version_set.each
@@ -228,5 +231,30 @@ class Package
     
     instances
   end
+
+  # Return a location that includes a potential chain of archive parents along
+  # with a given directory.  For example, if web-inf/lib/ant.jar is found in
+  # myapp.war which in turn is found in /deploy/bigproj.ear, the result will
+  # look like this:
+  #   /deploy/bigproj.ear!myapp.war!web-inf/lib/ant.jar
+  def self.reportable_location(dir, archive_parents)
+    if archive_parents.empty?
+      dir.empty? ? "/" : dir
+    else
+      dir = remove_parent_path(dir, archive_parents.last[1])
+      dir = dir.empty? ? "/" : dir
+      archive_parents.collect { |parent| parent[0] }.join('!') << '!' << dir
+    end
+  end
   
+  # Given two paths such as:
+  #   p1 = /tmp/solr.war20090127-32155-8pp7xr-0/WEB-INF/lib/commons-io.zip
+  # and
+  #   p2 = /tmp/solr.war20090127-32155-8pp7xr-0
+  # return a path like this:
+  #   p = /WEB-INF/lib/commons-io.zip
+  def self.remove_parent_path(full_path, parent_path)
+    full_path[parent_path.size..-1]
+  end
+
 end

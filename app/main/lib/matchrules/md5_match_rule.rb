@@ -61,12 +61,12 @@ class MD5MatchRule < FilenameMatchRule
   to compare the 'defined_digest' for this class with the 'actual_filepath_digest' 
   argument, since this is a cheaper operation than actually computing it.
 =end  
-  def match?(actual_filepath, actual_filepath_digest=nil)
+  def match?(actual_filepath, actual_filepath_digest, archive_parents)
     @match_attempts = @match_attempts + 1
     match_val, digest = MD5MatchRule.match?(@defined_filename, @defined_digest, actual_filepath, actual_filepath_digest)
     
     if match_val
-      @matched_against[File.dirname(actual_filepath)] = actual_filepath
+      @matched_against[File.dirname(actual_filepath)] = [[@version, archive_parents]]
       @latest_match_val = @version
     end
     
@@ -84,11 +84,7 @@ class MD5MatchRule < FilenameMatchRule
   directory, and we want all MatchRules to walk and talk like each in this respect.
 =end 
   def get_found_versions(location)
-    versions = Set.new
-    if (@matched_against.has_key?(location)) then
-      versions << @version
-    end
-    return versions
+    @matched_against[location] || []
   end
   
   def MD5MatchRule.create(attributes)
@@ -98,7 +94,7 @@ class MD5MatchRule < FilenameMatchRule
   
   def MD5MatchRule.match?(defined_filename, defined_digest, actual_filepath, actual_digest)
     unless FilenameMatchRule.match?(defined_filename, actual_filepath)
-      return [false, nil]
+      return [false, actual_digest]
     end
 
     digest = actual_digest || MD5MatchRule.get_digest_for(actual_filepath)
@@ -107,7 +103,6 @@ class MD5MatchRule < FilenameMatchRule
   end
   
   def MD5MatchRule.get_digest_for(filepath)
-    puts "digesting #{filepath}"
     file = File.new( filepath )
     file.binmode
     digest = Digest::MD5.hexdigest( file.read )

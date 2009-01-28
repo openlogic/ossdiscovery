@@ -65,7 +65,7 @@ symlink_depth: 5
 #--------------------------------------------------------------------------------------
 # Open archives (e.g., zip files) to scan their contents?
 # NOTE: nested archive files will also be examined, along with their nested archives, etc.
-open_archives: false
+open_archives: true
 
 #--------------------------------------------------------------------------------------
 # Where archives are temporarily unpacked for scanning

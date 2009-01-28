@@ -191,11 +191,16 @@ class Walker
     contents would always be ignored.  This flag will be propagated when walking
     any nested directories.
 
+    The archive_parents parameter is used to keep track of a hierarchy of nested
+    archive files so we can report where a particular matched file actually lives.
+    For example, we could find apache-ant.jar inside of myproj.war inside of
+    bigproj.ear.
+
     returns false if given fileordir is a directory excluded by a filter
     returns true if given fileordir was walked
 =end
 
-   def walk_dir( fileordir, override_dir_exclusions = false )
+  def walk_dir(fileordir, override_dir_exclusions = false, archive_parents = [])
     @root_scan_dir = fileordir if @root_scan_dir.nil?
     # crude progress indicator
     if ( !@show_verbose && @show_progress && @file_ct != 0 )
@@ -208,7 +213,6 @@ class Walker
     if ( @show_verbose && @file_ct != 0 && @show_every != 0)
       q,r = @file_ct.divmod( @show_every )
       if ( r == 0 )
-        # puts fileordir # Uncomment this line in order to see the directories being walked
         progress_report(fileordir)
       end
     end
@@ -230,30 +234,30 @@ class Walker
 
     unless override_dir_exclusions
       @dir_exclusions.each do | filter |
-         if ( File.directory?(fileordir) && fileordir.match( filter ) != nil )   # found a directory exclusion
-            if ( @list_exclusions || $DEBUG )
-              printf("'%s' is excluded by: %s directory filter\n", fileordir, filter )
-            end
-            #  blow out of here if this file matches an exclusion condition,
-            #  false because this is a directory which needs to be pruned
-            return false
+        if ( File.directory?(fileordir) && fileordir.match( filter ) != nil )   # found a directory exclusion
+          if ( @list_exclusions || $DEBUG )
+            printf("'%s' is excluded by: %s directory filter\n", fileordir, filter )
           end
+          #  blow out of here if this file matches an exclusion condition,
+          #  false because this is a directory which needs to be pruned
+          return false
+        end
       end
     end
 
     @file_exclusions.each do | filter |
-        if ( File.basename( fileordir ).match( filter ) != nil )   # found an exclusion
-          if ( @list_exclusions || $DEBUG )
-            printf("'%s' is excluded by: %s file filter\n", fileordir, filter )
-          end
-          return true  # blow out of here if this file matches an exclusion condition, true because this is a file and got walked
+      if ( File.basename( fileordir ).match( filter ) != nil )   # found an exclusion
+        if ( @list_exclusions || $DEBUG )
+          printf("'%s' is excluded by: %s file filter\n", fileordir, filter )
         end
+        return true  # blow out of here if this file matches an exclusion condition, true because this is a file and got walked
       end
+    end
 
     # --list-files flag implementation
     # will show only files that made it through the exclusion filters
 
-    if ( @list_files || $DEBUG )
+    if @list_files || $DEBUG
       puts fileordir
     end
 
@@ -276,19 +280,18 @@ class Walker
           end
 
           # see if this entry is resolvable and matches anything anyone's looking for
-          if ( resolved )
-            if (is_archive?(fileordir) && @open_archives)
+          if resolved
+            if @open_archives && is_archive?(fileordir)
               @archives_found_ct += 1
-              open_archive(fileordir)
+              open_archive(fileordir, archive_parents)
             else
-              name_match( fileordir )
+              name_match(fileordir, archive_parents)
             end
           end
         else # the file was not readable
           increment_permission_denied_ct(fileordir)
           return false
         end # of if (File.readable?
-
 
       elsif( File.directory?(fileordir) )
         have_perms_for_dir = true
@@ -345,10 +348,10 @@ class Walker
                   # @@log.info("Walker") { "pwd: #{pwd} direntry: #{direntry}" }
 
                   # check to see if we need to prune a directory
-                  if ( !walk_dir( direntry, override_dir_exclusions ) )
-                      if ( @list_exclusions || $DEBUG )
-                        printf("'%s' pruned\n", direntry )
-                      end
+                  if !walk_dir(direntry, override_dir_exclusions, archive_parents)
+                    if ( @list_exclusions || $DEBUG )
+                      printf("'%s' pruned\n", direntry )
+                    end
                   end
                 end
             end
@@ -409,9 +412,10 @@ class Walker
   end
 
   # Open the given archive file and walk it
-  def open_archive(path)
+  def open_archive(path, archive_parents = [])
     # create a temporary directory to store the archive file contents
-    target_dir = create_temp_dir(File.basename(path))
+    archive_file = File.basename(path)
+    target_dir = create_temp_dir(archive_file)
 
     # fail immediately unless the create temp dir worked
     unless target_dir
@@ -430,7 +434,16 @@ class Walker
       # Walk the new temporary directory containing the archive file's contents
       # We pass 'true' as the second argument to override the temp dir exclusion
       @@log.info("Walker") { "Walking archive temp dir: #{target_dir}" }
-      walk_dir(target_dir, true)
+
+      # if we're the topmost archive, include our full path
+      if archive_parents.empty?
+        archive_file = path
+      else
+        # otherwise, strip our most recent parent's path from our path
+        archive_file = remove_parent_path(path, archive_parents.last[1])
+      end
+      new_parents = ([].concat(archive_parents)) << [archive_file, target_dir]
+      walk_dir(target_dir, true, new_parents)
 
       # remove the temporary directory now that we're done with it
       @@log.info("Walker") { "Deleting archive temp dir: #{target_dir}" }
@@ -438,6 +451,16 @@ class Walker
     else
       @unopenable_archive_ct += 1
     end
+  end
+
+  # Given two paths such as:
+  #   p1 = /tmp/solr.war20090127-32155-8pp7xr-0/WEB-INF/lib/commons-io.zip
+  # and
+  #   p2 = /tmp/solr.war20090127-32155-8pp7xr-0
+  # return a path like this:
+  #   p = /WEB-INF/lib/commons-io.zip
+  def remove_parent_path(full_path, parent_path)
+    full_path[parent_path.size..-1]
   end
 
   # unzip the zip file found at the given path into the given destination
@@ -578,14 +601,15 @@ class Walker
 =begin rdoc
   given the filename, this code will check the list of subscribers and
   notify those subscribers whose filename criteria matches this filename
-  a subscriber must have a notify method that receives filename, location parameters
+  a subscriber must have a notify method that receives filename, location
+  parameters, and a potentially empty list of archive parents that contain
+  the file.
 =end
 
-  def notify_subscribers( subscribers, location, filename, rule_used )
+  def notify_subscribers(subscribers, location, filename, rule_used, archive_parents)
     subscribers.each{ | subscriber |
-      subscriber.found_file( location, filename, rule_used )
+      subscriber.found_file(location, filename, rule_used, archive_parents)
     }
-
   end
 
 
@@ -593,10 +617,10 @@ class Walker
   this is the main method which compares a filename found by the walker against the list of
   files of interest to see if there's a match.  if there is a match, this code will fire the
   subscriber notification method to tell the subscriber (ie RuleEngine) a file of interest
-  has been found
+  has been found. The archive_parents parameter gives us a path back up the archive hiearchy,
+  if any, that contains the given file or directory.
 =end
-
-  def name_match( fileordir )
+  def name_match(fileordir, archive_parents)
 
     # FUTURE - determine if it may be necessary to pull this optimization out and do a literal match on
     # all criteria, not just take the first match....right now, with a one-subscriber model (RuleEngine),
@@ -604,16 +628,14 @@ class Walker
     # find any more matches in the criteria after the first match.  Later we may not have this luxury
     # if we need to support more than one subscriber in the system.
 
-
     # do a direct/literal look up first since this will be the fastest match, do it first
+    basename = File.basename(fileordir)
+    dirname =  File.dirname(fileordir)
 
-    basename = File.basename( fileordir )
-    dirname =  File.dirname( fileordir )
-
-    if ( @criteria[ basename ] )
+    if @criteria[basename]
       # found a literal filename match in the criteria list, so notify its subscribers
       @foi_ct += 1
-      notify_subscribers( @criteria[ basename ], dirname, basename, basename )
+      notify_subscribers(@criteria[basename], dirname, basename, basename, archive_parents)
       return
     end
 
@@ -624,10 +646,10 @@ class Walker
     # first match and return the subscriber list
 
     @criteria.each_key { | criterion |
-      if ( basename.match(criterion) )
+      if basename.match(criterion)
         @foi_ct += 1
         # notify array of subscribers
-        notify_subscribers( @criteria[ criterion ], dirname, basename, criterion )
+        notify_subscribers(@criteria[criterion], dirname, basename, criterion, archive_parents)
         return
       end
     }

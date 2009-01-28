@@ -50,7 +50,7 @@ class MatchRuleSet
 =begin rdoc
   Returns a Set of locations (directories) this ruleset evaluates to true for.
 =end 
-  def evaluate()
+  def evaluate
     locations = get_ruleset_match_locations
     
     results = Set.new
@@ -81,7 +81,7 @@ class MatchRuleSet
 =begin rdoc
   Returns a Hash.  Here's an example:
 
-  Given the follwing
+  Given the following
 
   1) a ruleset defined like this:
 

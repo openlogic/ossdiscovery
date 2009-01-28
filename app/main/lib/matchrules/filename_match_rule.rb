@@ -53,17 +53,17 @@ class FilenameMatchRule < MatchRule
     @matched_against = Hash.new
   end
   
-  def match?(actual_filepath)
+  def match?(actual_filepath, archive_parents)
     @match_attempts = @match_attempts + 1
     val = FilenameMatchRule.match?(@defined_filename, actual_filepath)
     
     if (val) then
-      @matched_against[File.dirname(actual_filepath)] = actual_filepath
-      if (@version == nil || @version == "") then
+      if (@version == nil || @version == "")
         @latest_match_val = Package::VERSION_UNKNOWN
       else
         @latest_match_val = @version
       end
+      @matched_against[File.dirname(actual_filepath)] = [[@latest_match_val, archive_parents]]
     end
     
     return val
@@ -80,11 +80,7 @@ class FilenameMatchRule < MatchRule
   directory, and we want all MatchRules to walk and talk like each in this respect.
 =end   
   def get_found_versions(location)
-    versions = Set.new
-    if (@matched_against.has_key?(location)) then
-      versions << @version
-    end
-    return versions        
+    @matched_against[location] || []
   end
   
   # This method tries to do a regexp match every single time, no simple String comparison is performed.

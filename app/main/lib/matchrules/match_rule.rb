@@ -78,13 +78,7 @@ class MatchRule
   Strings (fully qualified file names in most cases).
 =end 
   def matched_anything?
-    val = nil
-    if (@matched_against.size == 0) then
-      val = false
-    else
-      val = true
-    end
-    return val
+    @matched_against.any?
   end
   
 =begin rdoc
