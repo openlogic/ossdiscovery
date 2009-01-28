@@ -40,6 +40,6 @@
 @file_exclusion_filters["Name Rules Exceptions make"] = '\.make$'
 @file_exclusion_filters["Name Rules Exceptions setup"] = '^setup\..*$'
 @file_exclusion_filters["Name Rules Exceptions nice"] = '^config\..*$'
-@file_exclusion_filters["Name Rules Exceptions html"] = '\.htm.$'
+@file_exclusion_filters["Name Rules Exceptions html"] = '\.htm.?$'
 @file_exclusion_filters["Name Rules Exceptions autorun"] = '^autorun\..*$'
-@file_exclusion_filters["Name Rules Exceptions manpages"] = '^\.[0-9]$'
+@file_exclusion_filters["Name Rules Exceptions manpages"] = '\.[0-9]$'
