@@ -61,7 +61,7 @@ MAX_TEMP_DIR_CREATION_RETRIES = 5 unless defined?(MAX_TEMP_DIR_CREATION_RETRIES)
 
 # Figure out if we have an 'unzip' program on the operating system
 @@unzip ||= begin
-              `which unzip`.strip
+              major_platform =~ /windows/i ? "" : `which unzip`.strip
             rescue
               ""
             end
