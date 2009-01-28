@@ -1,10 +1,8 @@
-# walker.rb
-#
 # LEGAL NOTICE
 # -------------
 #
 # OSS Discovery is a tool that finds installed open source software.
-#    Copyright (C) 2007-2008 OpenLogic, Inc.
+#    Copyright (C) 2007-2009 OpenLogic, Inc.
 #
 # OSS Discovery is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License version 3 as
@@ -25,26 +23,20 @@
 # You can contact OpenLogic at info@openlogic.com.
 
 
-# --------------------------------------------------------------------------------------------------
-#
-#
-#  A walker is the object which will scan directories, look for file matches and then
-#  notify the rule engine (or any subscriber) of a filename match.
-#
-#  Multiple instances of Walkers are allowed - for example a global Walker may be
-#  scanning the disk, it encounters a jar file, passes that jar file to the RuleEngine
-#  and the rule itself decides to crack the jar, then create a walker for just walking
-#  the exploded jar directory contents.
-#
-#  An instance of Walker is given a directory from which it will start walking through
-#  files and directories.  In order to walk individual directories which aren't
-#  nested, you must call walkDir() once for each directory.
-#
-#  For example, to walk /usr, /opt, and /tmp without walking the entire root directory, you'd
-#  call walkDir 3 times, once for each directory off of root that you want scanned.  You can
-#  use the same Walker instance for each walkDir call or create one Walker instance for each
-#  directory - it doesn't matter.
-
+# -----------------------------------------------------------------------------
+# A walker is the object which will scan directories, look for file matches and
+# then notify the rule engine (or any subscriber) of a filename match.
+# Multiple instances of Walkers are allowed - for example a global Walker may be
+# scanning the disk, it encounters a jar file, passes that jar file to the
+# RuleEngine and the rule itself decides to crack the jar, then create a walker
+# for just walking the exploded jar directory contents.
+# An instance of Walker is given a directory from which it will start walking
+# through files and directories.  In order to walk individual directories which
+# aren't nested, you must call walkDir() once for each directory.
+# For example, to walk /usr, /opt, and /tmp without walking the entire root
+# directory, you'd call walkDir 3 times, once for each directory off of root
+# that you want scanned.  You can use the same Walker instance for each walkDir
+# call or create one Walker instance for each directory - it doesn't matter.
 
 require 'pathname'
 require 'fileutils'
@@ -61,10 +53,10 @@ MAX_TEMP_DIR_CREATION_RETRIES = 5 unless defined?(MAX_TEMP_DIR_CREATION_RETRIES)
 
 # Figure out if we have an 'unzip' program on the operating system
 @@unzip ||= begin
-              major_platform =~ /windows/i ? "" : `which unzip`.strip
-            rescue
-              ""
-            end
+  major_platform =~ /windows/i ? "" : `which unzip`.strip
+rescue
+  ""
+end
 
 =begin rdoc
   an instance of Walker is given a directory from which it will start walking through
@@ -154,7 +146,7 @@ class Walker
   directory ignored through the generic exclusion mechanism
 =end
   def add_dir_exclusions( exclusion_list )
-      @dir_exclusions.concat( exclusion_list )
+    @dir_exclusions.concat( exclusion_list )
   end
 
 =begin rdoc
@@ -164,7 +156,7 @@ class Walker
   directory ignored through the generic exclusion mechanism
 =end
   def add_file_exclusions( exclusion_list )
-      @file_exclusions.concat( exclusion_list )
+    @file_exclusions.concat( exclusion_list )
   end
 
 
@@ -206,7 +198,7 @@ class Walker
     if ( !@show_verbose && @show_progress && @file_ct != 0 )
       q,r = @file_ct.divmod( @show_every )
       if ( r == 0 )
-        printf "."
+        putc "."
       end
     end
 
@@ -233,24 +225,28 @@ class Walker
     # getting MD5s or anything else on a file that is not of interest
 
     unless override_dir_exclusions
-      @dir_exclusions.each do | filter |
-        if ( File.directory?(fileordir) && fileordir.match( filter ) != nil )   # found a directory exclusion
-          if ( @list_exclusions || $DEBUG )
-            printf("'%s' is excluded by: %s directory filter\n", fileordir, filter )
+      if File.directory?(fileordir)
+        @dir_exclusions.each do |filter|
+          if fileordir.match(filter)
+            if @list_exclusions || $DEBUG
+              puts "'#{fileordir}' is excluded by: #{filter} directory filter"
+            end
+            #  blow out of here if this file matches an exclusion condition,
+            #  false because this is a directory which needs to be pruned
+            return false
           end
-          #  blow out of here if this file matches an exclusion condition,
-          #  false because this is a directory which needs to be pruned
-          return false
         end
       end
     end
 
-    @file_exclusions.each do | filter |
-      if ( File.basename( fileordir ).match( filter ) != nil )   # found an exclusion
-        if ( @list_exclusions || $DEBUG )
-          printf("'%s' is excluded by: %s file filter\n", fileordir, filter )
+    if File.file?(fileordir)
+      @file_exclusions.each do |filter|
+        if File.basename(fileordir).match(filter)
+          if @list_exclusions || $DEBUG
+            puts "'#{fileordir}' is excluded by: #{filter} file filter"
+          end
+          return true  # blow out of here if this file matches an exclusion condition, true because this is a file and got walked
         end
-        return true  # blow out of here if this file matches an exclusion condition, true because this is a file and got walked
       end
     end
 
@@ -264,14 +260,13 @@ class Walker
     resolved = true
 
     begin
-
-      if( File.file?(fileordir) )
-        if (File.readable?(fileordir)) then
+      if File.file?(fileordir)
+        if File.readable?(fileordir)
           @file_ct += 1
 
-          if ( is_symlink?(fileordir) )
-            if ( @follow_symlinks )
-              resolved, fileordir = resolve_symlink( fileordir )
+          if is_symlink?(fileordir)
+            if @follow_symlinks
+              resolved, fileordir = resolve_symlink(fileordir)
             else
               resolved = false
               @sym_link_ct += 1
@@ -283,6 +278,9 @@ class Walker
           if resolved
             if @open_archives && is_archive?(fileordir)
               @archives_found_ct += 1
+              # match against the archive file itself in case we can't recognize
+              # anything inside it but the name gives it away
+              name_match(fileordir, archive_parents)
               open_archive(fileordir, archive_parents)
             else
               name_match(fileordir, archive_parents)
@@ -291,9 +289,8 @@ class Walker
         else # the file was not readable
           increment_permission_denied_ct(fileordir)
           return false
-        end # of if (File.readable?
-
-      elsif( File.directory?(fileordir) )
+        end
+      elsif File.directory?(fileordir)
         have_perms_for_dir = true
         pwd = Dir.pwd
         begin
@@ -308,20 +305,17 @@ class Walker
 
           # list the contents of this directory (the pwd) and recursively call walkdir
           # if it's not empty
-
           begin
-
-            if ( is_symlink?(fileordir) )
-              if ( @follow_symlinks )
+            if is_symlink?(fileordir)
+              if @follow_symlinks
                 # need to resolve the symlink
-                resolved, fileordir = resolve_symlink( fileordir )
+                resolved, fileordir = resolve_symlink(fileordir)
                 # @@log.info("Walker") {"resolved: " + resolved.to_s + " fileordir: " + fileordir }
               else
                 resolved = false
                 @sym_link_ct += 1
                 @not_followed_ct += 1
               end
-
             end
           rescue Exception
             # the only times we've seen this hit are when a symlink is completely orphaned => points to nothing
@@ -333,35 +327,28 @@ class Walker
             resolved = false
           end
 
-          if ( resolved )
-
-            # printf("fileordir resolved: #{fileordir}\n")
-
+          if resolved
             pwd = fileordir
+            Dir.foreach(fileordir) do |direntry|
+              # recurse into this directory if it's not current or parent directories
+              if direntry != "." && direntry != ".."
+                direntry = (pwd == '/' ? "/#{direntry}" : "#{pwd}/#{direntry}" )
 
-            Dir.foreach(fileordir) do | direntry |
-
-                # recurse into this directory if it's not current or parent directories
-                if ( direntry != "." && direntry != ".." )
-                  direntry = (pwd == '/' ? "/#{direntry}" : "#{pwd}/#{direntry}" )
-
-                  # @@log.info("Walker") { "pwd: #{pwd} direntry: #{direntry}" }
-
-                  # check to see if we need to prune a directory
-                  if !walk_dir(direntry, override_dir_exclusions, archive_parents)
-                    if ( @list_exclusions || $DEBUG )
-                      printf("'%s' pruned\n", direntry )
-                    end
+                # check to see if we need to prune a directory
+                if !walk_dir(direntry, override_dir_exclusions, archive_parents)
+                  if @list_exclusions || $DEBUG
+                    puts "'#{direntry}' pruned"
                   end
                 end
+              end
             end
           end
           return true
         else # the file was not readable
           increment_permission_denied_ct(fileordir)
           return false
-        end # of if (File.readable?(fileordir))
-      end # of if (File.readable?(fileordir))
+        end
+      end
 
     rescue Errno::EACCES, Errno::EPERM
       increment_permission_denied_ct(fileordir)
@@ -373,6 +360,7 @@ class Walker
       return false
     end
 
+    true
   end
 
   def increment_permission_denied_ct(fileordir)
@@ -549,11 +537,11 @@ class Walker
 
     begin
 
-         @sym_link_ct += 1
-         realpath = Pathname.new( fileordir ).realpath
-         @@symlink_cache[fileordir] = realpath
-         @@log.info("Walker") {"realpath: #{realpath}\n"}
-         return true, realpath
+      @sym_link_ct += 1
+      realpath = Pathname.new( fileordir ).realpath
+      @@symlink_cache[fileordir] = realpath
+      @@log.info("Walker") {"realpath: #{realpath}\n"}
+      return true, realpath
 
     rescue Errno::ENOENT
 
@@ -590,12 +578,12 @@ class Walker
       end
     end
 
-#        printf( "directories walked: %d\n", dir_ct() )
-#        printf( "files encountered : %d\n", file_ct() )
-#        printf( "symlinks found    : %d\n", sym_link_ct() )
-#        printf( "bad symlink count : %d\n", bad_link_ct() )
-#        printf( "permission denied : %d\n", permission_denied_ct() )
-#        printf( "files of interest : %d\n", foi_ct() )
+    #        printf( "directories walked: %d\n", dir_ct() )
+    #        printf( "files encountered : %d\n", file_ct() )
+    #        printf( "symlinks found    : %d\n", sym_link_ct() )
+    #        printf( "bad symlink count : %d\n", bad_link_ct() )
+    #        printf( "permission denied : %d\n", permission_denied_ct() )
+    #        printf( "files of interest : %d\n", foi_ct() )
   end
 
 =begin rdoc
