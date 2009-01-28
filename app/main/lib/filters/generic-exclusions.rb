@@ -39,6 +39,7 @@ require "#{@filterdir}/no-apparmor.rb"
 require "#{@filterdir}/no-log.rb"
 require "#{@filterdir}/no-menu.rb"
 require "#{@filterdir}/no-aptarchives.rb"
+require "#{@filterdir}/name-rules-exceptions.rb"
 
 #require "#{@filterdir}/no-media.rb"
 
