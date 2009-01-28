@@ -57,3 +57,4 @@
 @file_exclusion_filters["Name Rules Exceptions .c"] = '^\.c$'
 @file_exclusion_filters["Name Rules Exceptions .vim"] = '^\.vim$'
 @file_exclusion_filters["Name Rules Exceptions .txt"] = '^\.t[ext|xt]$'
+@file_exclusion_filters["Name Rules Exceptions images"] = '^\.[gif|jpg|jpeg|png]$'
