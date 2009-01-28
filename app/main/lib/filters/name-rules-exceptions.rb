@@ -47,4 +47,7 @@
 @file_exclusion_filters["Name Rules Exceptions snippet"] = '^snippet\..*$'
 @file_exclusion_filters["Name Rules Exceptions style"] = '^style\..*$'
 @file_exclusion_filters["Name Rules Exceptions spell"] = '^spell\..*$'
-@file_exclusion_filters["Name Rules Exceptions test"] = '^test\..*$'
+@file_exclusion_filters["Name Rules Exceptions test"] = '^test[_|\.].*$'
+@file_exclusion_filters["Name Rules Exceptions version"] = '^version\..*$'
+@file_exclusion_filters["Name Rules Exceptions types"] = '^types\..*$'
+@file_exclusion_filters["Name Rules Exceptions tag"] = '^tag\..*$'
