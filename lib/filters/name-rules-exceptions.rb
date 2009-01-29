@@ -60,5 +60,6 @@
 @file_exclusion_filters["Name Rules Exceptions .vim"] = '\.vim$'
 @file_exclusion_filters["Name Rules Exceptions .txt"] = '\.t(ext|xt)$'
 @file_exclusion_filters["Name Rules Exceptions msoffice"] = '\.(doc|xls|xlt|ppt)$'
+@file_exclusion_filters["Name Rules Exceptions web"] = '\.(css|xsl|xsd|js|php)$'
 @file_exclusion_filters["Name Rules Exceptions media"] = '\.(gif|jpg|jpeg|png|tiff|mp3|mp3|mpeg|m4a|ogg|acc|xpm|ico)$'
 
