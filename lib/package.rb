@@ -1,10 +1,8 @@
-# project_rule.rb
-#
 # LEGAL NOTICE
 # -------------
 #
 # OSS Discovery is a tool that finds installed open source software.
-#    Copyright (C) 2007-2008 OpenLogic, Inc.
+#    Copyright (C) 2007-2009 OpenLogic, Inc.
 #
 # OSS Discovery is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License version 3 as
@@ -24,6 +22,7 @@
 # You can contact the OSS Discovery team at info@ossdiscovery.org.
 # You can contact OpenLogic at info@openlogic.com.
 
+
 # --------------------------------------------------------------------------------------------------
 #
 =begin rdoc
@@ -42,7 +41,7 @@ require File.join(File.dirname(__FILE__), 'conf', 'config')
 
 class Package
   VERSION_UNKNOWN = "unknown"
-  attr_accessor :name, :version, :found_at
+  attr_accessor :name, :version, :found_at, :file_name
   
 =begin rdoc
   I don't know why they call this the 'spaceship' operator.  It looks more like
@@ -50,10 +49,14 @@ class Package
 =end  
   def <=>(other)
     val = 0
-    if (self.name == other.name) then
-      if (self.version == other.version) then
-        if (self.found_at == other.found_at) then
-          val = 0
+    if self.name == other.name
+      if self.version == other.version
+        if self.found_at == other.found_at
+          if self.file_name == other.file_name
+            val = 0
+          else
+            val = self.file_name <=> other.file_name
+          end
         else
           val = self.found_at <=> other.found_at
         end
@@ -77,9 +80,8 @@ class Package
   
   def ==(other)
     val = false
-    if ((other.name == @name) && 
-          (other.version == @version) &&
-          (other.found_at == @found_at)) then
+    if other.name == @name && other.version == @version && 
+        other.found_at == @found_at && other.file_name == @file_name
       val = true
     end
     val
@@ -90,6 +92,7 @@ class Package
     val += 37 * @name.hash
     val += 37 * @version.hash
     val += 37 * @found_at.hash
+    val += 37 * @file_name.hash
     
     val
   end
@@ -178,52 +181,52 @@ class Package
     
     locations.each_with_index do |location, index|
 
-      project_names_and_archive_parents  = nil
-      version_and_archive_parents_set = Set.new
+      project_names_and_archive_parents_and_file_names  = nil
+      version_and_archive_parents_and_file_names_set = Set.new
       project_rule.rulesets.each do |ruleset|
         ruleset.match_rules.each do |match_rule|
           # hack for filename_list rules
           if match_rule.type == MatchRule::TYPE_FILENAME_LIST
-            project_names_and_archive_parents = match_rule.get_found_versions(location)
-            versions_and_archive_parents = project_names_and_archive_parents.collect { |pnaap| [VERSION_UNKNOWN, pnaap[1]] }
+            project_names_and_archive_parents_and_file_names = match_rule.get_found_versions(location)
+            versions_and_archive_parents_and_file_names = project_names_and_archive_parents_and_file_names.collect { |pnapfn| [VERSION_UNKNOWN, pnapfn[1]] }
           else
-            versions_and_archive_parents = match_rule.get_found_versions(location)
+            versions_and_archive_parents_and_file_names = match_rule.get_found_versions(location)
           end
-          versions_and_archive_parents.each do |version_and_archive_parents|
-            if (version_and_archive_parents[0] == nil || version_and_archive_parents[0] == "")
-              version_and_archive_parents[0] = VERSION_UNKNOWN
+          versions_and_archive_parents_and_file_names.each do |version_and_archive_parents_and_file_name|
+            if (version_and_archive_parents_and_file_name[0] == nil || version_and_archive_parents_and_file_name[0] == "")
+              version_and_archive_parents_and_file_name[0] = VERSION_UNKNOWN
             end
-            version_and_archive_parents_set << version_and_archive_parents
+            version_and_archive_parents_and_file_names_set << version_and_archive_parents_and_file_name
           end # of found_versions.each
         end
         
         # See the note in this method's rdoc about 'unknown' versions for an
         # explanation of what's going on here.
-        if (version_and_archive_parents_set.size > 1) then
-          version_and_archive_parents_set.delete_if {|vaap| vaap[0] == VERSION_UNKNOWN}
+        if (version_and_archive_parents_and_file_names_set.size > 1) then
+          version_and_archive_parents_and_file_names_set.delete_if {|vapfn| vapfn[0] == VERSION_UNKNOWN}
         end
       end # of project_rule.rulesets.each
 
       # hack for filename_list rules that can produce a list of found projects
       # in a single directory
-      if project_names_and_archive_parents
-        project_names_and_archive_parents.each do |pnaap|
+      if project_names_and_archive_parents_and_file_names
+        project_names_and_archive_parents_and_file_names.each do |pnapfn|
           package = Package.new
-          package.name = pnaap[0]
+          package.name = pnapfn[0]
           package.version = VERSION_UNKNOWN
-          #puts "#{package.name}, location = #{location}, pnaap[1] = #{pnaap[1].inspect}"
-          package.found_at = reportable_location(location, pnaap[1])
+          package.found_at = reportable_location(location, pnapfn[1])
+          package.file_name = pnapfn[2]
           instances << package
         end
       else
-        version_and_archive_parents_set.each do |vaap|
+        version_and_archive_parents_and_file_names_set.each do |vapfn|
           package = Package.new
           package.name = project_rule.name
-          package.found_at = reportable_location(location, vaap[1])
+          package.found_at = reportable_location(location, vapfn[1])
           # Doing this gsub because we ran into a scenario when using a hex
           # binary match where the version looked like this: 2^@.^@3
-          package.version = vaap[0].gsub("\0", "")
-          
+          package.version = vapfn[0].gsub("\0", "")
+          package.file_name = vapfn[2]
           instances << package
         end # of version_set.each
       end

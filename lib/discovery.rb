@@ -335,6 +335,7 @@ def make_reports
   @scandata.not_followed_ct = @walker.not_followed_ct
   @scandata.permission_denied_ct = @walker.permission_denied_ct
   @scandata.foi_ct = @walker.foi_ct
+  @scandata.archives_found_ct = @walker.archives_found_ct
   @scandata.starttime = @starttime
   @scandata.endtime = @endtime
   @scandata.distro = @distro

@@ -66,7 +66,7 @@ class MD5MatchRule < FilenameMatchRule
     match_val, digest = MD5MatchRule.match?(@defined_filename, @defined_digest, actual_filepath, actual_filepath_digest)
     
     if match_val
-      @matched_against[File.dirname(actual_filepath)] = [[@version, archive_parents]]
+      @matched_against[File.dirname(actual_filepath)] = [[@version, archive_parents, File.basename(actual_filepath)]]
       @latest_match_val = @version
     end
     

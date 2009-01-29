@@ -63,7 +63,7 @@ class FilenameMatchRule < MatchRule
       else
         @latest_match_val = @version
       end
-      @matched_against[File.dirname(actual_filepath)] = [[@latest_match_val, archive_parents]]
+      @matched_against[File.dirname(actual_filepath)] = [[@latest_match_val, archive_parents, File.basename(actual_filepath)]]
     end
     
     return val

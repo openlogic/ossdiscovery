@@ -30,7 +30,8 @@
 class ScanData
 
   attr_accessor :client_version, :machine_id, :hostname, :ipaddress
-  attr_accessor :file_ct, :dir_ct, :sym_link_ct, :bad_link_ct, :permission_denied_ct, :foi_ct, :not_found_ct, :not_followed_ct
+  attr_accessor :file_ct, :dir_ct, :sym_link_ct, :bad_link_ct, :permission_denied_ct, 
+                :foi_ct, :not_found_ct, :not_followed_ct, :archives_found_ct
   attr_accessor :starttime, :endtime, :total_seconds_paused_for_throttling
   attr_accessor :distro, :os_family, :os, :os_version, :os_architecture, :kernel, :production_scan
   attr_accessor :census_code, :group_code
@@ -52,6 +53,7 @@ class ScanData
     @foi_ct = 0
     @not_found_ct = 0 
     @not_followed_ct = 0
+    @archives_found_ct = 0
     @starttime = ""
     @endtime = ""
     @total_seconds_paused_for_throttling = 0

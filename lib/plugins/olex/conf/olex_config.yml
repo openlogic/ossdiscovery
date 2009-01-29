@@ -30,6 +30,17 @@
 
 olex_enabled: true
 
+results: STDOUT
+
 machine_report: scanresults-olex.txt
 local_report: scanresults-local-olex.txt
-results: STDOUT
+
+# Set to true to see http://olex.openlogic.com/packages/(package_id) links in
+# on-screen results instead of just the package_id for discovered packages.  This
+# makes it easy for Linux and certain other users to quickly bring up a discovered
+# package page in their browser.
+enable_olex_links: false
+
+# Set to true to only show file names of discovered packages instead of their
+# full paths in addition to file names.
+dont_show_paths: false
