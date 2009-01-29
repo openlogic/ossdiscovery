@@ -65,7 +65,7 @@ class FilenameListMatchRule < MatchRule
     val = FilenameListMatchRule.match?(actual_filepath)
     
     if val
-      (@matched_against[File.dirname(actual_filepath)] ||= Set.new) << [val, archive_parents]
+      (@matched_against[File.dirname(actual_filepath)] ||= Set.new) << [val, archive_parents, File.basename(actual_filepath)]
       @latest_match_val = Package::VERSION_UNKNOWN
     end
     

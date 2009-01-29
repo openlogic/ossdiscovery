@@ -53,8 +53,9 @@ class FilenameVersionMatchRule < FilenameMatchRule
     if match_val
       val = true
       match_set = Set.new
-      if @matched_against.has_key?(File.dirname(actual_filepath))
-        match_set = @matched_against[File.dirname(actual_filepath)]
+      dir = File.dirname(actual_filepath)
+      if @matched_against.has_key?(dir)
+        match_set = @matched_against[dir]
         @@log.debug('FilenameVersionMatchRule') {"Multiple versions of the same project likely exist in the same directory. MatchRule name: '#{@name}', version: '#{@version}', defined filename: '#{@defined_filename}', defined_regexp: '#{@defined_regexp}'"}
       end
       mv = match_val[1]
@@ -62,9 +63,9 @@ class FilenameVersionMatchRule < FilenameMatchRule
         @@log.info('FilenameVersionMatchRule') {"Got a nil match value when matching #{@defined_filename} against #{actual_filepath}.  Probably a filenameVersion rule with a regex to capture the version." }
         mv = "unknown"
       end
-      match_set << [mv.strip, archive_parents]
+      match_set << [mv.strip, archive_parents, File.basename(actual_filepath)]
       @latest_match_val = mv
-      @matched_against[File.dirname(actual_filepath)] = match_set
+      @matched_against[dir] = match_set
     end
     
     return val

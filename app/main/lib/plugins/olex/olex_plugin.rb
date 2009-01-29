@@ -34,12 +34,17 @@ require 'getoptlong'
 
 class OlexPlugin
 
-  attr_accessor :olex_machine_file, :olex_local_file
+  # where to link packages to on the OLEX production site
+  OLEX_PREFIX = "http://olex.openlogic.com/packages/" unless defined? OLEX_PREFIX
+
+  attr_accessor :olex_machine_file, :olex_local_file, :enable_olex_links, :dont_show_paths
     
   def initialize
 
     @olex_machine_file = OlexConfig.machine_report 
     @olex_local_file = OlexConfig.local_report
+    @enable_olex_links = OlexConfig.enable_olex_links || false
+    @dont_show_paths = OlexConfig.dont_show_paths || false
     @plugin_version = OLEX_PLUGIN_VERSION_KEY
 
   end 
@@ -53,7 +58,8 @@ class OlexPlugin
     clioptions_array = Array.new
     clioptions_array << [ "--olex-local","-A", GetoptLong::REQUIRED_ARGUMENT ]   # formerly --human-results
     clioptions_array << [ "--olex-results","-B", GetoptLong::REQUIRED_ARGUMENT ] # formerly --machine-results
-
+    clioptions_array << [ "--olex-links", "-L", GetoptLong::NO_ARGUMENT ]      # turn on showing http olex links in results
+    clioptions_array << [ "--dont-show-paths", "-P", GetoptLong::NO_ARGUMENT ]      # turn on to only show file names
   end
 
   def process_cli_options( opt, arg, scandata )
@@ -103,6 +109,17 @@ class OlexPlugin
          end
          exit 0
        end
+
+    when "--olex-links"
+      # Instead of showing just package ID's in the on-screen report, show HTTP links
+      # to the package on the live OLEX production site.  This makes it easy for
+      # Linux users to quickly see details on a discovered package.
+      @enable_olex_links = true
+
+    when "--dont-show-paths"
+      # Instead of showing full paths to discovered package files, only show
+      # the file name that was "discovered".
+      @dont_show_paths = true
     end
 
   end
@@ -234,6 +251,7 @@ class OlexPlugin
     printf(io, "hostname              : #{scandata.hostname}#{end_of_line}" )
     printf(io, "directories walked    : %d#{end_of_line}", scandata.dir_ct )
     printf(io, "files encountered     : %d#{end_of_line}", scandata.file_ct )
+    printf(io, "archives encountered  : %d#{end_of_line}", scandata.archives_found_ct )
     printf(io, "symlinks found        : %d#{end_of_line}", scandata.sym_link_ct )
     printf(io, "symlinks not followed : %d#{end_of_line}", scandata.not_followed_ct )  
     printf(io, "bad symlinks found    : %d#{end_of_line}", scandata.bad_link_ct )
@@ -263,18 +281,29 @@ class OlexPlugin
           longest_version = package.version.length if (package.version.length > longest_version)
         end
       end # of packages.each
+
+      longest_url = longest_name + OLEX_PREFIX.length
+
+      if @enable_olex_links
+        printf(io, %{#{"Package Name".ljust(longest_name)} #{"Version".ljust(longest_version)} #{"OLEX Package URL".ljust(longest_url)} Location#{end_of_line}})
+        printf(io, %{#{"============".ljust(longest_name)} #{"=======".ljust(longest_version)} #{"================".ljust(longest_url)} ========#{end_of_line}})
+      else
+        printf(io, %{#{"Package Name".ljust(longest_name)} #{"Version".ljust(longest_version)} Location#{end_of_line}})
+        printf(io, %{#{"============".ljust(longest_name)} #{"=======".ljust(longest_version)} ========#{end_of_line}})
+      end
       
-      printf(io, %{#{"Package Name".ljust(longest_name)} #{"Version".ljust(longest_version)} Location#{end_of_line}})
-      printf(io, %{#{"============".ljust(longest_name)} #{"=======".ljust(longest_version)} ========#{end_of_line}})
-      
-      packages.to_a.sort!.each do | package |
+      packages.to_a.sort!.each do |package|
         begin 
 
-          if ( package.version.size > max_version_length )
+          if package.version.size > max_version_length
             printf(io, "Possible error in rule: #{package.name} ... matched version text was too large (#{package.version.size} characters)#{end_of_line}")
             @@log.error("Possible error in rule: #{package.name} ... matched version text was too large (#{package.version.size} characters) - matched version: '#{package.version}'")
           else
-            printf(io, "#{package.name.ljust(longest_name)} #{package.version.ljust(longest_version)} #{package.found_at}#{end_of_line}")
+            if @enable_olex_links
+              printf(io, "#{package.name.ljust(longest_name)} #{package.version.ljust(longest_version)} #{link_to_olex(package.name).ljust(longest_url)} #{package_location(package)}#{end_of_line}")
+            else
+              printf(io, "#{package.name.ljust(longest_name)} #{package.version.ljust(longest_version)} #{package_location(package)}#{end_of_line}")
+            end
           end
         rescue Exception => e
           printf(io, "Possible error in rule: #{package.name}#{end_of_line}")
@@ -290,14 +319,28 @@ class OlexPlugin
     end
   end
 
-  # this is a callback from the framework after reports have been built to give the plugin an opportunity to send the report if it wants to
-  # this plugin never sends results to an OLEX server
-  def send_results()
-    return false
+  # Return the location to show for the given package
+  def package_location(package)
+    if @dont_show_paths
+      package.file_name
+    else
+      package.found_at + '/' + package.file_name
+    end
   end
 
-  def send_file( filename, overrides={} )
-    return false
+  # Link to the given package ID in olex
+  def link_to_olex(package_id)
+    OLEX_PREFIX + package_id
+  end
+
+  # this is a callback from the framework after reports have been built to give the plugin an opportunity to send the report if it wants to
+  # this plugin never sends results to an OLEX server
+  def send_results
+    false
+  end
+
+  def send_file(filename, overrides={})
+    false
   end
 
 end

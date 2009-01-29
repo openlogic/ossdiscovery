@@ -54,18 +54,19 @@ class BinaryMatchRule < FilenameMatchRule
     if match_value
       val = true
       match_set = Set.new
-      if @matched_against.has_key?(File.dirname(actual_filepath))
-        match_set = @matched_against[File.dirname(actual_filepath)]
+      dir = File.dirname(actual_filepath)
+      if @matched_against.has_key?(dir)
+        match_set = @matched_against[dir]
         @@log.debug('BinaryMatchRule') {"Multiple versions of the same project likely exist in the same directory. MatchRule name: '#{@name}', version: '#{@version}', defined filename: '#{@defined_filename}', defined_regexp: '#{@defined_regexp}'"}
       end
       
       start, finish = match_value.offset(1)
       s = match_value.string
       mv = (start...finish).inject("") { |all, character| all << s[character] }
-      match_set << [mv.strip, archive_parents]
+      match_set << [mv.strip, archive_parents, File.basename(actual_filepath)]
       @latest_match_val = mv
       
-      @matched_against[File.dirname(actual_filepath)] = match_set
+      @matched_against[dir] = match_set
     end
     
     [val, binary_content]
