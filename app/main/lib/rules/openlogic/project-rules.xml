@@ -35,6 +35,8 @@
       <!--match-rule name="ternarytree" type="filenameList" filename=".*" projectfile="projects.txt"/-->
       <!-- MATCH ONLY SPECIFIC EXTENSIONS -->
       <match-rule name="ternarytree" type="filenameList" filename="(\.jar|\.war|\.ear|\.sar|\.zip|\.java|\.dll|\.exe)$" projectfile="projects.txt"/>
+      <!-- MATCH WITHOUT NON-INTERESTING OR PROBLEMATIC EXTENSIONS -->
+      <!--match-rule name="ternarytree" type="filenameList" filename=".*(?<!\.gif|\.jpg|\.jpeg|\.png|\.tif|\.tiff|\.mp3|\.mp3|\.mpeg|\.m4a|\.ogg|\.acc|\.xpm|\.ico|\.css|\.xsl|\.xml|\.xsd|\.dtd|\.js|\.php|\.jsp|\.htm|\.html|\.xhtml|\.doc|\.xls|\.xlt|\.ppt|\.properties|\.property|\.make|\.text|\.txt|\.pdf|\.o|\.lo|\.so|\.c|\.vim|\.lst|\.rsc|\.bat|\.ini|\.yml|\.yaml|\.py|\.rb|\.[0-9])$" projectfile="projects.txt"/-->
     </match-rules>
   </project-rule>
   <project-rule name="7-zip" from="wild" os="windows">
