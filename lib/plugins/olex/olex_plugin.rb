@@ -59,9 +59,9 @@ class OlexPlugin
     clioptions_array = Array.new
     clioptions_array << [ "--olex-local","-u", GetoptLong::REQUIRED_ARGUMENT ]   # formerly --human-results
     clioptions_array << [ "--olex-results","-m", GetoptLong::REQUIRED_ARGUMENT ] # formerly --machine-results
-    clioptions_array << [ "--olex-links", "-L", GetoptLong::NO_ARGUMENT ]      # turn on showing http olex links in results
-    clioptions_array << [ "--no-paths", "-P", GetoptLong::NO_ARGUMENT ]      # turn on to only show file names
-    clioptions_array << [ "--show-base-dirs", "-B", GetoptLong::NO_ARGUMENT ]      # turn on to show path to scanned directories
+    clioptions_array << [ "--olex-links", "-L", GetoptLong::NO_ARGUMENT ]        # turn on showing http olex links in results
+    clioptions_array << [ "--no-paths", "-P", GetoptLong::NO_ARGUMENT ]          # turn on to only show file names
+    clioptions_array << [ "--show-base-dirs", "-B", GetoptLong::NO_ARGUMENT ]    # turn on to show path to scanned directories
   end
 
   def process_cli_options( opt, arg, scandata )
@@ -319,6 +319,7 @@ class OlexPlugin
     end
     
     printf(io, "#{end_of_line * 2}")
+    printf(io, "To show only file names of discovered files, run discovery with --no-paths#{end_of_line}")
     printf(io, "To show full paths to discovered files, run discovery with --show-base-dirs#{end_of_line}")
     printf(io, "To show OLEX web site links for discovered packages, run discovery with --olex-links#{end_of_line}")
 
