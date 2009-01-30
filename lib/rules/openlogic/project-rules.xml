@@ -34,7 +34,7 @@
       <!-- MATCH EVERYTHING -->
       <!--match-rule name="ternarytree" type="filenameList" filename=".*" projectfile="projects.txt"/-->
       <!-- MATCH ONLY SPECIFIC EXTENSIONS -->
-      <match-rule name="ternarytree" type="filenameList" filename="(\.jar|\.war|.\ear|.sar|\.zip|\.java|\.dll|\.exe)$" projectfile="projects.txt"/>
+      <match-rule name="ternarytree" type="filenameList" filename="(\.jar|\.war|\.ear|\.sar|\.zip|\.java|\.dll|\.exe)$" projectfile="projects.txt"/>
     </match-rules>
   </project-rule>
   <project-rule name="7-zip" from="wild" os="windows">
