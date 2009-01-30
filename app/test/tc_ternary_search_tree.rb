@@ -35,7 +35,7 @@ class TcTernarySearchTree < Test::Unit::TestCase
   end
 
   def test_load_from_simple_file
-    @tst.load_from_simple_test_file(simple_test_file_name)
+    @tst.load_from_file(simple_test_file_name)
     items = %w{ant antlr apache apache2 apache-tomcat tomcat}
     items.each do |item|
       @tst.put(item, item)
@@ -44,7 +44,7 @@ class TcTernarySearchTree < Test::Unit::TestCase
   end
 
   def test_simple_file_name_match
-    @tst.load_from_simple_test_file(simple_test_file_name)
+    @tst.load_from_file(simple_test_file_name)
     items = [
       %w{apache apache},
       %w{apache apache.exe},
@@ -54,12 +54,12 @@ class TcTernarySearchTree < Test::Unit::TestCase
       %w{apache apache-2.3b.zip},
       %w{apache2 apache2}]
     items.each do |item|
-      assert_equal item[0], @tst.match(item[1])
+      assert_equal item[0], @tst.match(item[1])[0]
     end
   end
 
   def test_simple_file_name_no_match
-    @tst.load_from_simple_test_file(simple_test_file_name)
+    @tst.load_from_file(simple_test_file_name)
     items = %w{apache-2b.zip apache-ant apache-beta}
     items.each do |item|
       assert_nil @tst.match(item)
@@ -95,62 +95,6 @@ class TcTernarySearchTree < Test::Unit::TestCase
     puts Time.now
   end
 
-  def no_test_real_file_search_against_big_file
-    @tst.seed_tree
-    puts "Loading big file: #{start = Time.now}"
-    @tst.load_from_file(full_test_file_name)
-    puts "done loading.  Took #{Time.now - start} seconds."
-    targets = []
-    file = File.new(big_target_test_file_name)
-    while filename = file.gets
-      targets << filename.strip
-    end
-
-    puts "About to do #{10 * targets.size} matches against tree with #{@tst.nodes.size} nodes"
-    puts "  starting at #{start = Time.now}"
-    count = 0
-    10.times do
-      targets.each do |target|
-        @tst.match(target)
-        count += 1
-        if count == 10000
-          count = 0
-          putc '.'
-          STDOUT.flush
-        end
-      end
-    end
-    puts "  done.  Took #{Time.now - start} seconds."
-  end
-
-  def no_test_real_file_search_against_debian_file
-    @tst.seed_tree
-    puts "Loading big file: #{start = Time.now}"
-    @tst.load_from_file(debian_test_file_name)
-    puts "done loading.  Took #{Time.now - start} seconds."
-    targets = []
-    file = File.new(big_target_test_file_name)
-    while filename = file.gets
-      targets << filename.strip
-    end
-
-    puts "About to do #{10 * targets.size} matches against tree with #{@tst.nodes.size} nodes"
-    puts "  starting at #{start = Time.now}"
-    count = 0
-    10.times do
-      targets.each do |target|
-        @tst.match(target)
-        count += 1
-        if count == 10000
-          count = 0
-          putc '.'
-          STDOUT.flush
-        end
-      end
-    end
-    puts "  done.  Took #{Time.now - start} seconds."
-  end
-
   protected
 
   def simple_test_file_name
@@ -161,15 +105,7 @@ class TcTernarySearchTree < Test::Unit::TestCase
     @@target_test_file_name ||= File.join(File.dirname(__FILE__), "resources", "rules", "test_file_names", "targetfilenames.txt")
   end
 
-  def big_target_test_file_name
-    @@big_target_test_file_name ||= File.join(File.dirname(__FILE__), "resources", "rules", "test_file_names", "bigfilenames.txt")
-  end
-
   def full_test_file_name
     @@full_test_file_name ||= File.join(File.dirname(__FILE__), "resources", "rules", "test_file_names", "projects.txt")
-  end
-
-  def debian_test_file_name
-    @@debian_test_file_name ||= File.join(File.dirname(__FILE__), "resources", "rules", "test_file_names", "debian.txt")
   end
 end
