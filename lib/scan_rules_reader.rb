@@ -95,7 +95,6 @@ class ScanRulesReader
           project = ProjectRule.new(xproject.attributes["name"], 
                                 xproject.attributes["from"], 
                                 xproject.attributes["os"].split(",").to_set)
-          projects << project
     
           # next, dig out project's eval expression for the ruleset evaluation
           #     <eval rule="executables AND versionstring" speed="2" value="100" />
@@ -103,9 +102,8 @@ class ScanRulesReader
           # from this example, the rulesets of interest for speed level 2 would be 'executables' and 'versionstring'
           evalrulesets = nil
           xproject.elements.each("eval") { | xeval | 
-            
             # look for an eval that matches the given speed hint. speed must be a numeric, so if it's not already, make it one
-            if ( xeval.attributes["speed"].to_i == speed.to_i )
+            if ( xeval.attributes["speed"].to_i <= speed.to_i )
     
               # this eval rule should be activated because it's defined for this speed.
               # to activate it, add it to the project's eval rules.
@@ -120,6 +118,7 @@ class ScanRulesReader
               
               evalrulesets = project.eval_rule.get_rule_names()
               
+              projects << project
               break  # right now there should be only one eval per speed factor per project, so break out of this after speed matched
             end           
           }

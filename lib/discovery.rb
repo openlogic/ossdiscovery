@@ -116,8 +116,7 @@ require 'scan_rules_updater'
 @show_verbose = false
 
 # used to help validate speed values in various subsystems
-@valid_speeds = 1
-SPEEDHINT = 1 unless defined?(SPEEDHINT)
+@speed = 1
 
 # important global objects
 @rule_engine = nil
@@ -197,7 +196,7 @@ def execute()
   msg << "Reading project rules....\n"
   puts msg
   
-  @rule_engine = RuleEngine.new(  @rules_dirs, @walker, SPEEDHINT )
+  @rule_engine = RuleEngine.new(@rules_dirs, @walker, @speed)
 
   # obey the command line parameter to list the files of interest.  this can't be done until
   # the rule engine has parsed the scan rules file so that we know all the actual files of 
@@ -395,6 +394,7 @@ options_array << [ "--path", "-p", GetoptLong::REQUIRED_ARGUMENT ]            # 
 options_array << [ "--progress", "-x", GetoptLong::OPTIONAL_ARGUMENT ]        # show a progress indication every X files scanned
 options_array << [ "--preview-results","-R", GetoptLong::OPTIONAL_ARGUMENT ]  # the existence of this flag will cause discovery to print to stdout the machine results file when scan is completed 
 options_array << [ "--rule-version", "-V", GetoptLong::NO_ARGUMENT ]          # print out rule version info and do nothing else (no scan performed)
+options_array << [ "--speed", "-s", GetoptLong::REQUIRED_ARGUMENT ]           # set the speed level - 0=ternary search tree, 1=regex file names, 2=most others, 3=MD5 and content matches
 options_array << [ "--throttle", "-T", GetoptLong::NO_ARGUMENT ]              # enable production throttling (by default it is disabled)
 options_array << [ "--update-rules", "-r", GetoptLong::OPTIONAL_ARGUMENT ]    # get update scan rules, and optionally perform the scan after getting them
 options_array << [ "--verbose", "-b", GetoptLong::OPTIONAL_ARGUMENT ]         # be verbose while scanning - every X files scanned  
@@ -557,6 +557,9 @@ begin
     when "--rule-version"
       print_rule_version_info
       exit 0
+
+    when "--speed"
+      @speed = (arg || '1').to_i
       
     when "--throttle"
       @throttling_enabled = true
