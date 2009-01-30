@@ -244,7 +244,7 @@ class TernarySearchTree
     for i in best_match[0].size...(filename.size - ext.size)
       version << filename[i] if start || CharacterInfo.is_digit_character?(filename[i])
       start ||= (CharacterInfo.is_name_version_delimiter_character?(filename[i]) ||
-                CharacterInfo.is_digit_character?(filename[i]))
+                 CharacterInfo.is_digit_character?(filename[i]))
     end
     version.empty? ? "unknown" : version
   end

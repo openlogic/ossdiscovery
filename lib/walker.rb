@@ -145,8 +145,11 @@ class Walker
   directory to be ignored.  No subscriber will ever get a chance to process a file or
   directory ignored through the generic exclusion mechanism
 =end
-  def add_dir_exclusions( exclusion_list )
-    @dir_exclusions.concat( exclusion_list )
+  def add_dir_exclusions(exclusion_list)
+    @dir_exclusions.concat(exclusion_list.values)
+
+    # get all the exclusions except for temp dirs
+    @no_temp_dir_exclusions = exclusion_list.reject { |key, value| key =~ /No te?mp files/ }.collect { |key_value| key_value[1] }
   end
 
 =begin rdoc
@@ -223,19 +226,20 @@ class Walker
     #
     # this is a major part of the optimized scan because there's no sense in applying rules,
     # getting MD5s or anything else on a file that is not of interest
-    dir_exclusions = override_dir_exclusions
 
-    unless override_dir_exclusions
-      if File.directory?(fileordir)
-        @dir_exclusions.each do |filter|
-          if fileordir.match(filter)
-            if @list_exclusions || $DEBUG
-              puts "'#{fileordir}' is excluded by: #{filter} directory filter"
-            end
-            #  blow out of here if this file matches an exclusion condition,
-            #  false because this is a directory which needs to be pruned
-            return false
+    # if we're looking at the contents of an archive file, it will probably be
+    # in a temp dir, so don't exclude the temp dir
+    dir_exclusions = override_dir_exclusions ? @no_temp_dir_exclusions : @dir_exclusions
+
+    if File.directory?(fileordir)
+      dir_exclusions.each do |filter|
+        if fileordir.match(filter)
+          if @list_exclusions || $DEBUG
+            puts "'#{fileordir}' is excluded by: #{filter} directory filter"
           end
+          #  blow out of here if this file matches an exclusion condition,
+          #  false because this is a directory which needs to be pruned
+          return false
         end
       end
     end
