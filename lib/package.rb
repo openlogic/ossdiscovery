@@ -52,11 +52,7 @@ class Package
     if self.name == other.name
       if self.version == other.version
         if self.found_at == other.found_at
-          if self.file_name == other.file_name
-            val = 0
-          else
-            val = self.file_name <=> other.file_name
-          end
+          val = 0
         else
           val = self.found_at <=> other.found_at
         end
@@ -66,9 +62,32 @@ class Package
     else
       val = self.name <=> other.name
     end
-    
+
     return val
   end
+
+#  def <=>(other)
+#    val = 0
+#    if self.name == other.name
+#      if self.version == other.version
+#        if self.found_at == other.found_at
+#          if self.file_name == other.file_name
+#            val = 0
+#          else
+#            val = self.file_name <=> other.file_name
+#          end
+#        else
+#          val = self.found_at <=> other.found_at
+#        end
+#      else
+#        val = self.version <=> other.version
+#      end
+#    else
+#      val = self.name <=> other.name
+#    end
+#
+#    return val
+#  end
   
   def eql?(other)
     if ((self.==(other)) && (self.class == other.class)) then
@@ -80,8 +99,7 @@ class Package
   
   def ==(other)
     val = false
-    if other.name == @name && other.version == @version && 
-        other.found_at == @found_at && other.file_name == @file_name
+    if other.name == @name && other.version == @version && other.found_at == @found_at
       val = true
     end
     val
@@ -92,7 +110,6 @@ class Package
     val += 37 * @name.hash
     val += 37 * @version.hash
     val += 37 * @found_at.hash
-    val += 37 * @file_name.hash
     
     val
   end
@@ -212,8 +229,8 @@ class Package
       if project_names_and_archive_parents_and_file_names
         project_names_and_archive_parents_and_file_names.each do |pnapfn|
           package = Package.new
-          package.name = pnapfn[0]
-          package.version = VERSION_UNKNOWN
+          package.name = pnapfn[0][0]
+          package.version = pnapfn[0][1]
           package.found_at = reportable_location(location, pnapfn[1])
           package.file_name = pnapfn[2]
           instances << package

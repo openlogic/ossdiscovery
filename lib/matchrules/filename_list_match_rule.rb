@@ -64,9 +64,11 @@ class FilenameListMatchRule < MatchRule
     @match_attempts = @match_attempts + 1
     val = FilenameListMatchRule.match?(actual_filepath)
     
-    if val
+    # match returns an array of [name, version] where name is 
+    # nil if there's no match
+    if val && val[0]
       (@matched_against[File.dirname(actual_filepath)] ||= Set.new) << [val, archive_parents, File.basename(actual_filepath)]
-      @latest_match_val = Package::VERSION_UNKNOWN
+      @latest_match_val = val[1]
     end
     
     val

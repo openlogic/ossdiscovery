@@ -312,6 +312,8 @@ def get_local_ip
     s.connect '216.24.133.139', 1
     s.addr.last
   end
+rescue
+  IPSocket.getaddress(Socket.gethostname)
 ensure
   Socket.do_not_reverse_lookup = orig
 end
