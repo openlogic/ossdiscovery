@@ -557,11 +557,11 @@ class Walker
 =end
 
   def progress_report(fileordir)
-    if (@last_verbose_report.nil?) then
-      @last_verbose_report = @starttime if @last_verbose_report.nil?
-      if (@root_scan_dir_split_count.nil?) then
+    if @last_verbose_report.nil?
+      @last_verbose_report = @starttime
+      if @root_scan_dir_split_count.nil?
         @root_scan_dir_split_count = @root_scan_dir.split(File::SEPARATOR).size
-        if (@root_scan_dir_split_count == 0) then @root_scan_dir_split_count = 1 end
+        @root_scan_dir_split_count = 1 if @root_scan_dir_split_count == 0
       end
       now_scanning = fileordir.split(File::SEPARATOR)[0..@root_scan_dir_split_count].join(File::SEPARATOR)
       puts "\nelapsed time: #{((Time.new - @starttime).to_i)} seconds - scanning '#{now_scanning}' - walked #{dir_ct()} directories - scanned #{foi_ct()} files"
@@ -577,13 +577,6 @@ class Walker
         @last_verbose_report = now
       end
     end
-
-    #        printf( "directories walked: %d\n", dir_ct() )
-    #        printf( "files encountered : %d\n", file_ct() )
-    #        printf( "symlinks found    : %d\n", sym_link_ct() )
-    #        printf( "bad symlink count : %d\n", bad_link_ct() )
-    #        printf( "permission denied : %d\n", permission_denied_ct() )
-    #        printf( "files of interest : %d\n", foi_ct() )
   end
 
 =begin rdoc

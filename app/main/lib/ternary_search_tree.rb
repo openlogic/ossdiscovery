@@ -188,7 +188,7 @@ class TernarySearchTree
 
       # if we hit a stop character like '.', we're done
       if CharacterInfo.stop_character?
-        return best_match
+        return [best_match ? best_match[1] : nil, guess_version(filename, best_match)]
       end
       # if we hit a reset character like a-z, we need to forget our best match
       # so far as it's now obsolete
@@ -212,16 +212,39 @@ class TernarySearchTree
           # if we hit a reset character, we're toast
           return nil if CharacterInfo.reset_character?
           # if we hit a stop character, return the best results so far, if any
-          return best_match if CharacterInfo.stop_character?
+          return [best_match ? best_match[1] : nil, guess_version(filename, best_match)] if CharacterInfo.stop_character?
         end
         # we made it to the end of the file name without any issues, so return
         # the best match so far, if any
-        return best_match
+        return [best_match ? best_match[1] : nil, guess_version(filename, best_match)]
       end
     end
     # we made it to the end of the file name without any issues, so return the
     # best match so far, if any
-    best_match
+    [best_match ? best_match[1] : nil, "unknown"]
+  end
+
+  # Given a file name and a package name that matches part of it,
+  # return a best guess at the version number.
+  #
+  # Examples:
+  #    File name            Package name   Guessed Version
+  #    ------------         -------------- ---------------
+  #    ant.jar              ant            unknown
+  #    ant-2.3.jar          ant            2.3
+  #    ant_3b               ant            3b
+  #    ant-2.3-beta-2.jar   ant            2.3-beta-2
+  #    ant-2-3.4_2a.jar     ant-2          3.4_2a
+  def guess_version(filename, best_match)
+    return "unknown" unless best_match
+    version = ""
+    ext = File.extname(filename)
+    start = false
+    for i in best_match[0].size...(filename.size - ext.size)
+      version << filename[i] if start
+      start ||= CharacterInfo.is_name_version_delimiter_character?(filename[i])
+    end
+    version.empty? ? "unknown" : version
   end
 
   # print the tree to the console as plain text
@@ -298,7 +321,7 @@ class TernarySearchTree
           language_symbols = languages.split(LANGUAGE_DELIMITER).collect { |language| language.to_sym }
           entries += 1
           #put(project_alias, ProjectInfo.new(package_id, name, language_symbols))
-          put(project_alias, package_id)
+          put(project_alias, [project_alias, package_id])
         end
         count += 1
         if count == 10000
@@ -336,6 +359,7 @@ class CharacterInfo
   STOP_CHARACTER = '.'[0]
   MIN_RESET_CHARACTER = 'a'[0]
   MAX_RESET_CHARACTER = 'z'[0]
+  NAME_VERSION_DELIMITER_CHARACTERS = ['_'[0], '-'[0], '.'[0]]
 
   @@current_character = nil
 
@@ -354,6 +378,10 @@ class CharacterInfo
 
   def self.stop_character?
     @@current_character == STOP_CHARACTER
+  end
+
+  def self.is_name_version_delimiter_character?(ch)
+    NAME_VERSION_DELIMITER_CHARACTERS.include?(ch)
   end
 end
 
