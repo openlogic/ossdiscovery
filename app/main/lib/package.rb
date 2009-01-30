@@ -259,10 +259,9 @@ class Package
   #   /deploy/bigproj.ear!myapp.war!web-inf/lib/ant.jar
   def self.reportable_location(dir, archive_parents)
     if archive_parents.empty?
-      dir.empty? ? "/" : dir
+      dir
     else
       dir = remove_parent_path(dir, archive_parents.last[1])
-      dir = dir.empty? ? "/" : dir
       archive_parents.collect { |parent| parent[0] }.join('!') << '!' << dir
     end
   end

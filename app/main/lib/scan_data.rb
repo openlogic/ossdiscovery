@@ -38,6 +38,7 @@ class ScanData
   attr_accessor :universal_rules_md5, :universal_rules_version
   attr_accessor :geography 
   attr_accessor :throttling_enabled
+  attr_accessor :directories_scanned
 
   def initialize
 
@@ -70,7 +71,7 @@ class ScanData
     @universal_rules_version = ""
     @geography  = ""
 		@throttling_enabled = false
-
+		@directories_scanned = []
   end
 
 end

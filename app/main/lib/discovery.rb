@@ -351,6 +351,7 @@ def make_reports
   @scandata.universal_rules_version = @universal_rules_version
   @scandata.throttling_enabled = @walker.throttling_enabled
   @scandata.total_seconds_paused_for_throttling =@walker.total_seconds_paused_for_throttling
+  @scandata.directories_scanned = @directories_to_scan
 
   @plugins_list.each do | plugin_name, aPlugin |
     if aPlugin.respond_to?(:report, false)
