@@ -37,7 +37,7 @@ class OlexPlugin
   # where to link packages to on the OLEX production site
   OLEX_PREFIX = "http://olex.openlogic.com/packages/" unless defined? OLEX_PREFIX
 
-  attr_accessor :olex_machine_file, :olex_local_file, :enable_olex_links, :no_paths, :no_base_dirs
+  attr_accessor :olex_machine_file, :olex_local_file, :enable_olex_links, :no_paths, :show_base_dirs
     
   def initialize
 
@@ -45,7 +45,7 @@ class OlexPlugin
     @olex_local_file = OlexConfig.local_report
     @enable_olex_links = OlexConfig.enable_olex_links || false
     @no_paths = OlexConfig.no_paths || false
-    @no_base_dirs = OlexConfig.no_base_dirs || false
+    @show_base_dirs = OlexConfig.show_base_dirs || false
     @plugin_version = OLEX_PLUGIN_VERSION_KEY
 
   end 
@@ -61,7 +61,7 @@ class OlexPlugin
     clioptions_array << [ "--olex-results","-m", GetoptLong::REQUIRED_ARGUMENT ] # formerly --machine-results
     clioptions_array << [ "--olex-links", "-L", GetoptLong::NO_ARGUMENT ]      # turn on showing http olex links in results
     clioptions_array << [ "--no-paths", "-P", GetoptLong::NO_ARGUMENT ]      # turn on to only show file names
-    clioptions_array << [ "--no-base-dirs", "-B", GetoptLong::NO_ARGUMENT ]      # turn on to not show path to scanned directories
+    clioptions_array << [ "--show-base-dirs", "-B", GetoptLong::NO_ARGUMENT ]      # turn on to show path to scanned directories
   end
 
   def process_cli_options( opt, arg, scandata )
@@ -123,10 +123,10 @@ class OlexPlugin
       # the file name that was "discovered".
       @no_paths = true
 
-    when "--no-base-dirs"
-      # Instead of showing full paths to discovered package files, show
+    when "--show-base-dirs"
+      # Show full paths to discovered package files instead of showing
       # paths relative to the scanned directory.
-      @no_base_dirs = true
+      @show_base_dirs = true
     end
 
   end
@@ -307,17 +307,21 @@ class OlexPlugin
             @@log.error("Possible error in rule: #{package.name} ... matched version text was too large (#{package.version.size} characters) - matched version: '#{package.version}'")
           else
             if @enable_olex_links
-              printf(io, "#{package.name.ljust(longest_name)} #{package.version.ljust(longest_version)} #{link_to_olex(package.name).ljust(longest_url)} #{package_location(package)}#{end_of_line}")
+              printf(io, "#{package.name.ljust(longest_name)} #{package.version.ljust(longest_version)} #{link_to_olex(package.name).ljust(longest_url)} #{package_location(package, scandata.directories_scanned)}#{end_of_line}")
             else
               printf(io, "#{package.name.ljust(longest_name)} #{package.version.ljust(longest_version)} #{package_location(package, scandata.directories_scanned)}#{end_of_line}")
             end
           end
         rescue Exception => e
-          printf(io, "Possible error in rule: #{package.name}#{end_of_line} because: #{e.inspect}")
+          printf(io, "Possible error in rule: #{package.name}#{end_of_line} because: #{e.inspect}#{end_of_line}")
         end
       end # of packages.each
     end
     
+    printf(io, "#{end_of_line * 2}")
+    printf(io, "To show full paths to discovered files, run discovery with --show-base-dirs#{end_of_line}")
+    printf(io, "To show OLEX web site links for discovered packages, run discovery with --olex-links#{end_of_line}")
+
     if (io != STDOUT)  
       io.close 
       # now echo final results to console also
@@ -344,7 +348,7 @@ class OlexPlugin
   #   /myproj/stuff/code/ant.jar /code/ant.jar
   #   /other/lib/apache.exe      /apache.exe
   def maybe_remove_base_dir(dir, directories_scanned)
-    return dir unless @no_base_dirs || dir.empty?
+    return dir if @show_base_dirs || dir.empty?
     directories_scanned.each do |base|
       return dir[base.size+1..-1] if dir.index(base) == 0
     end
