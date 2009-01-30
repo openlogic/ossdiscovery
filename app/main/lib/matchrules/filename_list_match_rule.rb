@@ -41,11 +41,11 @@ class FilenameListMatchRule < MatchRule
   # unused, but required by the framework at this point
   attr_accessor :defined_filename
   
-  def initialize(name, project_file)
+  def initialize(name, defined_filename, project_file)
     super(name)
     @type = MatchRule::TYPE_FILENAME_LIST
     @matched_against = {}
-    @defined_filename = ".*"
+    @defined_filename = defined_filename
 
     # should only be one of these, so make a class variable
     @@tst = TernarySearchTree.new
@@ -85,6 +85,6 @@ class FilenameListMatchRule < MatchRule
   end
 
   def FilenameListMatchRule.create(attributes)
-    FilenameListMatchRule.new(attributes['name'], attributes['projectfile'])
+    FilenameListMatchRule.new(attributes['name'], attributes['filename'], attributes['projectfile'])
   end
 end
