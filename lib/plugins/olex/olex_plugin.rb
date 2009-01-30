@@ -37,14 +37,15 @@ class OlexPlugin
   # where to link packages to on the OLEX production site
   OLEX_PREFIX = "http://olex.openlogic.com/packages/" unless defined? OLEX_PREFIX
 
-  attr_accessor :olex_machine_file, :olex_local_file, :enable_olex_links, :dont_show_paths
+  attr_accessor :olex_machine_file, :olex_local_file, :enable_olex_links, :no_paths, :no_base_dirs
     
   def initialize
 
     @olex_machine_file = OlexConfig.machine_report 
     @olex_local_file = OlexConfig.local_report
     @enable_olex_links = OlexConfig.enable_olex_links || false
-    @dont_show_paths = OlexConfig.dont_show_paths || false
+    @no_paths = OlexConfig.no_paths || false
+    @no_base_dirs = OlexConfig.no_base_dirs || false
     @plugin_version = OLEX_PLUGIN_VERSION_KEY
 
   end 
@@ -56,10 +57,11 @@ class OlexPlugin
   #--- mandatory methods for a plugin ---
   def cli_options
     clioptions_array = Array.new
-    clioptions_array << [ "--olex-local","-A", GetoptLong::REQUIRED_ARGUMENT ]   # formerly --human-results
-    clioptions_array << [ "--olex-results","-B", GetoptLong::REQUIRED_ARGUMENT ] # formerly --machine-results
+    clioptions_array << [ "--olex-local","-u", GetoptLong::REQUIRED_ARGUMENT ]   # formerly --human-results
+    clioptions_array << [ "--olex-results","-m", GetoptLong::REQUIRED_ARGUMENT ] # formerly --machine-results
     clioptions_array << [ "--olex-links", "-L", GetoptLong::NO_ARGUMENT ]      # turn on showing http olex links in results
-    clioptions_array << [ "--dont-show-paths", "-P", GetoptLong::NO_ARGUMENT ]      # turn on to only show file names
+    clioptions_array << [ "--no-paths", "-P", GetoptLong::NO_ARGUMENT ]      # turn on to only show file names
+    clioptions_array << [ "--no-base-dirs", "-B", GetoptLong::NO_ARGUMENT ]      # turn on to not show path to scanned directories
   end
 
   def process_cli_options( opt, arg, scandata )
@@ -116,10 +118,15 @@ class OlexPlugin
       # Linux users to quickly see details on a discovered package.
       @enable_olex_links = true
 
-    when "--dont-show-paths"
+    when "--no-paths"
       # Instead of showing full paths to discovered package files, only show
       # the file name that was "discovered".
-      @dont_show_paths = true
+      @no_paths = true
+
+    when "--no-base-dirs"
+      # Instead of showing full paths to discovered package files, show
+      # paths relative to the scanned directory.
+      @no_base_dirs = true
     end
 
   end
@@ -302,11 +309,11 @@ class OlexPlugin
             if @enable_olex_links
               printf(io, "#{package.name.ljust(longest_name)} #{package.version.ljust(longest_version)} #{link_to_olex(package.name).ljust(longest_url)} #{package_location(package)}#{end_of_line}")
             else
-              printf(io, "#{package.name.ljust(longest_name)} #{package.version.ljust(longest_version)} #{package_location(package)}#{end_of_line}")
+              printf(io, "#{package.name.ljust(longest_name)} #{package.version.ljust(longest_version)} #{package_location(package, scandata.directories_scanned)}#{end_of_line}")
             end
           end
         rescue Exception => e
-          printf(io, "Possible error in rule: #{package.name}#{end_of_line}")
+          printf(io, "Possible error in rule: #{package.name}#{end_of_line} because: #{e.inspect}")
         end
       end # of packages.each
     end
@@ -320,12 +327,29 @@ class OlexPlugin
   end
 
   # Return the location to show for the given package
-  def package_location(package)
-    if @dont_show_paths
+  def package_location(package, directories_scanned)
+    if @no_paths
       package.file_name
     else
-      package.found_at + '/' + package.file_name
+      location = maybe_remove_base_dir(package.found_at, directories_scanned) || ""
+      location + (location.empty? ? "" : '/') + package.file_name
     end
+  end
+
+  # If a flag is set, remove the scan dir from the given directory. 
+  # Example:
+  #   Discovery invoked with --path /myproj/stuff,/other/lib
+  #   Dir given                  Result
+  #   -------------------------- --------------
+  #   /myproj/stuff/code/ant.jar /code/ant.jar
+  #   /other/lib/apache.exe      /apache.exe
+  def maybe_remove_base_dir(dir, directories_scanned)
+    return dir unless @no_base_dirs || dir.empty?
+    directories_scanned.each do |base|
+      return dir[base.size+1..-1] if dir.index(base) == 0
+    end
+    # should not happen
+    dir
   end
 
   # Link to the given package ID in olex

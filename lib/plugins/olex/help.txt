@@ -4,7 +4,8 @@ Olex Plugin v1.0 --help
 --olex-results,    -m the absolute or relative path and filename for the machine readable results file that can be uploaded to the OLEX Server
 --list-plugins,    -N lists just the enabled plugins, not all plugins installed
 --olex-links,      -L show http links to the OLEX site in the results
---dont-show-paths, -P show only the file names of discovered packages
+--no-paths,        -P show only the file names of discovered packages
+--no-base-dirs,    -B show only relative paths of discovered packages
 
 The Olex plugin is intended for project/application level scanning. The resulting scan data should then be uploaded from 
 within OLEX and associated with an OLEX project.

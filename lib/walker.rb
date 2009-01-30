@@ -223,6 +223,7 @@ class Walker
     #
     # this is a major part of the optimized scan because there's no sense in applying rules,
     # getting MD5s or anything else on a file that is not of interest
+    dir_exclusions = override_dir_exclusions
 
     unless override_dir_exclusions
       if File.directory?(fileordir)

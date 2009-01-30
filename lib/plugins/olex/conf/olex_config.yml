@@ -43,4 +43,8 @@ enable_olex_links: false
 
 # Set to true to only show file names of discovered packages instead of their
 # full paths in addition to file names.
-dont_show_paths: false
+no_paths: false
+
+# Set to true to show paths to discovered files that are relative to the scanned
+# directory instead of absolute paths.
+no_base_dirs: false
