@@ -281,7 +281,7 @@ class Walker
 
           # see if this entry is resolvable and matches anything anyone's looking for
           if resolved
-            if @open_archives && is_archive?(fileordir)
+            if @open_archives && is_archive?(fileordir.to_s)
               @archives_found_ct += 1
               # match against the archive file itself in case we can't recognize
               # anything inside it but the name gives it away
