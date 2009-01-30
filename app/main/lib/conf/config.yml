@@ -58,9 +58,15 @@ show_permission_denied: false
 #--------------------------------------------------------------------------------------
 # decide whether to scan symlink'd files and directories
 # by default it's true because symlinks are so commonly used
-follow_symlinks: false
+follow_symlinks: true
+
 # maximum number of indirections to follow through symlinks
 symlink_depth: 5
+
+#--------------------------------------------------------------------------------------
+# Set to 0 to run just the name-based rules and not all of them.
+speed: 1
+
 
 #--------------------------------------------------------------------------------------
 # Open archives (e.g., zip files) to scan their contents?
