@@ -64,8 +64,10 @@ follow_symlinks: true
 symlink_depth: 5
 
 #--------------------------------------------------------------------------------------
-# Set to 0 to run just the name-based rules and not all of them.
-speed: 1
+# Set to 'all' to run all rules.
+# Set to 'fast' to run just the fast name-based rules.
+# Set to 'slow' to run just the handwritten rules.
+rule_types: all
 
 
 #--------------------------------------------------------------------------------------
