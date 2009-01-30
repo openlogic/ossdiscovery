@@ -25,6 +25,7 @@ Options are not order dependent and may be one or more of:
 --progress,       -x show progress indicator every X number of files scanned - X given by the parameter to --progress
 --path,           -p the absolute or relative path of the directory to scan, the default is /.  To scan multiple paths or drives
                      comma-delimit the paths or drive names (no spaces after commas.)  Example:  --path x:\,c:\ 
+--rule-types,     -y type of rules to run - options are 'all', 'fast', and 'slow', where 'slow' is more accurate than 'fast' - default is 'all'
 --rule-version,   -V print out rule version info and do nothing else (no scan performed)
 --throttle,       -T Enable throttling of the scanner so all system resources are not fully dedicated to running this tool.
                      No arguments accepted for this option.  See the throttle_* properties in the configuration file.                                   

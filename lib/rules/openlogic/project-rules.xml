@@ -28,7 +28,7 @@
 <project-rules universal-version="20080515-165933">
   <project-rule name="fast-file-name-matcher" from="wild" os="all">
     <description>Looks for file name matches as defined in projects.txt</description>
-    <eval expression="all" speed="1"/>
+    <eval expression="all" speed="0"/>
     <match-rules name="all">
       <result expression="ternarytree"/>
       <!-- MATCH EVERYTHING -->

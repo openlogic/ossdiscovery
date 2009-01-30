@@ -115,8 +115,8 @@ require 'scan_rules_updater'
 @show_progress = false
 @show_verbose = false
 
-# used to help validate speed values in various subsystems
-@speed = 1
+@speed = -1
+@rule_types = "all"
 
 # important global objects
 @rule_engine = nil
@@ -144,7 +144,7 @@ load_plugins    # always load whatever plugins are found and enabled.
    c) kicks off the scan
 =end
 
-def execute()
+def execute
 
   # mark the beginning of a scan
   @starttime = Time.new
@@ -153,12 +153,16 @@ def execute()
   @universal_rules_version = ScanRulesReader.get_universal_rules_version()
 
   # create the application's Walker instance - @list_files is boolean for whether to dump files as encountered
-  @walker = Walker::new( )
+  @walker = Walker::new
   
-  if ( @walker == nil )
-    printf("FATAL - walker cannot be created\n")
+  if @walker == nil
+    puts("FATAL - walker cannot be created")
     exit 1
   end
+
+  # if the user sets rule_types in config.yml, we need to update our speed
+  # accordingly
+  set_speed(@rule_types)
   
   # setup all the walker behavior based on CLI flags
   #
@@ -316,6 +320,16 @@ ensure
   Socket.do_not_reverse_lookup = orig
 end
 
+# given a string, set our internal speed value
+def set_speed(type)
+  @speed = case type
+             when "all": -1
+             when "fast": 0
+             when "slow": 1
+             else -1
+           end
+end
+
 def make_reports
   if @produce_match_audit_records
     report_audit_records @rule_engine.audit_records
@@ -393,8 +407,8 @@ options_array << [ "--nofollow", "-S", GetoptLong::NO_ARGUMENT ]              # 
 options_array << [ "--path", "-p", GetoptLong::REQUIRED_ARGUMENT ]            # scan explicit path
 options_array << [ "--progress", "-x", GetoptLong::OPTIONAL_ARGUMENT ]        # show a progress indication every X files scanned
 options_array << [ "--preview-results","-R", GetoptLong::OPTIONAL_ARGUMENT ]  # the existence of this flag will cause discovery to print to stdout the machine results file when scan is completed 
+options_array << [ "--rule-types", "-y", GetoptLong::REQUIRED_ARGUMENT ]      # rules to use - 'all', 'fast' for ternary-tree only, 'slow' for non-ternary-tree
 options_array << [ "--rule-version", "-V", GetoptLong::NO_ARGUMENT ]          # print out rule version info and do nothing else (no scan performed)
-options_array << [ "--speed", "-s", GetoptLong::REQUIRED_ARGUMENT ]           # set the speed level - 0=ternary search tree, 1=regex file names, 2=most others, 3=MD5 and content matches
 options_array << [ "--throttle", "-T", GetoptLong::NO_ARGUMENT ]              # enable production throttling (by default it is disabled)
 options_array << [ "--update-rules", "-r", GetoptLong::OPTIONAL_ARGUMENT ]    # get update scan rules, and optionally perform the scan after getting them
 options_array << [ "--verbose", "-b", GetoptLong::OPTIONAL_ARGUMENT ]         # be verbose while scanning - every X files scanned  
@@ -554,12 +568,14 @@ begin
       @production_scan = true
       @@log.info('Discovery') {'This scan will be identified as a production scan.'}
     
+    when "--rule-types"
+      if arg && !arg.empty?
+        @rule_types = arg
+      end
+
     when "--rule-version"
       print_rule_version_info
       exit 0
-
-    when "--speed"
-      @speed = (arg || '1').to_i
       
     when "--throttle"
       @throttling_enabled = true
