@@ -26,13 +26,13 @@ class TcMatchRuleSet < Test::Unit::TestCase
     # FilenameMatchRule#initialize(name, defined_filename)
     
     mr1 = FilenameMatchRule.new("rule-httpd", "httpd")
-    val1 = mr1.match?("/home/me/httpd")
+    val1 = mr1.match?("/home/me/httpd", [])
     
     mr2 = FilenameMatchRule.new("rule-apxs", "apxs")
-    val2 = mr2.match?("/home/me/apxs")
+    val2 = mr2.match?("/home/me/apxs", [])
     
     mr3 = FilenameMatchRule.new("rule-htpasswd", "htpasswd")
-    val3 = mr3.match?("/home/me/htpasswd")
+    val3 = mr3.match?("/home/me/htpasswd", [])
     
     rs = MatchRuleSet.new("executables")
     rs.match_rules << mr1 << mr2 << mr3
@@ -68,16 +68,16 @@ class TcMatchRuleSet < Test::Unit::TestCase
     # FilenameMatchRule#initialize(name, defined_filename)
     
     mr1 = FilenameMatchRule.new("rule-httpd", "httpd")
-    val1 = mr1.match?("/home/me/httpd")
-    val1 = mr1.match?("/away/me/httpd")
+    val1 = mr1.match?("/home/me/httpd", [])
+    val1 = mr1.match?("/away/me/httpd", [])
     
     mr2 = FilenameMatchRule.new("rule-apxs", "apxs")
-    val2 = mr2.match?("/home/me/apxs")
-    val2 = mr2.match?("/away/me/apxs")
+    val2 = mr2.match?("/home/me/apxs", [])
+    val2 = mr2.match?("/away/me/apxs", [])
     
     mr3 = FilenameMatchRule.new("rule-htpasswd", "htpasswd")
-    val3 = mr3.match?("/home/me/htpasswd")
-    val3 = mr3.match?("/away/me/htpasswd")
+    val3 = mr3.match?("/home/me/htpasswd", [])
+    val3 = mr3.match?("/away/me/htpasswd", [])
     
     rs = MatchRuleSet.new("executables")
     rs.match_rules << mr1 << mr2 << mr3
@@ -123,17 +123,17 @@ class TcMatchRuleSet < Test::Unit::TestCase
     # FilenameMatchRule#initialize(name, defined_filename)
     
     mr1 = FilenameMatchRule.new("rule-httpd", "httpd")
-    val1 = mr1.match?("/home/me/httpd")
-    val11 = mr1.match?("/away/me/httpd")
+    val1 = mr1.match?("/home/me/httpd", [])
+    val11 = mr1.match?("/away/me/httpd", [])
     
     mr2 = FilenameMatchRule.new("rule-apxs", "apxs")
-    val2 = mr2.match?("/home/me/apxs")
-    val22 = mr2.match?("/away/me/apxs")
+    val2 = mr2.match?("/home/me/apxs", [])
+    val22 = mr2.match?("/away/me/apxs", [])
     
     mr3 = FilenameMatchRule.new("rule-htpasswd", "htpasswd")
-    val3 = mr3.match?("/home/me/htpasswd")
+    val3 = mr3.match?("/home/me/htpasswd", [])
     assert val3
-    val33 = mr3.match?("/away/me/foo")
+    val33 = mr3.match?("/away/me/foo", [])
     
     rs = MatchRuleSet.new("executables")
     rs.match_rules << mr1 << mr2 << mr3
@@ -182,13 +182,13 @@ class TcMatchRuleSet < Test::Unit::TestCase
     # FilenameMatchRule#initialize(name, defined_filename)
     
     mr1 = FilenameMatchRule.new("rule-httpd", "httpd")
-    val1 = mr1.match?("/home/me/baz")
+    val1 = mr1.match?("/home/me/baz", [])
     
     mr2 = FilenameMatchRule.new("rule-apxs", "apxs")
-    val2 = mr2.match?("/home/me/foo")
+    val2 = mr2.match?("/home/me/foo", [])
     
     mr3 = FilenameMatchRule.new("rule-htpasswd", "htpasswd")
-    val3 = mr3.match?("/home/me/bar")
+    val3 = mr3.match?("/home/me/bar", [])
     
     rs = MatchRuleSet.new("executables")
     rs.match_rules << mr1 << mr2 << mr3
@@ -215,16 +215,16 @@ class TcMatchRuleSet < Test::Unit::TestCase
     # FilenameMatchRule#initialize(name, defined_filename)
     
     mr1 = FilenameMatchRule.new("rule-httpd", "httpd")
-    val1 = mr1.match?("/home/me/httpd")
-    val1 = mr1.match?("/away/me/httpd")
+    val1 = mr1.match?("/home/me/httpd", [])
+    val1 = mr1.match?("/away/me/httpd", [])
     
     mr2 = FilenameMatchRule.new("rule-apxs", "apxs")
-    val2 = mr2.match?("/home/me/apxs")
-    val2 = mr2.match?("/away/me/apxs")
+    val2 = mr2.match?("/home/me/apxs", [])
+    val2 = mr2.match?("/away/me/apxs", [])
     
     mr3 = FilenameMatchRule.new("rule-htpasswd", "htpasswd")
-    val3 = mr3.match?("/home/me/foo")
-    val3 = mr3.match?("/away/me/bar")
+    val3 = mr3.match?("/home/me/foo", [])
+    val3 = mr3.match?("/away/me/bar", [])
     
     rs = MatchRuleSet.new("executables")
     rs.match_rules << mr1 << mr2 << mr3
@@ -277,16 +277,16 @@ class TcMatchRuleSet < Test::Unit::TestCase
     # FilenameMatchRule#initialize(name, defined_filename)
     
     mr1 = FilenameMatchRule.new("rule-httpd", "httpd")
-    val1 = mr1.match?("/home/me/httpd")
-    val1 = mr1.match?("/away/me/httpd")
+    val1 = mr1.match?("/home/me/httpd", [])
+    val1 = mr1.match?("/away/me/httpd", [])
     
     mr2 = FilenameMatchRule.new("rule-apxs", "apxs")
-    val2 = mr2.match?("/home/me/apxs")
-    val2 = mr2.match?("/away/me/foo")
+    val2 = mr2.match?("/home/me/apxs", [])
+    val2 = mr2.match?("/away/me/foo", [])
     
     mr3 = FilenameMatchRule.new("rule-htpasswd", "htpasswd")
-    val3 = mr3.match?("/home/me/foo")
-    val3 = mr3.match?("/away/me/htpasswd")
+    val3 = mr3.match?("/home/me/foo", [])
+    val3 = mr3.match?("/away/me/htpasswd", [])
     
     rs = MatchRuleSet.new("executables")
     rs.match_rules << mr1 << mr2 << mr3

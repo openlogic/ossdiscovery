@@ -144,24 +144,23 @@ class TcPackage < Test::Unit::TestCase
     pr.rulesets << rs1 << rs2
     
     mr1 = MockMatchRule.new
-    mr1.set_found_versions({ "/home/me/project" => "1.0", "/home/you/project" => "2.0" })
+    mr1.set_found_versions({ "/home/me/project" => ["1.0", [], "project"], "/home/you/project" => ["2.0", [], "project"] })
     
     mr2 = MockMatchRule.new
     # the 'unknown' version should get ignored since there is a known version ('1.0' from above) in the same directory
-    # 'nil' amounts to the same thing as 'uknown', so it gets treated the same way
-    mr2.set_found_versions({ "/home/me/project" => "unknown", "/home/you/project" => nil })
+    mr2.set_found_versions({ "/home/me/project" => ["unknown", [], "project"] })
     
     mr3 = MockMatchRule.new
     # this hash is the same as the first, essentially we're testing that '1.0' doesn't get reported as installed twice in the same directory... same for '2.0'
-    mr3.set_found_versions({ "/home/me/project" => "1.0", "/home/you/project" => "2.0" })
+    mr3.set_found_versions({ "/home/me/project" => ["1.0", [], "project"], "/home/you/project" => ["2.0", [], "project"] })
     
     mr4 = MockMatchRule.new
     # each of these should be reported as installed in their respective dirs because the versions are unique
-    mr4.set_found_versions({ "/home/me/project" => "1.9", "/home/you/project" => "2.9" })
+    mr4.set_found_versions({ "/home/me/project" => ["1.9", [], "project"], "/home/you/project" => ["2.9", [], "project"] })
     
     mr5 = MockMatchRule.new
     # this should be reported since no other known version is reported as installed in that directory
-    mr5.set_found_versions({ "/home/we/project" => "unknown" })
+    mr5.set_found_versions({ "/home/we/project" => ["unknown", [], "project"] })
     
     # It shouldn't matter which MatchRule goes into which MatchRuleSet with respect to what this method does, associating them arbitrarily.
     rs1.match_rules << mr1 << mr2 
