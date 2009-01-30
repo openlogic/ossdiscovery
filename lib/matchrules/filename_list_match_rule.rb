@@ -62,7 +62,7 @@ class FilenameListMatchRule < MatchRule
   
   def match?(actual_filepath, archive_parents)
     @match_attempts = @match_attempts + 1
-    val = FilenameListMatchRule.match?(actual_filepath)
+    val = FilenameListMatchRule.match?(@defined_filename, actual_filepath)
     
     # match returns an array of [name, version] where name is 
     # nil if there's no match
@@ -80,7 +80,10 @@ class FilenameListMatchRule < MatchRule
   end
   
   # look up path in our ternary search tree
-  def FilenameListMatchRule.match?(actual_filepath)
+  def FilenameListMatchRule.match?(defined_filename, actual_filepath)
+    unless FilenameMatchRule.match?(defined_filename, actual_filepath)
+      return false
+    end
     @@tst.match(File.basename(actual_filepath)) || false
   end
 
