@@ -71,7 +71,6 @@
 #@file_exclusion_filters["Name Rules Exceptions index"] = '^index\..*$'
 #@file_exclusion_filters["Name Rules Exceptions version"] = '^version\..*$'
 #@file_exclusion_filters["Name Rules Exceptions tag"] = '^tag\..*$'
-#
 #@file_exclusion_filters["Name Rules Exceptions foo"] = '^foo\..*$'
 #@file_exclusion_filters["Name Rules Exceptions lib"] = '^lib\..*$'
 #@file_exclusion_filters["Name Rules Exceptions prefix"] = '^prefix\..*$'
@@ -89,6 +88,6 @@
 #@file_exclusion_filters["Name Rules Exceptions parser"] = '^parser\..*$'
 #@file_exclusion_filters["Name Rules Exceptions pie"] = '^pie\..*$'
 #@file_exclusion_filters["Name Rules Exceptions new"] = '^new\..*$'
-#@file_exclusion_filters["Name Rules Exceptions new"] = '^abc\..*$'
+#@file_exclusion_filters["Name Rules Exceptions abc"] = '^abc\..*$'
 
 
