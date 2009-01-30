@@ -163,9 +163,8 @@ def execute()
   
   # setup all the walker behavior based on CLI flags
   #
-  # exclusion filters is a hash of descriptions/regexs, so just pass the criteria to the walker
-  @walker.add_dir_exclusions( @dir_exclusion_filters.values )
-  @walker.add_file_exclusions( @file_exclusion_filters.values )
+  @walker.add_dir_exclusions(@dir_exclusion_filters)
+  @walker.add_file_exclusions(@file_exclusion_filters.values)
   
   @walker.list_exclusions = @list_exclusions
   @walker.list_files = @list_files
