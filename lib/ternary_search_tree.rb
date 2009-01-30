@@ -231,6 +231,7 @@ class TernarySearchTree
   #    File name            Package name   Guessed Version
   #    ------------         -------------- ---------------
   #    ant.jar              ant            unknown
+  #    ant2.0.jar           ant            2.0
   #    ant-2.3.jar          ant            2.3
   #    ant_3b               ant            3b
   #    ant-2.3-beta-2.jar   ant            2.3-beta-2
@@ -241,8 +242,9 @@ class TernarySearchTree
     ext = File.extname(filename)
     start = false
     for i in best_match[0].size...(filename.size - ext.size)
-      version << filename[i] if start
-      start ||= CharacterInfo.is_name_version_delimiter_character?(filename[i])
+      version << filename[i] if start || CharacterInfo.is_digit_character?(filename[i])
+      start ||= (CharacterInfo.is_name_version_delimiter_character?(filename[i]) ||
+                CharacterInfo.is_digit_character?(filename[i]))
     end
     version.empty? ? "unknown" : version
   end
@@ -359,6 +361,8 @@ class CharacterInfo
   STOP_CHARACTER = '.'[0]
   MIN_RESET_CHARACTER = 'a'[0]
   MAX_RESET_CHARACTER = 'z'[0]
+  MIN_DIGIT_CHARACTER = '0'[0]
+  MAX_DIGIT_CHARACTER = '9'[0]
   NAME_VERSION_DELIMITER_CHARACTERS = ['_'[0], '-'[0], '.'[0]]
 
   @@current_character = nil
@@ -382,6 +386,10 @@ class CharacterInfo
 
   def self.is_name_version_delimiter_character?(ch)
     NAME_VERSION_DELIMITER_CHARACTERS.include?(ch)
+  end
+
+  def self.is_digit_character?(ch)
+    ch >= MIN_DIGIT_CHARACTER && ch <= MAX_DIGIT_CHARACTER
   end
 end
 
