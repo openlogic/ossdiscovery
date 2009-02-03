@@ -173,6 +173,7 @@ def execute
   @walker.list_files = @list_files
   @walker.show_permission_denied = @show_permission_denied
   @walker.open_archives = @open_archives
+  @walker.dont_open_discovered_archives = @dont_open_discovered_archives
   @walker.archive_temp_dir = @archive_temp_dir
   @walker.archive_extensions = @archive_extensions
   @walker.show_every = @show_every.to_i
@@ -390,6 +391,7 @@ options.quiet = true
 
 options_array = Array.new
 
+options_array << [ "--always-open-archives", "-a", GetoptLong::NO_ARGUMENT ]  # open archives even if we match against the archive file itself
 options_array << [ "--conf", "-c", GetoptLong::REQUIRED_ARGUMENT ]            # specific conf file
 options_array << [ "--deliver-results", "-d", GetoptLong::OPTIONAL_ARGUMENT ] # existence says 'yes' deliver results to server, followed by a filename sends that file to the server  
 options_array << [ "--deliver-batch", "-D", GetoptLong::REQUIRED_ARGUMENT ]   # argument points to a directory of scan results files to submit
@@ -445,6 +447,9 @@ begin
   options.each do | opt, arg |
   
     case opt
+
+    when "--always-open-archives"
+      @dont_open_discovered_archives = false
 
     when "--conf"
       if ( File.exist?(arg) && File.file?(arg) )

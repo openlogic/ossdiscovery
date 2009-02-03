@@ -74,7 +74,7 @@ class Walker
 
   attr_accessor :file_ct, :dir_ct, :sym_link_ct, :bad_link_ct, :permission_denied_ct, :foi_ct, :not_found_ct, :archives_found_ct
   attr_accessor :follow_symlinks, :symlink_depth, :not_followed_ct, :show_every, :show_verbose, :show_progress, :throttling_enabled, :throttle_number_of_files, :throttle_seconds_to_pause
-  attr_accessor :open_archives
+  attr_accessor :open_archives, :dont_open_discovered_archives
   attr_accessor :archive_temp_dir
   attr_accessor :archive_extensions
   attr_accessor :unopenable_archive_ct
@@ -285,8 +285,13 @@ class Walker
               @archives_found_ct += 1
               # match against the archive file itself in case we can't recognize
               # anything inside it but the name gives it away
-              name_match(fileordir, archive_parents)
-              open_archive(fileordir, archive_parents)
+              archive_file_discovered = name_match(fileordir, archive_parents)
+
+              # open the archive now unless we already discovered something from
+              # its name and the flag is set to not look any deeper
+              unless archive_file_discovered && @dont_open_discovered_archives
+                open_archive(fileordir, archive_parents)
+              end
             else
               name_match(fileordir, archive_parents)
             end
@@ -593,9 +598,11 @@ class Walker
 =end
 
   def notify_subscribers(subscribers, location, filename, rule_used, archive_parents)
+    any_matches = false
     subscribers.each{ | subscriber |
-      subscriber.found_file(location, filename, rule_used, archive_parents)
+      any_matches ||= subscriber.found_file(location, filename, rule_used, archive_parents)
     }
+    any_matches
   end
 
 
@@ -605,6 +612,8 @@ class Walker
   subscriber notification method to tell the subscriber (ie RuleEngine) a file of interest
   has been found. The archive_parents parameter gives us a path back up the archive hiearchy,
   if any, that contains the given file or directory.
+  
+  Return true if any rules match the given file, false otherwise.
 =end
   def name_match(fileordir, archive_parents)
 
@@ -621,8 +630,7 @@ class Walker
     if @criteria[basename]
       # found a literal filename match in the criteria list, so notify its subscribers
       @foi_ct += 1
-      notify_subscribers(@criteria[basename], dirname, basename, basename, archive_parents)
-      return
+      return notify_subscribers(@criteria[basename], dirname, basename, basename, archive_parents)
     end
 
     # no literal filename match was found - check all other match types - regex's
@@ -635,11 +643,11 @@ class Walker
       if basename.match(criterion)
         @foi_ct += 1
         # notify array of subscribers
-        notify_subscribers(@criteria[criterion], dirname, basename, criterion, archive_parents)
-        return
+        return notify_subscribers(@criteria[criterion], dirname, basename, criterion, archive_parents)
       end
     }
 
+    false
   end
 
 =begin rdoc

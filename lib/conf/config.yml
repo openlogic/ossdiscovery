@@ -76,6 +76,12 @@ rule_types: all
 open_archives: true
 
 #--------------------------------------------------------------------------------------
+# Set to true to not look inside archives if we already match against the archive
+# file itself.  For example, if the archive is hibernate3.zip, we may not need
+# to open it.
+dont_open_discovered_archives: true
+
+#--------------------------------------------------------------------------------------
 # Where archives are temporarily unpacked for scanning
 # NOTE: set to 'nil' (without quotes) to use the operating system default temp dir
 #archive_temp_dir: /my/special/temp/dir

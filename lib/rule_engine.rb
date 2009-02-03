@@ -96,6 +96,8 @@ class RuleEngine
 
     The archive parents parameter is a potentially empty list of archive
     files that contains the found file.
+
+    Return true if the file matches at least one rule.
 =end
 
   def found_file(location, filename, filter_used, archive_parents)
@@ -103,6 +105,8 @@ class RuleEngine
     if $DEBUG
       printf("found_file %s, %s, %s in %s\n", location, filename, filter_used, archive_parents.join('!'))
     end
+
+    any_matches = false
     
     digest_of_found_file = nil
     binary_content_of_found_file = nil
@@ -135,6 +139,8 @@ class RuleEngine
                     else
                       match_or_not = match_rule.match?(location + "/" + filename, archive_parents)
                     end
+                    # make sure any_matches is set to true if any rule has matched
+                    any_matches ||= match_or_not
                     # For debugging purposes
                     if (produce_match_audit_records && match_or_not)
                       @audit_records << MatchAuditRecord.new(project_rule.name, ruleset.name, match_rule.name, location + "/" + filename, match_rule.get_latest_matchval)
@@ -151,6 +157,7 @@ class RuleEngine
       end # of project_rule.rulesets.each
     end # of @project_rules.each
 
+    any_matches
   end
   
 =begin rdoc

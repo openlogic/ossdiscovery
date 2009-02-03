@@ -68,7 +68,7 @@ class FilenameVersionMatchRule < FilenameMatchRule
       @matched_against[dir] = match_set
     end
     
-    return val
+    val
   end
 
   
