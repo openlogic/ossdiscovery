@@ -335,7 +335,7 @@ class TernarySearchTree
         puts "problem reading or parsing rule file line: #{line}"
       end
     end
-    puts "loaded #{entries} rules into #{nodes.size} nodes."
+    #puts "loaded #{entries} rules into #{nodes.size} nodes."
   end
 
   # attempt to get a wider, bushier tree by seeding with some starting nodes
