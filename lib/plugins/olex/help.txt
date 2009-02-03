@@ -6,6 +6,7 @@ Olex Plugin v1.0 --help
 --olex-links,      -L show http links to the OLEX site in the results
 --no-paths,        -P show only the file names of discovered packages
 --no-base-dirs,    -B show only relative paths of discovered packages
+--always-open-archives, -a open archives even if the archive file itself is identified
 
 The Olex plugin is intended for project/application level scanning. The resulting scan data should then be uploaded from 
 within OLEX and associated with an OLEX project.
