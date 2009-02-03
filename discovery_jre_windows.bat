@@ -7,7 +7,7 @@ REM LEGAL NOTICE
 REM -------------
 REM 
 REM OSS Discovery is a tool that finds installed open source software.
-REM    Copyright (C) 2007 OpenLogic, Inc.
+REM    Copyright (C) 2007-2009 OpenLogic, Inc.
 REM  
 REM OSS Discovery is free software: you can redistribute it and/or modify
 REM it under the terms of the GNU Affero General Public License version 3 as 

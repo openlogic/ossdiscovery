@@ -126,35 +126,11 @@ The source code is organized like this:
       to the generic-exlusions.rb file.  We may add a "no media" flag to the CLI options in the future.
 
 
-- Known Issues
-===============
-
-DIS-347 -- Minor -- OSSDiscovery does not find version 2.9.1 for Xerces.
- 
-DIS-701 -- Minor -- Configuration files need to be cleaned up.
- 
-DIS-836 -- Minor -- Currently, OSSDiscovery only reports finding a maximum of 1 instance of a given package version per machine scan.
- 
-DIS-837 -- Minor -- Duplicate delivery of a batch of scans doesn't report a duplicate submission.
- 
-DIS-881 -- Minor -- Under significant scan submission load, the public installations line graph and the installations summary are out of sync.
- 
-DIS-910 -- Minor -- With 9 Packages, reports for package by name and package by rank show page list control labels but no controls.
- 
-DIS-935 -- Minor -- Missing geography value when executing --deliver-results results in an error.
- 
-DIS-984 -- Major -- Many rules will only find distributions taken from Maven (ibilio).
- 
-DIS-987 -- Major -- The --list-foi flag for OSSDiscovery reports that a scan is taking place.
-
-DIS-990 -- Major -- Subsequent scans of a machine increment the found count for all packages found in earlier scans of the same machine.
-
-
 - LEGAL NOTICE
 ===============
 
 OSS Discovery is a tool that finds installed open source software.
-  Copyright (C) 2007-2008 OpenLogic, Inc.
+  Copyright (C) 2007-2009 OpenLogic, Inc.
 
 OSS Discovery is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License version 3 as 
