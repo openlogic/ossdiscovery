@@ -69,9 +69,10 @@ class FilenameListMatchRule < MatchRule
     if val && val[0]
       (@matched_against[File.dirname(actual_filepath)] ||= Set.new) << [val, archive_parents, File.basename(actual_filepath)]
       @latest_match_val = val[1]
+      return true
     end
     
-    val
+    false
   end
 
   # we don't do versions
