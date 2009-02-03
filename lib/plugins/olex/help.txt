@@ -1,18 +1,28 @@
 
-Olex Plugin v1.0 --help
---olex-local,      -u the absolute or relative path and filename for the human readable results file.  The default is STDOUT
---olex-results,    -m the absolute or relative path and filename for the machine readable results file that can be uploaded to the OLEX Server
+Olex Plugin v1.1 --help
+
+--olex-local,      -u the absolute or relative path and filename for the human
+                      readable results file.  The default is STDOUT
+
+--olex-results,    -m the absolute or relative path and filename for the
+                      machine readable results file that can be uploaded
+                      to the OLEX Server
+
 --list-plugins,    -N lists just the enabled plugins, not all plugins installed
+
 --olex-links,      -L show http links to the OLEX site in the results
+
 --no-paths,        -P show only the file names of discovered packages
+
 --no-base-dirs,    -B show only relative paths of discovered packages
---always-open-archives, -a open archives even if the archive file itself is identified
 
-The Olex plugin is intended for project/application level scanning. The resulting scan data should then be uploaded from 
-within OLEX and associated with an OLEX project.
+The Olex plugin is intended for project/application level scanning. The
+resulting scan data should then be uploaded from within OLEX and associated
+with an OLEX project.
 
-Your '--path' parameter should point to the top-level directory of the project/application directory you want to scan.
+Your '--path' parameter should point to the top-level directory of the
+project/application directory you want to scan.
 
-Copyright (C) 2007-2008 OpenLogic, Inc.
+Copyright (C) 2007-2009 OpenLogic, Inc.
 License: Affero GPLv3
 
