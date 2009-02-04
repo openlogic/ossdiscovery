@@ -45,7 +45,7 @@ class FilenameListMatchRule < MatchRule
     super(name)
     @type = MatchRule::TYPE_FILENAME_LIST
     @matched_against = {}
-    @defined_filename = defined_filename
+    @defined_filename = Regexp.new(/#{defined_filename}/i)
 
     # should only be one of these, so make a class variable
     @@tst = TernarySearchTree.new
