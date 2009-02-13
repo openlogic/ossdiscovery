@@ -39,7 +39,7 @@
       <!--match-rule name="ternarytree" type="filenameList" filename=".*(?<!\.gif|\.jpg|\.jpeg|\.png|\.tif|\.tiff|\.mp3|\.mp3|\.mpeg|\.m4a|\.ogg|\.acc|\.xpm|\.ico|\.css|\.xsl|\.xml|\.xsd|\.dtd|\.js|\.php|\.jsp|\.htm|\.html|\.xhtml|\.doc|\.xls|\.xlt|\.ppt|\.properties|\.property|\.make|\.text|\.txt|\.pdf|\.o|\.lo|\.so|\.c|\.vim|\.lst|\.rsc|\.bat|\.ini|\.yml|\.yaml|\.py|\.rb|\.[0-9])$" projectfile="projects.txt"/-->
     </match-rules>
   </project-rule>
-  <project-rule name="7-zip" from="wild" os="windows">
+  <project-rule name="sevenzip" from="wild" os="windows">
     <description>searching binary</description>
     <eval expression="bin" speed="1"/>
     <match-rules name="bin">
@@ -89,7 +89,7 @@
       <match-rule name="2.6portable" type="MD5" md5sum="c38ea6efb7cf2bf0571cdb7799d22ba7" filename="^AbiWord.exe$" version="2.6-portable"/>      
     </match-rules>
   </project-rule>
-  <project-rule name="acegi" from="wild" os="all">
+  <project-rule name="acegi-security" from="wild" os="all">
     <description>Finds versions using file names.</description>
     <eval expression="name" speed="1"/>
     <match-rules name="name">
@@ -163,7 +163,7 @@
       <match-rule name="35-jar-file" type="MD5" filename="^AwServer\.jar$" version="3.0.0.1" md5sum="4dfe0f9bf43528179b7e159f12960142" />
     </match-rules>
   </project-rule>
-  <project-rule name="ajaxcontroltoolkit" from="wild" os="all">
+  <project-rule name="ajax-control-toolkit" from="wild" os="all">
     <description>Looks for the dlls via md5, otherwise falls thru to name match.</description>
     <eval expression="md5 OR filename" speed="1"/>
     <match-rules name="filename">
@@ -461,14 +461,14 @@
       <match-rule name="3.0.5.2" type="MD5" md5sum="c7cd71c701d90bf24d95539082312ff2" filename="^Azureus.*\.jar$" version="3.0.5.2"/>
     </match-rules>
   </project-rule>
-  <project-rule name="base" from="wild" os="all">
+  <project-rule name="base-php" from="wild" os="all">
     <description>Checks version number in file base_conf.php.dist </description>
     <eval expression="base_bin" speed="1"/>
     <match-rules name="base_bin">
       <match-rule name="base-bin-version" type="binary" filename="^base_conf\.php\.dist$" regexp="BASE_VERSION = .(.*)\s\(.*"/>
     </match-rules>
   </project-rule>
-  <project-rule name="bash" from="wild" os="all">
+  <project-rule name="gnu-bash" from="wild" os="all">
     <description>Scans bash binary files for version string information</description>
     <eval expression="bashbin" speed="1"/>
     <match-rules name="bashbin">
@@ -549,7 +549,7 @@
       <match-rule name="blatexe" type="binary" filename="^blat.exe$" regexp="F.i.l.e.V.e.r.s.i.o.n.....([0-9].\..[0-9].\..[0-9])"/>
     </match-rules>
   </project-rule>
-  <project-rule name="blender" from="wild" os="windows">
+  <project-rule name="blender3d" from="wild" os="windows">
     <description>MD5s of exe files.</description>
     <eval expression="md5 OR filename" speed="1"/>
     <match-rules name="filename">
@@ -584,7 +584,7 @@
       <match-rule name="2.46-RC4" type="MD5" md5sum="64111cacc2015f145c3ddb53857efc89" filename="^blender.exe$" version="2.46-RC4"/>
     </match-rules>
   </project-rule>
-  <project-rule name="blogengine.net" from="wild" os="all">
+  <project-rule name="blogengine" from="wild" os="all">
     <eval expression="versions" speed="1"/>
     <match-rules name="versions">
       <result expression="OR-ALL"/>
@@ -602,7 +602,7 @@
       <match-rule name="bochs_bin" type="binary" filename="^bochs((-bin)|(.exe))$" regexp="\000([\d.]+)\000{1,3}Bochs x86 Emulator %s"/>
     </match-rules>
   </project-rule>
-  <project-rule name="bouncycastle-crypto" from="wild" os="all">
+  <project-rule name="bouncycastle" from="wild" os="all">
     <description>Finds versions using file names..</description>
     <eval expression="nameversion OR name" speed="1"/>
     <match-rules name="nameversion">
