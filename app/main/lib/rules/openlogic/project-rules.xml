@@ -97,14 +97,6 @@
       <match-rule name="acegi" type="filename" filename="^acegi-security.*jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="acegi-security" from="wild" os="all">
-    <description>Finds versions using file names.</description>
-    <eval expression="name" speed="1"/>
-    <match-rules name="name">
-      <result expression="OR-ALL"/>
-      <match-rule name="acegi" type="filename" filename="^acegi-security.*jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="activation" from="wild" os="all">
     <description>Assumes jars start with 'activation' and uses md5 digests to find versions.</description>
     <eval expression="md5 OR filename" speed="1"/>
@@ -592,7 +584,7 @@
       <match-rule name="blogwelcome" type="binary" filename="^c3b491e5-59ac-4f6a-81e5-27e971b903ed.xml$" regexp="BlogEngine.NET ([0-9].[0-9]+)"/>
     </match-rules>
   </project-rule>
-  <project-rule name="bochs" from="wild" os="all">
+  <project-rule name="bochs-gdb" from="wild" os="all">
     <description>Bochs binary file</description>
     <eval expression="bochs_bin OR bochs_filename" speed="1"/>
     <match-rules name="bochs_filename">
@@ -747,13 +739,6 @@
     <match-rules name="cigi-ccl_so">
       <result expression="OR-ALL"/>
       <match-rule name="cigi-ccl_so" type="binary" filename="^libcigicl.so.*?$" regexp="cigi-ccl\/(.*?)\/"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="cigi-ccl_dll" from="wild" os="windows">
-    <eval expression="cigi-ccl_dll" speed="1"/>
-    <match-rules name="cigi-ccl_dll">
-      <result expression="OR-ALL"/>
-      <match-rule name="cigi-ccl_dll" type="binary" filename="^libcigicl.so.*?$" regexp="cigi-ccl\/(.*?)\/"/>
     </match-rules>
   </project-rule>
   <project-rule name="cigi-mpv" from="wild" os="all">
@@ -1761,7 +1746,7 @@
       <match-rule name="7-dom4j-version-10-3-2-1" type="MD5" md5sum="0370cc785eb4db50e386b42ca07107f7" filename="^derby.*\.jar$" version="10.3.2.1"/>
     </match-rules>
   </project-rule>
-  <project-rule name="discovery" from="wild" os="all">
+  <project-rule name="ossdiscovery" from="wild" os="all">
     <description>Looks for the discovery.rb file, then pulls the version string out.  Spaces are ignored in the line of code, and both forms of quotes are accepted</description>
     <eval expression="discoveryrb" speed="1"/>
     <match-rules name="discoveryrb">
@@ -2057,7 +2042,7 @@
       <match-rule name="ajdt_ver" type="binary" filename="^feature.xml$" regexp="ajdt.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
-  <project-rule name="eclipseplugin-birt" from="wild" os="all">
+  <project-rule name="eclipseplugin-eclipse_birt" from="wild" os="all">
     <description/>
     <eval expression="birt_version" speed="1"/>
     <match-rules name="birt_version">
@@ -2089,7 +2074,7 @@
       <match-rule name="coloredit_ver" type="binary" filename="^feature.xml$" regexp="cbg.editor.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
-  <project-rule name="eclipseplugin-dtp" from="wild" os="all">
+  <project-rule name="eclipseplugin-eclipse_dtp" from="wild" os="all">
     <description/>
     <eval expression="dtp_version" speed="1"/>
     <match-rules name="dtp_version">
@@ -2097,7 +2082,7 @@
       <match-rule name="dtp_ver" type="binary" filename="^feature.xml$" regexp="dtp.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
-  <project-rule name="eclipseplugin-gmf" from="wild" os="all">
+  <project-rule name="eclipseplugin-eclipse_gmf" from="wild" os="all">
     <description/>
     <eval expression="gmf_version" speed="1"/>
     <match-rules name="gmf_version">
@@ -2137,7 +2122,7 @@
       <match-rule name="graysky-logwatcher_ver" type="binary" filename="^feature.xml$" regexp="graysky.logwatcher.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
-  <project-rule name="eclipseplugin-hibernatetools" from="wild" os="all">
+  <project-rule name="eclipseplugin-hibernate_tools" from="wild" os="all">
     <description/>
     <eval expression="hibernate_version" speed="1"/>
     <match-rules name="hibernate_version">
@@ -2161,7 +2146,7 @@
       <match-rule name="ecore.sdo_ver" type="binary" filename="^feature.xml$" regexp="ecore.sdo.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
-  <project-rule name="eclipseplugin-emf" from="wild" os="all">
+  <project-rule name="eclipseplugin-eclipse_emf" from="wild" os="all">
     <description/>
     <eval expression="emf_version" speed="1"/>
     <match-rules name="emf_version">
@@ -2169,7 +2154,7 @@
       <match-rule name="emf_ver" type="binary" filename="^feature.xml$" regexp="emf\&quot;.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
-  <project-rule name="eclipseplugin-gef" from="wild" os="all">
+  <project-rule name="eclipseplugin-eclipse_gef" from="wild" os="all">
     <description/>
     <eval expression="gef_version" speed="1"/>
     <match-rules name="gef_version">
@@ -2177,7 +2162,7 @@
       <match-rule name="gef_ver" type="binary" filename="^feature.xml$" regexp="gef.*?\n.*?label.*?\n.*?version=\&quot;(.+?)[-\&quot;]+"/>
     </match-rules>
   </project-rule>
-  <project-rule name="eclipseplugin-jem" from="wild" os="all">
+  <project-rule name="eclipseplugin-eclipse_jem" from="wild" os="all">
     <description/>
     <eval expression="jem_version" speed="1"/>
     <match-rules name="jem_version">
@@ -2241,7 +2226,7 @@
       <match-rule name="mevenide_ver" type="binary" filename="^feature.xml$" regexp="mevenide.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
-  <project-rule name="eclipseplugin-mddi" from="wild" os="all">
+  <project-rule name="eclipseplugin-eclipse_mddi" from="wild" os="all">
     <description/>
     <eval expression="mddi_version" speed="1"/>
     <match-rules name="mddi_version">
@@ -2275,7 +2260,7 @@
       <match-rule name="quickrex_ver" type="binary" filename="^feature.xml$" regexp="(?i)quickrex.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
-  <project-rule name="eclipseplugin-stp" from="wild" os="all">
+  <project-rule name="eclipseplugin-eclipse_stp" from="wild" os="all">
     <description/>
     <eval expression="stp_version" speed="1"/>
     <match-rules name="stp_version">
@@ -2283,7 +2268,7 @@
       <match-rule name="stp_ver" type="binary" filename="^feature.xml$" regexp="stp.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
-  <project-rule name="eclipseplugin-spellchecker" from="wild" os="all">
+  <project-rule name="eclipseplugin-espell3" from="wild" os="all">
     <description/>
     <eval expression="spellchecker_version" speed="1"/>
     <match-rules name="spellchecker_version">
@@ -2324,7 +2309,7 @@
       <match-rule name="javasvn_ver" type="binary" filename="^feature.xml$" regexp="javasvn.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
-  <project-rule name="eclipseplugin-tptp" from="wild" os="all">
+  <project-rule name="eclipseplugin-eclipse_tptp" from="wild" os="all">
     <description/>
     <eval expression="tptp_version" speed="1"/>
     <match-rules name="tptp_version">
@@ -2332,7 +2317,7 @@
       <match-rule name="tptp_ver" type="binary" filename="^feature.xml$" regexp="tptp.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
-  <project-rule name="eclipseplugin-uml2" from="wild" os="all">
+  <project-rule name="eclipseplugin-eclipse_uml2" from="wild" os="all">
     <description/>
     <eval expression="uml2_version" speed="1"/>
     <match-rules name="uml2_version">
@@ -2356,7 +2341,7 @@
       <match-rule name="vssplugin_ver" type="binary" filename="^feature.xml$" regexp="vssplugin.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
-  <project-rule name="eclipseplugin-web-tools-editors" from="wild" os="all">
+  <project-rule name="eclipseplugin-wtp-web" from="wild" os="all">
     <description/>
     <eval expression="wtp-web_version" speed="1"/>
     <match-rules name="wtp-web_version">
@@ -2424,7 +2409,7 @@
       <match-rule name="emma-2.0.5312" type="MD5" md5sum="58802fbe6bb583b72ab7cf39b8033ed3" filename="^emma.jar$" version="2.0.5312"/>
     </match-rules>
   </project-rule>
-  <project-rule name="excalibur" from="wild" os="all">
+  <project-rule name="excalibar" from="wild" os="all">
     <description/>
     <eval expression="excalibur_filename_version" speed="1"/>
     <match-rules name="excalibur_filename_version">
@@ -2864,50 +2849,27 @@
       <match-rule name="win-4.x-gnuplot-version" type="binary" filename="^wgnuplot.exe$" regexp=".*(4\.\d).*olin.*"/>
     </match-rules>
   </project-rule>
-  <project-rule name="grizzly-cometd" from="wild" os="all">
+  <project-rule name="grizzly" from="wild" os="all">
     <description>Checks md5 against grizzly.jar or detects presence of file</description>
-    <eval expression="grizzly_md5 OR grizzly_cometd_filename_version" speed="1"/>
-    <match-rules name="grizzly_cometd_filename_version">
-      <match-rule name="grizzly_jar" type="filenameVersion" filename="^grizzly-cometd.*?([0-9].*?)(?:-sources)?.jar$"/>
+    <eval expression="grizzly_md5 OR grizzly_filename_version" speed="1"/>
+    <match-rules name="grizzly_filename_version">
+      <result expression="OR-ALL"/>
+      <match-rule name="cometd_grizzly_jar" type="filenameVersion" filename="^grizzly-cometd.*?([0-9].*?)(?:-sources)?.jar$"/>
+      <match-rule name="comet_grizzly_jar" type="filenameVersion" filename="^grizzly-comet-.*?([0-9].*?)(?:-sources)?.jar$"/>
+      <match-rule name="http_grizzly_jar" type="filenameVersion" filename="^grizzly-http-.*?([0-9].*?)(?:-sources)?.jar$"/>
+      <match-rule name="jruby_grizzly_jar" type="filenameVersion" filename="^grizzly-jruby-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
     <match-rules name="grizzly_md5">
       <result expression="OR-ALL"/>
       <match-rule name="cometd-grizzly-1.7.2" type="MD5" md5sum="a1f536694daee316073a6eb127c25cd4" filename="^grizzly-.*jar$" version="1.7.2"/>
       <match-rule name="cometd-grizzly-1.7.0" type="MD5" md5sum="d7caa0e6d0c42b427184c6c489b1b47a" filename="^grizzly-.*jar$" version="1.7.0"/>
       <match-rule name="cometd-grizzly-1.7.1" type="MD5" md5sum="2b1af95759db198c696838d3ee968c42" filename="^grizzly-.*jar$" version="1.7.1"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="grizzly-comet" from="wild" os="all">
-    <description>Checks md5 against grizzly.jar or detects presence of file</description>
-    <eval expression="grizzly_md5 OR grizzly_comet_filename_version" speed="1"/>
-    <match-rules name="grizzly_comet_filename_version">
-      <match-rule name="grizzly_jar" type="filenameVersion" filename="^grizzly-comet-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-    <match-rules name="grizzly_md5">
       <match-rule name="comet-grizzly-1.7.2" type="MD5" md5sum="a5c41c5a897977331f84ffd05e060c9a" filename="^grizzly-.*jar$" version="1.7.2"/>
       <match-rule name="comet-grizzly-1.7.0" type="MD5" md5sum="3d9b6b79116066be7905084918c561e9" filename="^grizzly-.*jar$" version="1.7.0"/>
       <match-rule name="comet-grizzly-1.7.1" type="MD5" md5sum="81c161c5ffcbe1c8fabaa47f0a8764b2" filename="^grizzly-.*jar$" version="1.7.1"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="grizzly-http" from="wild" os="all">
-    <description>Checks md5 against grizzly.jar or detects presence of file</description>
-    <eval expression="grizzly_md5 OR grizzly_http_filename_version" speed="1"/>
-    <match-rules name="grizzly_http_filename_version">
-      <match-rule name="grizzly_jar" type="filenameVersion" filename="^grizzly-http-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-    <match-rules name="grizzly_md5">
       <match-rule name="http-grizzly-1.7.2" type="MD5" md5sum="877f9794e0fda9f12b911aab81868f5f" filename="^grizzly-.*jar$" version="1.7.2"/>
       <match-rule name="http-grizzly-1.7.0" type="MD5" md5sum="0146593827174191a101d1bea1a87427" filename="^grizzly-.*jar$" version="1.7.0"/>
       <match-rule name="http-grizzly-1.7.1" type="MD5" md5sum="2fe83f342e56ad7173939dcff60acc35" filename="^grizzly-.*jar$" version="1.7.1"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="grizzly-jruby" from="wild" os="all">
-    <description>Checks md5 against grizzly.jar or detects presence of file</description>
-    <eval expression="grizzly_md5 OR grizzly_jruby_filename_version" speed="1"/>
-    <match-rules name="grizzly_jruby_filename_version">
-      <match-rule name="grizzly_jar" type="filenameVersion" filename="^grizzly-jruby-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-    <match-rules name="grizzly_md5">
       <match-rule name="jruby-grizzly-1.7.2" type="MD5" md5sum="bfe5f2f441bab8e7bdfacf50b44e8d16" filename="^grizzly-.*jar$" version="1.7.2"/>
       <match-rule name="jruby-grizzly-1.7.0" type="MD5" md5sum="30195e4da2531151fb7b53d6dd42b896" filename="^grizzly-.*jar$" version="1.7.0"/>
       <match-rule name="jruby-grizzly-1.7.1" type="MD5" md5sum="5e7a55b27cde235f55ec0a73005aacb7" filename="^grizzly-.*jar$" version="1.7.1"/>
@@ -3359,7 +3321,7 @@
       <match-rule name="1.9.1" type="MD5" version="1.9.1" filename="^jacob\.jar$" md5sum="308f29be185b2a079b00a200f6c74bb7"/>
     </match-rules>
   </project-rule>
-  <project-rule name="jakarta-regexp" from="wild" os="all">
+  <project-rule name="regexp" from="wild" os="all">
     <eval expression="file_name_version" speed="1"/>
     <match-rules name="file_name_version">
       <result expression="OR-ALL"/>
@@ -3803,7 +3765,7 @@
       <match-rule name="2.0.0" type="MD5" version="2.0.0" filename="^jbosscache\.jar$" md5sum="ff33318d1b6cfc67959de2b118a9e2da"/>
     </match-rules>
   </project-rule>
-  <project-rule name="jboss-jbpm" from="wild" os="all">
+  <project-rule name="jbpm" from="wild" os="all">
     <description/>
     <eval expression="jbpm_version" speed="1"/>
     <match-rules name="jbpm_version">
@@ -3838,7 +3800,7 @@
       <match-rule name="name2" type="filename" filename="^richfaces-ui.*jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="jboss-tools" from="wild" os="linux">
+  <project-rule name="jbosstools" from="wild" os="linux">
     <description>Checks for any of the jboss tools jars</description>
     <eval expression="jboss-tools_fv OR jboss-tools_filename" speed="1"/>
     <match-rules name="jboss-tools_filename">
@@ -4332,7 +4294,7 @@
       <match-rule name="jmx-1.2.1" type="MD5" md5sum="4a1e41354de6311793cd8bcb035eb748" filename="^jmxri\.*jar$" version="1.2.1"/>
     </match-rules>
   </project-rule>
-  <project-rule name="jmxtools" from="wild" os="all">
+  <project-rule name="jmxconsoletools" from="wild" os="all">
     <description>Checks md5 against jmx.jar or detects presence of file</description>
     <eval expression="jmxtools_filename OR jmxtools_md5 OR jmxtools_filename_version" speed="1"/>
     <match-rules name="jmxtools_filename">
@@ -4634,7 +4596,7 @@
       <match-rule name="libsndfile-1.0.17-lin" type="MD5" md5sum="9dd65ed62452c63f0b0d1c390474813c" filename="^libsndfile.so$" version="1.0.17-linux"/>
     </match-rules>
   </project-rule>
-  <project-rule name="libxml2" from="wild" os="all">
+  <project-rule name="libxml" from="wild" os="all">
     <description>rules for libxml2 - date created : 01/29/2008 dpm</description>
     <eval expression="libxml2_filename or libxml2_md5" speed="1"/>
     <match-rules name="libxml2_filename">
@@ -5102,6 +5064,7 @@
       <match-rule name="mule_jar" type="filenameVersion" filename="^mule\-core\-([0-9].*?[0-9]).jar$"/>
     </match-rules>
   </project-rule>
+
   <project-rule name="myfaces" from="wild" os="all">
     <description>Assumes jars start with 'myfaces' and uses md5 digests to find versions gte 0.1.2 and lte 1.1.1</description>
     <!-- GS This rule catches all "old" myfaces releases before the switch to maven at apache.org (includes sourceforge) -->
@@ -5142,7 +5105,7 @@
       <match-rule name="23-apache-myfaces-1.1.1-bin.zip-myfaces.jar" type="MD5" md5sum="ac6324e128d2b56df2f1a68b61ed7ce5" filename="^myfaces.*jar$" version="1.1.1"/>
     </match-rules>
   </project-rule>
-  <project-rule name="myfaces-tobago" from="wild" os="all">
+  <project-rule name="tobago" from="wild" os="all">
     <description>Apache Myfaces Tobago</description>
     <eval expression="tobago-filename or tobago-md5" speed="1"/>
     <match-rules name="tobago-filename">
@@ -5226,7 +5189,7 @@
       <match-rule name="mysqldexe" type="binary" filename="^mysqld.exe$" regexp="mysql-([4-5]\.[0-9]\.[0-9]+)"/>
     </match-rules>
   </project-rule>
-  <project-rule name="mysql-connector-java" from="wild" os="all">
+  <project-rule name="mysql-connector" from="wild" os="all">
     <description>Finds mysql-connector-java.jar versions by md5 or filename matching</description>
     <eval expression="md5 or fileversion or file" speed="1"/>
     <match-rules name="file">
@@ -5370,7 +5333,7 @@
       <match-rule name="1.0.4.0" type="MD5" md5sum="21a764436e4e21a7b4fb57e99ea0c56e" filename="^NHibernate.dll$" version="1.0.4.0"/>
     </match-rules>
   </project-rule>
-  <project-rule name="nmap" from="wild" os="all">
+  <project-rule name="nmapwin" from="wild" os="all">
     <description>Finds nmap on various platforms</description>
     <eval expression="bin" speed="1"/>
     <match-rules name="bin">
@@ -5432,7 +5395,7 @@
       <match-rule name="linux3.3.3" type="MD5" version="3.3.3" filename="^openfire\.jar$" md5sum="8693d1066d9a8c1a58a11b8d49773c20"/>
     </match-rules>
   </project-rule>
-  <project-rule name="openjms" from="wild" os="all">
+  <project-rule name="openjmsadapter" from="wild" os="all">
     <description>Finds openjms .jar versions by md5</description>
     <eval expression="md5-base or md5-common or md5-net or md5-tools or md5-client or fileversion or file" speed="1"/>
     <match-rules name="file">
@@ -5543,7 +5506,7 @@
       <match-rule name="exe" type="filename" filename="^OSCommander\.exe$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="ostermillerutils" from="wild" os="all">
+  <project-rule name="ostermiller" from="wild" os="all">
     <description>Assumes jars start with 'ostermillerutils' and uses filenameVersion to find versions.</description>
     <eval expression="nameversion OR filename" speed="1"/>
     <match-rules name="filename">
@@ -6427,7 +6390,7 @@ libpython2.5.so.1.0
       <match-rule name="41-spring-ws-bin-0.9.zip-spring-ws-core-0.9.jar" type="MD5" md5sum="048ee6c88ea6c063cfd802f0647ab938" filename="^spring-ws.*jar$" version="0.9"/>
     </match-rules>
   </project-rule>
-  <project-rule name="squirrel-sql-client" from="wild" os="windows">
+  <project-rule name="squirrel" from="wild" os="windows">
     <description>checks md5 against squirrel-sql.jar or detects presence of file</description>
     <eval expression="squirrel_sql_filename or squirrel_sql_md5" speed="1"/>
     <match-rules name="squirrel_sql_filename">
@@ -6449,7 +6412,7 @@ libpython2.5.so.1.0
       <match-rule name="13-squirrel-sql-2.6.4" type="MD5" md5sum="c9c5c09f46e04860983d5e82b7b80588" filename="^squirrel-sql.*\.jar$" version="2.6.4"/>
     </match-rules>
   </project-rule>
-  <project-rule name="sshtools" from="wild" os="all">
+  <project-rule name="sshtools-j2ssh" from="wild" os="all">
     <eval expression="sshtools_files or sshtools_md5" speed="1"/>
     <match-rules name="sshtools_files">
       <result expression="AND-ALL"/>
@@ -6476,7 +6439,7 @@ libpython2.5.so.1.0
       <match-rule name="1-sslext-1.2" type="MD5" md5sum="fda7f2a2f7ac9b017a5de1a4742753fd" filename="^sslext\.jar$" version="1.2"/>
     </match-rules>
   </project-rule>
-  <project-rule name="standardista-table-sorting" from="wild" os="all">
+  <project-rule name="table-sorting" from="wild" os="all">
     <description>Assumes js start with 'standardista-table-sorting' and uses md5 digests to find versions.</description>
     <eval expression="js_md5 OR filename" speed="1"/>
     <match-rules name="filename">
@@ -6514,8 +6477,11 @@ libpython2.5.so.1.0
       <match-rule name="struts_fn" type="filename" filename="^struts[^2].*\jar$"/>
     </match-rules>
     <match-rules name="struts_filename_version">
+      <result expression="OR-ALL"/>
       <!-- will work for dists > 1.2.9 because the versions appear in the filename -->
+      <!-- Rolled struts2 into struts...   we refer to them the same way in olex. -->
       <match-rule name="struts_fv" type="filenameVersion" filename="^struts[^2].*-(.*)\.jar$"/>
+      <match-rule name="struts2_fv" type="filenameVersion" filename="^struts2.*-(.*)\.jar$"/>
     </match-rules>
     <!-- dists <= 1.2.9 do not have versions in the filenames. -->
     <match-rules name="struts_md5">
@@ -6538,14 +6504,7 @@ libpython2.5.so.1.0
       <match-rule name="27-struts-1.2.9-bin.tar.gz-struts.jar" type="MD5" md5sum="978d4d99ae4098e9c37d6ec3c9871a7a" filename="^struts[^2].*jar$" version="1.2.9"/>
     </match-rules>
   </project-rule>
-  <project-rule name="struts2" from="wild" os="all">
-    <description>Finds versions based on the fact that all standard distributions start with 'struts2' and contain the version in the filename.</description>
-    <!-- We didn't bother with MD5's in this case because the default distributions from the project site included the version in the filename.  -->
-    <eval expression="struts2_filename_version" speed="1"/>
-    <match-rules name="struts2_filename_version">
-      <match-rule name="struts2_fv" type="filenameVersion" filename="^struts2.*-(.*)\.jar$"/>
-    </match-rules>
-  </project-rule>
+
   <project-rule name="subversion" from="wild" os="all">
     <eval expression="bin or lib or svnfile" speed="1"/>
     <match-rules name="bin">
@@ -6611,11 +6570,14 @@ libpython2.5.so.1.0
       <match-rule name="7-tablelayout-src" type="MD5" md5sum="498a2afcf2f8625d18949d0c1622b603" filename="^[tt]able[ll]ayout.*\.jar$" version="src"/>
     </match-rules>
   </project-rule>
-  <project-rule name="tcl" from="wild" os="all">
+  <project-rule name="tcltk" from="wild" os="all">
     <description> </description>
     <eval expression="tcl_bin OR tcl_filename_version" speed="1"/>
     <match-rules name="tcl_filename_version">
+      <result expression="OR-ALL" speed="1"/>
       <match-rule name="win-tcldll" type="binary" filename="^tcl[0-9].*?\.dll$" regexp="\x00([7-9]\.[0-9]\..*?)\x00" />
+      <match-rule name="win-base" type="filenameVersion" filename="^base-tk(.*?)\-thread\-win32\-ix86.exe$" />
+      <match-rule name="win-dll" type="binary" filename="tk[7-9][0-9].dll" regexp="version=\x22([7-9].*?)\x22" />
     </match-rules>
     <match-rules name="tcl_bin">
       <result expression="OR-ALL"/>
@@ -6625,6 +6587,8 @@ libpython2.5.so.1.0
       <!-- os x dynamic lib for tcl -->
       <match-rule name="tcl-dylib" type="binary" filename="^libtcl.*?\.dylib$" regexp="\x00([7-9]\.[0-9].*?)\x00"/>
       <match-rule name="tcl-Tcldylib" type="binary" filename="^Tcl$" regexp="\x00([7-9]\.[0-9].*?)\x00"/>
+      <match-rule name="tklib" type="binary" filename="libtk[7-9]\.[0-9].*?\.so.*?$" regexp="\x00([7-9]\.[0-9].*?)\x00" />
+      <match-rule name="tk-name" type="filenameVersion" filename="^wish([7-9]\.[0-9])$"/>
     </match-rules>
   </project-rule>
   <project-rule name="tcpmon" from="wild" os="all">
@@ -6705,20 +6669,6 @@ libpython2.5.so.1.0
       <result expression="OR-ALL"/>
       <match-rule name="tinysql-2.0" type="MD5" md5sum="d86393248c2695e6b09b97a29e894ad4" filename="^tinySQL.*?\.jar$" version="2.0"/>
       <match-rule name="tinysql-2.26" type="MD5" md5sum="82a69137d2b9acb800721f153c0234ba" filename="^tinySQL.*?\.jar$" version="2.26"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="tk" from="wild" os="all">
-    <description>looks for tk-related libraries and executables </description>
-    <eval expression="tk_unix OR tk_win_filename_version" speed="1"/>
-    <match-rules name="tk_win_filename_version">
-      <result expression="OR-ALL" speed="1"/>
-      <match-rule name="win-base" type="filenameVersion" filename="^base-tk(.*?)\-thread\-win32\-ix86.exe$" />
-      <match-rule name="win-dll" type="binary" filename="tk[7-9][0-9].dll" regexp="version=\x22([7-9].*?)\x22" />
-    </match-rules>
-    <match-rules name="tk_unix">
-      <result expression="OR-ALL" speed="1"/>
-      <match-rule name="tklib" type="binary" filename="libtk[7-9]\.[0-9].*?\.so.*?$" regexp="\x00([7-9]\.[0-9].*?)\x00" />
-      <match-rule name="tk-name" type="filenameVersion" filename="^wish([7-9]\.[0-9])$"/>
     </match-rules>
   </project-rule>
   <project-rule name="tkabber" from="wild" os="windows">
@@ -7282,7 +7232,7 @@ libpython2.5.so.1.0
       <match-rule name="1-wsif-20" type="MD5" md5sum="179f799d27398844b38ed5a58e501d68" filename="^wsif\.jar$" version="2.0"/>
     </match-rules>
   </project-rule>
-  <project-rule name="werken" from="wild" os="windows">
+  <project-rule name="werken-xpath" from="wild" os="windows">
     <description>checks md5 for werken jar or detects presence of file</description>
     <eval expression="werken_md5 or werken_filename" speed="1"/>
     <match-rules name="werken_filename">
