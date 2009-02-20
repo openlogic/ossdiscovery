@@ -1754,7 +1754,7 @@
       <match-rule name="discovery" type="binary" filename="^discovery.rb$" regexp="@discovery_version\s*=\s*[\x22\x27](.*)[\x22\x27]"/>
     </match-rules>
   </project-rule>
-  <project-rule name="dns-java" from="wild" os="windows">
+  <project-rule name="dnsjava" from="wild" os="windows">
     <description>checks md5 for dnsjava.jar or detects presence of file</description>
     <eval expression="dnsjava_md5 or dnsjava_filename" speed="1"/>
     <match-rules name="dnsjava_filename">
@@ -5536,7 +5536,7 @@
       <match-rule name="pager-taglib-2.0.jar" type="MD5" md5sum="9c8c8df03f55a2f02d7e7c1497e126fb" filename="pager-taglib-.*\.war" version="2.0"/>
     </match-rules>
   </project-rule>
-  <project-rule name="paint.net" from="wild" os="windows">
+  <project-rule name="paintdotnet" from="wild" os="windows">
     <description>MD5s of exe files.</description>
     <eval expression="md5 OR filename" speed="1"/>
     <match-rules name="filename">
