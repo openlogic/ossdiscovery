@@ -1835,13 +1835,15 @@
       <match-rule name="dojo-toolkit-1.0.2" type="MD5" md5sum="750f83592dc54fda05495880f3775ce1" filename="^dojo.js.uncompressed.js$" version="1.0.2"/>
     </match-rules>
   </project-rule>
-  <project-rule name="dojoz" from="wild" os="windows">
+  <project-rule name="zk" from="wild" os="windows">
     <description>checks md5 for dojoz.jar or detects presence of file</description>
-    <eval expression="dojoz_md5 or dojoz_filename" speed="1"/>
-    <match-rules name="dojoz_filename">
+    <eval expression="zk_parts_md5 or zk_parts_filename" speed="1"/>
+    <match-rules name="zk_parts_filename">
+      <result expression="OR-ALL"/>
       <match-rule name="1-dojoz-filename" type="filename" filename="dojoz\.jar$"/>
+      <match-rule name="fckez_version" type="filenameVersion" filename="^fckez-([\d\.]+[\d\-]+[\d])\.jar$"/> 
     </match-rules>
-    <match-rules name="dojoz_md5">
+    <match-rules name="zk_parts_md5">
       <match-rule name="1-dojoz-0.2.2-2006-09-20" type="MD5" md5sum="8d59b4863c743de82ea10dbe44955bce" filename="dojoz\.jar$" version="0.2.2-2006-09-20"/>
       <match-rule name="2-dojoz-0.2.2-2006-06-13" type="MD5" md5sum="44db600bea961705a40106bf137186f4" filename="dojoz\.jar$" version="0.2.2-2006-06-13"/>
       <match-rule name="3-dojoz-0.2.2-2006-07-29" type="MD5" md5sum="dd408826b02030cc4989079c5561e0b8" filename="dojoz\.jar$" version="0.2.2-2006-07-29"/>
@@ -1850,6 +1852,9 @@
       <match-rule name="6-dojoz-0.2.2-2006-03-17" type="MD5" md5sum="3f96b21252dd9f05cdfbdb8e00fa934b" filename="dojoz\.jar$" version="0.2.2-2006-03-17"/>
       <match-rule name="7-dojoz-0.2.2-2006-10-24" type="MD5" md5sum="f837258d7a2a76dee55ba142e78d6e82" filename="dojoz\.jar$" version="0.2.2-2006-10-24"/>
       <match-rule name="8-dojoz-0.2.2-2" type="MD5" md5sum="3be5bfe683f9a32080a64b507a0b5157" filename="dojoz\.jar$" version="0.2.2-2"/>
+      <match-rule name="fckez-2.3-1" type="MD5" md5sum="04ca3ae96fdb9e2d5874302495092abc" filename="^fckez.*jar$" version="2.3-1"/>
+      <match-rule name="fckez-2.3-2" type="MD5" md5sum="c9f8f1b1a35898a30aa8bffc52c8039c" filename="^fckez.*jar$" version="2.3-2"/>
+      <match-rule name="fckez-2.3-3" type="MD5" md5sum="9f336ec2c9102cc61eb8961c3e5fad7a" filename="^fckez.*jar$" version="2.3-3"/>
     </match-rules>
   </project-rule>
   <project-rule name="dom4j" from="wild" os="all">
@@ -2437,19 +2442,6 @@
     <match-rules name="expat_md5">
       <result expression="OR-ALL"/>
       <match-rule name="expat-2.0.0" type="MD5" md5sum="d7bf7d6b6c30c4b00fc6226d1e3ccaa2" filename="^xmlwf$" version="2.0.0"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="fckez" from="wild" os="all">
-    <eval expression="fckez_filename or fckez_md5" speed="1"/>
-    <match-rules name="fckez_filename">
-      <result expression="OR-ALL"/>
-      <match-rule name="fckez_version" type="filenameVersion" filename="^fckez-([\d\.]+[\d\-]+[\d])\.jar$"/> 
-    </match-rules>
-    <match-rules name="fckez_md5">
-      <result expression="OR-ALL"/>
-      <match-rule name="fckez-2.3-1" type="MD5" md5sum="04ca3ae96fdb9e2d5874302495092abc" filename="^fckez.*jar$" version="2.3-1"/>
-      <match-rule name="fckez-2.3-2" type="MD5" md5sum="c9f8f1b1a35898a30aa8bffc52c8039c" filename="^fckez.*jar$" version="2.3-2"/>
-      <match-rule name="fckez-2.3-3" type="MD5" md5sum="9f336ec2c9102cc61eb8961c3e5fad7a" filename="^fckez.*jar$" version="2.3-3"/>
     </match-rules>
   </project-rule>
   <project-rule name="filezilla" from="wild" os="windows">
