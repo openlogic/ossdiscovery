@@ -217,6 +217,8 @@ module Zip
         raise if (retried >= 5) # how many times should we retry?
         retried += 1
         retry
+      rescue java.util.zip.DataFormatException
+        raise "Probably a password-protected zip file"
       end
     end
 
