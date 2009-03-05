@@ -34,7 +34,7 @@
       <!-- MATCH EVERYTHING -->
       <!--match-rule name="ternarytree" type="filenameList" filename=".*" projectfile="projects.txt"/-->
       <!-- MATCH ONLY SPECIFIC EXTENSIONS -->
-      <match-rule name="ternarytree" type="filenameList" filename="(\.jar|\.war|\.ear|\.sar|\.zip|\.java|\.dll|\.exe)$" projectfile="projects.txt"/>
+      <match-rule name="ternarytree" type="filenameList" filename="(\.jar|\.war|\.ear|\.sar|\.java)$" projectfile="projects.txt"/>
       <!-- MATCH WITHOUT NON-INTERESTING OR PROBLEMATIC EXTENSIONS -->
       <!--match-rule name="ternarytree" type="filenameList" filename=".*(?<!\.gif|\.jpg|\.jpeg|\.png|\.tif|\.tiff|\.mp3|\.mp3|\.mpeg|\.m4a|\.ogg|\.acc|\.xpm|\.ico|\.css|\.xsl|\.xml|\.xsd|\.dtd|\.js|\.php|\.jsp|\.htm|\.html|\.xhtml|\.doc|\.xls|\.xlt|\.ppt|\.properties|\.property|\.make|\.text|\.txt|\.pdf|\.o|\.lo|\.so|\.c|\.vim|\.lst|\.rsc|\.bat|\.ini|\.yml|\.yaml|\.py|\.rb|\.[0-9])$" projectfile="projects.txt"/-->
     </match-rules>
@@ -2117,6 +2117,8 @@
       <match-rule name="ecore_ver" type="filename" filename="^org.eclipse.emf.ecore.sdo_2.1.0.jar$"/>
       <match-rule name="xsd_ver" type="filename" filename="^org.eclipse.xsd_2.1.0.jar$"/>
       <match-rule name="gef_ver" type="filenameVersion" filename="^org.eclipse.gef_(3.1.0).jar$"/>
+      <match-rule name="ecore.sdo_ver" type="binary" filename="^feature.xml$" regexp="ecore.sdo.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
+      <match-rule name="xsd_ver" type="binary" filename="^feature.xml$" regexp="xsd.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
   <project-rule name="eclipseplugin-grayskylogwatcher" from="wild" os="all">
@@ -2143,14 +2145,6 @@
       <match-rule name="subclipse_ver" type="binary" filename="^feature.xml$" regexp="subclipse.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
-  <project-rule name="eclipseplugin-ecore.sdo" from="wild" os="all">
-    <description/>
-    <eval expression="ecore.sdo_version" speed="1"/>
-    <match-rules name="ecore.sdo_version">
-      <result expression="OR-ALL"/>
-      <match-rule name="ecore.sdo_ver" type="binary" filename="^feature.xml$" regexp="ecore.sdo.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="eclipseplugin-eclipse_emf" from="wild" os="all">
     <description/>
     <eval expression="emf_version" speed="1"/>
@@ -2173,14 +2167,6 @@
     <match-rules name="jem_version">
       <result expression="OR-ALL"/>
       <match-rule name="jem_ver" type="binary" filename="^feature.xml$" regexp="jem.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="eclipseplugin-xsd" from="wild" os="all">
-    <description/>
-    <eval expression="xsd_version" speed="1"/>
-    <match-rules name="xsd_version">
-      <result expression="OR-ALL"/>
-      <match-rule name="xsd_ver" type="binary" filename="^feature.xml$" regexp="xsd.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
   <project-rule name="eclipseplugin-jbossaop" from="wild" os="all">
@@ -6250,8 +6236,8 @@ libpython2.5.so.1.0
       <match-rule name="2-win-snort-version" type="binary" filename="^snort\.exe$" regexp="\x00(\d.*?)-ODBC.*"/>
     </match-rules>
   </project-rule>
-  <project-rule name="sonar" from="wild" os="windows">
-    <description>checks md5 for sonar.jar or detects presence of file</description>
+  <project-rule name="jcaif" from="wild" os="windows">
+    <description>checks md5 for sonar.jar or detects presence of file. sonar is part of jcaif</description>
     <eval expression="sonar_md5 or sonar_filename" speed="1"/>
     <match-rules name="sonar_filename">
       <match-rule name="1-sonar-filename" type="filename" filename="sonar\.jar$"/>
