@@ -2118,7 +2118,7 @@
       <match-rule name="xsd_ver" type="filename" filename="^org.eclipse.xsd_2.1.0.jar$"/>
       <match-rule name="gef_ver" type="filenameVersion" filename="^org.eclipse.gef_(3.1.0).jar$"/>
       <match-rule name="ecore.sdo_ver" type="binary" filename="^feature.xml$" regexp="ecore.sdo.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
-      <match-rule name="xsd_ver" type="binary" filename="^feature.xml$" regexp="xsd.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
+      <match-rule name="xsd_ver2" type="binary" filename="^feature.xml$" regexp="xsd.*?\n.*?label.*?\n.*?version=\&quot;(.+?)\&quot;"/>
     </match-rules>
   </project-rule>
   <project-rule name="eclipseplugin-grayskylogwatcher" from="wild" os="all">
