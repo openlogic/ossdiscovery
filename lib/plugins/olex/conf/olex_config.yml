@@ -33,7 +33,9 @@ olex_enabled: true
 results: STDOUT
 
 machine_report: scanresults-olex.txt
-local_report: scanresults-local-olex.txt
+local_report: scanresults-local-detailed-olex.txt
+local_rollup_report: scanresults-local-rollup-olex.txt
+mif_report: scanresults-olex.mif
 
 # Set to true to see http://olex.openlogic.com/packages/(package_id) links in
 # on-screen results instead of just the package_id for discovered packages.  This

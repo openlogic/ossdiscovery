@@ -2,11 +2,29 @@
 Olex Plugin v1.1 --help
 
 --olex-local,      -u the absolute or relative path and filename for the human
-                      readable results file.  The default is STDOUT
+                      readable results file
+
+                        The default is scanresults-local-detailed-olex.txt
 
 --olex-results,    -m the absolute or relative path and filename for the
                       machine readable results file that can be uploaded
                       to the OLEX Server
+
+                        The default is scanresults-olex.txt
+
+--olex-rollup,     -z this option will change the default console output to
+                      the aggregated rollup report
+
+                      optional arg: the absolute or relative path and filename
+                      for the human readable aggregated results file
+
+                        The default is scanresults-local-rollup-olex.txt
+
+--olex-mif-file,      the absolute or relative path and filename for the human
+                      readable results file
+
+                        The default is scanresults-olex.mif
+
 
 --list-plugins,    -N lists just the enabled plugins, not all plugins installed
 

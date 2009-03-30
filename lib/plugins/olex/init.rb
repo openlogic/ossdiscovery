@@ -32,7 +32,7 @@ require 'conf/olex_config'
 if ( OlexConfig.olex_enabled )
    require 'olex_plugin'
 
-   OLEX_PLUGIN_VERSION = "1.0"
+   OLEX_PLUGIN_VERSION = "1.1"
    OLEX_PLUGIN_VERSION_KEY =  "30the24special47secret32".to_i(36).to_s(16)
 
    # create the plugin and register it with the ossdiscovery plugin framework
