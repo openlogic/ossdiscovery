@@ -381,6 +381,17 @@ def make_reports
         puts File.new(aPlugin.machine_report_filename).read
       end
     end
+
+    # if the plugin will respond to a mif report method, fire it off
+    if aPlugin.respond_to?(:mif_report, false)
+      aPlugin.mif_report(aPlugin.mif_report_filename, @packages, @scandata)
+
+      if @preview_results && aPlugin.mif_report_filename != STDOUT
+        printf("\nThese are the actual machine scan results from the file, %s, that can be imported into Tivoli Inventory. \n", destination)
+        puts File.new(aPlugin.mif_report_filename).read
+      end
+    end
+
   end
 end
 
