@@ -49,27 +49,6 @@
       <match-rule name="aspectj_jar" type="filenameVersion" filename="^aspectj-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="avalon-http" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="avalon-http_fv" speed="1"/>
-    <match-rules name="avalon-http_fv">
-      <match-rule name="avalon-http_jar" type="filenameVersion" filename="^avalon-http-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="avalon-meta" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="avalon-meta_fv" speed="1"/>
-    <match-rules name="avalon-meta_fv">
-      <match-rule name="avalon-meta_jar" type="filenameVersion" filename="^avalon-meta-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="avalon-util" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="avalon-util_fv" speed="1"/>
-    <match-rules name="avalon-util_fv">
-      <match-rule name="avalon-util_jar" type="filenameVersion" filename="^avalon-util-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="batik" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="batik_fv" speed="1"/>
@@ -77,25 +56,11 @@
       <match-rule name="batik_jar" type="filenameVersion" filename="^batik-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="berkeleydb" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="berkeleydb_fv" speed="1"/>
-    <match-rules name="berkeleydb_fv">
-      <match-rule name="berkeleydb_jar" type="filenameVersion" filename="^berkeleydb-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="bouncycastle" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="bouncycastle_fv" speed="1"/>
     <match-rules name="bouncycastle_fv">
       <match-rule name="bouncycastle_jar" type="filenameVersion" filename="^bouncycastle-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="boxstuff" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="boxstuff_fv" speed="1"/>
-    <match-rules name="boxstuff_fv">
-      <match-rule name="boxstuff_jar" type="filenameVersion" filename="^boxstuff-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="c3p0" from="wild" os="all">
@@ -147,32 +112,11 @@
       <match-rule name="commons-util_jar" type="filenameVersion" filename="^commons-util-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="controlhaus" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="controlhaus_fv" speed="1"/>
-    <match-rules name="controlhaus_fv">
-      <match-rule name="controlhaus_jar" type="filenameVersion" filename="^controlhaus-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="dentaku" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="dentaku_fv" speed="1"/>
-    <match-rules name="dentaku_fv">
-      <match-rule name="dentaku_jar" type="filenameVersion" filename="^dentaku-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="dna" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="dna_fv" speed="1"/>
     <match-rules name="dna_fv">
       <match-rule name="dna_jar" type="filenameVersion" filename="^dna-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="doccheck" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="doccheck_fv" speed="1"/>
-    <match-rules name="doccheck_fv">
-      <match-rule name="doccheck_jar" type="filenameVersion" filename="^doccheck-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="emma" from="wild" os="all">
@@ -182,25 +126,11 @@
       <match-rule name="emma_jar" type="filenameVersion" filename="^emma-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="excalibur" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur_fv" speed="1"/>
-    <match-rules name="excalibur_fv">
-      <match-rule name="excalibur_jar" type="filenameVersion" filename="^excalibur-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="exml" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="exml_fv" speed="1"/>
     <match-rules name="exml_fv">
       <match-rule name="exml_jar" type="filenameVersion" filename="^exml-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="fastutil" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fastutil_fv" speed="1"/>
-    <match-rules name="fastutil_fv">
-      <match-rule name="fastutil_jar" type="filenameVersion" filename="^fastutil-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="freemarker" from="wild" os="all">
@@ -215,34 +145,6 @@
     <eval expression="generama_fv" speed="1"/>
     <match-rules name="generama_fv">
       <match-rule name="generama_jar" type="filenameVersion" filename="^generama-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="geoserver" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="geoserver_fv" speed="1"/>
-    <match-rules name="geoserver_fv">
-      <match-rule name="geoserver_jar" type="filenameVersion" filename="^geoserver-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="geotools" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="geotools_fv" speed="1"/>
-    <match-rules name="geotools_fv">
-      <match-rule name="geotools_jar" type="filenameVersion" filename="^geotools-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="grails" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="grails_fv" speed="1"/>
-    <match-rules name="grails_fv">
-      <match-rule name="grails_jar" type="filenameVersion" filename="^grails-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="groovy-xmlrpc" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="groovy-xmlrpc_fv" speed="1"/>
-    <match-rules name="groovy-xmlrpc_fv">
-      <match-rule name="groovy-xmlrpc_jar" type="filenameVersion" filename="^groovy-xmlrpc-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="groovy" from="wild" os="all">
@@ -271,20 +173,6 @@
     <eval expression="jbehave_fv" speed="1"/>
     <match-rules name="jbehave_fv">
       <match-rule name="jbehave_jar" type="filenameVersion" filename="^jbehave-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jblanket" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jblanket_fv" speed="1"/>
-    <match-rules name="jblanket_fv">
-      <match-rule name="jblanket_jar" type="filenameVersion" filename="^jblanket-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jdbi" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jdbi_fv" speed="1"/>
-    <match-rules name="jdbi_fv">
-      <match-rule name="jdbi_jar" type="filenameVersion" filename="^jdbi-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="jetty" from="wild" os="all">
@@ -680,13 +568,6 @@
       <match-rule name="anttex_jar" type="filenameVersion" filename="^anttex-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="aptconvert" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="aptconvert_fv" speed="1"/>
-    <match-rules name="aptconvert_fv">
-      <match-rule name="aptconvert_jar" type="filenameVersion" filename="^aptconvert-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="ashkelon" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="ashkelon_fv" speed="1"/>
@@ -715,97 +596,6 @@
       <match-rule name="aspectwerkz_jar" type="filenameVersion" filename="^aspectwerkz-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="avalon" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="avalon_fv" speed="1"/>
-    <match-rules name="avalon_fv">
-      <match-rule name="avalon_jar" type="filenameVersion" filename="^avalon-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="avalon-activation" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="avalon-activation_fv" speed="1"/>
-    <match-rules name="avalon-activation_fv">
-      <match-rule name="avalon-activation_jar" type="filenameVersion" filename="^avalon-activation-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="avalon-apps" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="avalon-apps_fv" speed="1"/>
-    <match-rules name="avalon-apps_fv">
-      <match-rule name="avalon-apps_jar" type="filenameVersion" filename="^avalon-apps-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="avalon-composition" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="avalon-composition_fv" speed="1"/>
-    <match-rules name="avalon-composition_fv">
-      <match-rule name="avalon-composition_jar" type="filenameVersion" filename="^avalon-composition-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="avalon-cornerstone" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="avalon-cornerstone_fv" speed="1"/>
-    <match-rules name="avalon-cornerstone_fv">
-      <match-rule name="avalon-cornerstone_jar" type="filenameVersion" filename="^avalon-cornerstone-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="avalon-extension" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="avalon-extension_fv" speed="1"/>
-    <match-rules name="avalon-extension_fv">
-      <match-rule name="avalon-extension_jar" type="filenameVersion" filename="^avalon-extension-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="avalon-framework" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="avalon-framework_fv" speed="1"/>
-    <match-rules name="avalon-framework_fv">
-      <match-rule name="avalon-framework_jar" type="filenameVersion" filename="^avalon-framework-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="avalon-http" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="avalon-http_fv" speed="1"/>
-    <match-rules name="avalon-http_fv">
-      <match-rule name="avalon-http_jar" type="filenameVersion" filename="^avalon-http-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="avalon-logging" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="avalon-logging_fv" speed="1"/>
-    <match-rules name="avalon-logging_fv">
-      <match-rule name="avalon-logging_jar" type="filenameVersion" filename="^avalon-logging-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="avalon-meta" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="avalon-meta_fv" speed="1"/>
-    <match-rules name="avalon-meta_fv">
-      <match-rule name="avalon-meta_jar" type="filenameVersion" filename="^avalon-meta-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="avalon-phoenix" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="avalon-phoenix_fv" speed="1"/>
-    <match-rules name="avalon-phoenix_fv">
-      <match-rule name="avalon-phoenix_jar" type="filenameVersion" filename="^avalon-phoenix-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="avalon-repository" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="avalon-repository_fv" speed="1"/>
-    <match-rules name="avalon-repository_fv">
-      <match-rule name="avalon-repository_jar" type="filenameVersion" filename="^avalon-repository-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="avalon-util" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="avalon-util_fv" speed="1"/>
-    <match-rules name="avalon-util_fv">
-      <match-rule name="avalon-util_jar" type="filenameVersion" filename="^avalon-util-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="axion" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="axion_fv" speed="1"/>
@@ -827,13 +617,6 @@
       <match-rule name="bcel_jar" type="filenameVersion" filename="^bcel-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="blissed" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="blissed_fv" speed="1"/>
-    <match-rules name="blissed_fv">
-      <match-rule name="blissed_jar" type="filenameVersion" filename="^blissed-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="bouncycastle" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="bouncycastle_fv" speed="1"/>
@@ -846,20 +629,6 @@
     <eval expression="bsh_fv" speed="1"/>
     <match-rules name="bsh_fv">
       <match-rule name="bsh_jar" type="filenameVersion" filename="^bsh-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="burlap" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="burlap_fv" speed="1"/>
-    <match-rules name="burlap_fv">
-      <match-rule name="burlap_jar" type="filenameVersion" filename="^burlap-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="cactus" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="cactus_fv" speed="1"/>
-    <match-rules name="cactus_fv">
-      <match-rule name="cactus_jar" type="filenameVersion" filename="^cactus-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="cglib" from="wild" os="all">
@@ -960,13 +729,6 @@
       <match-rule name="resin_jar" type="filenameVersion" filename="^resin-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="extend" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="extend_fv" speed="1"/>
-    <match-rules name="extend_fv">
-      <match-rule name="extend_jar" type="filenameVersion" filename="^extend-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="generic" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="generic_fv" speed="1"/>
@@ -1009,13 +771,6 @@
       <match-rule name="silk_jar" type="filenameVersion" filename="^silk-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="easyio" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="easyio_fv" speed="1"/>
-    <match-rules name="easyio_fv">
-      <match-rule name="easyio_jar" type="filenameVersion" filename="^easyio-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="transform-swf" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="transform-swf_fv" speed="1"/>
@@ -1035,13 +790,6 @@
     <eval expression="xmlstringparser_fv" speed="1"/>
     <match-rules name="xmlstringparser_fv">
       <match-rule name="xmlstringparser_jar" type="filenameVersion" filename="^xmlstringparser-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="guice" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="guice_fv" speed="1"/>
-    <match-rules name="guice_fv">
-      <match-rule name="guice_jar" type="filenameVersion" filename="^guice-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="struts2webflow" from="wild" os="all">
@@ -1079,13 +827,6 @@
       <match-rule name="icu_jar" type="filenameVersion" filename="^icu-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="greenmail" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="greenmail_fv" speed="1"/>
-    <match-rules name="greenmail_fv">
-      <match-rule name="greenmail_jar" type="filenameVersion" filename="^greenmail-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="ghia" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="ghia_fv" speed="1"/>
@@ -1100,13 +841,6 @@
       <match-rule name="jsch_jar" type="filenameVersion" filename="^jsch-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="filters" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="filters_fv" speed="1"/>
-    <match-rules name="filters_fv">
-      <match-rule name="filters_jar" type="filenameVersion" filename="^filters-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="javaproj" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="javaproj_fv" speed="1"/>
@@ -1114,25 +848,11 @@
       <match-rule name="javaproj_jar" type="filenameVersion" filename="^javaproj-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="jide-oss" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jide-oss_fv" speed="1"/>
-    <match-rules name="jide-oss_fv">
-      <match-rule name="jide-oss_jar" type="filenameVersion" filename="^jide-oss-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="png-encoder" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="png-encoder_fv" speed="1"/>
     <match-rules name="png-encoder_fv">
       <match-rule name="png-encoder_jar" type="filenameVersion" filename="^png-encoder-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jaranalyzer" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jaranalyzer_fv" speed="1"/>
-    <match-rules name="jaranalyzer_fv">
-      <match-rule name="jaranalyzer_jar" type="filenameVersion" filename="^jaranalyzer-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="itext" from="wild" os="all">
@@ -1147,13 +867,6 @@
     <eval expression="jsap_fv" speed="1"/>
     <match-rules name="jsap_fv">
       <match-rule name="jsap_jar" type="filenameVersion" filename="^jsap-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jintellitype" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jintellitype_fv" speed="1"/>
-    <match-rules name="jintellitype_fv">
-      <match-rule name="jintellitype_jar" type="filenameVersion" filename="^jintellitype-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="jspiff" from="wild" os="all">
@@ -1177,32 +890,11 @@
       <match-rule name="mockrunner_jar" type="filenameVersion" filename="^mockrunner-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="echo2-app" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="echo2-app_fv" speed="1"/>
-    <match-rules name="echo2-app_fv">
-      <match-rule name="echo2-app_jar" type="filenameVersion" filename="^echo2-app-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="bayeux" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="bayeux_fv" speed="1"/>
-    <match-rules name="bayeux_fv">
-      <match-rule name="bayeux_jar" type="filenameVersion" filename="^bayeux-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="ldap" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="ldap_fv" speed="1"/>
     <match-rules name="ldap_fv">
       <match-rule name="ldap_jar" type="filenameVersion" filename="^ldap-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="captcha" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="captcha_fv" speed="1"/>
-    <match-rules name="captcha_fv">
-      <match-rule name="captcha_jar" type="filenameVersion" filename="^captcha-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="orangevolt" from="wild" os="all">
@@ -1247,13 +939,6 @@
       <match-rule name="jlmenu_jar" type="filenameVersion" filename="^jlmenu-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="blogger-api-client" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="blogger-api-client_fv" speed="1"/>
-    <match-rules name="blogger-api-client_fv">
-      <match-rule name="blogger-api-client_jar" type="filenameVersion" filename="^blogger-api-client-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="jsontools" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="jsontools_fv" speed="1"/>
@@ -1266,13 +951,6 @@
     <eval expression="cos_fv" speed="1"/>
     <match-rules name="cos_fv">
       <match-rule name="cos_jar" type="filenameVersion" filename="^cos-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="easymock-propertyutils" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="easymock-propertyutils_fv" speed="1"/>
-    <match-rules name="easymock-propertyutils_fv">
-      <match-rule name="easymock-propertyutils_jar" type="filenameVersion" filename="^easymock-propertyutils-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="xstream" from="wild" os="all">
@@ -1289,13 +967,6 @@
       <match-rule name="jarjar_jar" type="filenameVersion" filename="^jarjar-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="itunes-com-podcast" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="itunes-com-podcast_fv" speed="1"/>
-    <match-rules name="itunes-com-podcast_fv">
-      <match-rule name="itunes-com-podcast_jar" type="filenameVersion" filename="^itunes-com-podcast-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="purl-org-content" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="purl-org-content_fv" speed="1"/>
@@ -1310,25 +981,11 @@
       <match-rule name="purl-org-slash_jar" type="filenameVersion" filename="^purl-org-slash-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="jhighlight" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jhighlight_fv" speed="1"/>
-    <match-rules name="jhighlight_fv">
-      <match-rule name="jhighlight_jar" type="filenameVersion" filename="^jhighlight-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="whirlycache" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="whirlycache_fv" speed="1"/>
     <match-rules name="whirlycache_fv">
       <match-rule name="whirlycache_jar" type="filenameVersion" filename="^whirlycache-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="dtdparser" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="dtdparser_fv" speed="1"/>
-    <match-rules name="dtdparser_fv">
-      <match-rule name="dtdparser_jar" type="filenameVersion" filename="^dtdparser-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="jox" from="wild" os="all">
@@ -1350,13 +1007,6 @@
     <eval expression="commons-betwixt_fv" speed="1"/>
     <match-rules name="commons-betwixt_fv">
       <match-rule name="commons-betwixt_jar" type="filenameVersion" filename="^commons-betwixt-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="code316" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="code316_fv" speed="1"/>
-    <match-rules name="code316_fv">
-      <match-rule name="code316_jar" type="filenameVersion" filename="^code316-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="commons-cli" from="wild" os="all">
@@ -1443,13 +1093,6 @@
       <match-rule name="commons-graph_jar" type="filenameVersion" filename="^commons-graph-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="commons-http" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="commons-http_fv" speed="1"/>
-    <match-rules name="commons-http_fv">
-      <match-rule name="commons-http_jar" type="filenameVersion" filename="^commons-http-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="commons-httpclient" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="commons-httpclient_fv" speed="1"/>
@@ -1478,13 +1121,6 @@
       <match-rule name="commons-jexl_jar" type="filenameVersion" filename="^commons-jexl-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="commons-jux" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="commons-jux_fv" speed="1"/>
-    <match-rules name="commons-jux_fv">
-      <match-rule name="commons-jux_jar" type="filenameVersion" filename="^commons-jux-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="commons-jxpath" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="commons-jxpath_fv" speed="1"/>
@@ -1506,32 +1142,11 @@
       <match-rule name="commons-logging_jar" type="filenameVersion" filename="^commons-logging-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="commons-math" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="commons-math_fv" speed="1"/>
-    <match-rules name="commons-math_fv">
-      <match-rule name="commons-math_jar" type="filenameVersion" filename="^commons-math-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="commons-messenger" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="commons-messenger_fv" speed="1"/>
-    <match-rules name="commons-messenger_fv">
-      <match-rule name="commons-messenger_jar" type="filenameVersion" filename="^commons-messenger-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="commons-modeler" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="commons-modeler_fv" speed="1"/>
     <match-rules name="commons-modeler_fv">
       <match-rule name="commons-modeler_jar" type="filenameVersion" filename="^commons-modeler-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="commons-naming" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="commons-naming_fv" speed="1"/>
-    <match-rules name="commons-naming_fv">
-      <match-rule name="commons-naming_jar" type="filenameVersion" filename="^commons-naming-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="commons-net" from="wild" os="all">
@@ -1548,20 +1163,6 @@
       <match-rule name="commons-pool_jar" type="filenameVersion" filename="^commons-pool-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="commons-sql" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="commons-sql_fv" speed="1"/>
-    <match-rules name="commons-sql_fv">
-      <match-rule name="commons-sql_jar" type="filenameVersion" filename="^commons-sql-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="commons-threadpool" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="commons-threadpool_fv" speed="1"/>
-    <match-rules name="commons-threadpool_fv">
-      <match-rule name="commons-threadpool_jar" type="filenameVersion" filename="^commons-threadpool-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="commons-validator" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="commons-validator_fv" speed="1"/>
@@ -1576,13 +1177,6 @@
       <match-rule name="commons-vfs_jar" type="filenameVersion" filename="^commons-vfs-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="commons-xo" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="commons-xo_fv" speed="1"/>
-    <match-rules name="commons-xo_fv">
-      <match-rule name="commons-xo_jar" type="filenameVersion" filename="^commons-xo-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="concurrent" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="concurrent_fv" speed="1"/>
@@ -1590,60 +1184,11 @@
       <match-rule name="concurrent_jar" type="filenameVersion" filename="^concurrent-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="cornerstone-connection" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="cornerstone-connection_fv" speed="1"/>
-    <match-rules name="cornerstone-connection_fv">
-      <match-rule name="cornerstone-connection_jar" type="filenameVersion" filename="^cornerstone-connection-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="cornerstone-datasources" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="cornerstone-datasources_fv" speed="1"/>
-    <match-rules name="cornerstone-datasources_fv">
-      <match-rule name="cornerstone-datasources_jar" type="filenameVersion" filename="^cornerstone-datasources-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="cornerstone-scheduler" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="cornerstone-scheduler_fv" speed="1"/>
-    <match-rules name="cornerstone-scheduler_fv">
-      <match-rule name="cornerstone-scheduler_jar" type="filenameVersion" filename="^cornerstone-scheduler-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="cornerstone-sockets" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="cornerstone-sockets_fv" speed="1"/>
-    <match-rules name="cornerstone-sockets_fv">
-      <match-rule name="cornerstone-sockets_jar" type="filenameVersion" filename="^cornerstone-sockets-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="cornerstone-store" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="cornerstone-store_fv" speed="1"/>
-    <match-rules name="cornerstone-store_fv">
-      <match-rule name="cornerstone-store_jar" type="filenameVersion" filename="^cornerstone-store-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="cornerstone-threads" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="cornerstone-threads_fv" speed="1"/>
-    <match-rules name="cornerstone-threads_fv">
-      <match-rule name="cornerstone-threads_jar" type="filenameVersion" filename="^cornerstone-threads-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="crimson" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="crimson_fv" speed="1"/>
     <match-rules name="crimson_fv">
       <match-rule name="crimson_jar" type="filenameVersion" filename="^crimson-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="cryptix" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="cryptix_fv" speed="1"/>
-    <match-rules name="cryptix_fv">
-      <match-rule name="cryptix_jar" type="filenameVersion" filename="^cryptix-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="dbunit" from="wild" os="all">
@@ -1658,13 +1203,6 @@
     <eval expression="displaytag_fv" speed="1"/>
     <match-rules name="displaytag_fv">
       <match-rule name="displaytag_jar" type="filenameVersion" filename="^displaytag-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="dnsjava" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="dnsjava_fv" speed="1"/>
-    <match-rules name="dnsjava_fv">
-      <match-rule name="dnsjava_jar" type="filenameVersion" filename="^dnsjava-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="drools" from="wild" os="all">
@@ -1695,13 +1233,6 @@
       <match-rule name="ecs_jar" type="filenameVersion" filename="^ecs-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="edenlib" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="edenlib_fv" speed="1"/>
-    <match-rules name="edenlib_fv">
-      <match-rule name="edenlib_jar" type="filenameVersion" filename="^edenlib-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="edtftp" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="edtftp_fv" speed="1"/>
@@ -1716,209 +1247,6 @@
       <match-rule name="ehcache_jar" type="filenameVersion" filename="^ehcache-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="excalibur" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur_fv" speed="1"/>
-    <match-rules name="excalibur_fv">
-      <match-rule name="excalibur_jar" type="filenameVersion" filename="^excalibur-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-altrmi" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-altrmi_fv" speed="1"/>
-    <match-rules name="excalibur-altrmi_fv">
-      <match-rule name="excalibur-altrmi_jar" type="filenameVersion" filename="^excalibur-altrmi-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-cli" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-cli_fv" speed="1"/>
-    <match-rules name="excalibur-cli_fv">
-      <match-rule name="excalibur-cli_jar" type="filenameVersion" filename="^excalibur-cli-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-collections" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-collections_fv" speed="1"/>
-    <match-rules name="excalibur-collections_fv">
-      <match-rule name="excalibur-collections_jar" type="filenameVersion" filename="^excalibur-collections-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-component" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-component_fv" speed="1"/>
-    <match-rules name="excalibur-component_fv">
-      <match-rule name="excalibur-component_jar" type="filenameVersion" filename="^excalibur-component-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-concurrent" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-concurrent_fv" speed="1"/>
-    <match-rules name="excalibur-concurrent_fv">
-      <match-rule name="excalibur-concurrent_jar" type="filenameVersion" filename="^excalibur-concurrent-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-configuration" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-configuration_fv" speed="1"/>
-    <match-rules name="excalibur-configuration_fv">
-      <match-rule name="excalibur-configuration_jar" type="filenameVersion" filename="^excalibur-configuration-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-containerkit" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-containerkit_fv" speed="1"/>
-    <match-rules name="excalibur-containerkit_fv">
-      <match-rule name="excalibur-containerkit_jar" type="filenameVersion" filename="^excalibur-containerkit-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-datasource" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-datasource_fv" speed="1"/>
-    <match-rules name="excalibur-datasource_fv">
-      <match-rule name="excalibur-datasource_jar" type="filenameVersion" filename="^excalibur-datasource-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-event" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-event_fv" speed="1"/>
-    <match-rules name="excalibur-event_fv">
-      <match-rule name="excalibur-event_jar" type="filenameVersion" filename="^excalibur-event-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-extension" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-extension_fv" speed="1"/>
-    <match-rules name="excalibur-extension_fv">
-      <match-rule name="excalibur-extension_jar" type="filenameVersion" filename="^excalibur-extension-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-fortress" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-fortress_fv" speed="1"/>
-    <match-rules name="excalibur-fortress_fv">
-      <match-rule name="excalibur-fortress_jar" type="filenameVersion" filename="^excalibur-fortress-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-i18n" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-i18n_fv" speed="1"/>
-    <match-rules name="excalibur-i18n_fv">
-      <match-rule name="excalibur-i18n_jar" type="filenameVersion" filename="^excalibur-i18n-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-instrument" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-instrument_fv" speed="1"/>
-    <match-rules name="excalibur-instrument_fv">
-      <match-rule name="excalibur-instrument_jar" type="filenameVersion" filename="^excalibur-instrument-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-instrument-manager" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-instrument-manager_fv" speed="1"/>
-    <match-rules name="excalibur-instrument-manager_fv">
-      <match-rule name="excalibur-instrument-manager_jar" type="filenameVersion" filename="^excalibur-instrument-manager-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-instrument-manager-interfaces" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-instrument-manager-interfaces_fv" speed="1"/>
-    <match-rules name="excalibur-instrument-manager-interfaces_fv">
-      <match-rule name="excalibur-instrument-manager-interfaces_jar" type="filenameVersion" filename="^excalibur-instrument-manager-interfaces-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-io" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-io_fv" speed="1"/>
-    <match-rules name="excalibur-io_fv">
-      <match-rule name="excalibur-io_jar" type="filenameVersion" filename="^excalibur-io-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-lifecycle" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-lifecycle_fv" speed="1"/>
-    <match-rules name="excalibur-lifecycle_fv">
-      <match-rule name="excalibur-lifecycle_jar" type="filenameVersion" filename="^excalibur-lifecycle-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-logger" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-logger_fv" speed="1"/>
-    <match-rules name="excalibur-logger_fv">
-      <match-rule name="excalibur-logger_jar" type="filenameVersion" filename="^excalibur-logger-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-monitor" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-monitor_fv" speed="1"/>
-    <match-rules name="excalibur-monitor_fv">
-      <match-rule name="excalibur-monitor_jar" type="filenameVersion" filename="^excalibur-monitor-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-mpool" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-mpool_fv" speed="1"/>
-    <match-rules name="excalibur-mpool_fv">
-      <match-rule name="excalibur-mpool_jar" type="filenameVersion" filename="^excalibur-mpool-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-naming" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-naming_fv" speed="1"/>
-    <match-rules name="excalibur-naming_fv">
-      <match-rule name="excalibur-naming_jar" type="filenameVersion" filename="^excalibur-naming-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-pool" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-pool_fv" speed="1"/>
-    <match-rules name="excalibur-pool_fv">
-      <match-rule name="excalibur-pool_jar" type="filenameVersion" filename="^excalibur-pool-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-sourceresolve" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-sourceresolve_fv" speed="1"/>
-    <match-rules name="excalibur-sourceresolve_fv">
-      <match-rule name="excalibur-sourceresolve_jar" type="filenameVersion" filename="^excalibur-sourceresolve-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-store" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-store_fv" speed="1"/>
-    <match-rules name="excalibur-store_fv">
-      <match-rule name="excalibur-store_jar" type="filenameVersion" filename="^excalibur-store-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-thread" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-thread_fv" speed="1"/>
-    <match-rules name="excalibur-thread_fv">
-      <match-rule name="excalibur-thread_jar" type="filenameVersion" filename="^excalibur-thread-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-util" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-util_fv" speed="1"/>
-    <match-rules name="excalibur-util_fv">
-      <match-rule name="excalibur-util_jar" type="filenameVersion" filename="^excalibur-util-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="excalibur-xmlutil" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="excalibur-xmlutil_fv" speed="1"/>
-    <match-rules name="excalibur-xmlutil_fv">
-      <match-rule name="excalibur-xmlutil_jar" type="filenameVersion" filename="^excalibur-xmlutil-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="exist" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="exist_fv" speed="1"/>
-    <match-rules name="exist_fv">
-      <match-rule name="exist_jar" type="filenameVersion" filename="^exist-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="exml" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="exml_fv" speed="1"/>
@@ -1926,32 +1254,11 @@
       <match-rule name="exml_jar" type="filenameVersion" filename="^exml-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="exolabcore" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="exolabcore_fv" speed="1"/>
-    <match-rules name="exolabcore_fv">
-      <match-rule name="exolabcore_jar" type="filenameVersion" filename="^exolabcore-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="exteca" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="exteca_fv" speed="1"/>
-    <match-rules name="exteca_fv">
-      <match-rule name="exteca_jar" type="filenameVersion" filename="^exteca-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="fastutil" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="fastutil_fv" speed="1"/>
     <match-rules name="fastutil_fv">
       <match-rule name="fastutil_jar" type="filenameVersion" filename="^fastutil-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="fesi" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fesi_fv" speed="1"/>
-    <match-rules name="fesi_fv">
-      <match-rule name="fesi_jar" type="filenameVersion" filename="^fesi-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="flux" from="wild" os="all">
@@ -1975,25 +1282,11 @@
       <match-rule name="forehead_jar" type="filenameVersion" filename="^forehead-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="formproc" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="formproc_fv" speed="1"/>
-    <match-rules name="formproc_fv">
-      <match-rule name="formproc_jar" type="filenameVersion" filename="^formproc-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="foxtrot" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="foxtrot_fv" speed="1"/>
     <match-rules name="foxtrot_fv">
       <match-rule name="foxtrot_jar" type="filenameVersion" filename="^foxtrot-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="freebxml" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="freebxml_fv" speed="1"/>
-    <match-rules name="freebxml_fv">
-      <match-rule name="freebxml_jar" type="filenameVersion" filename="^freebxml-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="freemarker" from="wild" os="all">
@@ -2003,20 +1296,6 @@
       <match-rule name="freemarker_jar" type="filenameVersion" filename="^freemarker-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="fulcrum" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fulcrum_fv" speed="1"/>
-    <match-rules name="fulcrum_fv">
-      <match-rule name="fulcrum_jar" type="filenameVersion" filename="^fulcrum-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="genjar" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="genjar_fv" speed="1"/>
-    <match-rules name="genjar_fv">
-      <match-rule name="genjar_jar" type="filenameVersion" filename="^genjar-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="gnu-regexp" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="gnu-regexp_fv" speed="1"/>
@@ -2024,25 +1303,11 @@
       <match-rule name="gnu-regexp_jar" type="filenameVersion" filename="^gnu-regexp-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="graphlayout" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="graphlayout_fv" speed="1"/>
-    <match-rules name="graphlayout_fv">
-      <match-rule name="graphlayout_jar" type="filenameVersion" filename="^graphlayout-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="groovy" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="groovy_fv" speed="1"/>
     <match-rules name="groovy_fv">
       <match-rule name="groovy_jar" type="filenameVersion" filename="^groovy-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="gsbase" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="gsbase_fv" speed="1"/>
-    <match-rules name="gsbase_fv">
-      <match-rule name="gsbase_jar" type="filenameVersion" filename="^gsbase-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="hsqldb" from="wild" os="all">
@@ -2059,13 +1324,6 @@
       <match-rule name="httpunit_jar" type="filenameVersion" filename="^httpunit-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="isorelax" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="isorelax_fv" speed="1"/>
-    <match-rules name="isorelax_fv">
-      <match-rule name="isorelax_jar" type="filenameVersion" filename="^isorelax-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="jacl" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="jacl_fv" speed="1"/>
@@ -2080,20 +1338,6 @@
       <match-rule name="jalopy_jar" type="filenameVersion" filename="^jalopy-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="james" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="james_fv" speed="1"/>
-    <match-rules name="james_fv">
-      <match-rule name="james_jar" type="filenameVersion" filename="^james-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jarsync" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jarsync_fv" speed="1"/>
-    <match-rules name="jarsync_fv">
-      <match-rule name="jarsync_jar" type="filenameVersion" filename="^jarsync-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="javacc" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="javacc_fv" speed="1"/>
@@ -2106,13 +1350,6 @@
     <eval expression="cargo_fv" speed="1"/>
     <match-rules name="cargo_fv">
       <match-rule name="cargo_jar" type="filenameVersion" filename="^cargo-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="javagroups" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="javagroups_fv" speed="1"/>
-    <match-rules name="javagroups_fv">
-      <match-rule name="javagroups_jar" type="filenameVersion" filename="^javagroups-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="javassist" from="wild" os="all">
@@ -2136,13 +1373,6 @@
       <match-rule name="jaxen_jar" type="filenameVersion" filename="^jaxen-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="jaxme" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jaxme_fv" speed="1"/>
-    <match-rules name="jaxme_fv">
-      <match-rule name="jaxme_jar" type="filenameVersion" filename="^jaxme-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="jcifs" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="jcifs_fv" speed="1"/>
@@ -2157,25 +1387,11 @@
       <match-rule name="jcommon_jar" type="filenameVersion" filename="^jcommon-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="jcoverage" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jcoverage_fv" speed="1"/>
-    <match-rules name="jcoverage_fv">
-      <match-rule name="jcoverage_jar" type="filenameVersion" filename="^jcoverage-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="jcs" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="jcs_fv" speed="1"/>
     <match-rules name="jcs_fv">
       <match-rule name="jcs_jar" type="filenameVersion" filename="^jcs-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jcvsii" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jcvsii_fv" speed="1"/>
-    <match-rules name="jcvsii_fv">
-      <match-rule name="jcvsii_jar" type="filenameVersion" filename="^jcvsii-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="jdbm" from="wild" os="all">
@@ -2199,13 +1415,6 @@
       <match-rule name="jdiff_jar" type="filenameVersion" filename="^jdiff-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="jdring" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jdring_fv" speed="1"/>
-    <match-rules name="jdring_fv">
-      <match-rule name="jdring_jar" type="filenameVersion" filename="^jdring-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="jep" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="jep_fv" speed="1"/>
@@ -2225,27 +1434,6 @@
     <eval expression="jfreechart_fv" speed="1"/>
     <match-rules name="jfreechart_fv">
       <match-rule name="jfreechart_jar" type="filenameVersion" filename="^jfreechart-.*?([0-9].*?[0-9])(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jgraph" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jgraph_fv" speed="1"/>
-    <match-rules name="jgraph_fv">
-      <match-rule name="jgraph_jar" type="filenameVersion" filename="^jgraph-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jisp" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jisp_fv" speed="1"/>
-    <match-rules name="jisp_fv">
-      <match-rule name="jisp_jar" type="filenameVersion" filename="^jisp-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jlibdiff" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jlibdiff_fv" speed="1"/>
-    <match-rules name="jlibdiff_fv">
-      <match-rule name="jlibdiff_jar" type="filenameVersion" filename="^jlibdiff-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="jmml" from="wild" os="all">
@@ -2540,13 +1728,6 @@
     <eval expression="xwork_fv" speed="1"/>
     <match-rules name="xwork_fv">
       <match-rule name="xwork_jar" type="filenameVersion" filename="^xwork-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="clickstream" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="clickstream_fv" speed="1"/>
-    <match-rules name="clickstream_fv">
-      <match-rule name="clickstream_jar" type="filenameVersion" filename="^clickstream-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="oscache" from="wild" os="all">
@@ -3025,13 +2206,6 @@
       <match-rule name="webmacro_jar" type="filenameVersion" filename="^webmacro-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="drone" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="drone_fv" speed="1"/>
-    <match-rules name="drone_fv">
-      <match-rule name="drone_jar" type="filenameVersion" filename="^drone-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="werken-xpath" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="werken-xpath_fv" speed="1"/>
@@ -3263,13 +2437,6 @@
       <match-rule name="gabriel_jar" type="filenameVersion" filename="^gabriel-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="jaimbot" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jaimbot_fv" speed="1"/>
-    <match-rules name="jaimbot_fv">
-      <match-rule name="jaimbot_jar" type="filenameVersion" filename="^jaimbot-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="jasperreports" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="jasperreports_fv" speed="1"/>
@@ -3282,13 +2449,6 @@
     <eval expression="simple-jndi_fv" speed="1"/>
     <match-rules name="simple-jndi_fv">
       <match-rule name="simple-jndi_jar" type="filenameVersion" filename="^simple-jndi-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="dsh-vocabulary" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="dsh-vocabulary_fv" speed="1"/>
-    <match-rules name="dsh-vocabulary_fv">
-      <match-rule name="dsh-vocabulary_jar" type="filenameVersion" filename="^dsh-vocabulary-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="jblanket" from="wild" os="all">
@@ -3333,25 +2493,11 @@
       <match-rule name="dna_jar" type="filenameVersion" filename="^dna-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="generama" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="generama_fv" speed="1"/>
-    <match-rules name="generama_fv">
-      <match-rule name="generama_jar" type="filenameVersion" filename="^generama-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="norbert" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="norbert_fv" speed="1"/>
     <match-rules name="norbert_fv">
       <match-rule name="norbert_jar" type="filenameVersion" filename="^norbert-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="ivory" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="ivory_fv" speed="1"/>
-    <match-rules name="ivory_fv">
-      <match-rule name="ivory_jar" type="filenameVersion" filename="^ivory-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="jmock" from="wild" os="all">
@@ -3480,13 +2626,6 @@
       <match-rule name="tlddoc_jar" type="filenameVersion" filename="^tlddoc-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="clirr" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="clirr_fv" speed="1"/>
-    <match-rules name="clirr_fv">
-      <match-rule name="clirr_jar" type="filenameVersion" filename="^clirr-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="log4unit" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="log4unit_fv" speed="1"/>
@@ -3543,20 +2682,6 @@
       <match-rule name="commons-compress_jar" type="filenameVersion" filename="^commons-compress-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="drools-examples" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="drools-examples_fv" speed="1"/>
-    <match-rules name="drools-examples_fv">
-      <match-rule name="drools-examples_jar" type="filenameVersion" filename="^drools-examples-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="abbot" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="abbot_fv" speed="1"/>
-    <match-rules name="abbot_fv">
-      <match-rule name="abbot_jar" type="filenameVersion" filename="^abbot-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="berkeleydb" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="berkeleydb_fv" speed="1"/>
@@ -3592,27 +2717,6 @@
       <match-rule name="hivemind_jar" type="filenameVersion" filename="^hivemind-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="coconut" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="coconut_fv" speed="1"/>
-    <match-rules name="coconut_fv">
-      <match-rule name="coconut_jar" type="filenameVersion" filename="^coconut-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="d-haven-event" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="d-haven-event_fv" speed="1"/>
-    <match-rules name="d-haven-event_fv">
-      <match-rule name="d-haven-event_jar" type="filenameVersion" filename="^d-haven-event-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="aislib" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="aislib_fv" speed="1"/>
-    <match-rules name="aislib_fv">
-      <match-rule name="aislib_jar" type="filenameVersion" filename="^aislib-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="janino" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="janino_fv" speed="1"/>
@@ -3641,39 +2745,11 @@
       <match-rule name="commons-attributes_jar" type="filenameVersion" filename="^commons-attributes-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="jmscts" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jmscts_fv" speed="1"/>
-    <match-rules name="jmscts_fv">
-      <match-rule name="jmscts_jar" type="filenameVersion" filename="^jmscts-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jrobin" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jrobin_fv" speed="1"/>
-    <match-rules name="jrobin_fv">
-      <match-rule name="jrobin_jar" type="filenameVersion" filename="^jrobin-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="dynaop" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="dynaop_fv" speed="1"/>
-    <match-rules name="dynaop_fv">
-      <match-rule name="dynaop_jar" type="filenameVersion" filename="^dynaop-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="cas" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="cas_fv" speed="1"/>
     <match-rules name="cas_fv">
       <match-rule name="cas_jar" type="filenameVersion" filename="^cas-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="javaconfig" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="javaconfig_fv" speed="1"/>
-    <match-rules name="javaconfig_fv">
-      <match-rule name="javaconfig_jar" type="filenameVersion" filename="^javaconfig-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="joda-time" from="wild" os="all">
@@ -3781,13 +2857,6 @@
       <match-rule name="colt_jar" type="filenameVersion" filename="^colt-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="jcache" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jcache_fv" speed="1"/>
-    <match-rules name="jcache_fv">
-      <match-rule name="jcache_jar" type="filenameVersion" filename="^jcache-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="dumbster" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="dumbster_fv" speed="1"/>
@@ -3807,104 +2876,6 @@
     <eval expression="jotm_fv" speed="1"/>
     <match-rules name="jotm_fv">
       <match-rule name="jotm_jar" type="filenameVersion" filename="^jotm-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jfree" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jfree_fv" speed="1"/>
-    <match-rules name="jfree_fv">
-      <match-rule name="jfree_jar" type="filenameVersion" filename="^jfree-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="acegi-security" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="acegi-security_fv" speed="1"/>
-    <match-rules name="acegi-security_fv">
-      <match-rule name="acegi-security_jar" type="filenameVersion" filename="^acegi-security-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="acegi-security-cas" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="acegi-security-cas_fv" speed="1"/>
-    <match-rules name="acegi-security-cas_fv">
-      <match-rule name="acegi-security-cas_jar" type="filenameVersion" filename="^acegi-security-cas-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="acegi-security-catalina" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="acegi-security-catalina_fv" speed="1"/>
-    <match-rules name="acegi-security-catalina_fv">
-      <match-rule name="acegi-security-catalina_jar" type="filenameVersion" filename="^acegi-security-catalina-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="acegi-security-catalina-common" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="acegi-security-catalina-common_fv" speed="1"/>
-    <match-rules name="acegi-security-catalina-common_fv">
-      <match-rule name="acegi-security-catalina-common_jar" type="filenameVersion" filename="^acegi-security-catalina-common-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="acegi-security-catalina-server" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="acegi-security-catalina-server_fv" speed="1"/>
-    <match-rules name="acegi-security-catalina-server_fv">
-      <match-rule name="acegi-security-catalina-server_jar" type="filenameVersion" filename="^acegi-security-catalina-server-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="acegi-security-jboss" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="acegi-security-jboss_fv" speed="1"/>
-    <match-rules name="acegi-security-jboss_fv">
-      <match-rule name="acegi-security-jboss_jar" type="filenameVersion" filename="^acegi-security-jboss-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="acegi-security-jboss-lib" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="acegi-security-jboss-lib_fv" speed="1"/>
-    <match-rules name="acegi-security-jboss-lib_fv">
-      <match-rule name="acegi-security-jboss-lib_jar" type="filenameVersion" filename="^acegi-security-jboss-lib-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="acegi-security-jetty" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="acegi-security-jetty_fv" speed="1"/>
-    <match-rules name="acegi-security-jetty_fv">
-      <match-rule name="acegi-security-jetty_jar" type="filenameVersion" filename="^acegi-security-jetty-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="acegi-security-jetty-ext" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="acegi-security-jetty-ext_fv" speed="1"/>
-    <match-rules name="acegi-security-jetty-ext_fv">
-      <match-rule name="acegi-security-jetty-ext_jar" type="filenameVersion" filename="^acegi-security-jetty-ext-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="acegi-security-resin" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="acegi-security-resin_fv" speed="1"/>
-    <match-rules name="acegi-security-resin_fv">
-      <match-rule name="acegi-security-resin_jar" type="filenameVersion" filename="^acegi-security-resin-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="acegi-security-resin-lib" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="acegi-security-resin-lib_fv" speed="1"/>
-    <match-rules name="acegi-security-resin-lib_fv">
-      <match-rule name="acegi-security-resin-lib_jar" type="filenameVersion" filename="^acegi-security-resin-lib-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="acegi-security-taglib" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="acegi-security-taglib_fv" speed="1"/>
-    <match-rules name="acegi-security-taglib_fv">
-      <match-rule name="acegi-security-taglib_jar" type="filenameVersion" filename="^acegi-security-taglib-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="acegi-security-tiger" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="acegi-security-tiger_fv" speed="1"/>
-    <match-rules name="acegi-security-tiger_fv">
-      <match-rule name="acegi-security-tiger_jar" type="filenameVersion" filename="^acegi-security-tiger-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="activeio" from="wild" os="all">
@@ -3935,32 +2906,11 @@
       <match-rule name="backport175_jar" type="filenameVersion" filename="^backport175-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="beehive" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="beehive_fv" speed="1"/>
-    <match-rules name="beehive_fv">
-      <match-rule name="beehive_jar" type="filenameVersion" filename="^beehive-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="berkano" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="berkano_fv" speed="1"/>
-    <match-rules name="berkano_fv">
-      <match-rule name="berkano_jar" type="filenameVersion" filename="^berkano-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="c3p0" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="c3p0_fv" speed="1"/>
     <match-rules name="c3p0_fv">
       <match-rule name="c3p0_jar" type="filenameVersion" filename="^c3p0-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="glazedlists" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="glazedlists_fv" speed="1"/>
-    <match-rules name="glazedlists_fv">
-      <match-rule name="glazedlists_jar" type="filenameVersion" filename="^glazedlists-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="cewolf" from="wild" os="all">
@@ -4003,13 +2953,6 @@
     <eval expression="commons-chain_fv" speed="1"/>
     <match-rules name="commons-chain_fv">
       <match-rule name="commons-chain_jar" type="filenameVersion" filename="^commons-chain-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="commons-i18n" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="commons-i18n_fv" speed="1"/>
-    <match-rules name="commons-i18n_fv">
-      <match-rule name="commons-i18n_jar" type="filenameVersion" filename="^commons-i18n-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="commons-scxml" from="wild" os="all">
@@ -4103,13 +3046,6 @@
       <match-rule name="dwr_jar" type="filenameVersion" filename="^dwr-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="easyconf" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="easyconf_fv" speed="1"/>
-    <match-rules name="easyconf_fv">
-      <match-rule name="easyconf_jar" type="filenameVersion" filename="^easyconf-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="jtb" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="jtb_fv" speed="1"/>
@@ -4145,25 +3081,11 @@
       <match-rule name="excalibur-component-tests_jar" type="filenameVersion" filename="^excalibur-component-tests-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="exo" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="exo_fv" speed="1"/>
-    <match-rules name="exo_fv">
-      <match-rule name="exo_jar" type="filenameVersion" filename="^exo-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="flox" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="flox_fv" speed="1"/>
     <match-rules name="flox_fv">
       <match-rule name="flox_jar" type="filenameVersion" filename="^flox-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jetm" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jetm_fv" speed="1"/>
-    <match-rules name="jetm_fv">
-      <match-rule name="jetm_jar" type="filenameVersion" filename="^jetm-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="spoon" from="wild" os="all">
@@ -4187,67 +3109,11 @@
       <match-rule name="htmlunit_jar" type="filenameVersion" filename="^htmlunit-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="ical4j" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="ical4j_fv" speed="1"/>
-    <match-rules name="ical4j_fv">
-      <match-rule name="ical4j_jar" type="filenameVersion" filename="^ical4j-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jmonit" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jmonit_fv" speed="1"/>
-    <match-rules name="jmonit_fv">
-      <match-rule name="jmonit_jar" type="filenameVersion" filename="^jmonit-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="informa" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="informa_fv" speed="1"/>
-    <match-rules name="informa_fv">
-      <match-rule name="informa_jar" type="filenameVersion" filename="^informa-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="innig-util" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="innig-util_fv" speed="1"/>
-    <match-rules name="innig-util_fv">
-      <match-rule name="innig-util_jar" type="filenameVersion" filename="^innig-util-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="macker" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="macker_fv" speed="1"/>
     <match-rules name="macker_fv">
       <match-rule name="macker_jar" type="filenameVersion" filename="^macker-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="izpack" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="izpack_fv" speed="1"/>
-    <match-rules name="izpack_fv">
-      <match-rule name="izpack_jar" type="filenameVersion" filename="^izpack-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jackcess" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jackcess_fv" speed="1"/>
-    <match-rules name="jackcess_fv">
-      <match-rule name="jackcess_jar" type="filenameVersion" filename="^jackcess-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jakarta-regexp" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jakarta-regexp_fv" speed="1"/>
-    <match-rules name="jakarta-regexp_fv">
-      <match-rule name="jakarta-regexp_jar" type="filenameVersion" filename="^jakarta-regexp-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jardiff" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jardiff_fv" speed="1"/>
-    <match-rules name="jardiff_fv">
-      <match-rule name="jardiff_jar" type="filenameVersion" filename="^jardiff-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="javancss" from="wild" os="all">
@@ -4292,25 +3158,11 @@
       <match-rule name="jcharts_jar" type="filenameVersion" filename="^jcharts-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="jdsl" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jdsl_fv" speed="1"/>
-    <match-rules name="jdsl_fv">
-      <match-rule name="jdsl_jar" type="filenameVersion" filename="^jdsl-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="jencks" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="jencks_fv" speed="1"/>
     <match-rules name="jencks_fv">
       <match-rule name="jencks_jar" type="filenameVersion" filename="^jencks-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jgrapht" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jgrapht_fv" speed="1"/>
-    <match-rules name="jgrapht_fv">
-      <match-rule name="jgrapht_jar" type="filenameVersion" filename="^jgrapht-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="jmorph" from="wild" os="all">
@@ -4341,39 +3193,11 @@
       <match-rule name="jline_jar" type="filenameVersion" filename="^jline-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="jmimemagic" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jmimemagic_fv" speed="1"/>
-    <match-rules name="jmimemagic_fv">
-      <match-rule name="jmimemagic_jar" type="filenameVersion" filename="^jmimemagic-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="jparsec" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="jparsec_fv" speed="1"/>
     <match-rules name="jparsec_fv">
       <match-rule name="jparsec_jar" type="filenameVersion" filename="^jparsec-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jpox-dbcp" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jpox-dbcp_fv" speed="1"/>
-    <match-rules name="jpox-dbcp_fv">
-      <match-rule name="jpox-dbcp_jar" type="filenameVersion" filename="^jpox-dbcp-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jpox-enhancer" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jpox-enhancer_fv" speed="1"/>
-    <match-rules name="jpox-enhancer_fv">
-      <match-rule name="jpox-enhancer_jar" type="filenameVersion" filename="^jpox-enhancer-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jpox-java5" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jpox-java5_fv" speed="1"/>
-    <match-rules name="jpox-java5_fv">
-      <match-rule name="jpox-java5_jar" type="filenameVersion" filename="^jpox-java5-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="jung" from="wild" os="all">
@@ -4446,20 +3270,6 @@
       <match-rule name="databinder_jar" type="filenameVersion" filename="^databinder-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="jericho" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jericho_fv" speed="1"/>
-    <match-rules name="jericho_fv">
-      <match-rule name="jericho_jar" type="filenameVersion" filename="^jericho-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jericho-html" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jericho-html_fv" speed="1"/>
-    <match-rules name="jericho-html_fv">
-      <match-rule name="jericho-html_jar" type="filenameVersion" filename="^jericho-html-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="sweetxml" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="sweetxml_fv" speed="1"/>
@@ -4472,20 +3282,6 @@
     <eval expression="sweetxml-ant_fv" speed="1"/>
     <match-rules name="sweetxml-ant_fv">
       <match-rule name="sweetxml-ant_jar" type="filenameVersion" filename="^sweetxml-ant-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="ajax4jsf" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="ajax4jsf_fv" speed="1"/>
-    <match-rules name="ajax4jsf_fv">
-      <match-rule name="ajax4jsf_jar" type="filenameVersion" filename="^ajax4jsf-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jets3t" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jets3t_fv" speed="1"/>
-    <match-rules name="jets3t_fv">
-      <match-rule name="jets3t_jar" type="filenameVersion" filename="^jets3t-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="laf-plugin" from="wild" os="all">
@@ -4537,13 +3333,6 @@
       <match-rule name="xwork-spring_jar" type="filenameVersion" filename="^xwork-spring-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="jini" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jini_fv" speed="1"/>
-    <match-rules name="jini_fv">
-      <match-rule name="jini_jar" type="filenameVersion" filename="^jini-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="datecalc" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="datecalc_fv" speed="1"/>
@@ -4572,60 +3361,11 @@
       <match-rule name="antenna_jar" type="filenameVersion" filename="^antenna-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="apt-jelly" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="apt-jelly_fv" speed="1"/>
-    <match-rules name="apt-jelly_fv">
-      <match-rule name="apt-jelly_jar" type="filenameVersion" filename="^apt-jelly-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="beanlib" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="beanlib_fv" speed="1"/>
     <match-rules name="beanlib_fv">
       <match-rule name="beanlib_jar" type="filenameVersion" filename="^beanlib-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="bluecove" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="bluecove_fv" speed="1"/>
-    <match-rules name="bluecove_fv">
-      <match-rule name="bluecove_jar" type="filenameVersion" filename="^bluecove-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="click" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="click_fv" speed="1"/>
-    <match-rules name="click_fv">
-      <match-rule name="click_jar" type="filenameVersion" filename="^click-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="dozer" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="dozer_fv" speed="1"/>
-    <match-rules name="dozer_fv">
-      <match-rule name="dozer_jar" type="filenameVersion" filename="^dozer-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="dtddoc" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="dtddoc_fv" speed="1"/>
-    <match-rules name="dtddoc_fv">
-      <match-rule name="dtddoc_jar" type="filenameVersion" filename="^dtddoc-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="dynpageplus" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="dynpageplus_fv" speed="1"/>
-    <match-rules name="dynpageplus_fv">
-      <match-rule name="dynpageplus_jar" type="filenameVersion" filename="^dynpageplus-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="ezmorph" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="ezmorph_fv" speed="1"/>
-    <match-rules name="ezmorph_fv">
-      <match-rule name="ezmorph_jar" type="filenameVersion" filename="^ezmorph-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="falcon" from="wild" os="all">
@@ -4635,46 +3375,11 @@
       <match-rule name="falcon_jar" type="filenameVersion" filename="^falcon-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="hermesftp" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="hermesftp_fv" speed="1"/>
-    <match-rules name="hermesftp_fv">
-      <match-rule name="hermesftp_jar" type="filenameVersion" filename="^hermesftp-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jdatabaseimport" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jdatabaseimport_fv" speed="1"/>
-    <match-rules name="jdatabaseimport_fv">
-      <match-rule name="jdatabaseimport_jar" type="filenameVersion" filename="^jdatabaseimport-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jfcunit" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jfcunit_fv" speed="1"/>
-    <match-rules name="jfcunit_fv">
-      <match-rule name="jfcunit_jar" type="filenameVersion" filename="^jfcunit-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jfig" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jfig_fv" speed="1"/>
-    <match-rules name="jfig_fv">
-      <match-rule name="jfig_jar" type="filenameVersion" filename="^jfig-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="jguard" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="jguard_fv" speed="1"/>
     <match-rules name="jguard_fv">
       <match-rule name="jguard_jar" type="filenameVersion" filename="^jguard-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jipcam" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jipcam_fv" speed="1"/>
-    <match-rules name="jipcam_fv">
-      <match-rule name="jipcam_jar" type="filenameVersion" filename="^jipcam-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="jpf" from="wild" os="all">
@@ -4796,13 +3501,6 @@
       <match-rule name="webdav-servlet_jar" type="filenameVersion" filename="^webdav-servlet-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="config" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="config_fv" speed="1"/>
-    <match-rules name="config_fv">
-      <match-rule name="config_jar" type="filenameVersion" filename="^config-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="web" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="web_fv" speed="1"/>
@@ -4810,53 +3508,11 @@
       <match-rule name="web_jar" type="filenameVersion" filename="^web-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="collections" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="collections_fv" speed="1"/>
-    <match-rules name="collections_fv">
-      <match-rule name="collections_jar" type="filenameVersion" filename="^collections-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="cruisecontrol" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="cruisecontrol_fv" speed="1"/>
     <match-rules name="cruisecontrol_fv">
       <match-rule name="cruisecontrol_jar" type="filenameVersion" filename="^cruisecontrol-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="javawebparts" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="javawebparts_fv" speed="1"/>
-    <match-rules name="javawebparts_fv">
-      <match-rule name="javawebparts_jar" type="filenameVersion" filename="^javawebparts-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jchardet" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jchardet_fv" speed="1"/>
-    <match-rules name="jchardet_fv">
-      <match-rule name="jchardet_jar" type="filenameVersion" filename="^jchardet-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jena" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jena_fv" speed="1"/>
-    <match-rules name="jena_fv">
-      <match-rule name="jena_jar" type="filenameVersion" filename="^jena-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jeuclid" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jeuclid_fv" speed="1"/>
-    <match-rules name="jeuclid_fv">
-      <match-rule name="jeuclid_jar" type="filenameVersion" filename="^jeuclid-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jfacets" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jfacets_fv" speed="1"/>
-    <match-rules name="jfacets_fv">
-      <match-rule name="jfacets_jar" type="filenameVersion" filename="^jfacets-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="jtds" from="wild" os="all">
@@ -5048,13 +3704,6 @@
       <match-rule name="sandesha2_jar" type="filenameVersion" filename="^sandesha2-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="axiom" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="axiom_fv" speed="1"/>
-    <match-rules name="axiom_fv">
-      <match-rule name="axiom_jar" type="filenameVersion" filename="^axiom-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="xmlschema" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="xmlschema_fv" speed="1"/>
@@ -5104,25 +3753,11 @@
       <match-rule name="modello_jar" type="filenameVersion" filename="^modello-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="cojen" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="cojen_fv" speed="1"/>
-    <match-rules name="cojen_fv">
-      <match-rule name="cojen_jar" type="filenameVersion" filename="^cojen-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="imageinfo" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="imageinfo_fv" speed="1"/>
     <match-rules name="imageinfo_fv">
       <match-rule name="imageinfo_jar" type="filenameVersion" filename="^imageinfo-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="custom_rhino" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="custom_rhino_fv" speed="1"/>
-    <match-rules name="custom_rhino_fv">
-      <match-rule name="custom_rhino_jar" type="filenameVersion" filename="^custom_rhino-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="xsd" from="wild" os="all">
@@ -5137,13 +3772,6 @@
     <eval expression="xmlc_fv" speed="1"/>
     <match-rules name="xmlc_fv">
       <match-rule name="xmlc_jar" type="filenameVersion" filename="^xmlc-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="extremecomponents" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="extremecomponents_fv" speed="1"/>
-    <match-rules name="extremecomponents_fv">
-      <match-rule name="extremecomponents_jar" type="filenameVersion" filename="^extremecomponents-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="fitnesse" from="wild" os="all">
@@ -5167,20 +3795,6 @@
       <match-rule name="libidn_jar" type="filenameVersion" filename="^libidn-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="hamcrest" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="hamcrest_fv" speed="1"/>
-    <match-rules name="hamcrest_fv">
-      <match-rule name="hamcrest_jar" type="filenameVersion" filename="^hamcrest-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="hammurapi" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="hammurapi_fv" speed="1"/>
-    <match-rules name="hammurapi_fv">
-      <match-rule name="hammurapi_jar" type="filenameVersion" filename="^hammurapi-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="jacorb" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="jacorb_fv" speed="1"/>
@@ -5188,39 +3802,11 @@
       <match-rule name="jacorb_jar" type="filenameVersion" filename="^jacorb-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="jasypt" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jasypt_fv" speed="1"/>
-    <match-rules name="jasypt_fv">
-      <match-rule name="jasypt_jar" type="filenameVersion" filename="^jasypt-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jconfig" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jconfig_fv" speed="1"/>
-    <match-rules name="jconfig_fv">
-      <match-rule name="jconfig_jar" type="filenameVersion" filename="^jconfig-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jempbox" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jempbox_fv" speed="1"/>
-    <match-rules name="jempbox_fv">
-      <match-rule name="jempbox_jar" type="filenameVersion" filename="^jempbox-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="jibx" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="jibx_fv" speed="1"/>
     <match-rules name="jibx_fv">
       <match-rule name="jibx_jar" type="filenameVersion" filename="^jibx-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jostraca" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jostraca_fv" speed="1"/>
-    <match-rules name="jostraca_fv">
-      <match-rule name="jostraca_jar" type="filenameVersion" filename="^jostraca-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="registry" from="wild" os="all">
@@ -5265,25 +3851,11 @@
       <match-rule name="mockejb_jar" type="filenameVersion" filename="^mockejb-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="jemmy" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jemmy_fv" speed="1"/>
-    <match-rules name="jemmy_fv">
-      <match-rule name="jemmy_jar" type="filenameVersion" filename="^jemmy-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="ashwood" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="ashwood_fv" speed="1"/>
     <match-rules name="ashwood_fv">
       <match-rule name="ashwood_jar" type="filenameVersion" filename="^ashwood-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="cayenne" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="cayenne_fv" speed="1"/>
-    <match-rules name="cayenne_fv">
-      <match-rule name="cayenne_jar" type="filenameVersion" filename="^cayenne-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="carol" from="wild" os="all">
@@ -5382,13 +3954,6 @@
     <eval expression="rxtx_fv" speed="1"/>
     <match-rules name="rxtx_fv">
       <match-rule name="rxtx_jar" type="filenameVersion" filename="^rxtx-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="irclib" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="irclib_fv" speed="1"/>
-    <match-rules name="irclib_fv">
-      <match-rule name="irclib_jar" type="filenameVersion" filename="^irclib-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="simple-xml" from="wild" os="all">
@@ -5536,27 +4101,6 @@
     <eval expression="zk_fv" speed="1"/>
     <match-rules name="zk_fv">
       <match-rule name="zk_jar" type="filenameVersion" filename="^zk-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="dojoz" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="dojoz_fv" speed="1"/>
-    <match-rules name="dojoz_fv">
-      <match-rule name="dojoz_jar" type="filenameVersion" filename="^dojoz-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="fckez" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fckez_fv" speed="1"/>
-    <match-rules name="fckez_fv">
-      <match-rule name="fckez_jar" type="filenameVersion" filename="^fckez-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="gmapsz" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="gmapsz_fv" speed="1"/>
-    <match-rules name="gmapsz_fv">
-      <match-rule name="gmapsz_jar" type="filenameVersion" filename="^gmapsz-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="timelinez" from="wild" os="all">
@@ -5849,15 +4393,6 @@
       <match-rule name="xdoclet_jar" type="filenameVersion" filename="^xdoclet-([0-9].*?).jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="jetspeed-2" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="js_fv2" speed="1"/>
-    <match-rules name="js_fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="js_jar" type="filenameVersion" filename="^jetspeed-.*?-([0-9].*?).jar$"/>
-      <match-rule name="js2_jar" type="filenameVersion" filename="^jetspeed2-.*?-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="jgoodies-animation" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="jg_fv2" speed="1"/>
@@ -5893,27 +4428,6 @@
       <result expression="OR-ALL"/>
       <match-rule name="jg_jar" type="filenameVersion" filename="^looks-([0-9].*?).jar$"/>
       <match-rule name="jgwin_jar" type="filenameVersion" filename="^looks-win([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jgoodies-plastic" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jg_fv2" speed="1"/>
-    <match-rules name="jg_fv2">
-      <match-rule name="jg_jar" type="filenameVersion" filename="^plastic-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="beanshell" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <match-rule name="bsh_jar" type="filenameVersion" filename="^bsh-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="beanshell-bsf" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <match-rule name="bsh_jar" type="filenameVersion" filename="^bsh-bsf-([0-9].*?).jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="directory" from="wild" os="all">
@@ -5955,20 +4469,6 @@
       <match-rule name="dir2_jar" type="filenameVersion" filename="^kerberos-common-([0-9].*?).jar$"/>
       <match-rule name="dir3_jar" type="filenameVersion" filename="^ldap-common-([0-9].*?).jar$"/>
       <match-rule name="dir4_jar" type="filenameVersion" filename="^ldap-snacc-provider-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="asteriskjava" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <match-rule name="jar" type="filenameVersion" filename="^asterisk-java-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="arat" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <match-rule name="jar" type="filenameVersion" filename="^rat-lib-([0-9].*?).jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="webtest" from="wild" os="all">
@@ -6043,14 +4543,6 @@
       <match-rule name="jar" type="filenameVersion" filename="^xsd-([0-9].*?).jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="java2html" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="jar" type="filenameVersion" filename="^j2h-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="openoffice" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="fv2" speed="1"/>
@@ -6073,101 +4565,6 @@
       <match-rule name="jar4" type="filenameVersion" filename="^publisher-impl-([0-9].*?).jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="genjava-beans" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="jar" type="filenameVersion" filename="^gj-beans-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="genjava-config" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="jar" type="filenameVersion" filename="^gj-config-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="genjava-core" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="jar" type="filenameVersion" filename="^gj-core-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="genjava-csv" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="jar" type="filenameVersion" filename="^gj-csv-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="genjava-find" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="jar" type="filenameVersion" filename="^gj-find-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="genjava-gui" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="jar" type="filenameVersion" filename="^gj-gui-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="genjava-mail" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="jar" type="filenameVersion" filename="^gj-mail-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="genjava-scrape" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="jar" type="filenameVersion" filename="^gj-scrape-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="genjava-servlet" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="jar" type="filenameVersion" filename="^gj-servlet-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="genjava-tools" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="jar" type="filenameVersion" filename="^gj-tools-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="genjava-xml" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="jar" type="filenameVersion" filename="^gj-xml-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="java3d" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <match-rule name="jar" type="filenameVersion" filename="^j3d-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="javaexchangeconnector" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="fv2" speed="1"/>
@@ -6182,27 +4579,11 @@
       <match-rule name="jar" type="filenameVersion" filename="^simple-log-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="apache-jaxme" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <match-rule name="jar" type="filenameVersion" filename="^jaxme.*?-incubation-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="sun-jaxb" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="fv2" speed="1"/>
     <match-rules name="fv2">
       <match-rule name="jar" type="filenameVersion" filename="^jaxb-.*?-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="httpcomponents-httpcore" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="jar" type="filenameVersion" filename="^httpcore-.*?-([0-9].*?).jar$"/>
-      <match-rule name="jar2" type="filenameVersion" filename="^jakarta-httpcore-.*?-([0-9].*?).jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="taglibs" from="wild" os="all">
@@ -6227,14 +4608,6 @@
       <match-rule name="jar13" type="filenameVersion" filename="^xsl-([0-9].*?).jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="evaserver" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="jar" type="filenameVersion" filename="^eva-properties-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="ws-scout" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="fv2" speed="1"/>
@@ -6257,14 +4630,6 @@
     <match-rules name="fv2">
       <result expression="OR-ALL"/>
       <match-rule name="jar" type="filenameVersion" filename="^j2me-.*?-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jexcelapi" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="jar" type="filenameVersion" filename="^jxl-([0-9].*?).jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="jface" from="wild" os="all">
@@ -6332,38 +4697,6 @@
       <match-rule name="jar" type="filenameVersion" filename="^stopwatch-([0-9].*?).jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="arm_4_0" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="jar" type="filenameVersion" filename="^ARM_4_0-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="j2ee-servlets-api" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="jar" type="filenameVersion" filename="^cos-(.*?).jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="d-haven-eventbus" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="jar" type="filenameVersion" filename="^eventbus-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="d-haven-mpool" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="jar" type="filenameVersion" filename="^managed-pool-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="jruby-extras" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="fv2" speed="1"/>
@@ -6388,14 +4721,6 @@
       <match-rule name="jar" type="filenameVersion" filename="^manta-([0-9].*?).jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="jaxb2-commons" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="jar" type="filenameVersion" filename="^jaxb-fluent-api-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="jxta" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="fv2" speed="1"/>
@@ -6410,14 +4735,6 @@
     <match-rules name="fv2">
       <result expression="OR-ALL"/>
       <match-rule name="jar" type="filenameVersion" filename="^jsp-api-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="javainetlocator" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="jar" type="filenameVersion" filename="^inetaddresslocator-([0-9].*?).jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="javainetlocator" from="wild" os="all">
@@ -6476,14 +4793,6 @@
       <match-rule name="jar" type="filenameVersion" filename="^msnmlib-([0-9].*?).jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="jmsn" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <result expression="OR-ALL"/>
-      <match-rule name="jar" type="filenameVersion" filename="^msnmlib-([0-9].*?).jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="maven-jini-plugin" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="fv2" speed="1"/>
@@ -6531,25 +4840,11 @@
       <match-rule name="jar" type="filename" filename="^jsr173_([0-9].*?)_api.*?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="crossdb" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <match-rule name="jar" type="filename" filename="^crossdb.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="maven" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="fv2" speed="1"/>
     <match-rules name="fv2">
       <match-rule name="jar" type="filename" filename="^maven.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jbehave" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <match-rule name="jar" type="filename" filename="^jbehave.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="jdring" from="wild" os="all">
@@ -6564,13 +4859,6 @@
     <eval expression="fv2" speed="1"/>
     <match-rules name="fv2">
       <match-rule name="jar" type="filename" filename="^genericra.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jparsec" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="fv2" speed="1"/>
-    <match-rules name="fv2">
-      <match-rule name="jar" type="filename" filename="^groovyparse.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="woodstox" from="wild" os="all">
