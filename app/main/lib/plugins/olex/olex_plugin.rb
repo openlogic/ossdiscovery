@@ -343,12 +343,7 @@ END COMPONENT
 
 }
 
-    # strip off leading whitespace and compress all other spaces in
-    # the rendered template so it's more efficient for sending
-#    template = template.gsub(/^\s+/, "").squeeze(" ")
     text = ERB.new(template, 0, "%").result(binding)
-
-#    printf(io, "integrity_check: #{Integrity.create_integrity_check(text,"",OLEX_PLUGIN_VERSION_KEY)}\n")
 
     # TODO - when a rogue rule runs afoul and matches too much text on a package, it will blow chunks here
     begin
@@ -365,13 +360,8 @@ END COMPONENT
     dumps a simple ASCII text report including every individual match
 =end
   def report( destination, packages, scandata  )
-#    io = nil
-#    if (destination == STDOUT) then
-#      io = STDOUT
-#    else
-      detailed_io = File.new(@olex_local_detailed_file, "w")
-      rollup_io = File.new(@olex_local_rollup_file, "w")
-#    end
+    detailed_io = File.new(@olex_local_detailed_file, "w")
+    rollup_io = File.new(@olex_local_rollup_file, "w")
 
 
     scan_ftime = scandata.endtime - scandata.starttime  # seconds
@@ -468,6 +458,9 @@ To show only file names of discovered files, run discovery with --no-paths
 To show full paths to discovered files, run discovery with --show-base-dirs
 To show OLEX web site links for discovered packages, run discovery with --olex-links
 
+NOTE: OSSDiscovery with the OLEX plugin uses the fast rules by default.  To do a
+slower, but more accurate search, run discovery with --rule-types=both
+
 }
 
      rollup_report_template = %{
@@ -505,6 +498,8 @@ because: <%= e.inspect %>
 
 To show OLEX web site links for discovered packages, run discovery with --olex-links
 
+NOTE: OSSDiscovery with the OLEX plugin uses the fast rules by default.  To do a
+slower, but more accurate search, run discovery with --rule-types=both
 
 }
 
@@ -576,3 +571,4 @@ To show OLEX web site links for discovered packages, run discovery with --olex-l
   end
 
 end
+
