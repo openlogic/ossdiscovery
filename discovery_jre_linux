@@ -77,7 +77,7 @@ OSSDISCOVERY_HOME=`pwd`
 # export this on a separate line because some versions of bash(solaris) blow when all on one export/define line
 export OSSDISCOVERY_HOME
 
-JAVA_HOME=$OSSDISCOVERY_HOME/jre/jre-1.5.0_07-linux-ia32
+JAVA_HOME=$OSSDISCOVERY_HOME/jre/jre-1.6.0_13-linux-ia32
 export JAVA_HOME
 
 # echo "%%%% OSSDISCOVERY_HOME=$OSSDISCOVERY_HOME"
@@ -97,5 +97,5 @@ do
 	fi
 done
 
-"$OSSDISCOVERY_HOME/jruby/bin/jruby" -J-Xmx512m -J-Xms512m -J-client "$OSSDISCOVERY_HOME/lib/discovery.rb" --progress 100 --verbose $*
+"$OSSDISCOVERY_HOME/jruby/bin/jruby" -J-Xmx256m -J-Xms256m -J-client "$OSSDISCOVERY_HOME/lib/discovery.rb" --progress 100 --verbose $*
 
