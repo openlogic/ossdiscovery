@@ -459,7 +459,7 @@ To show full paths to discovered files, run discovery with --show-base-dirs
 To show OLEX web site links for discovered packages, run discovery with --olex-links
 
 NOTE: OSSDiscovery with the OLEX plugin uses the fast rules by default.  To do a
-slower, but more accurate search, run discovery with --rule-types=both
+slower, but more accurate search, run discovery with --rule-types=all
 
 }
 
@@ -499,7 +499,7 @@ because: <%= e.inspect %>
 To show OLEX web site links for discovered packages, run discovery with --olex-links
 
 NOTE: OSSDiscovery with the OLEX plugin uses the fast rules by default.  To do a
-slower, but more accurate search, run discovery with --rule-types=both
+slower, but more accurate search, run discovery with --rule-types=all
 
 }
 
