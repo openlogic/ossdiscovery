@@ -1,3 +1,4 @@
+require 'package'
 require 'pathname'
 require 'fileutils'
 require 'zip/stdrubyext'
