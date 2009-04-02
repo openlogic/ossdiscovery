@@ -86,7 +86,7 @@ require 'scan_rules_updater'
 @basedir = File.expand_path(File.dirname(__FILE__))
 @config = 'conf/config.rb'
 @copyright = "Copyright (C) 2007-2009 OpenLogic, Inc."
-@discovery_version = "2.2.0"
+@discovery_version = "2.3.0"
 @discovery_name = "ossdiscovery"
 @discovery_license = "GNU Affero General Public License version 3"
 @discovery_license_shortname = "Affero GPLv3" 
@@ -174,6 +174,8 @@ def execute
   @walker.show_permission_denied = @show_permission_denied
   @walker.open_archives = @open_archives
   @walker.dont_open_discovered_archives = @dont_open_discovered_archives
+  @walker.class_file_archive_extensions = @class_file_archive_extensions
+  @walker.no_class_files = @no_class_files
   @walker.archive_temp_dir = @archive_temp_dir
   @walker.archive_extensions = @archive_extensions
   @walker.show_every = @show_every.to_i
@@ -351,6 +353,7 @@ def make_reports
   @scandata.permission_denied_ct = @walker.permission_denied_ct
   @scandata.foi_ct = @walker.foi_ct
   @scandata.archives_found_ct = @walker.archives_found_ct
+  @scandata.class_file_archives_found_ct = @walker.class_file_archives_found_ct
   @scandata.starttime = @starttime
   @scandata.endtime = @endtime
   @scandata.distro = @distro
@@ -416,6 +419,7 @@ options_array << [ "--list-plugins","-N", GetoptLong::NO_ARGUMENT ]           # 
 options_array << [ "--list-projects", "-j", GetoptLong::OPTIONAL_ARGUMENT ]   # show a list projects discovery is capable of finding
 options_array << [ "--list-md5-dupes", "-M", GetoptLong::NO_ARGUMENT ]  
 options_array << [ "--list-tag", "-t", GetoptLong::NO_ARGUMENT ]              # dump the MD5 hash which is the machine id tag 
+options_array << [ "--no-class-files", "-C", GetoptLong::NO_ARGUMENT ]        # don't try to match against class files inside of a jar if the jar isn't recognized
 options_array << [ "--nofollow", "-S", GetoptLong::NO_ARGUMENT ]              # follow symlinks?  presence of this flag says "No" don't follow
 options_array << [ "--path", "-p", GetoptLong::REQUIRED_ARGUMENT ]            # scan explicit path
 options_array << [ "--progress", "-x", GetoptLong::OPTIONAL_ARGUMENT ]        # show a progress indication every X files scanned
@@ -559,6 +563,9 @@ begin
       printf("Unique Machine Tag (ID): %s\n", @machine_id )
       exit 0
      
+    when "--no-class-files"
+      @no_class_files = true
+
     when "--nofollow"   
       @follow_symlinks = false
       

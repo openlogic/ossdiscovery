@@ -60,6 +60,9 @@ Options are not order dependent and may be one or more of:
 --list-tag,             -t print the machine ID (tag) that will be reported
                            with scan results
 
+--no-class-files,       -C if a jar file is not recognized, do not look inside
+                           of it for known .class files
+
 --nofollow,             -N don't follow symlinks, default is: Yes,
                            follow symlinks
 

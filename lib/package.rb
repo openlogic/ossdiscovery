@@ -41,7 +41,7 @@ require File.join(File.dirname(__FILE__), 'conf', 'config')
 
 class Package
   VERSION_UNKNOWN = "unknown"
-  attr_accessor :name, :version, :found_at, :file_name
+  attr_accessor :name, :version, :found_at, :file_name, :archive
   
 =begin rdoc
   I don't know why they call this the 'spaceship' operator.  It looks more like
