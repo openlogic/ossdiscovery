@@ -393,6 +393,7 @@ hostname                : <%= scandata.hostname %>
 directories walked      : <%= scandata.dir_ct %>
 files encountered       : <%= scandata.file_ct %>
 archives encountered    : <%= scandata.archives_found_ct %>
+class file archives     : <%= scandata.class_file_archives_found_ct %>
 symlinks found          : <%= scandata.sym_link_ct %>
 symlinks not followed   : <%= scandata.not_followed_ct %>
 bad symlinks found      : <%= scandata.bad_link_ct %>
@@ -406,7 +407,7 @@ kernel                  : <%= scandata.kernel %>
 anonymous machine hash  : <%= scandata.machine_id %>
 package instances found : <%= packages.length %>
 unique packages found   : <%= unique_packages.length %>
-throttling              : <%= throttling_enabled_or_disabled %> (total seconds paused: <%= scandata.total_seconds_paused_for_throttling %>
+throttling              : <%= throttling_enabled_or_disabled %> (total seconds paused: <%= scandata.total_seconds_paused_for_throttling %>)
 production machine      : <%= scandata.production_scan %>
 
 }
@@ -532,7 +533,13 @@ slower, but more accurate search, run discovery with --rule-types=all
   # Return the location to show for the given package
   def package_location(package, directories_scanned)
     if @no_paths
-      package.file_name
+      # even if we're not showing paths, we still want to show the archive
+      # that contains the file name so we have a clue where it was found
+      if package.archive
+        "#{package.archive}!/#{package.file_name}"
+      else
+        package.file_name
+      end
     else
       location = maybe_remove_base_dir(package.found_at, directories_scanned) || ""
       location + (location.empty? ? "" : '/') + package.file_name

@@ -63,13 +63,16 @@ class RuleAnalyzer
     #   into a ever-growing Set (remember that a Set holds no duplicates, which is exactly what we have 
     #   as part of the multiple scan rule scenario described above).
     allpackages_with_unknowns = Set.new
-    project_rules.each do | project_rule |
+    project_rules.each do |project_rule|
       packages_for_project = project_rule.build_packages
       allpackages_with_unknowns.merge(packages_for_project)
     end # of project_rules.each
+
+    # Also merge in anything found in class file archives
+    allpackages_with_unknowns.merge(ClassFileArchiveDiscoverer.discovered_packages)
     
     # We have to go through a similar step here since we allow multiple 'project-rule' definitions.  
-    # All unneccesary 'unkown' version identifications will have been removed within the context of one 
+    # All unnecessary 'unknown' version identifications will have been removed within the context of one
     # 'project-rule' definition above (specifically, this occurs in the bowels of the 'build_packages' method).  
     # But we could still have something like the following:
     #

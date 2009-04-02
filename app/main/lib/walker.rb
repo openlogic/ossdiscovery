@@ -45,6 +45,7 @@ require 'zip/ioextras'
 require 'zip/zip'
 require 'zip/zipfilesystem'
 require 'zip/tempfile_bugfixed'
+require 'class_file_archive_discoverer'
 
 require File.join(File.dirname(__FILE__), 'conf', 'config')
 
@@ -72,11 +73,12 @@ class Walker
 
   @@log = Config.log
 
-  attr_accessor :file_ct, :dir_ct, :sym_link_ct, :bad_link_ct, :permission_denied_ct, :foi_ct, :not_found_ct, :archives_found_ct
+  attr_accessor :file_ct, :dir_ct, :sym_link_ct, :bad_link_ct, :permission_denied_ct, :foi_ct, :not_found_ct, :archives_found_ct, :class_file_archives_found_ct
   attr_accessor :follow_symlinks, :symlink_depth, :not_followed_ct, :show_every, :show_verbose, :show_progress, :throttling_enabled, :throttle_number_of_files, :throttle_seconds_to_pause
   attr_accessor :open_archives, :dont_open_discovered_archives
   attr_accessor :archive_temp_dir
   attr_accessor :archive_extensions
+  attr_accessor :class_file_archive_extensions, :no_class_files
   attr_accessor :unopenable_archive_ct
   attr_accessor :list_exclusions, :list_files, :show_permission_denied, :starttime
   attr_reader :total_seconds_paused_for_throttling
@@ -125,6 +127,7 @@ class Walker
     @permission_denied_ct = 0
     @not_found_ct = 0
     @archives_found_ct = 0
+    @class_file_archives_found_ct = 0
     @unopenable_archive_ct = 0
     @show_progress = false
     @show_permission_denied = false
@@ -281,19 +284,26 @@ class Walker
 
           # see if this entry is resolvable and matches anything anyone's looking for
           if resolved
+            # always match against the given file
+            discovered = name_match(fileordir, archive_parents)
+
+            # we didn't recognize the file, so check to see if it might
+            # contain class files we recognize
+            if !discovered && !@no_class_files && is_class_file_archive?(fileordir.to_s)
+              @class_file_archives_found_ct += 1
+              examine_class_file_archive(fileordir, archive_parents)
+            end
+
+            # if it's an archive file, we may also want to open it up and look
+            # inside for any nested archives and other interesting files
             if @open_archives && is_archive?(fileordir.to_s)
               @archives_found_ct += 1
-              # match against the archive file itself in case we can't recognize
-              # anything inside it but the name gives it away
-              archive_file_discovered = name_match(fileordir, archive_parents)
 
               # open the archive now unless we already discovered something from
-              # its name and the flag is set to not look any deeper
-              unless archive_file_discovered && @dont_open_discovered_archives
+              # just the name of the archive
+              if !discovered || !@dont_open_discovered_archives
                 open_archive(fileordir, archive_parents)
               end
-            else
-              name_match(fileordir, archive_parents)
             end
           end
         else # the file was not readable
@@ -402,6 +412,17 @@ class Walker
   # as defined through the configuration file
   def is_archive?(fileordir)
     @archive_extensions.any? { |ext| ends_with?(fileordir, ext) }
+  end
+
+  # Return true if the given file name ends with an archive extension that may
+  # contain .class files as defined through the configuration file
+  def is_class_file_archive?(fileordir)
+    @class_file_archive_extensions.any? { |ext| ends_with?(fileordir, ext) }
+  end
+
+  # Return true if the given file name ends with ".class"
+  def is_class_file?(file_name)
+    file_name.ends_with?(".class")
   end
 
   # Return true if the given source string ends with the given target string
@@ -524,6 +545,26 @@ class Walker
     final_path
   end
 
+  # Look inside the given class file archive to see if we can recognize anything
+  # inside of it.  For example, see if we detect
+  # "org/apache/commons/collections/whatever.class".  We might also look in a
+  # manifest file, if any can be found, or do other Java-specific discovery.
+  def examine_class_file_archive(path, archive_parents = [])
+    # if we're the topmost archive, include our full path
+    if archive_parents.empty?
+      archive_file = path
+    else
+      # otherwise, strip our most recent parent's path from our path
+      archive_file = remove_parent_path(path, archive_parents.last[1])
+    end
+    #new_parents = ([].concat(archive_parents)) << ["/", File.dirname(archive_file)]
+    new_parents = ([].concat(archive_parents)) << [archive_file, archive_file]
+    #new_parents = ([].concat(archive_parents)) << [archive_file, archive_file]
+    #new_parents = ([].concat(archive_parents)) << [File.dirname(archive_file), File.dirname(path)]
+    #new_parents = ([].concat(archive_parents)) << [File.dirname(archive_file), File.dirname(archive_file)]
+    ClassFileArchiveDiscoverer.discover(path, new_parents)
+  end
+
 =begin rdoc
   return true or false if the symlink could be resolved and the realpath if it can
 
@@ -599,7 +640,7 @@ class Walker
 
   def notify_subscribers(subscribers, location, filename, rule_used, archive_parents)
     any_matches = false
-    subscribers.each{ | subscriber |
+    subscribers.each{ |subscriber|
       any_matches ||= subscriber.found_file(location, filename, rule_used, archive_parents)
     }
     any_matches

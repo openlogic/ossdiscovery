@@ -30,7 +30,7 @@
 
 $:.unshift File.join(File.dirname(__FILE__), '..')
 require 'package'
-require 'ternary_search_tree'
+require 'search_trees'
 require 'matchrules/match_rule'
 require File.join(File.dirname(__FILE__), '..', 'conf', 'config')
 
@@ -48,15 +48,14 @@ class FilenameListMatchRule < MatchRule
     @defined_filename = Regexp.new(/#{defined_filename}/i)
 
     # should only be one of these, so make a class variable
-    @@tst = TernarySearchTree.new
-    @@tst.seed_tree
+    SearchTrees.seed_trees
 
     tst_file = File.expand_path(File.join(
           File.dirname(__FILE__), '..', 'rules', 'openlogic', project_file))
 
     start = Time.now
     puts "Loading name-based rules"
-    @@tst.load_from_file(tst_file)
+    SearchTrees.load_from_file(tst_file)
     puts "done loading rules in #{Time.now - start} seconds."
   end
   
@@ -85,7 +84,7 @@ class FilenameListMatchRule < MatchRule
     unless FilenameMatchRule.match?(defined_filename, actual_filepath)
       return false
     end
-    @@tst.match(File.basename(actual_filepath)) || false
+    SearchTrees.match_file_name(File.basename(actual_filepath)) || false
   end
 
   def FilenameListMatchRule.create(attributes)

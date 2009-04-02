@@ -1,6 +1,9 @@
-ant;ant;ant;none
-antlr;antlr;antlr;none
-apache;apache;apache;none
-apache2;apache2;apache2;none
-apache-tomcat;apache-tomcat;apache-tomcat;none
-tomcat;tomcat;tomcat;none
+ant;ant;ant;java;org.apache.tools.ant
+ant-tools;ant-tools;ant-tools;java;org.apache.tools
+antlr;antlr;antlr;java;org.antlr
+apache;apache;apache;none;none
+apache-logging;apache logging;apache-logging;java;org.apache.tools.ant.logging
+apache2;apache2;apache2;none;none
+apache-tomcat;apache-tomcat;apache-tomcat;java;org.apache.tomcat,org.catalina
+commons-collections;commons-collections;commons-collections;java;org.apache.commons.collections
+tomcat;tomcat;tomcat;java;org.tomcat
