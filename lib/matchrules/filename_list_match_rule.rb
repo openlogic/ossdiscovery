@@ -35,17 +35,24 @@ require 'matchrules/match_rule'
 require File.join(File.dirname(__FILE__), '..', 'conf', 'config')
 
 require 'set'
+require 'yaml'
 
 class FilenameListMatchRule < MatchRule
   
   # unused, but required by the framework at this point
   attr_accessor :defined_filename
   
-  def initialize(name, defined_filename, project_file)
+  def initialize(name, defined_filename, project_file, language_file)
     super(name)
     @type = MatchRule::TYPE_FILENAME_LIST
     @matched_against = {}
     @defined_filename = Regexp.new(/#{defined_filename}/i)
+
+    # set up our search trees to know about languages and their file extensions
+    language_mapping_file = File.expand_path(File.join(
+          File.dirname(__FILE__), '..', 'rules', 'openlogic', language_file))
+    language_map = YAML.load_file(language_mapping_file)
+    SearchTrees.initialize(language_map)
 
     # should only be one of these, so make a class variable
     SearchTrees.seed_trees
@@ -88,6 +95,6 @@ class FilenameListMatchRule < MatchRule
   end
 
   def FilenameListMatchRule.create(attributes)
-    FilenameListMatchRule.new(attributes['name'], attributes['filename'], attributes['projectfile'])
+    FilenameListMatchRule.new(attributes['name'], attributes['filename'], attributes['projectfile'], attributes['languagefile'])
   end
 end

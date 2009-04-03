@@ -23,7 +23,12 @@ module FileNameSearchTree
 
     # Store the entire tree in a flat array indexed by integers. Create a single
     # node and call it the root.
-    def initialize
+    def initialize(language_map)
+      @language_map = {}
+      # make sure the keys in the language map are symbols
+      language_map.each do |language, extensions|
+        @language_map[language.downcase.to_sym] = extensions
+      end
       @nodes = []
       @root = new_node
     end
@@ -195,7 +200,7 @@ module FileNameSearchTree
 
         # if we hit a stop character like '.', we're done
         if CharacterInfo.stop_character?
-          return [best_match ? best_match[1] : nil, guess_version(filename, best_match)]
+          return prepare_answer(best_match, filename)
         end
         # if we hit a reset character like a-z, we need to forget our best match
         # so far as it's now obsolete
@@ -219,16 +224,48 @@ module FileNameSearchTree
             # if we hit a reset character, we're toast
             return nil if CharacterInfo.reset_character?
             # if we hit a stop character, return the best results so far, if any
-            return [best_match ? best_match[1] : nil, guess_version(filename, best_match)] if CharacterInfo.stop_character?
+            return prepare_answer(best_match, filename) if CharacterInfo.stop_character?
           end
           # we made it to the end of the file name without any issues, so return
           # the best match so far, if any
-          return [best_match ? best_match[1] : nil, guess_version(filename, best_match)]
+          return prepare_answer(best_match, filename)
         end
       end
       # we made it to the end of the file name without any issues, so return the
       # best match so far, if any
-      [best_match ? best_match[1] : nil, "unknown"]
+      return prepare_answer(best_match, filename,  false)
+    end
+
+    # post-process our current best match and the given filename to create a
+    # value suitable for return to the callers of "match"
+    def prepare_answer(best_match, filename, guess_version = true)
+      language_okay = check_language(best_match, filename)
+      if language_okay
+        version = guess_version ? guess_version(filename, best_match) : "unknown"
+        [best_match ? best_match[1] : nil, version]
+      else
+        [nil, "unknown"]
+      end
+    end
+
+    # we need to make sure the matched project and the file name extension
+    # agree with the language information we have on the project, if any
+    def check_language(best_match, filename)
+      # if there's not match, then let it go through
+      return true unless best_match && best_match[2].any?
+      ext = File.extname(filename).downcase
+      best_match[2].any? { |language| language_has_extension(language, ext) }
+    end
+
+    # return true if the given language (as a symbol) typically has file names
+    # with the given extension.  Example:  Java uses .jar, .war, .ear, .class,
+    # and .java
+    # The language map is usually defined in rules/openlogic/languages.yml
+    def language_has_extension(language, ext)
+      specific_language_list = @language_map[language]
+      # if we don't know about the language, return true for now until we get
+      # extremely clean language data on all rules
+      !specific_language_list || specific_language_list.include?(ext)
     end
 
     # Given a file name and a package name that matches part of it, return a
@@ -343,9 +380,8 @@ module FileNameSearchTree
     # Load a single line of data from a file into the tree
     def load_from_details(package_id, name, aliases, languages, namespaces)
       aliases.split(ALIAS_DELIMITER).each do |project_alias|
-        # #language_symbols = languages.split(LANGUAGE_DELIMITER).collect {
-        # |language| language.to_sym }
-        put(project_alias, [project_alias, package_id])
+        language_symbols = languages.split(LANGUAGE_DELIMITER).reject { |language| language == "none" }.collect { |language| language.to_sym }
+        put(project_alias, [project_alias, package_id, language_symbols])
       end
     end
 
