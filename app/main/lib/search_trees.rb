@@ -36,11 +36,11 @@ class SearchTrees
     count = 0
     IO.foreach(file_name) do |line|
       begin
-        package_id, name, aliases, languages, namespaces = line.split(PROJECT_DELIMITER)
+        package_id, aliases, languages, namespaces = line.split(PROJECT_DELIMITER)
         # make sure we don't have any strange line ending issues
         namespaces.strip!
-        file_name_tree.load_from_details(package_id, name, aliases, languages, namespaces)
-        class_file_path_tree.load_from_details(package_id, name, aliases, languages, namespaces)
+        file_name_tree.load_from_details(package_id, aliases, languages, namespaces)
+        class_file_path_tree.load_from_details(package_id, aliases, languages, namespaces)
         count += 1
         if count == 10000
           count = 0

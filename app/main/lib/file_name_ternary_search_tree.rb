@@ -363,8 +363,8 @@ module FileNameSearchTree
       count = 0
       IO.foreach(file_name) do |line|
         begin
-          package_id, name, aliases, languages, namespaces = line.split(PROJECT_DELIMITER)
-          load_from_details(package_id, name, aliases, languages, namespaces.strip)
+          package_id, aliases, languages, namespaces = line.split(PROJECT_DELIMITER)
+          load_from_details(package_id, aliases, languages, namespaces.strip)
           count += 1
           if count == 10000
             count = 0
@@ -378,9 +378,9 @@ module FileNameSearchTree
     end
 
     # Load a single line of data from a file into the tree
-    def load_from_details(package_id, name, aliases, languages, namespaces)
+    def load_from_details(package_id, aliases, languages, namespaces)
+      language_symbols = languages.split(LANGUAGE_DELIMITER).reject { |language| language == "none" }.collect { |language| language.to_sym }
       aliases.split(ALIAS_DELIMITER).each do |project_alias|
-        language_symbols = languages.split(LANGUAGE_DELIMITER).reject { |language| language == "none" }.collect { |language| language.to_sym }
         put(project_alias, [project_alias, package_id, language_symbols])
       end
     end

@@ -8,7 +8,7 @@ require File.join(File.dirname(__FILE__), 'test_helper')
 class TcFileNameTernarySearchTree < Test::Unit::TestCase
 
   def setup
-    SearchTrees.initialize
+    SearchTrees.initialize({})
     @tst = SearchTrees.file_name_tree
   end
   
