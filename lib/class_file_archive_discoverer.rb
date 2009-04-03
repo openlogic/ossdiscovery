@@ -89,6 +89,7 @@ class ClassFileArchiveDiscoverer
   def self.get_paths_from_zip(path)
     # reset our class variable for a new search for a manifest file
     @@manifest_version = nil
+    @@maven_pom_version = nil
 
     # if we're running on JRuby, we prefer to use Java for looking inside of
     # jars because the Ruby zip library has seemingly random issues reading the
