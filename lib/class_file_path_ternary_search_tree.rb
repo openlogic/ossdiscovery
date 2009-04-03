@@ -301,8 +301,8 @@ module ClassFilePathSearchTree
       count = 0
       IO.foreach(file_name) do |line|
         begin
-          package_id, name, aliases, languages, namespaces = line.split(PROJECT_DELIMITER)
-          load_from_details(package_id, name, aliases, languages, namespaces.strip)
+          package_id, aliases, languages, namespaces = line.split(PROJECT_DELIMITER)
+          load_from_details(package_id, aliases, languages, namespaces.strip)
           count += 1
           if count == 10000
             count = 0
@@ -316,7 +316,7 @@ module ClassFilePathSearchTree
     end
 
     # Load a single line of data from a file into the tree
-    def load_from_details(package_id, name, aliases, languages, namespaces)
+    def load_from_details(package_id, aliases, languages, namespaces)
       namespaces.split(NAMESPACE_DELIMITER).each do |namespace|
         put(namespace.gsub(/\./, '/'), [namespace, package_id]) unless namespace == "none"
       end
