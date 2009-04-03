@@ -1,4 +1,5 @@
 require 'package'
+require 'rexml/document'
 require 'pathname'
 require 'fileutils'
 require 'zip/stdrubyext'
@@ -50,12 +51,24 @@ class ClassFileArchiveDiscoverer
     matches.each do |package_name, path_inside_archive|
       package = Package.new
       package.name = package_name
-      package.version = "unknown"
       package.found_at = reportable_location(path, archive_parents)
       package.file_name = path_inside_archive
+      package.version = get_version(matches)
       package.archive = File.basename(path)
       discovered_packages << package
     end
+  end
+
+  # Get the version from the manifest file or Maven POM file only if we
+  # matched a single package in the archive, otherwise set it to "unknown".
+  # If we have both a manifest file with a version and a Maven POM file with
+  # version, they have to match otherwise we play it safe and say "unknown".
+  def self.get_version(matches)
+    version_match = true
+    if @@manifest_version && @@maven_pom_version
+      version_match = @@manifest_version == @@maven_pom_version
+    end
+    (matches.size == 1 && version_match && (@@manifest_version || @@maven_pom_version)) || "unknown"
   end
 
   # Given a path to a .class file inside an archive, return either the package
@@ -74,6 +87,9 @@ class ClassFileArchiveDiscoverer
 
   # return an array that represents the table of contents for the given zip file
   def self.get_paths_from_zip(path)
+    # reset our class variable for a new search for a manifest file
+    @@manifest_version = nil
+
     # if we're running on JRuby, we prefer to use Java for looking inside of
     # jars because the Ruby zip library has seemingly random issues reading the
     # contents of certain jar files.
@@ -96,14 +112,21 @@ class ClassFileArchiveDiscoverer
       # when it's time to look at manifest files
       # #jar_input_stream = java.util.jar.JarInputStream.new(java.io.FileInputStream.new(path), false)
       # #entry = jar_input_stream.next_jar_entry
-      zip_input_stream = java.util.zip.ZipInputStream.new(java.io.FileInputStream.new(path))
-      while entry = zip_input_stream.next_entry
-        paths << entry.name
+      zip_file = java.util.zip.ZipFile.new(path)
+      zip_file.entries.each do |entry|
+        name = entry.name
+        paths << name
+        if is_maven_pom_file?(name)
+          @@maven_pom_version = get_version_from_maven_pom(read_java_input_stream(zip_file.get_input_stream(entry)))
+        end
+        if is_manifest_file?(name)
+          @@manifest_version = get_version_from_manifest(read_java_input_stream(zip_file.get_input_stream(entry)))
+        end
       end
     rescue java.io.IOException => e
       puts "Java ZipInputStream could not examine the contents of class file archive: #{path} because #{e.inspect}:  #{e.backtrace}"
     ensure
-      zip_input_stream.close if zip_input_stream rescue nil
+      zip_file.close if zip_file rescue nil
     end
     paths
   end
@@ -115,13 +138,73 @@ class ClassFileArchiveDiscoverer
     begin
       Zip::ZipFile.open(path) do |zip_file|
         zip_file.entries.each do |entry|
-          paths << entry.name
+          name = entry.name
+          paths << name
+          if is_maven_pom_file?(name)
+            @@maven_pom_version = get_version_from_maven_pom(read_ruby_zip_entry(entry))
+          end
+          if is_manifest_file?(name)
+            @@manifest_version = get_version_from_manifest(read_ruby_zip_entry(entry))
+          end
         end
       end
     rescue Exception => e
       puts "ruby unzip could not examine contents of class file archive: #{path} because #{e.inspect}:  #{e.backtrace}"
     end
     paths
+  end
+
+  # return true if the given file name is a jar file's manifest file
+  def self.is_manifest_file?(name)
+    name == "META-INF/MANIFEST.MF"
+  end
+
+  # return true if the given file name is a jar file's optional Maven POM file
+  def self.is_maven_pom_file?(name)
+    name =~ %r{^META-INF/maven/.*/pom\.xml$}
+  end
+
+  # look through a manifest file to pull out the version, if any
+  def self.get_version_from_manifest(manifest)
+    /Implementation-Version:\s(.*)$/ =~ manifest
+    version = $1
+    # let's see if the version is too long
+    if version && version.length > 10
+      # it is, so let's try to split it at the first " ", if any
+      if space = version.index(" ")
+        version = version[0...space]
+      end
+    end
+    version
+  end
+
+  # look through a Maven POM file to pull out the version, if any
+  def self.get_version_from_maven_pom(pom)
+    doc = REXML::Document.new(pom)
+    version_node = doc.root.elements["version"]
+    version_node ? version_node.text : nil
+  end
+
+  # fully read the given input stream into a string
+  def self.read_java_input_stream(is)
+    reader = java.io.BufferedReader.new(java.io.InputStreamReader.new(is))
+    text = ""
+    while line = reader.read_line
+      text << line << "\n"
+    end
+    text
+  end
+
+  # read the given ZipFileEntry into a string
+  def self.read_ruby_zip_entry(entry)
+    text = ""
+    entry.get_input_stream do |is|
+      buf = ""
+      while buf = is.sysread(32768, buf)
+        text << buf
+      end
+    end
+    text
   end
 
   # Return a location that includes a potential chain of archive parents along
@@ -161,5 +244,6 @@ class ClassFileArchiveDiscoverer
   # Forget everything we've found so far and prepare for a fresh start
   def self.reset
     discovered_packages.clear
+    @@manifest_version = nil
   end
 end
