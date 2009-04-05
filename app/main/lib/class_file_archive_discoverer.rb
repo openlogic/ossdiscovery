@@ -176,14 +176,14 @@ class ClassFileArchiveDiscoverer
         version = version[0...space]
       end
     end
-    version.strip if version
+    version.strip.gsub(/"/, "") if version
   end
 
   # look through a Maven POM file to pull out the version, if any
   def self.get_version_from_maven_pom(pom)
     doc = REXML::Document.new(pom)
     version_node = doc.root.elements["version"]
-    version_node ? version_node.text.strip : nil
+    version_node ? version_node.text.strip.gsub(/"/, "") : nil
   end
 
   # fully read the given input stream into a string
