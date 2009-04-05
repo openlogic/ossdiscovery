@@ -42,7 +42,7 @@ class FilenameListMatchRule < MatchRule
   # unused, but required by the framework at this point
   attr_accessor :defined_filename
   
-  def initialize(name, defined_filename, project_file, language_file)
+  def initialize(name, defined_filename, project_file, language_file, special_file)
     super(name)
     @type = MatchRule::TYPE_FILENAME_LIST
     @matched_against = {}
@@ -52,7 +52,12 @@ class FilenameListMatchRule < MatchRule
     language_mapping_file = File.expand_path(File.join(
           File.dirname(__FILE__), '..', 'rules', 'openlogic', language_file))
     language_map = YAML.load_file(language_mapping_file)
-    SearchTrees.initialize(language_map)
+
+    # they also need to know about special files
+    special_mapping_file = File.expand_path(File.join(
+          File.dirname(__FILE__), '..', 'rules', 'openlogic', special_file))
+    special_map = YAML.load_file(special_mapping_file)
+    SearchTrees.initialize(language_map, special_map)
 
     # should only be one of these, so make a class variable
     SearchTrees.seed_trees
@@ -95,6 +100,6 @@ class FilenameListMatchRule < MatchRule
   end
 
   def FilenameListMatchRule.create(attributes)
-    FilenameListMatchRule.new(attributes['name'], attributes['filename'], attributes['projectfile'], attributes['languagefile'])
+    FilenameListMatchRule.new(attributes['name'], attributes['filename'], attributes['projectfile'], attributes['languagefile'], attributes['specialfile'])
   end
 end

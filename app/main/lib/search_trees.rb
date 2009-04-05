@@ -8,8 +8,9 @@ class SearchTrees
   PROJECT_DELIMITER  = ';'
 
   # set or reset the trees
-  def self.initialize(language_map)
+  def self.initialize(language_map, special_map)
     @@language_map = language_map
+    @@special_map = special_map
     @@the_file_name_tree = nil
     @@the_class_file_path_tree = nil
   end
@@ -66,7 +67,7 @@ class SearchTrees
 
   # accessors
   def self.file_name_tree
-    @@the_file_name_tree ||= FileNameSearchTree::FileNameTernarySearchTree.new(@@language_map)
+    @@the_file_name_tree ||= FileNameSearchTree::FileNameTernarySearchTree.new(@@language_map, @@special_map)
   end
 
   def self.class_file_path_tree

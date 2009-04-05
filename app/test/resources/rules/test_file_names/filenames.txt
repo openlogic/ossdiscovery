@@ -7,3 +7,4 @@ apache2;apache2;none;none
 apache-tomcat;apache-tomcat;java;org.apache.tomcat,org.catalina
 commons-collections;commons-collections;java;org.apache.commons.collections
 tomcat;tomcat;java;org.tomcat
+jquery;jquery;javascript;none

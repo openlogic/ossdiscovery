@@ -23,11 +23,17 @@ module FileNameSearchTree
 
     # Store the entire tree in a flat array indexed by integers. Create a single
     # node and call it the root.
-    def initialize(language_map)
+    def initialize(language_map, special_map)
       @language_map = {}
       # make sure the keys in the language map are symbols
       language_map.each do |language, extensions|
         @language_map[language.downcase.to_sym] = extensions
+      end
+
+      @special_map = {}
+      # make sure the keys in the special map are symbols
+      special_map.each do |special_type, package|
+        @special_map[special_type.downcase.to_sym] = package
       end
       @nodes = []
       @root = new_node
@@ -280,15 +286,34 @@ module FileNameSearchTree
     #    ant_3b               ant            3b
     #    ant-2.3-beta-2.jar   ant            2.3-beta-2
     #    ant-2-3.4_2a.jar     ant-2          3.4_2a
+    #
+    # Also handle 'special' packages that tend to have odd file names, such as
+    # ones with '.' after the package name but before some other text.  This
+    # requires that the 'special' map contains the package names along with
+    # their special constraints.  File names with '.' in the middle of them are
+    # the only currently supported definition of 'special'.
+    #
+    # Examples where 'jquery' is a special project:
+    #    File name            Package name   Guessed Version
+    #    ------------         -------------- ---------------
+    #    jquery.js            jquery         unknown
+    #    jquery2.0.js         jquery         2.0
+    #    jquery-2.3.js        jquery         2.3
+    #    jquery.core-3.1b.js  jquery         3.1b
+    #    jquery.core.js       jquery         unknown
+    #    jquery.other.bak.js  jquery         unknown
+    #    jquery.bridge.js     jquery         unknown
     def guess_version(filename, best_match)
       return "unknown" unless best_match
+      # determine if we're dealing with a special file
+      normal = !@special_map[:dots_in_name].include?(best_match[0])
       version = ""
       ext = File.extname(filename)
       start = false
       for i in best_match[0].size...(filename.size - ext.size)
         version << filename[i] if start || CharacterInfo.is_digit_character?(filename[i])
-        start ||= (CharacterInfo.is_name_version_delimiter_character?(filename[i]) ||
-            CharacterInfo.is_digit_character?(filename[i]))
+        start ||= ((normal && CharacterInfo.is_name_version_delimiter_character?(filename[i])) ||
+                   CharacterInfo.is_digit_character?(filename[i]))
       end
       version.empty? ? "unknown" : version
     end
@@ -410,7 +435,9 @@ module FileNameSearchTree
     MAX_RESET_CHARACTER = 'z'[0]
     MIN_DIGIT_CHARACTER = '0'[0]
     MAX_DIGIT_CHARACTER = '9'[0]
-    NAME_VERSION_DELIMITER_CHARACTERS = ['_'[0], '-'[0], '.'[0]]
+    UNDERSCORE = '_'[0]
+    DASH = '-'[0]
+    DOT = '.'[0]
 
     @@current_character = nil
 
@@ -431,8 +458,8 @@ module FileNameSearchTree
       @@current_character == STOP_CHARACTER
     end
 
-    def self.is_name_version_delimiter_character?(ch)
-      NAME_VERSION_DELIMITER_CHARACTERS.include?(ch)
+    def self.is_name_version_delimiter_character?(ch, include_dot = true)
+      ch == DASH || (ch == DOT && include_dot) || ch == UNDERSCORE
     end
 
     def self.is_digit_character?(ch)

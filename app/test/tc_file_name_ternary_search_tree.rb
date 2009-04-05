@@ -8,7 +8,7 @@ require File.join(File.dirname(__FILE__), 'test_helper')
 class TcFileNameTernarySearchTree < Test::Unit::TestCase
 
   def setup
-    SearchTrees.initialize({})
+    SearchTrees.initialize({}, {"dots_in_name" => ["jquery"]})
     @tst = SearchTrees.file_name_tree
   end
   
@@ -64,6 +64,21 @@ class TcFileNameTernarySearchTree < Test::Unit::TestCase
     items = %w{apache-2b.zip apache-ant apache-beta}
     items.each do |item|
       assert_nil @tst.match(item)
+    end
+  end
+
+  def test_special_file_name_match
+    @tst.load_from_file(simple_test_file_name)
+    items = [
+      %w{jquery unknown jquery.core.dogma.fritos},
+      %w{jquery unknown jquery.spanky},
+      %w{jquery unknown jquery.so},
+      %w{jquery unknown jquery.zip},
+      %w{jquery unknown jquery.tar.gz},
+      %w{jquery 2.3b jquery-2.3b.zip}]
+    items.each do |item|
+      assert_equal item[0], @tst.match(item[2])[0]
+      assert_equal item[1], @tst.match(item[2])[1]
     end
   end
 
