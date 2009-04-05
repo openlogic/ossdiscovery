@@ -78,7 +78,7 @@ class Walker
   attr_accessor :open_archives, :dont_open_discovered_archives
   attr_accessor :archive_temp_dir
   attr_accessor :archive_extensions
-  attr_accessor :class_file_archive_extensions, :no_class_files
+  attr_accessor :class_file_archive_extensions, :no_class_files, :always_open_class_file_archives
   attr_accessor :unopenable_archive_ct
   attr_accessor :list_exclusions, :list_files, :show_permission_denied, :starttime
   attr_reader :total_seconds_paused_for_throttling
@@ -289,7 +289,7 @@ class Walker
 
             # we didn't recognize the file, so check to see if it might
             # contain class files we recognize
-            if !discovered && !@no_class_files && is_class_file_archive?(fileordir.to_s)
+            if ((!discovered && !@no_class_files) || @always_open_class_file_archives) && is_class_file_archive?(fileordir.to_s)
               @class_file_archives_found_ct += 1
               examine_class_file_archive(fileordir, archive_parents)
             end

@@ -93,6 +93,11 @@ archive_temp_dir: nil
 archive_extensions: <% [ '.zip', '.war', '.ear' ] %>
 
 #--------------------------------------------------------------------------------------
+# Set to true to force discovery to look inside of a jar file for known class
+# files even if the jar file itself is recognized.
+always_open_class_file_archives: false
+
+#--------------------------------------------------------------------------------------
 # Set to true to avoid looking inside of a jar file for known class files if the
 # jar file itself is not recognized.
 no_class_files: false

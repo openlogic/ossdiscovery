@@ -9,6 +9,9 @@ Options are not order dependent and may be one or more of:
 --always-open-archives, -a open archives even if the archive file itself
                            is identified
 
+--always-open-class-file-archives, -f open class file archives (like jars) even if the archive file itself
+                           is identified
+
 --conf,                 -c the absolute or relative path and filename of
                            the configuration file to use for the scan
 
