@@ -291,6 +291,13 @@ class Walker
             discovered = name_match(fileordir, archive_parents)
             file_string = fileordir.to_s
 
+            # if we matched against a class file archive but don't yet know the
+            # version number, let's look inside it for a manifest or POM file
+            if discovered && !@no_class_files && !@always_open_class_file_archives &&
+               discovered.kind_of?(Array) && discovered[1] == "unknown" && is_class_file_archive?(file_string)
+              try_to_get_version_from_class_file_archive(discovered[0], fileordir, archive_parents)
+            end
+
             # we didn't recognize the file, so check to see if we're supposed
             # to examine the contents of source files
             if !discovered && @examine_source_files && is_source_file?(file_string)
@@ -567,19 +574,13 @@ class Walker
   # "org/apache/commons/collections/whatever.class".  We might also look in a
   # manifest file, if any can be found, or do other Java-specific discovery.
   def examine_class_file_archive(path, archive_parents = [])
-    # if we're the topmost archive, include our full path
-    if archive_parents.empty?
-      archive_file = path
-    else
-      # otherwise, strip our most recent parent's path from our path
-      archive_file = remove_parent_path(path, archive_parents.last[1])
-    end
-    #new_parents = ([].concat(archive_parents)) << ["/", File.dirname(archive_file)]
-    new_parents = ([].concat(archive_parents)) << [archive_file, archive_file]
-    #new_parents = ([].concat(archive_parents)) << [archive_file, archive_file]
-    #new_parents = ([].concat(archive_parents)) << [File.dirname(archive_file), File.dirname(path)]
-    #new_parents = ([].concat(archive_parents)) << [File.dirname(archive_file), File.dirname(archive_file)]
-    ClassFileArchiveDiscoverer.discover(path, new_parents)
+    ClassFileArchiveDiscoverer.discover(path, get_new_parents_for_container(path, archive_parents))
+  end
+
+  # if we matched against a class file archive but don't yet know the
+  # version number, let's look inside it for a manifest or POM file
+  def try_to_get_version_from_class_file_archive(package_name, path, archive_parents)
+    ClassFileArchiveDiscoverer.try_to_get_version(package_name, path, get_new_parents_for_container(path, archive_parents))
   end
 
   # Look inside the given source file to see if we can recognize anything
@@ -587,15 +588,23 @@ class Walker
   # "import org.apache.commons.collections.*".  We might also look for package
   # statements or do other Java-specific discovery.
   def examine_source_file(path, archive_parents = [])
+    SourceFileDiscoverer.discover(path, get_new_parents_for_container(path, archive_parents))
+  end
+
+
+  # Given a "container" path, where "container" is an archive file or a source
+  # file or anything else that could generate one or more discovery matches, and
+  # a list of parent enclosing archive files, return a new list of archive
+  # parents to be passed along to the next generation.
+  def get_new_parents_for_container(container_path, archive_parents = [])
     # if we're the topmost "archive", include our full path
     if archive_parents.empty?
-      archive_file = path
+      archive_file = container_path
     else
       # otherwise, strip our most recent parent's path from our path
-      archive_file = remove_parent_path(path, archive_parents.last[1])
+      archive_file = remove_parent_path(container_path, archive_parents.last[1])
     end
-    new_parents = ([].concat(archive_parents)) << [archive_file, archive_file]
-    SourceFileDiscoverer.discover(path, new_parents)
+    ([].concat(archive_parents)) << [archive_file, archive_file]
   end
 
 =begin rdoc

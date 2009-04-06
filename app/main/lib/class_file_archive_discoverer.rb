@@ -64,11 +64,39 @@ class ClassFileArchiveDiscoverer
   # If we have both a manifest file with a version and a Maven POM file with
   # version, they have to match otherwise we play it safe and say "unknown".
   def self.get_version(matches)
-    version_match = true
-    if @@manifest_version && @@maven_pom_version
-      version_match = @@manifest_version == @@maven_pom_version
+    (matches.size == 1 && get_reported_version(@@manifest_version, @@maven_pom_version)) || "unknown"
+  end
+
+  # given an array of versions, choose the best, if any to report to users
+  # for now, there can only be two and they have to match
+  def self.get_reported_version(*versions)
+    # either can be nil
+    return versions[0] unless versions[1]
+    return versions[1] unless versions[0]
+
+    # if both have values, they must match
+    versions[0] == versions[1] ? versions[0] : nil
+  end
+
+  # As opposed to the method above, this is called on a new archive that has not
+  # been opened by this class.  It opens the given archive and attempts to get
+  # a file name out of it by looking at the manifest and/or POM files, if any.
+  def self.try_to_get_version(package_name, path, archive_parents = [])
+    info = get_info_from_zip(path)
+    version = get_reported_version(*info[0].values)
+    if version
+      record_version_match(package_name, version, path, archive_parents = [])
     end
-    (matches.size == 1 && version_match && (@@manifest_version || @@maven_pom_version)) || "unknown"
+  end
+    
+  # Record the version we found when opening a "cold" archive
+  def self.record_version_match(package_name, version, path, archive_parents = [])
+    package = Package.new
+    package.name = package_name
+    package.found_at = File.dirname(path)
+    package.file_name = File.basename(path)
+    package.version = version
+    discovered_packages << package
   end
 
   # Given a path to a .class file inside an archive, return either the package
@@ -81,31 +109,39 @@ class ClassFileArchiveDiscoverer
 
   # return a list of all class file paths inside the archive
   def self.get_class_file_paths(zip_path)
-    paths = get_paths_from_zip(zip_path)
-    paths.find_all { |path| is_class_file?(path) }
+    info = get_info_from_zip(zip_path)
+    info[1].find_all { |path| is_class_file?(path) }
   end
 
-  # return an array that represents the table of contents for the given zip file
-  def self.get_paths_from_zip(path)
-    # reset our class variable for a new search for a manifest file
-    @@manifest_version = nil
-    @@maven_pom_version = nil
-
+  # return an array of arrays that represents the table of contents for the given zip file
+  # plus additional information like this:
+  # [{:manifest_version => "2.3", :pom_version => "2.3.1"}, ["org/apache/commons/collections/Thing.class", ...] ]
+  def self.get_info_from_zip(path)
     # if we're running on JRuby, we prefer to use Java for looking inside of
     # jars because the Ruby zip library has seemingly random issues reading the
     # contents of certain jar files.
     if JAVA_AVAILABLE
-      paths = get_paths_from_zip_via_java(path)
+      info = get_info_from_zip_via_java(path)
     else
-      paths = get_paths_from_zip_via_ruby(path)
+      info = get_info_from_zip_via_ruby(path)
     end
-    paths.sort
+
+    # pull out some version information
+    @@manifest_version = info[0][:manifest_version]
+    @@maven_pom_version = info[0][:pom_version]
+
+    # order the paths alphabetically as you can't be sure of the order that comes
+    # back when reading from the archive table of contents
+    info[1].sort!
+    info
   end
 
-  # return an array that represents the table of contents for the given zip file
-  # using Java libraries
-  def self.get_paths_from_zip_via_java(path)
-    paths = []
+  # return an array of arrays that represents the table of contents for the given zip file
+  # using Java libraries plus additional information like this:
+  # [{:manifest_version => "2.3", :pom_version => "2.3.1"}, ["org/apache/commons/collections/Thing.class", ...] ]
+  def self.get_info_from_zip_via_java(path)
+    info = [{}, []]
+    paths = info[1]
     begin
       # this spews out a bunch of Java debug to the console even though no debug
       # flags are set and no exceptions are thrown, so I'm commenting all this
@@ -117,11 +153,11 @@ class ClassFileArchiveDiscoverer
       zip_file.entries.each do |entry|
         name = entry.name
         paths << name
-        if is_maven_pom_file?(name)
-          @@maven_pom_version = get_version_from_maven_pom(read_java_input_stream(zip_file.get_input_stream(entry)))
-        end
         if is_manifest_file?(name)
-          @@manifest_version = get_version_from_manifest(read_java_input_stream(zip_file.get_input_stream(entry)))
+          info[0][:manifest_version] = get_version_from_manifest(read_java_input_stream(zip_file.get_input_stream(entry)))
+        end
+        if is_maven_pom_file?(name)
+          info[0][:pom_version] = get_version_from_maven_pom(read_java_input_stream(zip_file.get_input_stream(entry)))
         end
       end
     rescue java.io.IOException => e
@@ -129,30 +165,32 @@ class ClassFileArchiveDiscoverer
     ensure
       zip_file.close if zip_file rescue nil
     end
-    paths
+    info
   end
 
-  # return an array that represents the table of contents for the given zip file
-  # using Ruby libraries
-  def self.get_paths_from_zip_via_ruby(path)
-    paths = []
+  # Return an array of arrays that represents the table of contents for the given zip file
+  # using Ruby libraries plus additional information like this:
+  # [{:manifest_version => "2.3", :pom_version => "2.3.1"}, ["org/apache/commons/collections/Thing.class", ...] ]
+  def self.get_info_from_zip_via_ruby(path)
+    info = [{}, []]
+    paths = info[1]
     begin
       Zip::ZipFile.open(path) do |zip_file|
         zip_file.entries.each do |entry|
           name = entry.name
           paths << name
-          if is_maven_pom_file?(name)
-            @@maven_pom_version = get_version_from_maven_pom(read_ruby_zip_entry(entry))
-          end
           if is_manifest_file?(name)
-            @@manifest_version = get_version_from_manifest(read_ruby_zip_entry(entry))
+            info[0][:manifest_version] = get_version_from_manifest(read_ruby_zip_entry(entry))
+          end
+          if is_maven_pom_file?(name)
+            info[0][:pom_version] = get_version_from_maven_pom(read_ruby_zip_entry(entry))
           end
         end
       end
     rescue Exception => e
       puts "ruby unzip could not examine contents of class file archive: #{path} because #{e.inspect}:  #{e.backtrace}"
     end
-    paths
+    info
   end
 
   # return true if the given file name is a jar file's manifest file
