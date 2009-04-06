@@ -46,6 +46,7 @@ require 'zip/zip'
 require 'zip/zipfilesystem'
 require 'zip/tempfile_bugfixed'
 require 'class_file_archive_discoverer'
+require 'source_file_discoverer'
 
 require File.join(File.dirname(__FILE__), 'conf', 'config')
 
@@ -79,6 +80,7 @@ class Walker
   attr_accessor :archive_temp_dir
   attr_accessor :archive_extensions
   attr_accessor :class_file_archive_extensions, :no_class_files, :always_open_class_file_archives
+  attr_accessor :examine_source_files, :source_file_extensions, :source_files_found_ct
   attr_accessor :unopenable_archive_ct
   attr_accessor :list_exclusions, :list_files, :show_permission_denied, :starttime
   attr_reader :total_seconds_paused_for_throttling
@@ -129,6 +131,7 @@ class Walker
     @archives_found_ct = 0
     @class_file_archives_found_ct = 0
     @unopenable_archive_ct = 0
+    @source_files_found_ct = 0
     @show_progress = false
     @show_permission_denied = false
     @show_verbose = false
@@ -286,17 +289,25 @@ class Walker
           if resolved
             # always match against the given file
             discovered = name_match(fileordir, archive_parents)
+            file_string = fileordir.to_s
+
+            # we didn't recognize the file, so check to see if we're supposed
+            # to examine the contents of source files
+            if !discovered && @examine_source_files && is_source_file?(file_string)
+              @source_files_found_ct += 1
+              examine_source_file(fileordir, archive_parents)
+            end
 
             # we didn't recognize the file, so check to see if it might
             # contain class files we recognize
-            if ((!discovered && !@no_class_files) || @always_open_class_file_archives) && is_class_file_archive?(fileordir.to_s)
+            if ((!discovered && !@no_class_files) || @always_open_class_file_archives) && is_class_file_archive?(file_string)
               @class_file_archives_found_ct += 1
               examine_class_file_archive(fileordir, archive_parents)
             end
 
             # if it's an archive file, we may also want to open it up and look
             # inside for any nested archives and other interesting files
-            if @open_archives && is_archive?(fileordir.to_s)
+            if @open_archives && is_archive?(file_string)
               @archives_found_ct += 1
 
               # open the archive now unless we already discovered something from
@@ -410,14 +421,20 @@ class Walker
 
   # Return true if the given file name ends with an archive extension,
   # as defined through the configuration file
-  def is_archive?(fileordir)
-    @archive_extensions.any? { |ext| ends_with?(fileordir, ext) }
+  def is_archive?(file_name)
+    @archive_extensions.any? { |ext| ends_with?(file_name, ext) }
   end
 
   # Return true if the given file name ends with an archive extension that may
   # contain .class files as defined through the configuration file
-  def is_class_file_archive?(fileordir)
-    @class_file_archive_extensions.any? { |ext| ends_with?(fileordir, ext) }
+  def is_class_file_archive?(file_name)
+    @class_file_archive_extensions.any? { |ext| ends_with?(file_name, ext) }
+  end
+
+  # Return true if the given file name ends with ".java".  We'll add other
+  # languages in the future.
+  def is_source_file?(file_name)
+    @source_file_extensions.any? { |ext| ends_with?(file_name, ext) }
   end
 
   # Return true if the given file name ends with ".class"
@@ -563,6 +580,22 @@ class Walker
     #new_parents = ([].concat(archive_parents)) << [File.dirname(archive_file), File.dirname(path)]
     #new_parents = ([].concat(archive_parents)) << [File.dirname(archive_file), File.dirname(archive_file)]
     ClassFileArchiveDiscoverer.discover(path, new_parents)
+  end
+
+  # Look inside the given source file to see if we can recognize anything
+  # inside of it.  For example, see if we detect
+  # "import org.apache.commons.collections.*".  We might also look for package
+  # statements or do other Java-specific discovery.
+  def examine_source_file(path, archive_parents = [])
+    # if we're the topmost "archive", include our full path
+    if archive_parents.empty?
+      archive_file = path
+    else
+      # otherwise, strip our most recent parent's path from our path
+      archive_file = remove_parent_path(path, archive_parents.last[1])
+    end
+    new_parents = ([].concat(archive_parents)) << [archive_file, archive_file]
+    SourceFileDiscoverer.discover(path, new_parents)
   end
 
 =begin rdoc

@@ -394,6 +394,7 @@ directories walked      : <%= scandata.dir_ct %>
 files encountered       : <%= scandata.file_ct %>
 archives encountered    : <%= scandata.archives_found_ct %>
 class file archives     : <%= scandata.class_file_archives_found_ct %>
+source files            : <%= scandata.source_files_found_ct %>
 symlinks found          : <%= scandata.sym_link_ct %>
 symlinks not followed   : <%= scandata.not_followed_ct %>
 bad symlinks found      : <%= scandata.bad_link_ct %>

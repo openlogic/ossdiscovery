@@ -9,12 +9,12 @@ require 'zip/zipfilesystem'
 require 'zip/tempfile_bugfixed'
 
 begin
-  # if we're running under JRuby use the apache httpclient for https posts
+  # if Java is available, we can use it to open zip files as it's more reliable
+  # than Ruby's zip library
   require 'java'
-  # #require "#{ENV['OSSDISCOVERY_HOME']}/jruby/lib/commons-httpclient-3.1.jar"
-  JAVA_AVAILABLE = true
+  JAVA_AVAILABLE = true unless defined?(JAVA_AVAILABLE)
 rescue LoadError
-  JAVA_AVAILABLE = false
+  JAVA_AVAILABLE = false unless defined?(JAVA_AVAILABLE)
 end
 
 
@@ -246,5 +246,6 @@ class ClassFileArchiveDiscoverer
   def self.reset
     discovered_packages.clear
     @@manifest_version = nil
+    @@maven_pom_version = nil
   end
 end

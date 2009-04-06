@@ -68,8 +68,9 @@ class RuleAnalyzer
       allpackages_with_unknowns.merge(packages_for_project)
     end # of project_rules.each
 
-    # Also merge in anything found in class file archives
+    # Also merge in anything found in class file archives or source files
     allpackages_with_unknowns.merge(ClassFileArchiveDiscoverer.discovered_packages)
+    allpackages_with_unknowns.merge(SourceFileDiscoverer.discovered_packages)
     
     # We have to go through a similar step here since we allow multiple 'project-rule' definitions.  
     # All unnecessary 'unknown' version identifications will have been removed within the context of one

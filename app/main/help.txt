@@ -90,6 +90,9 @@ Options are not order dependent and may be one or more of:
 --rule-version,         -V print out rule version info and do nothing else
                            (no scan performed)
 
+--source-scan           -s Examine source code files to look for references to
+                           open source, such as Java import statements
+
 --throttle,             -T Enable throttling of the scanner so all system
                            resources are not fully dedicated to running
                            this tool.
