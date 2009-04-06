@@ -67,15 +67,19 @@ class ClassFileArchiveDiscoverer
     (matches.size == 1 && get_reported_version(@@manifest_version, @@maven_pom_version)) || "unknown"
   end
 
-  # given an array of versions, choose the best, if any to report to users
-  # for now, there can only be two and they have to match
+  # Given an array of versions, choose the best, if any to report to users
+  # for now, there can only be two and they have to match.  Also, the result
+  # must contain at least one digit, otherwise we return nil.
   def self.get_reported_version(*versions)
     # either can be nil
-    return versions[0] unless versions[1]
-    return versions[1] unless versions[0]
+    answer = versions[0] unless versions[1]
+    answer = versions[1] unless versions[0]
 
     # if both have values, they must match
-    versions[0] == versions[1] ? versions[0] : nil
+    answer ||= versions[0] == versions[1] ? versions[0] : nil
+
+    # does our final answer have at least one digit?
+    answer =~ /\d/ ? answer : nil
   end
 
   # As opposed to the method above, this is called on a new archive that has not
