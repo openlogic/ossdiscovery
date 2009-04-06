@@ -52926,7 +52926,7 @@ jmailserver;jmailserver;java;none
 jmailto;jmailto;java;none
 jmake;jmake;perl;none
 jmakeztxt;jmakeztxt;java;none
-jmaki;jmaki;java;com.sun.jmaki
+jmaki;jmaki;java;com.sun.jmaki,com.sun.jmaki.rss
 jmame;jmame;none;none
 jman-mp3-server;jman-mp3-server;javascript,php;none
 jman;jman;java;none
@@ -98689,7 +98689,6 @@ rss2writer;rss2writer;none;none
 rss4admins;rss4admins;perl;none
 rss4ant;rss4ant;java;none
 rss4jsf;rss4jsf;java,jsp;none
-rss;rss;javascript,php;none
 rssadmin;rssadmin;php;none
 rssalarmclock;rssalarmclock;c++,perl,visual basic;none
 rssatellite;rssatellite;php;none
