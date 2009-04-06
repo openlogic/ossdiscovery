@@ -43,16 +43,6 @@ namespace :release do
         yml_fd.write(olex_yml)
         yml_fd.close
       end
-
-      # also reset the rule-types to fast mode by default
-      olex_yml = File.open("lib/conf/config.yml").read
-      olex_yml.gsub!("rule_types: all", "rule_types: fast")
-      puts olex_yml
-      if ( !olex_yml.nil? )
-        yml_fd = File.open("lib/conf/config.yml","w")
-        yml_fd.write(olex_yml)
-        yml_fd.close
-      end
     end
 
   end
