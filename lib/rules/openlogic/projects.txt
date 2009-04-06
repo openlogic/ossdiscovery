@@ -975,7 +975,7 @@ activemap;activemap;none;none
 activemdb;activemdb;none;none
 activemerchant;activemerchant;none;none
 activemon;activemon;perl;none
-activemq;activemq,apache-activemq,jakarta-activemq;java;org.apache.activemq
+activemq;activemq,activemq-core,apache-activemq,apache-activemq-core,jakarta-activemq;java;org.apache.activemq
 activemsn;activemsn;delphi/kylix,object pascal;none
 activeperl;activeperl;none;none
 activepython;activepython;none;none
@@ -14365,7 +14365,7 @@ cgixmlform;cgixmlform;none;none
 cgixx;cgixx;none;none
 cgkit;cgkit;c++,python;none
 cgl-class;cgl-class;c++;none
-cglib;cglib,cglib-nodep;java;net.sf.cglib
+cglib;cglib,cglib-nodep,cglib-full;java;net.sf.cglib
 cglinux;cglinux;c,c++,python,unix shell;none
 cglogviewer;cglogviewer;c#;none
 cgltracker;cgltracker;java;none
@@ -15821,7 +15821,6 @@ cleanui;cleanui;none;none
 cleanup;cleanup;c++;none
 cleanupoldstuff;cleanupoldstuff;java;none
 cleanux;cleanux;lisp,python;none
-clear;clear;c++;none
 clearantlib;clearantlib;java;none
 clearblue;clearblue;none;none
 clearbox;clearbox;c;none
@@ -43862,7 +43861,7 @@ hibernate-entitymanager;hibernate-entitymanager;java;org.hibernate.ejb.test
 hibernate-shards;hibernate-shards;none;none
 hibernate4gwt;hibernate4gwt;java;none
 hibernate4sprin;hibernate4sprin;java;none
-hibernate;hibernate;java;org.hibernate
+hibernate;hibernate,hibernate3;java;org.hibernate
 hibernatepojoge;hibernatepojoge;java;none
 hibernatesample;hibernatesample;java;none
 hibernatespatial;hibernatespatial;none;none
@@ -73255,7 +73254,6 @@ nautilus;nautilus;asp;none
 nautilusshell;nautilusshell;java;none
 nautix;nautix;c,c++;none
 nautsearchtool;nautsearchtool;c;none
-nav;nav;java,perl,php,python;none
 navajoframework;navajoframework;java;none
 naval-battles;naval-battles;c++;none
 navalwar;navalwar;java;none
@@ -75035,7 +75033,7 @@ nhdsoft;nhdsoft;c++,python,visual basic;none
 nhdventrilostat;nhdventrilostat;php;none
 nheengatu;nheengatu;java;none
 nhib-gen;nhib-gen;c#;none
-nhibernate;nhibernate;java,c#;org.apache.commons
+nhibernate;nhibernate;c#;none
 nhibernateaddin;nhibernateaddin;c#;none
 nhibernateexten;nhibernateexten;c#;none
 nhibernateit;nhibernateit;c#;none
@@ -81264,7 +81262,7 @@ overflux;overflux;none;none
 overgold;overgold;none;none
 overlapper;overlapper;java;none
 overlay;overlay;java;none
-overlib;overlib;none;none
+overlib;overlib;javascript;none
 overlook;overlook;none;none
 overlookwebmail;overlookwebmail;none;none
 overlord;overlord;c++;none
