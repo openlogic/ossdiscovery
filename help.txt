@@ -91,7 +91,10 @@ Options are not order dependent and may be one or more of:
                            (no scan performed)
 
 --source-scan           -s Examine source code files to look for references to
-                           open source, such as Java import statements
+                           open source, such as Java import statements.  This
+                           flag is currently experimental and will automatically
+                           disable creation of the report file that can be sent
+                           to OpenLogic.
 
 --throttle,             -T Enable throttling of the scanner so all system
                            resources are not fully dedicated to running
