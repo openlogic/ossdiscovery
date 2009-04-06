@@ -38266,7 +38266,7 @@ germanaica;germanaica;none;none
 germanmacosx;germanmacosx;none;none
 geronimo-j2ee-connector-1_5_spec;geronimo-j2ee-connector-1_5_spec;none;none
 geronimo-jetty;geronimo-jetty;java;org.apache.geronimo.jetty
-geronimo;geronimo;java;org.apache.geronimo
+geronimo;geronimo,geronimo-j2ee-management,geronimo-jms;java;org.apache.geronimo
 gerpgr;gerpgr;c++;none
 gerris;gerris;none;none
 gerstensaft;gerstensaft;none;none
@@ -49508,7 +49508,7 @@ j2ee-adapt;j2ee-adapt;java;none
 j2ee-connector-arch;j2ee-connector-arch;java;javax.resource
 j2ee-dp-gen;j2ee-dp-gen;java;none
 j2ee-examples;j2ee-examples;java,jsp;none
-j2ee-jax-rpc;j2ee-jax-rpc;none;none
+jax-rpc;j2ee-jax-rpc,jaxrpc,jax-rpc;java;javax.xml.rpc
 j2ee-jsp-api;j2ee-jsp-api;none;none
 j2ee-jsp;j2ee-jsp;none;none
 j2ee-servlet-api;j2ee-servlet-api,j2ee-servlets-api;none;none
@@ -50812,7 +50812,6 @@ javascour;javascour;java;none
 javascribe;javascribe;java,jsp;none
 javascript-debugger;javascript-debugger;none;none
 javascript-tools;javascript-tools;none;none
-javascript;javascript;c,javascript;none
 javascriptclien;javascriptclien;javascript;none
 javascriptfont;javascriptfont;javascript;none
 javascriptguide;javascriptguide;javascript;none
@@ -51348,6 +51347,7 @@ jcello;jcello;java;none
 jcengine;jcengine;java;none
 jceps;jceps;java;none
 jcersia;jcersia;java;none
+jcert;jcert;java;javax.security.cert
 jcetaglib;jcetaglib;java;none
 jcf;jcf;javascript;none
 jcfd;jcfd;java;none
@@ -53196,6 +53196,7 @@ jndie;jndie;java;none
 jndiff;jndiff;java;none
 jnerve;jnerve;java;none
 jnessuslib;jnessuslib;java;none
+jnet;jnet,jsse;java;javax.net,javax.net.ssl
 jneta;jneta;java;none
 jnetclip;jnetclip;java;none
 jnetconf;jnetconf;java;none
@@ -54342,7 +54343,7 @@ jsf-security;jsf-security;java;none
 jsf-spring;jsf-spring;java;none
 jsf-sql-console;jsf-sql-console;jsp;none
 jsf4portlets;jsf4portlets;java;none
-jsf;jsf;none;none
+jsf;jsf,javaserverfaces,java-server-faces,jsf-impl,jsf-api;java;com.sun.faces
 jsfchartshow;jsfchartshow;java;none
 jsfilter;jsfilter;java;none
 jsfire;jsfire;none;none
@@ -73701,7 +73702,7 @@ neo-im2d;neo-im2d;php;none
 neo-portal;neo-portal;c#,java,php,pl/sql;none
 neo-psx;neo-psx;c,c++;none
 neo2squirrel;neo2squirrel;none;none
-neo;neo,neo4j;java;org.neo4j,org.neo4j.util.shell
+neo;neo,neo4j,index-util;java;org.neo4j,org.neo4j.util.shell
 neoanime;neoanime;none;none
 neobase;neobase;php;none
 neobio;neobio;java;none
@@ -97273,7 +97274,7 @@ rhide;rhide;c++;none
 rhino-canvas;rhino-canvas;java,javascript;none
 rhino-ircd;rhino-ircd;c;none
 rhino-tools;rhino-tools;c#;none
-rhino;rhino,custom_rhino;c++,java;org.mozilla.javascript
+rhino;rhino,custom_rhino,javascript,js;c++,java;org.mozilla.javascript
 rhinoceros;rhinoceros;delphi/kylix;none
 rhinocomponents;rhinocomponents;java,javascript;none
 rhinohide;rhinohide;none;none
