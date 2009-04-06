@@ -109,6 +109,15 @@ no_class_files: false
 class_file_archive_extensions: <% [ '.jar', '.war', '.ear' ] %>
 
 #--------------------------------------------------------------------------------------
+# Set to true to open source files to find traces of open source usage.
+examine_source_files: false
+
+#--------------------------------------------------------------------------------------
+# Which file extensions signify a source code file.
+# NOTE: currently only Java-style languages are supported.
+source_file_extensions: <% [ '.java', '.groovy' ] %>
+
+#--------------------------------------------------------------------------------------
 # When a scan is performed on a production machine, the person performing the scan does
 # not want the scanner to take all system resources. Below are the parameters that will
 # throttle the max amount of system resources that the scanner will consume.

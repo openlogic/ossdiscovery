@@ -179,6 +179,8 @@ def execute
   @walker.no_class_files = @no_class_files
   @walker.archive_temp_dir = @archive_temp_dir
   @walker.archive_extensions = @archive_extensions
+  @walker.examine_source_files = @examine_source_files
+  @walker.source_file_extensions = @source_file_extensions
   @walker.show_every = @show_every.to_i
   @walker.show_progress = @show_progress
   @walker.show_verbose = @show_verbose  
@@ -355,6 +357,7 @@ def make_reports
   @scandata.foi_ct = @walker.foi_ct
   @scandata.archives_found_ct = @walker.archives_found_ct
   @scandata.class_file_archives_found_ct = @walker.class_file_archives_found_ct
+  @scandata.source_files_found_ct = @walker.source_files_found_ct
   @scandata.starttime = @starttime
   @scandata.endtime = @endtime
   @scandata.distro = @distro
@@ -428,6 +431,7 @@ options_array << [ "--progress", "-x", GetoptLong::OPTIONAL_ARGUMENT ]        # 
 options_array << [ "--preview-results","-R", GetoptLong::OPTIONAL_ARGUMENT ]  # the existence of this flag will cause discovery to print to stdout the machine results file when scan is completed 
 options_array << [ "--rule-types", "-y", GetoptLong::REQUIRED_ARGUMENT ]      # rules to use - 'all', 'fast' for ternary-tree only, 'slow' for non-ternary-tree
 options_array << [ "--rule-version", "-V", GetoptLong::NO_ARGUMENT ]          # print out rule version info and do nothing else (no scan performed)
+options_array << [ "--source-scan", "-s", GetoptLong::NO_ARGUMENT ]           # look inside source files for things like Java import statements
 options_array << [ "--throttle", "-T", GetoptLong::NO_ARGUMENT ]              # enable production throttling (by default it is disabled)
 options_array << [ "--update-rules", "-r", GetoptLong::OPTIONAL_ARGUMENT ]    # get update scan rules, and optionally perform the scan after getting them
 options_array << [ "--verbose", "-b", GetoptLong::OPTIONAL_ARGUMENT ]         # be verbose while scanning - every X files scanned  
@@ -605,6 +609,9 @@ begin
       print_rule_version_info
       exit 0
       
+    when "--source-scan"
+      @examine_source_files = true
+
     when "--throttle"
       @throttling_enabled = true
       @@log.info('Discovery') {'Throttling has been enabled.'}
