@@ -624,13 +624,6 @@
       <match-rule name="bouncycastle_jar" type="filenameVersion" filename="^bouncycastle-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
-  <project-rule name="bsh" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="bsh_fv" speed="1"/>
-    <match-rules name="bsh_fv">
-      <match-rule name="bsh_jar" type="filenameVersion" filename="^bsh-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
   <project-rule name="cglib" from="wild" os="all">
     <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
     <eval expression="cglib_fv" speed="1"/>
@@ -3401,13 +3394,6 @@
     <eval expression="jsptest_fv" speed="1"/>
     <match-rules name="jsptest_fv">
       <match-rule name="jsptest_jar" type="filenameVersion" filename="^jsptest-.*?([0-9].*?)(?:-sources)?.jar$"/>
-    </match-rules>
-  </project-rule>
-  <project-rule name="jsr107cache" from="wild" os="all">
-    <description>Uses filename and filename-version match rules to find key jar files from maven repositories</description>
-    <eval expression="jsr107cache_fv" speed="1"/>
-    <match-rules name="jsr107cache_fv">
-      <match-rule name="jsr107cache_jar" type="filenameVersion" filename="^jsr107cache-.*?([0-9].*?)(?:-sources)?.jar$"/>
     </match-rules>
   </project-rule>
   <project-rule name="jt400" from="wild" os="all">
