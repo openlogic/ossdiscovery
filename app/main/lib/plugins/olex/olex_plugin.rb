@@ -216,6 +216,10 @@ class OlexPlugin
   Output the report we'll submit to the olex server.
 =end
   def machine_report(destination, packages, scandata )
+    # for now, source scan is experimental and so if that flag is on we can't
+    # send results up to OLEX
+    return if scandata.source_scan
+
     io = nil
     if ( destination == STDOUT) then
       io = STDOUT

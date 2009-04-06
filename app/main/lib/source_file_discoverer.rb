@@ -51,10 +51,12 @@ class SourceFileDiscoverer
     SearchTrees.match_class_file_path(reference.gsub(/\./, '/'))
   end
 
-  # return a list of all open source references inside the source file like this:
-  #   [["package", "org.apache.commons.*"], ["import", "other.pkg.Name], ...]
+  # Return a list of all open source references inside the source file like this:
+  #   [["package", "org.apache.commons.*"], ["import", "other.pkg.Name],
+  #    ["usage", "org/apache/commons/ArrayStack", ...]
   def self.get_references(source_file_path)
-    IO.read(source_file_path).scan(/(package|import)\s+([^;\s]+)/)
+    text = IO.read(source_file_path)
+    text.scan(/(package|import)\s+([^;\s]+)/) + text.scan(/L([\w\/]*?);/).collect { |klass_path| ["usage", klass_path[0]] }
   end
 
   # Return a location that includes a potential chain of archive parents along
