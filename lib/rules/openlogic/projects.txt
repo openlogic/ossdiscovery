@@ -14466,7 +14466,6 @@ chan_misdn;chan_misdn;none;none
 chandler;chandler;none;none
 chanel;chanel;java,jsp;none
 change-mgmt;change-mgmt;perl;none
-change;change;none;none
 change_website_mode;change_website_mode;none;none
 changeblindness;changeblindness;none;none
 changeblogger;changeblogger;none;none
@@ -17426,7 +17425,6 @@ componentmanage;componentmanage;javascript,php;none
 componentplanet;componentplanet;none;none
 componentrssjsf;componentrssjsf;java,jsp;none
 components4oaw;components4oaw;java;none
-components;components;none;none
 componet;componet;c#;none
 componize;componize;java,xsl (xslt/xpath/xsl-fo);none
 comport;comport;delphi/kylix;none
@@ -17899,7 +17897,6 @@ contestquizzer;contestquizzer;javascript;none
 conteudophp;conteudophp;php;none
 context-hau;context-hau;java;none
 context-tree;context-tree;c++,java,python;none
-context;context;actionscript;none
 contextblogger;contextblogger;java;none
 contextfilter;contextfilter;none;none
 contextmenu;contextmenu;c#;none
@@ -22589,7 +22586,6 @@ demo002;demo002;none;none
 demo003;demo003;none;none
 demo004;demo004;none;none
 demo4;demo4;php;none
-demo;demo;java;none
 demobuilder;demobuilder;c,java,javascript;none
 democracy;democracy;none;none
 democrakey;democrakey;none;none
@@ -22679,9 +22675,6 @@ deplan;deplan;java;none
 deplate;deplate;ruby;none
 deplategem;deplategem;ruby;none
 deploid;deploid;javascript,php;none
-deploy;deploy;c++;none
-deployable;deployable;python;none
-deployer;deployer;java;none
 deploymanager;deploymanager;none;none
 deployorganizer;deployorganizer;ruby;none
 depluck;depluck;c;none
@@ -62641,7 +62634,6 @@ loggerfs;loggerfs;c++;none
 loggerithim;loggerithim;c,perl;none
 loggertools;loggertools;none;none
 loggin;loggin;php;none
-logging;logging;c++;none
 loggingselenium;loggingselenium;java;none
 loggrep;loggrep;c++;none
 loggrepandcount;loggrepandcount;perl;none
@@ -80550,7 +80542,6 @@ organicdesigner;organicdesigner;none;none
 organise-fw;organise-fw;c++;none
 organise-ui;organise-ui;c++;none
 organiseddkp;organiseddkp;none;none
-organization;organization;java;none
 organizator;organizator;java;none
 organizer-media;organizer-media;java;none
 organizer;organizer;java,javascript;none
@@ -80971,7 +80962,7 @@ osscout;osscout;php;none
 ossdevclubittgr;ossdevclubittgr;c++,java;none
 ossdevstudio;ossdevstudio;c++;none
 ossdirdev;ossdirdev;php;none
-ossdiscovery;ossdiscovery;none;none
+ossdiscovery;ossdiscovery,discovery;ruby;none
 ossdvd;ossdvd;none;none
 ossechids;ossechids;none;none
 osseg;osseg;none;none
@@ -96062,7 +96053,6 @@ red2auctionos;red2auctionos;c#;none
 red2leadmanager;red2leadmanager;c#;none
 red2monitor;red2monitor;c#;none
 red5chat;red5chat;actionscript,java;none
-red;red;java;none
 red_nazguul;red_nazguul;none;none
 red_nov;red_nov;none;none
 red_planet;red_planet;none;none
@@ -99412,7 +99402,6 @@ ruleby;ruleby;ruby;none
 rulecore;rulecore;python;none
 rulegenerator;rulegenerator;c++;none
 ruleminer;ruleminer;java;none
-rules;rules;java;none
 rulesengine;rulesengine;java;none
 rulesetmodeling;rulesetmodeling;c++,java,python;none
 ruleviz;ruleviz;java;none
@@ -107039,7 +107028,6 @@ solver;solver;programming language unknown,ruby;none
 solversasfa;solversasfa;asp,c#,c++,javascript,php,visual basic;none
 solvoku;solvoku;c++;none
 solyaris;solyaris;none;none
-som;som;programming language unknown,ruby;none
 soma-dev;soma-dev;php;none
 soma-server;soma-server;java;none
 soma;soma;none;none
@@ -115068,7 +115056,6 @@ timeoutx;timeoutx;ruby;none
 timepasses;timepasses;none;none
 timepicker-js;timepicker-js;javascript;none
 timeplan;timeplan;perl;none
-timer;timer;delphi/kylix;none
 timer_q;timer_q;none;none
 timerapplet;timerapplet;python;none
 timeration;timeration;none;none
@@ -116926,7 +116913,6 @@ trecoll;trecoll;php;none
 tree-cont-lib;tree-cont-lib;c++;none
 tree-factory;tree-factory;php;none
 tree2html;tree2html;none;none
-tree;tree;c,c++;none
 treebank;treebank;ruby;none
 treebeard;treebeard;java;none
 treebeard_fm;treebeard_fm;none;none
