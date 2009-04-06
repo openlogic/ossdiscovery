@@ -6689,7 +6689,7 @@ avalerion;avalerion;none;none
 avalgrind;avalgrind;ada;none
 avalon-harvest;avalon-harvest;none;none
 avalon1;avalon1;c#;none
-avalon;avalon,avalon-apps,avalon-composition,avalon-cornerstone,avalon-extension,avalon-framework,avalon-http,avalon-logging,avalon-logkit,avalon-meta,avalon-phoenix,avalon-repository,avalon-util,cornerstone-connection,cornerstone-datasources,cornerstone-scheduler,cornerstone-sockets,cornerstone-store,cornerstone-threads;none;none
+avalon;avalon,avalon-apps,avalon-composition,avalon-cornerstone,avalon-extension,avalon-framework,avalon-http,avalon-logging,avalon-logkit,avalon-meta,avalon-phoenix,avalon-repository,avalon-util,cornerstone-connection,cornerstone-datasources,cornerstone-scheduler,cornerstone-sockets,cornerstone-store,cornerstone-threads;java;org.apache.avalon
 avaloncab;avaloncab;none;none
 avalonsql;avalonsql;none;none
 avango;avango;c++,scheme,unix shell;none
