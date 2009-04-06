@@ -16966,7 +16966,7 @@ collectd;collectd;none;none
 collection-cpp;collection-cpp;c++;none
 collectiondummy;collectiondummy;c#;none
 collectionmgr;collectionmgr;php;none
-collections15;collections15,collections;java;none
+collections15;collections15,collections-generic,collections;java;org.apache.commons.collections15
 collectionsshar;collectionsshar;php;none
 collective;collective;python,zope;none
 collectl;collectl;perl;none
@@ -27660,6 +27660,7 @@ edanator;edanator;c++;none
 edass;edass;php;none
 edb-postgres;edb-postgres;none;none
 edb;edb;pl/sql;none
+edb-jdbc;edb-jdbc,edbjdbc;java;com.edb.jdbc2
 edbrowse;edbrowse;c;none
 edbs2wkt;edbs2wkt;visual basic;none
 edc;edc;c++;none
@@ -50688,7 +50689,7 @@ javam;javam;java;none
 javamaf;javamaf;java;none
 javamail-crypto;javamail-crypto;java;none
 javamail-dsn;javamail-dsn;java;none
-javamail;javamail;java;com.sun.mail
+javamail;javamail;java;com.sun.mail,com.sun.mail.smtp
 javamailclient;javamailclient;java;none
 javamaildir;javamaildir;java;none
 javamailfactory;javamailfactory;java;none
@@ -52379,7 +52380,7 @@ jgoban;jgoban;java;none
 jgoodies-animation;jgoodies-animation;java;com.jgoodies.animation
 jgoodies-binding;jgoodies-binding;java;com.jgoodies.binding
 jgoodies-forms;jgoodies-forms;java;com.jgoodies.forms
-jgoodies-looks;jgoodies-looks,jgoodies-plastic;;java;com.jgoodies.looks
+jgoodies-looks;jgoodies-looks,jgoodies-plastic;java;com.jgoodies.looks
 jgoodies-validation;jgoodies-validation;java;com.jgoodies.validation
 jgoogleanalytics;jgoogleanalytics;none;none
 jgoose;jgoose;java;none
@@ -52925,6 +52926,7 @@ jmailserver;jmailserver;java;none
 jmailto;jmailto;java;none
 jmake;jmake;perl;none
 jmakeztxt;jmakeztxt;java;none
+jmaki;jmaki;java;com.sun.jmaki
 jmame;jmame;none;none
 jman-mp3-server;jman-mp3-server;javascript,php;none
 jman;jman;java;none
@@ -53189,7 +53191,7 @@ jnc;jnc;java;none
 jnca;jnca;java;none
 jncc2;jncc2;java;none
 jncss4eclipse;jncss4eclipse;java;none
-jndi;jndi;none;none
+jndi;jndi,providerutil;java;com.sun.jndi,com.sun.jndi.toolkit
 jndie;jndie;java;none
 jndiff;jndiff;java;none
 jnerve;jnerve;java;none
@@ -55138,7 +55140,7 @@ junes;junes;java;none
 junetodo;junetodo;php;none
 junetwork;junetwork;delphi/kylix,java;none
 junfa;junfa;none;none
-jung;jung;java;none
+jung;jung,jung-jai,jung-jai-samples,jung-samples,jung-rendering,jung-swt-samples,jung-swt-visualization,jung-visualization,jung-api,jung-graph-impl,jung-io,jung-swt-rendering,jung-algorithms;java;edu.uci.ics.jung
 jungle;jungle;c++;none
 jungleball;jungleball;c++,python;none
 junglelib;junglelib;php;none
@@ -71739,7 +71741,7 @@ mxflib;mxflib;c++;none
 mxftest;mxftest;c++;none
 mxgraph;mxgraph;none;none
 mxgui;mxgui;visual basic .net;none
-mxisp3axis;;php,javascript;none
+mxisp3axis;mxisp3axis;php,javascript;none
 mxk;mxk;none;none
 mxkart;mxkart;none;none
 mxl-osgi;mxl-osgi;java;none
@@ -71997,7 +71999,7 @@ myexperience;myexperience;c#;none
 myexperiment;myexperiment;ruby;none
 myexport;myexport;none;none
 myextract;myextract;none;none
-myfaces;myfaces,apache-myfaces,jakarta-myfaces;java;org.apache.myfaces
+myfaces;myfaces,myfaces-api,apache-myfaces,jakarta-myfaces;java;org.apache.myfaces
 myfairtunes;myfairtunes;assembly,c#,c++;none
 myfamily;myfamily;c#;none
 myfamilyportal;myfamilyportal;php;none
@@ -73699,7 +73701,7 @@ neo-im2d;neo-im2d;php;none
 neo-portal;neo-portal;c#,java,php,pl/sql;none
 neo-psx;neo-psx;c,c++;none
 neo2squirrel;neo2squirrel;none;none
-neo;neo;c#;none
+neo;neo,neo4j;java;org.neo4j,org.neo4j.util.shell
 neoanime;neoanime;none;none
 neobase;neobase;php;none
 neobio;neobio;java;none
@@ -90680,7 +90682,7 @@ proxlat;proxlat;assembly,basic,c;none
 proxml;proxml;visual basic .net;none
 proxmoxmailgateway;proxmoxmailgateway;none;none
 proxmoxve;proxmoxve;none;none
-proxool;proxool;java;org.logicalcobwebs
+proxool;proxool;java;org.logicalcobwebs.proxool
 proxsi;proxsi;none;none
 proxsmtp;proxsmtp;none;none
 proxwall;proxwall;none;none
@@ -96872,8 +96874,6 @@ resods;resods;c,c++;none
 resolution;resolution;c++;none
 resolutionii;resolutionii;assembly;none
 resolve;resolve;java;none
-resolver;resolver;c;none
-resolvr;resolvr;none;none
 resonance;resonance;c++;none
 resonantfreq;resonantfreq;c++;none
 resonate;resonate;python;none
@@ -97719,6 +97719,7 @@ rmimessagequeue;rmimessagequeue;java;none
 rminode;rminode;c;none
 rmipinger;rmipinger;perl;none
 rmipp;rmipp;c++;none
+rmiregistry;rmiregistry;java;com.sun.jndi.registry
 rml;rml;c;none
 rmligs;rmligs;none;none
 rmm;rmm;php;none
@@ -110367,7 +110368,7 @@ subetha;subetha;none;none
 subethaclipse;subethaclipse;java;none
 subethaedit;subethaedit;none;none
 subethashare;subethashare;c++;none
-subethasmtp;subethasmtp;none;none
+subethasmtp;subethasmtp,subetha-smtp;java;org.subethamail.smtp
 subether;subether;none;none
 subfix;subfix;python;none
 subfonsion;subfonsion;none;none
@@ -115656,6 +115657,7 @@ tlbx;tlbx;c;none
 tlccomp;tlccomp;java;none
 tlcdcemu;tlcdcemu;java;none
 tld-validation;tld-validation;c#,java,perl,python;none
+tlddoc;tlddoc;java;com.sun.tlddoc
 tldlib;tldlib;ruby;none
 tldmgr;tldmgr;php,unix shell;none
 tle-bu;tle-bu;c,javascript,perl;none
@@ -120164,7 +120166,7 @@ valterius;valterius;c,tcl;none
 valtoolkit;valtoolkit;java;none
 valtz;valtz;none;none
 value;value;delphi/kylix,java,php;none
-valuelist;valuelist;java;none
+valuelist;valuelist;java;net.mlw.vlh
 valuemap;valuemap;c#;none
 valuenetwork;valuenetwork;java;none
 valueobjects;valueobjects;java;none
@@ -128238,7 +128240,7 @@ xmk;xmk;assembly,c;none
 xml-apis;xml-apis;none;none
 xml-bare;xml-bare;c++,perl;none
 xml-blog;xml-blog;php;none
-xml-commons;xml-commons;java;org.apache.xml-commons
+xml-commons;xml-commons,resolver;java;org.apache.xml-commons,org.apache.xml
 xml-comparator;xml-comparator;java;none
 xml-compareml;xml-compareml;none;none
 xml-copy-editor;xml-copy-editor;c++;none
