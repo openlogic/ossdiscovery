@@ -2,14 +2,13 @@ require 'pp'
 require 'test/unit'
 $:.unshift File.join(File.dirname(__FILE__), "..", "main", "lib")
 
-require 'search_trees'
+require 'class_file_path_ternary_search_tree'
 require File.join(File.dirname(__FILE__), 'test_helper')
 
 class TcClassFilePathTernarySearchTree < Test::Unit::TestCase
 
   def setup
-    SearchTrees.initialize({}, {})
-    @tst = SearchTrees.class_file_path_tree
+    @tst = ClassFilePathSearchTree::ClassFilePathTernarySearchTree.new
   end
   
   def test_creation

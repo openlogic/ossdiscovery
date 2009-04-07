@@ -2,14 +2,13 @@ require 'pp'
 require 'test/unit'
 $:.unshift File.join(File.dirname(__FILE__), "..", "main", "lib")
 
-require 'search_trees'
 require File.join(File.dirname(__FILE__), 'test_helper')
+require 'file_name_ternary_search_tree'
 
 class TcFileNameTernarySearchTree < Test::Unit::TestCase
 
   def setup
-    SearchTrees.initialize({}, {"dots_in_name" => ["jquery"]})
-    @tst = SearchTrees.file_name_tree
+    @tst = FileNameSearchTree::FileNameTernarySearchTree.new({}, { "dots_in_name" => ["jquery"]})
   end
   
   def test_creation

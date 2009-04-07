@@ -9,8 +9,7 @@ require 'class_file_archive_discoverer'
 class TcClassFileArchiveDiscoverer < Test::Unit::TestCase
 
   def setup
-    SearchTrees.initialize({}, {})
-    @tst = SearchTrees.class_file_path_tree
+    @tst = ClassFilePathSearchTree::ClassFilePathTernarySearchTree.new
   end
   
   def test_load_simple_jar_file
