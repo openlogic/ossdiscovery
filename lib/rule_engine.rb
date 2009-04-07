@@ -83,7 +83,7 @@ class RuleEngine
     @speed = speedhint
     @audit_records = Array.new
 
-    load_scan_rules()
+    load_scan_rules
   end
      
 =begin rdoc
@@ -184,7 +184,7 @@ class RuleEngine
   def register_with_walker
    # register for a callback from the walker when a file of interst is found
    # tell the walker what the list of files of interest are
-   @walker.set_files_of_interest( self, files_of_interest() )
+   @walker.set_files_of_interest(self, files_of_interest)
   end
      
 =begin rdoc
