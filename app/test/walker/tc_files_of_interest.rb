@@ -19,7 +19,7 @@ class TcWalkerFilesOfInterest < Test::Unit::TestCase
 =end  
   def test_walker_set_files_of_interest()
    
-    test = `ruby #{DISCOVERY_RB} --list-foi`
+    test = `ruby #{DISCOVERY_RB} --list-foi --rule-types all`
     
     ['Files of interest','Apache.exe','php','libphp\(\.\?\).so','httpd'].each { | foi |
       if ( test.match(foi) == nil )
