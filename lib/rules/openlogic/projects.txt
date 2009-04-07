@@ -10825,7 +10825,6 @@ bootroot;bootroot;none;none
 bootsagem;bootsagem;c;none
 bootsectoros;bootsectoros;assembly;none
 bootsplash;bootsplash;none;none
-bootstrap;bootstrap;java;none
 bootstrapper;bootstrapper;perl,unix shell;none
 boottheme-cia;boottheme-cia;none;none
 boottool;boottool;none;none
@@ -34315,7 +34314,6 @@ fontindustry;fontindustry;none;none
 fontlib;fontlib;python;none
 fontlinge;fontlinge;perl,php,unix shell;none
 fontmaker;fontmaker;perl;none
-fontmanager;fontmanager;c++;none
 fontmatrix;fontmatrix;none;none
 fontpack;fontpack;c++;none
 fontpage;fontpage;none;none
@@ -39247,7 +39245,6 @@ gloarbline;gloarbline;c++;none
 glob2;glob2;none;none
 global-change;global-change;javascript,php;none
 global-environm;global-environm;java;none
-global;global;none;none
 globalbase;globalbase;c++;none
 globalbb;globalbb;php;none
 globalconquest;globalconquest;java;none
@@ -53190,7 +53187,7 @@ jnc;jnc;java;none
 jnca;jnca;java;none
 jncc2;jncc2;java;none
 jncss4eclipse;jncss4eclipse;java;none
-jndi;jndi,providerutil;java;com.sun.jndi,com.sun.jndi.toolkit
+jndi;jndi,providerutil,rmiregistry;java;com.sun.jndi,com.sun.jndi.toolkit,com.sun.jndi.registry
 jndie;jndie;java;none
 jndiff;jndiff;java;none
 jnerve;jnerve;java;none
@@ -53716,7 +53713,6 @@ jpeg-hw-comp;jpeg-hw-comp;vhdl/verilog;none
 jpeg2ascii;jpeg2ascii;c;none
 jpeg2bw;jpeg2bw;none;none
 jpeg2swf;jpeg2swf;php;none
-jpeg;jpeg;none;none
 jpegdeux;jpegdeux;objective c;none
 jpegextract;jpegextract;python;none
 jpegextractor;jpegextractor;none;none
@@ -56559,7 +56555,6 @@ keystoneframework;keystoneframework;none;none
 keystore;keystore;c#;none
 keystory;keystory;python;none
 keystroke;keystroke;python;none
-keytool;keytool;java;none
 keytooliu;keytooliu;none;none
 keytouch;keytouch;c;none
 keyutil;keyutil;assembly;none
@@ -62584,7 +62579,6 @@ log4spread;log4spread;none;none
 log4sql;log4sql;java;none
 log4u;log4u;actionscript,javascript;none
 log5j;log5j;java;none
-log;log;java;none
 log_analysis;log_analysis;none;none
 logabitwebtools;logabitwebtools;java;none
 logahead;logahead;javascript,php;none
@@ -64745,7 +64739,6 @@ managedfusion;managedfusion;asp.net,c#,visual basic .net,xsl (xslt/xpath/xsl-fo)
 managedgl;managedgl;c#;none
 managedpoom;managedpoom;c#,c++;none
 managedprocess;managedprocess;c#;none
-management;management;php;none
 managementcc;managementcc;php;none
 managementwiki;managementwiki;ruby;none
 managenie;managenie;visual basic .net;none
@@ -75275,7 +75268,6 @@ ninthlife;ninthlife;c++,lua;none
 ninvaders;ninvaders;c;none
 ninvent;ninvent;perl;none
 nio-service;nio-service;c++;none
-nio;nio;c++;none
 nio_framework;nio_framework;none;none
 niobium;niobium;asp;none
 niobjects;niobjects;php;none
@@ -81616,7 +81608,6 @@ pachydermfw;pachydermfw;none;none
 pacie;pacie;perl;none
 pacifictimesheet;pacifictimesheet;none;none
 pack-age;pack-age;c;none
-pack;pack;c;none
 package-framework;package-framework;none;none
 package-javadoc;package-javadoc;java;none
 package-jitsu;package-jitsu;c++;none
@@ -97708,7 +97699,6 @@ rmhhomebase;rmhhomebase;php;none
 rmi-eclipse;rmi-eclipse;java;none
 rmi-lite;rmi-lite;java;none
 rmi-wrapping;rmi-wrapping;java;none
-rmi;rmi;c++;none
 rmiadmin;rmiadmin;none;none
 rmiblackjack;rmiblackjack;java;none
 rmidi;rmidi;none;none
@@ -97719,7 +97709,6 @@ rmimessagequeue;rmimessagequeue;java;none
 rminode;rminode;c;none
 rmipinger;rmipinger;perl;none
 rmipp;rmipp;c++;none
-rmiregistry;rmiregistry;java;com.sun.jndi.registry
 rml;rml;c;none
 rmligs;rmligs;none;none
 rmm;rmm;php;none
@@ -100137,7 +100126,6 @@ sampalib;sampalib;c++,lua;none
 sampark;sampark;java,javascript,jsp;none
 samparka;samparka;php;none
 samphire;samphire;c++;none
-sample;sample;c;none
 sampleicc;sampleicc;c++;none
 sampleinventory;sampleinventory;python;none
 sampleload;sampleload;none;none
@@ -100179,7 +100167,6 @@ sand3d;sand3d;c++;none
 sand;sand;c;none
 sandamail;sandamail;c#;none
 sandapple-prt;sandapple-prt;c++;none
-sandbox;sandbox;c;none
 sandboxpix;sandboxpix;java;none
 sandboxprogress;sandboxprogress;progress;none
 sanddancer;sanddancer;none;none
@@ -100900,7 +100887,6 @@ schemainsight;schemainsight;c#;none
 schemalizer;schemalizer;java;none
 schemamap;schemamap;java;none
 schemamule;schemamule;java;none
-schemas;schemas;java;none
 schemascanner;schemascanner;none;none
 schemaspy;schemaspy;java;none
 schemaspygui;schemaspygui;java;none
@@ -119293,7 +119279,6 @@ unodor;unodor;php;none
 unonet;unonet;c++;none
 unoscores;unoscores;delphi/kylix,visual basic;none
 unox1;unox1;c,perl,php,pl/sql,unix shell;none
-unpack;unpack;none;none
 unpaper;unpaper;none;none
 unpaste;unpaste;c++;none
 unpic;unpic;perl;none
@@ -119888,7 +119873,6 @@ util-linux;util-linux;none;none
 util-vserver;util-vserver;none;none
 util4selenium;util4selenium;java;none
 util4testing;util4testing;java;none
-util;util;c#;none
 utilframework;utilframework;java;none
 utilfuncs;utilfuncs;c;none
 utilitest;utilitest;tcl;none
@@ -120737,7 +120721,6 @@ verema;verema;c++;none
 verge;verge;perl;none
 verhoeff;verhoeff;ruby;none
 verifier;verifier;c#;none
-verify;verify;none;none
 verilator;verilator;c++,perl;none
 verilisp;verilisp;common lisp,python,vhdl/verilog;none
 verilog-perl;verilog-perl;c,c++,perl,vhdl/verilog;none
@@ -131037,7 +131020,6 @@ zionedit;zionedit;c#,c++,java,php,python,ruby;none
 zip-thumbnails;zip-thumbnails;c++;none
 zip08x;zip08x;none;none
 zip2map;zip2map;javascript,php,xsl (xslt/xpath/xsl-fo);none
-zip;zip;none;none
 ziparchive;ziparchive;python;none
 zipcodefinder;zipcodefinder;java;none
 zipcom;zipcom;c++;none
