@@ -82,7 +82,8 @@ class Walker
   attr_accessor :class_file_archive_extensions, :no_class_files, :always_open_class_file_archives
   attr_accessor :examine_source_files, :source_file_extensions, :source_files_found_ct
   attr_accessor :unopenable_archive_ct
-  attr_accessor :list_exclusions, :list_files, :show_permission_denied, :starttime
+  attr_accessor :list_exclusions, :list_files, :show_permission_denied, :starttime, :last_verbose_report_time
+  attr_accessor :should_show_progress_report
   attr_reader :total_seconds_paused_for_throttling
 
   # criteria[:]
@@ -213,8 +214,15 @@ class Walker
 
     if ( @show_verbose && @file_ct != 0 && @show_every != 0)
       q,r = @file_ct.divmod( @show_every )
-      if ( r == 0 )
-        progress_report(fileordir)
+      if r == 0 || @should_show_progress_report
+        # Show a progress report unless we're scanning archive contents because then
+        # we would show "now scanning <big long scary temp directory name>" which
+        # tends to make people panic.
+        # Instead, if it's time to show the report, set a flag so that we'll
+        # keep trying to show the report and actually will do so as soon as we're
+        # not looking at the contents of an archive file.
+        @should_show_progress_report = true if r == 0
+        progress_report(fileordir) if archive_parents.empty?
       end
     end
 
@@ -650,25 +658,16 @@ class Walker
 =end
 
   def progress_report(fileordir)
-    if @last_verbose_report.nil?
-      @last_verbose_report = @starttime
+    # clear the flag now that we're going to show a report
+    if (Time.now - @last_verbose_report_time) >= 30
+      @should_show_progress_report = false
       if @root_scan_dir_split_count.nil?
         @root_scan_dir_split_count = @root_scan_dir.split(File::SEPARATOR).size
         @root_scan_dir_split_count = 1 if @root_scan_dir_split_count == 0
       end
       now_scanning = fileordir.split(File::SEPARATOR)[0..@root_scan_dir_split_count].join(File::SEPARATOR)
-      puts "\nelapsed time: #{((Time.new - @starttime).to_i)} seconds - scanning '#{now_scanning}' - walked #{dir_ct()} directories - scanned #{foi_ct()} files"
-    else
-      now = Time.new
-      if ((now - @last_verbose_report) >= 120) then
-        if (@root_scan_dir_split_count.nil?) then
-          @root_scan_dir_split_count = @root_scan_dir.split(File::SEPARATOR).size
-          if (@root_scan_dir_split_count == 0) then @root_scan_dir_split_count = 1 end
-        end
-        now_scanning = fileordir.split(File::SEPARATOR)[0..@root_scan_dir_split_count].join(File::SEPARATOR)
-        puts "\nelapsed time: #{((now - @starttime).to_i / 60)} minutes - scanning '#{now_scanning}' - walked #{dir_ct()} directories - scanned #{foi_ct()} files"
-        @last_verbose_report = now
-      end
+      puts "\nelapsed time: #{Utils.elapsed_time(@starttime, true)} - scanning '#{now_scanning}' - walked #{dir_ct()} directories - scanned #{foi_ct()} files"
+      @last_verbose_report_time = Time.now
     end
   end
 

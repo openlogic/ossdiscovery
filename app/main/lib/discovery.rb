@@ -192,6 +192,7 @@ def execute
   @walker.throttle_number_of_files = @throttle_number_of_files
   @walker.throttle_seconds_to_pause = @throttle_seconds_to_pause
   @walker.starttime = @starttime
+  @walker.last_verbose_report_time = @starttime
   
   # create the applications RuleEngine instance
   # in the process of constructing the object, the rule engine

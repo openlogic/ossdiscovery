@@ -9,4 +9,37 @@ module Utils
       number
     end
   end
+
+  def elapsed_time(from_time, include_seconds = false)
+    from_time = from_time.to_time if from_time.respond_to?(:to_time)
+    to_time = Time.new
+    distance_in_minutes = (((to_time - from_time).abs)/60).round
+    distance_in_seconds = ((to_time - from_time).abs).round
+
+    case distance_in_minutes
+    when 0..1
+      return distance_in_minutes == 0 ?
+        "less than a minute" :
+        "%i minutes" % distance_in_minutes unless include_seconds
+
+      case distance_in_seconds
+      when 0..4   then "less than 5 seconds"
+      when 5..9   then "less than 10 seconds"
+      when 10..19 then "less than 20 seconds"
+      when 20..39 then "half a minute"
+      when 40..59 then "almost a minute"
+      else             "1 minute"
+      end
+
+    when 2..44           then "%i minutes" % distance_in_minutes
+    when 45..89          then "about %i hours" % 1
+    when 90..1439        then "about %i hours" % (distance_in_minutes.to_f / 60.0).round
+    when 1440..2879      then "%i days" % 1
+    when 2880..43199     then "%i days" % (distance_in_minutes / 1440).round
+    when 43200..86399    then "about %i months" % 1
+    when 86400..525599   then "%i months" % (distance_in_minutes / 43200).round
+    when 525600..1051199 then "about %i years" % 1
+    else                      "over %i years" % (distance_in_minutes / 525600).round
+    end
+  end
 end
