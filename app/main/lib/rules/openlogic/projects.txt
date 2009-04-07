@@ -4196,7 +4196,6 @@ appletmultiplef;appletmultiplef;java;none
 appletransfer;appletransfer;none;none
 appletserver;appletserver;java;none
 applianceconfig;applianceconfig;tcl;none
-application;application;none;none
 applicationleveleventsalepreviewforrfid;applicationleveleventsalepreviewforrfid;none;none
 applicationmon;applicationmon;c#;none
 applicationtoolsforextensionservices;applicationtoolsforextensionservices;none;none
@@ -88677,7 +88676,7 @@ poha;poha;none;none
 pohonsi;pohonsi;java;none
 pohse;pohse;javascript,php,pl/sql;none
 poi-dup-finder;poi-dup-finder;delphi/kylix;none
-poi;poi,apache-poi,jakarta-poi;java;org.apache.poi
+poi;poi,apache-poi,jakarta-poi,poi-contrib;java;org.apache.poi
 poiexplorer;poiexplorer;c#;none
 poignant;poignant;ruby;none
 poing;poing;none;none
