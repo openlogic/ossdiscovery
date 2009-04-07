@@ -42,33 +42,11 @@ class FilenameListMatchRule < MatchRule
   # unused, but required by the framework at this point
   attr_accessor :defined_filename
   
-  def initialize(name, defined_filename, project_file, language_file, special_file)
+  def initialize(name, defined_filename)
     super(name)
     @type = MatchRule::TYPE_FILENAME_LIST
     @matched_against = {}
     @defined_filename = Regexp.new(/#{defined_filename}/i)
-
-    # set up our search trees to know about languages and their file extensions
-    language_mapping_file = File.expand_path(File.join(
-          File.dirname(__FILE__), '..', 'rules', 'openlogic', language_file))
-    language_map = YAML.load_file(language_mapping_file)
-
-    # they also need to know about special files
-    special_mapping_file = File.expand_path(File.join(
-          File.dirname(__FILE__), '..', 'rules', 'openlogic', special_file))
-    special_map = YAML.load_file(special_mapping_file)
-    SearchTrees.initialize(language_map, special_map)
-
-    # should only be one of these, so make a class variable
-    SearchTrees.seed_trees
-
-    tst_file = File.expand_path(File.join(
-          File.dirname(__FILE__), '..', 'rules', 'openlogic', project_file))
-
-    start = Time.now
-    puts "Loading name-based rules"
-    SearchTrees.load_from_file(tst_file)
-    puts "done loading rules in #{Time.now - start} seconds."
   end
   
   def match?(actual_filepath, archive_parents)
@@ -100,6 +78,6 @@ class FilenameListMatchRule < MatchRule
   end
 
   def FilenameListMatchRule.create(attributes)
-    FilenameListMatchRule.new(attributes['name'], attributes['filename'], attributes['projectfile'], attributes['languagefile'], attributes['specialfile'])
+    FilenameListMatchRule.new(attributes['name'], attributes['filename'])
   end
 end

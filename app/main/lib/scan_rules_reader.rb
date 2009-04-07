@@ -72,6 +72,7 @@ class ScanRulesReader
   Returns a Set of ProjectRule objects
 =end
   def ScanRulesReader.setup_project_rules(scan_rules_dirs, speed=1)
+    count = 0
     projects = Array.new
     
     scan_rules_dirs.each do |scan_rules_dir|
@@ -147,6 +148,10 @@ class ScanRulesReader
                 # this initializes the ruleset with the atomic match rules needed
                 
                 xruleset.elements.each("match-rule") { |xmatchrule|
+                  count += 1
+                  if count % 250 == 0
+                    putc "."
+                  end
                   ruletype = xmatchrule.attributes["type"]
                   xmatchrule_attrs = Hash.new
                   xmatchrule.attributes.each { |name, value| xmatchrule_attrs[name] = value }

@@ -74,10 +74,12 @@ require 'getoptlong'
 require 'parsedate'
 require 'pp'
 
-require 'walker.rb'
-require 'cliutils.rb'
-require 'rule_engine.rb'
+require 'walker'
+require 'cliutils'
+require 'rule_engine'
+require 'search_trees'
 require 'scan_rules_updater'
+require 'utils'
 
 
 #--------------- global defaults ---------------------------------------------
@@ -195,18 +197,20 @@ def execute
   # in the process of constructing the object, the rule engine
   # will register with the walker and set up the list of files of interest
   # after this object is created, the machine is ready to scan
-  msg = ""
-  
+
   unless @list_foi 
-    msg << "OSS Discovery is preparing to scan your machine or specified directory.\n"
-    msg << "If the directory or drive being scanned contains many files this will take some time.\n"
-    msg << "You can continue to work on your machine while the scan proceeds.\n"
+    puts "OSS Discovery is preparing to scan your machine or specified directory."
+    puts "If the directory or drive being scanned contains many files this will take some time."
+    puts "You can continue to work on your machine while the scan proceeds."
   end
   
-  msg << "Reading project rules....\n"
-  puts msg
-  
+  print "Loading and initializing hand-written signature groups..."
+  start = Time.now
   @rule_engine = RuleEngine.new(@rules_dirs, @walker, @speed)
+  puts "done loading #{Utils.number_with_delimiter(@rule_engine.project_rules.size)} in #{Time.now - start} seconds."
+
+  # Load up all our search trees and get ready to find stuff
+  SearchTrees.initialize
 
   # obey the command line parameter to list the files of interest.  this can't be done until
   # the rule engine has parsed the scan rules file so that we know all the actual files of 
