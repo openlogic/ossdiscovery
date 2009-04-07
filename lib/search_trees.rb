@@ -1,5 +1,6 @@
 require 'class_file_path_ternary_search_tree'
 require 'file_name_ternary_search_tree'
+require 'yaml'
 require 'utils'
 
 # Encapsulate access to a number of search trees for easy access and unified

@@ -306,7 +306,7 @@ module FileNameSearchTree
     def guess_version(filename, best_match)
       return "unknown" unless best_match
       # determine if we're dealing with a special file
-      normal = !@special_map[:dots_in_name].include?(best_match[0])
+      normal = !(@special_map[:dots_in_name] || {}).include?(best_match[0])
       version = ""
       ext = File.extname(filename)
       start = false
