@@ -165,7 +165,9 @@ class ClassFileArchiveDiscoverer
         end
       end
     rescue java.io.IOException => e
-      puts "Java ZipInputStream could not examine the contents of class file archive: #{path} because #{e.inspect}:  #{e.backtrace}"
+      # Nothing we can do here, so just swallow it.  The only known cause of this
+      # exception so far has been a 0 byte jar file in a spring distribution.
+      #puts "Java ZipInputStream could not examine the contents of class file archive: #{path} because #{e.inspect}:  #{e.backtrace}"
     ensure
       zip_file.close if zip_file rescue nil
     end
@@ -192,7 +194,9 @@ class ClassFileArchiveDiscoverer
         end
       end
     rescue Exception => e
-      puts "ruby unzip could not examine contents of class file archive: #{path} because #{e.inspect}:  #{e.backtrace}"
+      # Nothing we can do here, so just swallow it.  The only known cause of this
+      # exception so far has been a 0 byte jar file in a spring distribution.
+      #puts "ruby unzip could not examine contents of class file archive: #{path} because #{e.inspect}:  #{e.backtrace}"
     end
     info
   end
