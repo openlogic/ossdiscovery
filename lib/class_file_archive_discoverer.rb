@@ -239,6 +239,8 @@ class ClassFileArchiveDiscoverer
     while line = reader.read_line
       text << line << "\n"
     end
+    reader.close
+    is.close
     text
   end
 
