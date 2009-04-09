@@ -514,7 +514,7 @@ class Walker
     unless @@unzip.empty?
       # we found unzip on the system, so try to use it
       begin
-        line = "#{@@unzip} #{zip_path} -d #{destination}"
+        line = "#{@@unzip} -n #{zip_path} -d #{destination}"
         @@log.info("Walker") { "execing unzip program:\n  #{line}" }
         `#{line} 2>&1 > /dev/null`
         success = true
