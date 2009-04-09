@@ -4,39 +4,38 @@
 # OSS Discovery is a tool that finds installed open source software.
 #    Copyright (C) 2007-2009 OpenLogic, Inc.
 #
-# OSS Discovery is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License version 3 as
-# published by the Free Software Foundation.
+# OSS Discovery is free software: you can redistribute it and/or modify it under
+# the terms of the GNU Affero General Public License version 3 as published by
+# the Free Software Foundation.
 #
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License version 3 (discovery2-client/license/OSSDiscoveryLicense.txt)
-# for more details.
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License version 3
+# (discovery2-client/license/OSSDiscoveryLicense.txt) for more details.
 #
-# You should have received a copy of the GNU Affero General Public License along with this program.
-# If not, see http://www.gnu.org/licenses/
+# You should have received a copy of the GNU Affero General Public License along
+# with this program. If not, see http://www.gnu.org/licenses/
 #
-# You can learn more about OSSDiscovery, report bugs and get the latest versions at www.ossdiscovery.org.
-# You can contact the OSS Discovery team at info@ossdiscovery.org.
-# You can contact OpenLogic at info@openlogic.com.
+# You can learn more about OSSDiscovery, report bugs and get the latest versions
+# at www.ossdiscovery.org. You can contact the OSS Discovery team at
+# info@ossdiscovery.org. You can contact OpenLogic at info@openlogic.com.
 
 
 # -----------------------------------------------------------------------------
 # A walker is the object which will scan directories, look for file matches and
-# then notify the rule engine (or any subscriber) of a filename match.
-# Multiple instances of Walkers are allowed - for example a global Walker may be
-# scanning the disk, it encounters a jar file, passes that jar file to the
-# RuleEngine and the rule itself decides to crack the jar, then create a walker
-# for just walking the exploded jar directory contents.
-# An instance of Walker is given a directory from which it will start walking
-# through files and directories.  In order to walk individual directories which
-# aren't nested, you must call walkDir() once for each directory.
-# For example, to walk /usr, /opt, and /tmp without walking the entire root
-# directory, you'd call walkDir 3 times, once for each directory off of root
-# that you want scanned.  You can use the same Walker instance for each walkDir
-# call or create one Walker instance for each directory - it doesn't matter.
+# then notify the rule engine (or any subscriber) of a filename match. Multiple
+# instances of Walkers are allowed - for example a global Walker may be scanning
+# the disk, it encounters a jar file, passes that jar file to the RuleEngine and
+# the rule itself decides to crack the jar, then create a walker for just
+# walking the exploded jar directory contents. An instance of Walker is given a
+# directory from which it will start walking through files and directories.  In
+# order to walk individual directories which aren't nested, you must call
+# walkDir() once for each directory. For example, to walk /usr, /opt, and /tmp
+# without walking the entire root directory, you'd call walkDir 3 times, once
+# for each directory off of root that you want scanned.  You can use the same
+# Walker instance for each walkDir call or create one Walker instance for each
+# directory - it doesn't matter.
 
 require 'pathname'
 require 'fileutils'
@@ -50,27 +49,20 @@ require 'source_file_discoverer'
 
 require File.join(File.dirname(__FILE__), 'conf', 'config')
 
-# how many times we try to create a temporary directory for storing archive contents until we give up
+# how many times we try to create a temporary directory for storing archive
+# contents until we give up
 MAX_TEMP_DIR_CREATION_RETRIES = 5 unless defined?(MAX_TEMP_DIR_CREATION_RETRIES)
 
-# Figure out if we have an 'unzip' program on the operating system
-@@unzip ||= begin
-  major_platform =~ /windows/i ? "" : `which unzip`.strip
-rescue
-  ""
-end
-
-=begin rdoc
-  an instance of Walker is given a directory from which it will start walking through
-  files and directories.  In order to walk individual directories which aren't
-  nested, you must call walkdir once for each directory.
-
-  For example, to walk /usr, /opt, and /tmp without walking the entire root directory, you'd
-  walkdir 3 times, once for each directory off of root that you want scanned.  You can
-  use the same Walker instance for each walkdir.
-=end
-
+# an instance of Walker is given a directory from which it will start walking
+# through files and directories.  In order to walk individual directories which
+# aren't nested, you must call walkdir once for each directory. For example, to
+# walk /usr, /opt, and /tmp without walking the entire root directory, you'd
+# walkdir 3 times, once for each directory off of root that you want scanned.
+# You can use the same Walker instance for each walkdir.
 class Walker
+
+  # Figure out if we have an 'unzip' program on the operating system
+  @@unzip = (Utils.major_platform =~ /windows/i ? "" : `which unzip`.strip) rescue ""
 
   @@log = Config.log
 
@@ -86,39 +78,41 @@ class Walker
   attr_accessor :should_show_progress_report
   attr_reader :total_seconds_paused_for_throttling
 
-  # criteria[:]
-  # is a hash of filenames or regular expressions that can match a filename.
-  # the key to the hash is the string representing the criteria (the filename or regex.)
-  # the value of the hash is a list of subscribers to be notified on a match for this
-  # criteria.
+  # criteria[:] is a hash of filenames or regular expressions that can match a
+  # filename. the key to the hash is the string representing the criteria (the
+  # filename or regex.) the value of the hash is a list of subscribers to be
+  # notified on a match for this criteria.
   #
-  # criteria effectively holds what are called the "files of interest" but more than that
-  # handles who to notify when a file of interest is found.
+  # criteria effectively holds what are called the "files of interest" but more
+  # than that handles who to notify when a file of interest is found.
 
   @criteria = nil
 
-  # dir_exclusions is an array of dirs/ or regular expressions which, if matched,
-  # will exclude the dir from any further processing.  The Walker will count excluded
-  # files and directories for diagnostic purposes, but no subscriber will get a chance
-  # to see any file that's excluded through the generic exclusion mechanism
+  # dir_exclusions is an array of dirs/ or regular expressions which, if
+  # matched, will exclude the dir from any further processing.  The Walker will
+  # count excluded files and directories for diagnostic purposes, but no
+  # subscriber will get a chance to see any file that's excluded through the
+  # generic exclusion mechanism
 
   @dir_exclusions = nil
   @file_exclusions = nil
 
-  # this is used to detect circular symlinks...if a file or directory to resolve is in this
-  # cache, it can't be resolved again - a circular link will be reported instead by the
-  # walker and the package will move on.  It's a class variable due to recursive walking.
+  # this is used to detect circular symlinks...if a file or directory to resolve
+  # is in this cache, it can't be resolved again - a circular link will be
+  # reported instead by the walker and the package will move on.  It's a class
+  # variable due to recursive walking.
 
   @@symlink_cache = {}
-
-  # If we are running under jruby, we might as well require java so that it is available to
-  # this class.
-  if RUBY_PLATFORM =~ /java/
+  begin
+    # if Java is available, we can use it to open zip files as it's more
+    # reliable than Ruby's zip library
     require 'java'
+    JAVA_AVAILABLE = true unless defined?(JAVA_AVAILABLE)
+  rescue LoadError
+    JAVA_AVAILABLE = false unless defined?(JAVA_AVAILABLE)
   end
 
   def initialize()
-
     $stdout.sync = true        # used so progress indicators will flush to console immediately
 
     @file_ct = 0
@@ -146,12 +140,10 @@ class Walker
   end
 
 
-=begin rdoc
-  takes an array of exclusions such as literals or regular expressions which if
-  matched to a directory that's encountered by the walker will cause that file or
-  directory to be ignored.  No subscriber will ever get a chance to process a file or
-  directory ignored through the generic exclusion mechanism
-=end
+  #  takes an array of exclusions such as literals or regular expressions which if
+  #  matched to a directory that's encountered by the walker will cause that file or
+  #  directory to be ignored.  No subscriber will ever get a chance to process a file or
+  #  directory ignored through the generic exclusion mechanism
   def add_dir_exclusions(exclusion_list)
     @dir_exclusions.concat(exclusion_list.values)
 
@@ -159,49 +151,43 @@ class Walker
     @no_temp_dir_exclusions = exclusion_list.reject { |key, value| key =~ /No te?mp files/ }.collect { |key_value| key_value[1] }
   end
 
-=begin rdoc
-  takes an array of exclusions such as literals or regular expressions which if
-  matched to a directory that's encountered by the walker will cause that file or
-  directory to be ignored.  No subscriber will ever get a chance to process a file or
-  directory ignored through the generic exclusion mechanism
-=end
+  #  takes an array of exclusions such as literals or regular expressions which if
+  #  matched to a directory that's encountered by the walker will cause that file or
+  #  directory to be ignored.  No subscriber will ever get a chance to process a file or
+  #  directory ignored through the generic exclusion mechanism
   def add_file_exclusions( exclusion_list )
     @file_exclusions.concat( exclusion_list )
   end
 
 
-=begin rdoc
-  clear out the generic exclusions list
-=end
+  # clear out the generic exclusions list
   def clear_exclusions()
     @dir_exclusions.clear
     @file_exclusions.clear
   end
 
 
-=begin rdoc
-    this method will recursively walk the given directory.  It will compare the
-    files it encounters with the filter list, both the generic filters first, and
-    then the list of files gleaned from the subscribers (usually a RuleEngine instance.)
-    If it finds a file of interest, it notifies the subscriber for that file match
-    of the match, passes the file and location to the subscriber.
-
-    Pass in true for override_dir_exclusions to check every file in the given
-    directory.  This flag is set when opening an archive file because they will
-    often be temporarily extracted to a temp dir and then have their contents
-    scanned there.  If the standard temp dir exclusions applied, these archive
-    contents would always be ignored.  This flag will be propagated when walking
-    any nested directories.
-
-    The archive_parents parameter is used to keep track of a hierarchy of nested
-    archive files so we can report where a particular matched file actually lives.
-    For example, we could find apache-ant.jar inside of myproj.war inside of
-    bigproj.ear.
-
-    returns false if given fileordir is a directory excluded by a filter
-    returns true if given fileordir was walked
-=end
-
+  # this method will recursively walk the given directory.  It will compare the
+  # files it encounters with the filter list, both the generic filters first,
+  # and then the list of files gleaned from the subscribers (usually a
+  # RuleEngine instance.) If it finds a file of interest, it notifies the
+  # subscriber for that file match of the match, passes the file and location to
+  # the subscriber.
+  #
+  # Pass in true for override_dir_exclusions to check every file in the given
+  # directory.  This flag is set when opening an archive file because they will
+  # often be temporarily extracted to a temp dir and then have their contents
+  # scanned there.  If the standard temp dir exclusions applied, these archive
+  # contents would always be ignored.  This flag will be propagated when walking
+  # any nested directories.
+  #
+  # The archive_parents parameter is used to keep track of a hierarchy of nested
+  # archive files so we can report where a particular matched file actually
+  # lives. For example, we could find apache-ant.jar inside of myproj.war inside
+  # of bigproj.ear.
+  #
+  # returns false if given fileordir is a directory excluded by a filter returns
+  # true if given fileordir was walked
   def walk_dir(fileordir, override_dir_exclusions = false, archive_parents = [])
     @root_scan_dir = fileordir if @root_scan_dir.nil?
     # crude progress indicator
@@ -215,12 +201,12 @@ class Walker
     if ( @show_verbose && @file_ct != 0 && @show_every != 0)
       q,r = @file_ct.divmod( @show_every )
       if r == 0 || @should_show_progress_report
-        # Show a progress report unless we're scanning archive contents because then
-        # we would show "now scanning <big long scary temp directory name>" which
-        # tends to make people panic.
-        # Instead, if it's time to show the report, set a flag so that we'll
-        # keep trying to show the report and actually will do so as soon as we're
-        # not looking at the contents of an archive file.
+        # Show a progress report unless we're scanning archive contents because
+        # then we would show "now scanning <big long scary temp directory name>"
+        # which tends to make people panic. Instead, if it's time to show the
+        # report, set a flag so that we'll keep trying to show the report and
+        # actually will do so as soon as we're not looking at the contents of an
+        # archive file.
         @should_show_progress_report = true if r == 0
         progress_report(fileordir) if archive_parents.empty?
       end
@@ -235,11 +221,13 @@ class Walker
       end
     end
 
-    # we have a file or directory.  before we process it further we need to see if it
-    # is of interest to us or if it matches a filter that indicates it should be excluded
+    # we have a file or directory.  before we process it further we need to see
+    # if it is of interest to us or if it matches a filter that indicates it
+    # should be excluded
     #
-    # this is a major part of the optimized scan because there's no sense in applying rules,
-    # getting MD5s or anything else on a file that is not of interest
+    # this is a major part of the optimized scan because there's no sense in
+    # applying rules, getting MD5s or anything else on a file that is not of
+    # interest
 
     # if we're looking at the contents of an archive file, it will probably be
     # in a temp dir, so don't exclude the temp dir
@@ -269,9 +257,8 @@ class Walker
       end
     end
 
-    # --list-files flag implementation
-    # will show only files that made it through the exclusion filters
-
+    # --list-files flag implementation will show only files that made it through
+    # the exclusion filters
     if @list_files || $DEBUG
       puts fileordir
     end
@@ -293,7 +280,8 @@ class Walker
             end
           end
 
-          # see if this entry is resolvable and matches anything anyone's looking for
+          # see if this entry is resolvable and matches anything anyone's
+          # looking for
           if resolved
             # always match against the given file
             discovered = name_match(fileordir, archive_parents)
@@ -302,19 +290,19 @@ class Walker
             # if we matched against a class file archive but don't yet know the
             # version number, let's look inside it for a manifest or POM file
             if discovered && !@no_class_files && !@always_open_class_file_archives &&
-               discovered.kind_of?(Array) && discovered[1] == "unknown" && is_class_file_archive?(file_string)
+                discovered.kind_of?(Array) && discovered[1] == "unknown" && is_class_file_archive?(file_string)
               try_to_get_version_from_class_file_archive(discovered[0], fileordir, archive_parents)
             end
 
-            # we didn't recognize the file, so check to see if we're supposed
-            # to examine the contents of source files
+            # we didn't recognize the file, so check to see if we're supposed to
+            # examine the contents of source files
             if !discovered && @examine_source_files && is_source_file?(file_string)
               @source_files_found_ct += 1
               examine_source_file(fileordir, archive_parents)
             end
 
-            # we didn't recognize the file, so check to see if it might
-            # contain class files we recognize
+            # we didn't recognize the file, so check to see if it might contain
+            # class files we recognize
             if ((!discovered && !@no_class_files) || @always_open_class_file_archives) && is_class_file_archive?(file_string)
               @class_file_archives_found_ct += 1
               examine_class_file_archive(fileordir, archive_parents)
@@ -349,14 +337,15 @@ class Walker
         if (have_perms_for_dir) then
           @dir_ct += 1
 
-          # list the contents of this directory (the pwd) and recursively call walkdir
-          # if it's not empty
+          # list the contents of this directory (the pwd) and recursively call
+          # walkdir if it's not empty
           begin
             if is_symlink?(fileordir)
               if @follow_symlinks
                 # need to resolve the symlink
                 resolved, fileordir = resolve_symlink(fileordir)
-                # @@log.info("Walker") {"resolved: " + resolved.to_s + " fileordir: " + fileordir }
+                # @@log.info("Walker") {"resolved: " + resolved.to_s + "
+                # fileordir: " + fileordir }
               else
                 resolved = false
                 @sym_link_ct += 1
@@ -364,9 +353,10 @@ class Walker
               end
             end
           rescue Exception
-            # the only times we've seen this hit are when a symlink is completely orphaned => points to nothing
-            # this has only occurred on a symlink found in /lost+found on Solaris.  otherwise, there's no way
-            # to make a symlink like this using ln.
+            # the only times we've seen this hit are when a symlink is
+            # completely orphaned => points to nothing this has only occurred on
+            # a symlink found in /lost+found on Solaris.  otherwise, there's no
+            # way to make a symlink like this using ln.
             @not_followed_ct += 1
             @bad_link_ct += 1
             @@log.info("Walker") {"WARNING: Bad lstat on symlink check - #{fileordir} - likely an orphaned symlink"}
@@ -376,7 +366,8 @@ class Walker
           if resolved
             pwd = fileordir
             Dir.foreach(fileordir) do |direntry|
-              # recurse into this directory if it's not current or parent directories
+              # recurse into this directory if it's not current or parent
+              # directories
               if direntry != "." && direntry != ".."
                 direntry = (pwd == '/' ? "/#{direntry}" : "#{pwd}/#{direntry}" )
 
@@ -400,8 +391,9 @@ class Walker
       increment_permission_denied_ct(fileordir)
       return false
     rescue Errno::ENOENT, Errno::ENOTDIR
-      # it may seem odd that a file that was scanned would end up not found, but it's possible that
-      # a file existed and in the moments between when it was encountered and when it was scanned, was removed or moved.
+      # it may seem odd that a file that was scanned would end up not found, but
+      # it's possible that a file existed and in the moments between when it was
+      # encountered and when it was scanned, was removed or moved.
       @not_found_ct += 1
       return false
     end
@@ -417,9 +409,10 @@ class Walker
   end
 
   def is_symlink?(fileordir)
-    # If we are running under jruby, we need to use the old abs/can path to check
-    # if a directory is a symlink.  Otherwise, we can use the file system.  This call
-    # using the ruby File object returns false even on symlinks when running under JRuby
+    # If we are running under jruby, we need to use the old abs/can path to
+    # check if a directory is a symlink.  Otherwise, we can use the file system.
+    # This call using the ruby File object returns false even on symlinks when
+    # running under JRuby
     is_symlink=false
     if RUBY_PLATFORM =~ /notneeded/
       java_file=java.io.File.new(fileordir)
@@ -434,8 +427,8 @@ class Walker
     is_symlink
   end
 
-  # Return true if the given file name ends with an archive extension,
-  # as defined through the configuration file
+  # Return true if the given file name ends with an archive extension, as
+  # defined through the configuration file
   def is_archive?(file_name)
     @archive_extensions.any? { |ext| ends_with?(file_name, ext) }
   end
@@ -526,33 +519,86 @@ class Walker
         `#{line} 2>&1 > /dev/null`
         success = true
       rescue Exception => e
-        @@log.info("Walker") { "unzip program could not unzip archive: #{path} because #{e.inspect}" }
+        @@log.info("Walker") { "unzip program could not unzip archive: #{zip_path} because #{e.inspect}" }
       end
     end
 
-    # we may have already tried the 'unzip' program if it's installed, but if
-    # it failed we might as well try the slow way in case it works
+    # we may have already tried the 'unzip' program if it's installed, but if it
+    # failed we might as well try the slow way in case it works
     unless success
-      begin
-        Zip::ZipFile.open(zip_path) do |zip_file|
-          zip_file.entries.sort.each do |entry|
-            entry.extract("#{destination}/#{entry}")
-          end
-        end
-        success = true
-      rescue Exception => e
-        @@log.info("Walker") { "ruby unzip could not unzip archive: #{path} because #{e.inspect}" }
+      if JAVA_AVAILABLE
+        success = extract_zip_with_java(zip_path, destination)
+      else
+        success = extract_zip_with_ruby(zip_path, destination)
       end
     end
 
     success
   end
 
+  # use java to extract all the contents of the zip at the given path to the
+  # given destination directory
+  def extract_zip_with_java(zip_path, destination)
+    success = false
+    begin
+      zip_file = java.util.zip.ZipFile.new(zip_path)
+      zip_file.entries.each do |entry|
+        extract_java_zip_entry(zip_file, entry, destination)
+      end
+      success = true
+    rescue Exception => e
+      @@log.info("Walker") { "java unzip could not unzip archive: #{zip_path} because #{e.inspect}" }
+    ensure
+      zip_file.close if zip_file rescue nil
+    end
+    success
+  end
+
+  # extract the given java zip entry to the given destination directory
+  def extract_java_zip_entry(zip_file, entry, destination)
+    buffer_size = 32768
+    data = Java::byte[buffer_size].new
+    is = java.io.BufferedInputStream.new(zip_file.get_input_stream(entry))
+    file = java.io.File.new("#{destination}/#{entry.name}")
+    if entry.directory?
+      file.mkdirs
+    else
+      begin
+        bos = java.io.BufferedOutputStream.new(java.io.FileOutputStream.new(file), buffer_size)
+        while (count = is.read(data, 0, buffer_size)) != -1
+          bos.write(data, 0, count)
+        end
+      rescue java.io.IOException => e
+        # ignore it as there's no recovery possible
+      ensure
+        bos.flush if bos rescue nil
+        bos.close if bos rescue nil
+        is.close if is rescue nil
+      end
+    end
+  end
+
+  # use ruby to extract all the contents of the zip at the given path to the
+  # given destination directory
+  def extract_zip_with_ruby(zip_path, destination)
+    success = false
+    begin
+      Zip::ZipFile.open(zip_path) do |zip_file|
+        zip_file.entries.sort.each do |entry|
+          entry.extract("#{destination}/#{entry}")
+        end
+      end
+      success = true
+    rescue Exception => e
+      @@log.info("Walker") { "ruby unzip could not unzip archive: #{zip_path} because #{e.inspect}" }
+    end
+    success
+  end
+
   # create a new temporary directory
   def create_temp_dir(name)
-    # do a little footwork here to create a temporary file that is
-    # guaranteed to be unique, then delete it and create a directory
-    # with the same name
+    # do a little footwork here to create a temporary file that is guaranteed to
+    # be unique, then delete it and create a directory with the same name
     final_path = nil
     failures = 0
     begin
@@ -585,15 +631,15 @@ class Walker
     ClassFileArchiveDiscoverer.discover(path, get_new_parents_for_container(path, archive_parents))
   end
 
-  # if we matched against a class file archive but don't yet know the
-  # version number, let's look inside it for a manifest or POM file
+  # if we matched against a class file archive but don't yet know the version
+  # number, let's look inside it for a manifest or POM file
   def try_to_get_version_from_class_file_archive(package_name, path, archive_parents)
     ClassFileArchiveDiscoverer.try_to_get_version(package_name, path, get_new_parents_for_container(path, archive_parents))
   end
 
-  # Look inside the given source file to see if we can recognize anything
-  # inside of it.  For example, see if we detect
-  # "import org.apache.commons.collections.*".  We might also look for package
+  # Look inside the given source file to see if we can recognize anything inside
+  # of it.  For example, see if we detect "import
+  # org.apache.commons.collections.*".  We might also look for package
   # statements or do other Java-specific discovery.
   def examine_source_file(path, archive_parents = [])
     SourceFileDiscoverer.discover(path, get_new_parents_for_container(path, archive_parents))
@@ -615,22 +661,20 @@ class Walker
     ([].concat(archive_parents)) << [archive_file, archive_file]
   end
 
-=begin rdoc
-  return true or false if the symlink could be resolved and the realpath if it can
+  # return true or false if the symlink could be resolved and the realpath if it
+  # can
 
-  always returns a resolved state of false if @follow_symlinks is false
+  # always returns a resolved state of false if @follow_symlinks is false
 
-  true - link resolved to a real path
-  false - link was broken or circular and could not be resolved to a real path
-=end
-
+  # true - link resolved to a real path false - link was broken or circular and
+  # could not be resolved to a real path
   def resolve_symlink( fileordir )
 
     @@log.debug("Walker") {"\n-------------\nresolving symlink: #{fileordir}"}
 
     if ( @@symlink_cache[fileordir] != nil )
-      # then we've seen this sym link before and we have just detected a circular
-      # reference, so don't resolve this again
+      # then we've seen this sym link before and we have just detected a
+      # circular reference, so don't resolve this again
       @bad_link_ct += 1
       @@log.warn("Walker") {"detected circular link #{fileordir}"}
       return false, fileordir
@@ -653,10 +697,7 @@ class Walker
 
   end
 
-=begin rdoc
-  periodically called to show more verbose progress
-=end
-
+  # periodically called to show more verbose progress
   def progress_report(fileordir)
     # clear the flag now that we're going to show a report
     if (Time.now - @last_verbose_report_time) >= 30
@@ -671,14 +712,10 @@ class Walker
     end
   end
 
-=begin rdoc
-  given the filename, this code will check the list of subscribers and
-  notify those subscribers whose filename criteria matches this filename
-  a subscriber must have a notify method that receives filename, location
-  parameters, and a potentially empty list of archive parents that contain
-  the file.
-=end
-
+  # given the filename, this code will check the list of subscribers and notify
+  # those subscribers whose filename criteria matches this filename a subscriber
+  # must have a notify method that receives filename, location parameters, and a
+  # potentially empty list of archive parents that contain the file.
   def notify_subscribers(subscribers, location, filename, rule_used, archive_parents)
     any_matches = false
     subscribers.each{ |subscriber|
@@ -688,38 +725,43 @@ class Walker
   end
 
 
-=begin rdoc
-  this is the main method which compares a filename found by the walker against the list of
-  files of interest to see if there's a match.  if there is a match, this code will fire the
-  subscriber notification method to tell the subscriber (ie RuleEngine) a file of interest
-  has been found. The archive_parents parameter gives us a path back up the archive hiearchy,
-  if any, that contains the given file or directory.
-  
-  Return true if any rules match the given file, false otherwise.
-=end
+  # this is the main method which compares a filename found by the walker
+  # against the list of files of interest to see if there's a match.  if there
+  # is a match, this code will fire the subscriber notification method to tell
+  # the subscriber (ie RuleEngine) a file of interest has been found. The
+  # archive_parents parameter gives us a path back up the archive hiearchy, if
+  # any, that contains the given file or directory.
+
+  # Return true if any rules match the given file, false otherwise.
   def name_match(fileordir, archive_parents)
 
-    # FUTURE - determine if it may be necessary to pull this optimization out and do a literal match on
-    # all criteria, not just take the first match....right now, with a one-subscriber model (RuleEngine),
-    # any match is going to notify the subscriber, so it's an optimization to not try to
-    # find any more matches in the criteria after the first match.  Later we may not have this luxury
-    # if we need to support more than one subscriber in the system.
+    # FUTURE - determine if it may be necessary to pull this optimization out
+    # and do a literal match on all criteria, not just take the first
+    # match....right now, with a one-subscriber model (RuleEngine), any match is
+    # going to notify the subscriber, so it's an optimization to not try to find
+    # any more matches in the criteria after the first match.  Later we may not
+    # have this luxury if we need to support more than one subscriber in the
+    # system.
 
-    # do a direct/literal look up first since this will be the fastest match, do it first
+    # do a direct/literal look up first since this will be the fastest match, do
+    # it first
     basename = File.basename(fileordir)
     dirname =  File.dirname(fileordir)
 
     if @criteria[basename]
-      # found a literal filename match in the criteria list, so notify its subscribers
+      # found a literal filename match in the criteria list, so notify its
+      # subscribers
       @foi_ct += 1
       return notify_subscribers(@criteria[basename], dirname, basename, basename, archive_parents)
     end
 
-    # no literal filename match was found - check all other match types - regex's
+    # no literal filename match was found - check all other match types -
+    # regex's
 
-    # now try to match each criterion against the given filename and build a list of subscribers
-    # that care - because the filename might match more than one criterion, we can't just find the
-    # first match and return the subscriber list
+    # now try to match each criterion against the given filename and build a
+    # list of subscribers that care - because the filename might match more than
+    # one criterion, we can't just find the first match and return the
+    # subscriber list
 
     @criteria.each_key { | criterion |
       if basename.match(criterion)
@@ -732,30 +774,29 @@ class Walker
     false
   end
 
-=begin rdoc
-  this method receives a subscriber who is interested in a certain set of files.
-  The files list may include regex's or literal filenames.  Each of the files of
-  interest will be associated with one or more subscribers who are interested in
-  that same file or file type.  When a file match is found, the subscriber will
-  be notified.  Subscribers must support a:
+  # this method receives a subscriber who is interested in a certain set of
+  # files. The files list may include regex's or literal filenames.  Each of the
+  # files of interest will be associated with one or more subscribers who are
+  # interested in that same file or file type.  When a file match is found, the
+  # subscriber will be notified.  Subscribers must support a:
 
-  found_file( location, filename, rule_used )
+  # found_file( location, filename, rule_used )
 
-  method so the walker can notify it of a found file.
-=end
-
+  # method so the walker can notify it of a found file.
   def set_files_of_interest( subscriber, filelist )
 
-    # spin through the list of files and either add it to the criteria hash if it's not already found in the hash.
-    # After that, associate the subscriber with it.  The list of files of interest, @criteria, is
-    # a hash key'd by the file of interest whose value is a list of subscribers to
-    # notify in a found file condition.
+    # spin through the list of files and either add it to the criteria hash if
+    # it's not already found in the hash. After that, associate the subscriber
+    # with it.  The list of files of interest, @criteria, is a hash key'd by the
+    # file of interest whose value is a list of subscribers to notify in a found
+    # file condition.
     #
-    # it's assumed that the given file list has no duplicates in it, but even if it did, they'd
-    # get filtered out by virtue that the criteria is keyed by filename
+    # it's assumed that the given file list has no duplicates in it, but even if
+    # it did, they'd get filtered out by virtue that the criteria is keyed by
+    # filename
     #
-    # a file of interest can be a regex or a literal filename, but it's a filename
-    # or basename of a dir only, not a path
+    # a file of interest can be a regex or a literal filename, but it's a
+    # filename or basename of a dir only, not a path
 
     filelist.each { | file_of_interest |
       if ( @criteria[ file_of_interest ] == nil )  # then this is a new file or file type to watch for
@@ -765,8 +806,9 @@ class Walker
         @criteria[ file_of_interest ].push( subscriber )  # add a subcriber to the list for that file
 
       else
-        # TODO - if we can't enforce or trust that filelist has no duplicates, then we need to
-        # check to see if this file of interest already has this subscriber in it.
+        # TODO - if we can't enforce or trust that filelist has no duplicates,
+        # then we need to check to see if this file of interest already has this
+        # subscriber in it.
 
         @criteria[ file_of_interest ].push( subscriber )
 
@@ -775,13 +817,9 @@ class Walker
 
   end
 
-=begin rdoc
-  returns the keys of the criteria as an array
-=end
-
+  #  returns the keys of the criteria as an array
   def get_files_of_interest()
     return @criteria.keys
   end
-
 end
 

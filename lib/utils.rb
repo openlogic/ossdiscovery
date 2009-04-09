@@ -1,3 +1,5 @@
+require 'rbconfig'
+
 module Utils
   module_function
   def number_with_delimiter(number, delimiter=",", separator=".")
@@ -40,6 +42,49 @@ module Utils
     when 86400..525599   then "%i months" % (distance_in_minutes / 43200).round
     when 525600..1051199 then "about %i years" % 1
     else                      "over %i years" % (distance_in_minutes / 525600).round
+    end
+  end
+
+  # get the major platform on which this instance of the app is running.
+  # possible return values are: linux, solaris, windows, macosx
+  def major_platform
+    @@major_platform ||= case RUBY_PLATFORM
+    when /linux/     # ie: x86_64-linux
+      "linux"
+    when /solaris/   # ie: sparc-solaris2.8
+      "solaris"
+    when /mswin/     # ie: i386-mswin32
+      "windows"
+    when /darwin/    # ie: powerpc-darwin8.10.0
+      "macosx"
+    when /cygwin/
+      "cygwin"
+    when /freebsd/
+      "freebsd"
+    when /java/      # JRuby returns java regardless of platform so we need to turn this into a real platform string
+
+      case RbConfig::CONFIG['host_os']
+      when "Mac OS X", "darwin"
+        # "host_os"=>"Mac OS X",
+        "macosx"
+
+      when /inux/
+        # "host_os"=>"Linux",  # some platforms return "linux" others "Linux"
+        "linux"
+
+      when /Windows/
+        "jruby-windows"
+
+      when /mswin32/
+        "jruby-windows"
+
+      when /SunOS/
+        "solaris"
+
+      when /freebsd/i
+        "freebsd"
+      end
+
     end
   end
 end
