@@ -3309,7 +3309,7 @@ andrews;andrews;c++;none
 andrioalmeida;andrioalmeida;none;none
 andro;andro;php;none
 androibay;androibay;java;none
-android;android;assembly,c,java,javascript,python;none
+android;android,android-sdk;assembly,c,java,javascript,python;com.google.android
 androiddesigner;androiddesigner;visual basic;none
 andromda;andromda;java;org.andromda
 andromdaplugins;andromdaplugins;java;none
@@ -5401,7 +5401,6 @@ aspdf;aspdf;asp;none
 aspeasygallery;aspeasygallery;asp;none
 aspect-perl;aspect-perl;perl;none
 aspect4facelets;aspect4facelets;aspectj,java;none
-aspect;aspect;php;none
 aspectbrains;aspectbrains;aspectj,java;none
 aspectc;aspectc;none;none
 aspectdng;aspectdng;c#;none
@@ -18176,7 +18175,6 @@ core-m;core-m;php;none
 core1;core1;assembly,c,php;none
 core2;core2;none;none
 core404;core404;php;none
-core;core;c++,lua;none
 core_restart;core_restart;none;none
 coreapm;coreapm;javascript,php;none
 coreasm;coreasm;java;none
@@ -28204,7 +28202,6 @@ ejax;ejax;javascript;none
 ejb3cart;ejb3cart;java;none
 ejb3checker;ejb3checker;java;none
 ejb3unit;ejb3unit;java;none
-ejb;ejb;none;none
 ejbace;ejbace;java;none
 ejbca;ejbca;java,javascript,jsp;none
 ejbdataprovider;ejbdataprovider;none;none
@@ -30837,7 +30834,6 @@ expchecker;expchecker;delphi/kylix;none
 expclsgenerator;expclsgenerator;java;none
 expcms;expcms;javascript,php;none
 expect-lite;expect-lite;tcl;none
-expect;expect;c,tcl;none
 expectj;expectj;java;none
 expectperl;expectperl;perl;none
 expense-ss;expense-ss;java,javascript,jsp;none
@@ -34532,7 +34528,6 @@ formol;formol;c++;none
 formprocessor;formprocessor,formproc;php;none
 formps;formps;php;none
 forms-framework;forms-framework;pl/sql;none
-forms;forms;php;none
 formsess;formsess;php;none
 formsforsorting;formsforsorting;php;none
 formsgen;formsgen;java;none
@@ -45076,7 +45071,7 @@ httpchat;httpchat;java;none
 httpclass;httpclass;none;none
 httpclientplgin;httpclientplgin;java;none
 httpconfig;httpconfig;ruby;none
-httpcore;httpcore,apache-httpcore,jakarta-httpcore,httpcomponents-httpcore;none;none
+httpcore;httpcore,apache-httpcore,jakarta-httpcore,httpcomponents-httpcore;java;org.apache.http
 httpd-garage;httpd-garage;c;none
 httpd-log;httpd-log;c;none
 httpd-sh;httpd-sh;unix shell;none
@@ -49501,10 +49496,8 @@ j2dscript;j2dscript;java;none
 j2e-translate;j2e-translate;java;none
 j2easy;j2easy;java;none
 j2ee-adapt;j2ee-adapt;java;none
-j2ee-connector-arch;j2ee-connector-arch;java;javax.resource
 j2ee-dp-gen;j2ee-dp-gen;java;none
 j2ee-examples;j2ee-examples;java,jsp;none
-jax-rpc;j2ee-jax-rpc,jaxrpc,jax-rpc;java;javax.xml.rpc
 j2ee-jsp-api;j2ee-jsp-api;none;none
 j2ee-jsp;j2ee-jsp;none;none
 j2ee-servlet-api;j2ee-servlet-api,j2ee-servlets-api;none;none
@@ -51343,7 +51336,6 @@ jcello;jcello;java;none
 jcengine;jcengine;java;none
 jceps;jceps;java;none
 jcersia;jcersia;java;none
-jcert;jcert;java;javax.security.cert
 jcetaglib;jcetaglib;java;none
 jcf;jcf;javascript;none
 jcfd;jcfd;java;none
@@ -51732,7 +51724,11 @@ jdistro;jdistro;java;none
 jdive;jdive;java;none
 jdivelog;jdivelog;java,xsl (xslt/xpath/xsl-fo);none
 jdk15eclipsehel;jdk15eclipsehel;java;none
-jdk;jdk;java;com.sun.java
+jdk;jdk;java;com.sun.java,javax.security.cert,java.awt,java.io,java.math,java.net,java.nio,java.security,java.sql,java.txt,java.util
+jax-rpc;j2ee-jax-rpc,jaxrpc,jax-rpc;java;javax.xml.rpc
+j2ee-connector-arch;j2ee-connector-arch;java;javax.resource
+jnet;jnet,jsse;java;javax.net,javax.net.ssl
+jmx;jmx;java;javax.management
 jdkguitools;jdkguitools;java;none
 jdkp;jdkp;php;none
 jdlabagent;jdlabagent;c,c++;none
@@ -53161,7 +53157,6 @@ jmwstudio;jmwstudio;java;none
 jmx-bench;jmx-bench;java,perl,unix shell;none
 jmx4ant;jmx4ant;java;none
 jmx4odp;jmx4odp;java;none
-jmx;jmx;java;javax.management
 jmxconsoletools;jmxconsoletools;java;none
 jmxdump;jmxdump;none;none
 jmxframework;jmxframework;none;none
@@ -53192,7 +53187,6 @@ jndie;jndie;java;none
 jndiff;jndiff;java;none
 jnerve;jnerve;java;none
 jnessuslib;jnessuslib;java;none
-jnet;jnet,jsse;java;javax.net,javax.net.ssl
 jneta;jneta;java;none
 jnetclip;jnetclip;java;none
 jnetconf;jnetconf;java;none
@@ -54511,7 +54505,7 @@ json-rpc-java;json-rpc-java;none;none
 json-taglib;json-taglib;java,jsp;none
 json-xs;json-xs;none;none
 json4j;json4j;java;none
-json;json;ruby,standard ml;none
+json;json;java,ruby,standard ml;org.json
 json_java;json_java;none;none
 json_javascript;json_javascript;none;none
 jsonator;jsonator;java;none
@@ -99417,7 +99411,6 @@ rumpus;rumpus;c,ruby;none
 rumt;rumt;none;none
 run-free;run-free;c,c++;none
 run68;run68;c;none
-run;run;javascript,php;none
 run_mpiblast;run_mpiblast;none;none
 runabout-theme;runabout-theme;none;none
 runabout;runabout;none;none
@@ -103600,7 +103593,6 @@ shuriken;shuriken;c;none
 shurrender;shurrender;java,jsp;none
 shush;shush;none;none
 shutbox;shutbox;none;none
-shutdown;shutdown;delphi/kylix;none
 shutdownit;shutdownit;c++;none
 shutdowntimer;shutdowntimer;delphi/kylix;none
 shuti;shuti;visual basic .net;none
