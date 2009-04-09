@@ -94,7 +94,7 @@ class RuleAnalyzer
     app_home = normalize_dir(ENV['OSSDISCOVERY_HOME'])
     
     running_on_windows = false
-    if (major_platform.include?('windows')) then # major_platform lives in cliutils
+    if (Utils.major_platform.include?('windows')) then # major_platform lives in cliutils
       app_home.downcase!
       running_on_windows = true
     end    

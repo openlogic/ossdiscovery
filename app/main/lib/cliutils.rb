@@ -42,6 +42,7 @@ require 'rbconfig'
 require 'uri'
 require 'integrity'
 require 'scan_data'
+require 'utils'
 
 MAX_GEO_NUM = 195
 
@@ -174,57 +175,6 @@ def normalize_path!( thepath )
   # thepath.gsub!("\\",'/')
 
   return File.expand_path( thepath )
-end
-
-
-=begin rdoc
-  get the major platform on which this instance of the app is running.  possible return values are:
-  linux, solaris, windows, macosx
-=end
-
-def major_platform()
-  case
-  when ( RUBY_PLATFORM =~ /linux/ )    # ie: x86_64-linux
-    return "linux"
-  when ( RUBY_PLATFORM =~ /solaris/ )  # ie: sparc-solaris2.8
-    return "solaris"
-  when ( RUBY_PLATFORM =~ /mswin/ )    # ie: i386-mswin32
-    return "windows"
-  when ( RUBY_PLATFORM =~ /darwin/ )   # ie: powerpc-darwin8.10.0
-    return "macosx"
-  when ( RUBY_PLATFORM =~ /cygwin/ )
-    return "cygwin"
-  when ( RUBY_PLATFORM =~ /freebsd/ )
-    return "freebsd"
-  when ( RUBY_PLATFORM =~ /java/ )     # JRuby returns java regardless of platform so we need to turn this into a real platform string
-
-    # DEBUG
-    # pp RbConfig::CONFIG
-
-    case
-    when RbConfig::CONFIG['host_os'] == "Mac OS X" || RbConfig::CONFIG['host_os'] == "darwin"
-      # "host_os"=>"Mac OS X",
-      return "macosx"
-
-    when RbConfig::CONFIG['host_os'].match("inux")
-      # "host_os"=>"Linux",  # some platforms return "linux" others "Linux"
-      return "linux"
-
-    when RbConfig::CONFIG['host_os'].match("Windows")
-      return "jruby-windows"
-
-    when RbConfig::CONFIG['host_os'].match("mswin32")
-      return "jruby-windows"
-
-    when RbConfig::CONFIG['host_os'].match("SunOS")
-      return "solaris"
-
-    when RbConfig::CONFIG['host_os'].downcase.include?('freebsd')
-      return "freebsd"
-
-    end
-
-  end
 end
 
 
@@ -561,7 +511,7 @@ def make_machine_id
 
   # otherwise, no plugin supplies machine_id, so do the normal machine id generation
   # for non-windows machines, everything else is u*ix like and should support uname
-  platform = major_platform
+  platform = Utils.major_platform
 
   case platform
   when "windows", "mswin32", "jruby-windows"
@@ -711,7 +661,7 @@ def get_os_version_str
 
   @os_family = RbConfig::CONFIG['host_os']
 
-  case major_platform
+  case Utils.major_platform
   when "linux"
     return get_linux_version_str
   when "windows", "mswin32", "jruby-windows"
@@ -1067,7 +1017,7 @@ def normalize_dir(dir)
   # Some versions of ruby have trouble when expanding a path with backslashes.
   # In windows, replace all backslashes with forward slashes.
 
-  if major_platform =~ /windows/
+  if Utils.major_platform =~ /windows/
     dir=dir.gsub('\\','/')
   end
 
