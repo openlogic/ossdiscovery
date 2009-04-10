@@ -430,14 +430,14 @@ module FileNameSearchTree
   # a simple class used to analyze a particular character for certain
   # characteristics, pardon the pun
   class CharacterInfo
-    STOP_CHARACTER = '.'[0]
-    MIN_RESET_CHARACTER = 'a'[0]
-    MAX_RESET_CHARACTER = 'z'[0]
-    MIN_DIGIT_CHARACTER = '0'[0]
-    MAX_DIGIT_CHARACTER = '9'[0]
-    UNDERSCORE = '_'[0]
-    DASH = '-'[0]
-    DOT = '.'[0]
+    STOP_CHARACTER = ?.
+    MIN_RESET_CHARACTER = ?a
+    MAX_RESET_CHARACTER = ?z
+    MIN_DIGIT_CHARACTER = ?0
+    MAX_DIGIT_CHARACTER = ?9
+    UNDERSCORE = ?_
+    DASH = ?-
+    DOT = ?.
 
     @@current_character = nil
 
