@@ -342,13 +342,12 @@ module ClassFilePathSearchTree
   # a simple class used to analyze a particular character for certain
   # characteristics, pardon the pun
   class CharacterInfo
-    STOP_CHARACTER = '.'[0]
-    SLASH_CHARACTER = '/'[0]
-    MIN_RESET_CHARACTER = 'a'[0]
-    MAX_RESET_CHARACTER = 'z'[0]
-    MIN_DIGIT_CHARACTER = '0'[0]
-    MAX_DIGIT_CHARACTER = '9'[0]
-    NAME_VERSION_DELIMITER_CHARACTERS = ['_'[0], '-'[0], '.'[0]]
+    STOP_CHARACTER = ?.
+    SLASH_CHARACTER = ?/
+    MIN_RESET_CHARACTER = ?a
+    MAX_RESET_CHARACTER = ?z
+    MIN_DIGIT_CHARACTER = ?0
+    MAX_DIGIT_CHARACTER = ?9
 
     @@current_character = nil
 
@@ -367,10 +366,6 @@ module ClassFilePathSearchTree
 
     def self.stop_character?
       @@current_character == STOP_CHARACTER
-    end
-
-    def self.is_name_version_delimiter_character?(ch)
-      NAME_VERSION_DELIMITER_CHARACTERS.include?(ch)
     end
 
     def self.is_digit_character?(ch)
