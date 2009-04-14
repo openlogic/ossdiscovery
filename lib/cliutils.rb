@@ -49,7 +49,9 @@ MAX_GEO_NUM = 195
 begin
   # if we're running under JRuby use the apache httpclient for https posts
   require 'java'
-  require "#{ENV['OSSDISCOVERY_HOME']}/jruby/lib/commons-httpclient-3.1.jar"
+  require "#{ENV['OSSDISCOVERY_HOME']}/lib/commons-codec-1.3.jar"
+  require "#{ENV['OSSDISCOVERY_HOME']}/lib/commons-httpclient-3.1.jar"
+  require "#{ENV['OSSDISCOVERY_HOME']}/lib/commons-logging-1.1.jar"
 
   JAVA_HTTPS_AVAILABLE = true
 

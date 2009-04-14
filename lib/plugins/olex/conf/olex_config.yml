@@ -50,3 +50,41 @@ no_paths: false
 # Set to true to show absolute paths to discovered files instead of paths that
 # are relative to the scanned directory.
 show_base_dirs: false
+
+
+#--------------------------------------------------------------------------------------
+# WARNING:  The next section overrides settings in the main config.yml file!
+#--------------------------------------------------------------------------------------
+
+# Set to true to make Discovery check the OLEX site for new rules and other
+# configuration files and download them.
+update_rules: true
+
+# Set to true to make Discovery check the OLEX site for new rules and other
+# configuration files and download them before continuing to perform a new scan.
+update_rules_and_do_scan: true
+
+# This tells Discovery where to look for updates to the rules and other
+# configuration files.  These values should not include a trailing slash.
+server_base_url: http://localhost:3000/content/discovery/rules
+rules_file_base_url: http://localhost:3000/content/discovery/rules
+#server_base_url: https://olex.openlogic.com/content/discovery/rules
+#rules_file_base_url: https://olex.openlogic.com/content/discovery/rules
+
+#--------------------------------------------------------------------------------------
+# WARNING:  The previous section overrides settings in the main config.yml file!
+#--------------------------------------------------------------------------------------
+
+#--------------------------------------------------------------------------------------
+# Some corporations require all web traffic to go through an internal proxy
+# server.  It can be configured here as necessary.
+
+# IMPORTANT: proxy data needs to be nil'd out if no proxy is used.
+# Any proxy value not specified (used) is required to be nil
+
+proxy_host: nil     # example: "192.168.10.211"
+proxy_port: nil     # example: 4545
+proxy_user: nil     # example: corpusername
+proxy_password: nil # example: corppassword
+
+proxy_ntlm_domain: "" # typically left blank, but in case an NTLM-only proxy requires it, it's available for configuration

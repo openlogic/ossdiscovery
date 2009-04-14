@@ -1,4 +1,6 @@
 require 'rbconfig'
+require 'digest/md5'
+require 'java'
 
 module Utils
   module_function
@@ -87,4 +89,22 @@ module Utils
 
     end
   end
+
+  # fully read the given input stream into a string
+  def read_java_input_stream(is)
+    reader = java.io.BufferedReader.new(java.io.InputStreamReader.new(is))
+    text = ""
+    while line = reader.read_line
+      text << line << "\n"
+    end
+    reader.close
+    is.close
+    text
+  end
+
+  # compute a checksum for the given string
+  def get_checksum(response_body)
+    Digest::MD5.hexdigest(response_body)
+  end
+
 end

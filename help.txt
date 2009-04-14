@@ -27,6 +27,9 @@ Options are not order dependent and may be one or more of:
                              which is a path to an existing scan results
                              file to deliver
 
+--dont-update-rules     -U prevent discovery from checking for and downloading
+                           updated rules from a remote server
+
 --help,                 -h print this help message
 
 --human-results,        -u the absolute or relative path and filename for

@@ -261,6 +261,15 @@ def execute
 end
 
 def update_scan_rules
+  # make sure all proxy information is set before we try to connect to a remote
+  # server to get a rule update
+  @plugins_list.each do |plugin_name, aPlugin|
+    %w(host port username password ntlm_domain).each do |item|
+      if aPlugin.respond_to?("proxy_#{item}".to_sym)
+        instance_variable_set("@proxy_#{item}", aPlugin.send("proxy_#{item}".to_sym))
+      end
+    end
+  end
   updater = ScanRulesUpdater.new(@server_base_url, @rules_file_base_url)
   updater.proxy_host = @proxy_host
   updater.proxy_port = @proxy_port
@@ -270,7 +279,7 @@ def update_scan_rules
     updater.update_scanrules(@rules_openlogic, @rules_files_url_path)
   rescue Exception => e
     @@log.error("Discovery: " << e.inspect + e.backtrace.inspect.gsub("[\"", "\n\t[\"").gsub(", ", ",\n\t ")) # if there's a better/easier way to get a readable exception trace, I don't know what it is
-    printf("#{e.to_s}\n")
+    raise e
   end
 end
 
@@ -420,6 +429,7 @@ options_array << [ "--always-open-class-file-archives", "-f", GetoptLong::NO_ARG
 options_array << [ "--conf", "-c", GetoptLong::REQUIRED_ARGUMENT ]            # specific conf file
 options_array << [ "--deliver-results", "-d", GetoptLong::OPTIONAL_ARGUMENT ] # existence says 'yes' deliver results to server, followed by a filename sends that file to the server  
 options_array << [ "--deliver-batch", "-D", GetoptLong::REQUIRED_ARGUMENT ]   # argument points to a directory of scan results files to submit
+options_array << [ "--dont-update-rules", "-U", GetoptLong::NO_ARGUMENT ]     # override config file to prevent checking for and downloading new rules
 options_array << [ "--help", "-h", GetoptLong::NO_ARGUMENT ]                  # get help, then exit
 options_array << [ "--list-os","-o", GetoptLong::NO_ARGUMENT ] 
 options_array << [ "--list-excluded", "-e", GetoptLong::NO_ARGUMENT]          # show excluded filenames during scan
@@ -522,6 +532,9 @@ begin
           exit 1
         end
       end 
+
+    when "--dont-update-rules"
+      @dont_update_rules = true
 
     when "--help"
       help()
@@ -702,18 +715,18 @@ end
 #end
 
 # make sure all files are writable so we don't scan first and then blow out on writing results
-@plugins_list.each do | plugin_name, aPlugin |
-  if ( aPlugin.respond_to?(:test_file_permissions, false) )
-    aPlugin.test_file_permissions()
+@plugins_list.each do |plugin_name, aPlugin|
+  if aPlugin.respond_to?(:test_file_permissions, false)
+    aPlugin.test_file_permissions
   end
 end
       
 # test access to the destination_url for posting to make sure we can get out ok
 # pre-check and warn if server cannot be reached
-if ( @send_results )
-  @plugins_list.each do | plugin_name, aPlugin |
-    if ( aPlugin.can_deliver? && (check_network_connectivity(aPlugin.destination_server_url) == false) ) # checks to see if scan results post server is reachable.
-      puts "\nOSS Discovery could not contact the #{aPlugin.class} server.   It's likely that you are operating behind a proxy.  "
+if @send_results
+  @plugins_list.each do |plugin_name, aPlugin|
+    if aPlugin.can_deliver? && (check_network_connectivity(aPlugin.destination_server_url) == false) # checks to see if scan results post server is reachable.
+      puts "\nOSS Discovery could not contact the #{aPlugin.class} server.  It's likely that you are operating behind a proxy."
       puts "The scan will continue, but you will need to manually post your scan results.\n"
       puts "The URL used to contact the server is: #{aPlugin.destination_server_url}"
       if ( aPlugin.upload_url != nil )
@@ -724,29 +737,39 @@ if ( @send_results )
   end
 end
 
-if ( @update_rules ) then
-  do_a_scan = "Finished getting the updated rules, going on to perform a scan.\n"
-  just_update_rules = "Finished getting the updated rules, no scan being performed.\n"
+if @update_rules && !@dont_update_rules
+  do_a_scan = "Finished checking for updated rules, going on to perform a scan.\n"
+  just_update_rules = "Finished checking for updated rules, no scan being performed.\n"
   
   # get the updated rules from the server
   begin 
-    printf("Getting the updated scan rules from the server.\n")
-    update_scan_rules()
+    update_scan_rules
   rescue => e
-    error_msg =  "An error occured while attempting to get the updated scan rules.\n"
-    error_msg << "  error: #{e.message}\n"
-    error_msg << "  The original scan rules should still be in affect.\n"
-    printf(error_msg)
+    if e.message =~ /connection refused/i
+      puts "\n\n"
+      puts "Could not connect to the server at #{@server_base_url} to check for"
+      puts "updated rule files."
+      puts "If you are behind a proxy, you may want to update the proxy values"
+      puts "found in the configuration .yml file under the plugins conf directory."
+      puts "If you already have proxy values set correctly, it's possible that"
+      puts "the discovery server is down at the moment.  Please try again later."
+      puts ""
+    else
+      error_msg =  "An error occurred while attempting to get the updated scan rules.\n"
+      error_msg << "  error: #{e.message}\n"
+      error_msg << "  The original scan rules should still be in effect.\n"
+      printf(error_msg)
+    end
     @@log.error(e.inspect + e.backtrace.inspect.gsub("[\"", "\n\t[\"").gsub(", ", ",\n\t ")) # if there's a better/easier way to get a readable exception trace, I don't know what it is
     do_a_scan = "Going on to perform a scan using the original scan rules.\n"
     just_update_rules = "No scan being performed.\n"
   end
   
-  if (@update_rules_and_do_scan) then
-    # go on and do the business below starting with 'execute()'
-    printf(do_a_scan)
+  if @update_rules_and_do_scan
+    # go on and do the business below starting with 'execute'
+    printf do_a_scan
   else
-    printf(just_update_rules)
+    printf just_update_rules
     exit 0
   end
 end

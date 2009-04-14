@@ -1,4 +1,5 @@
 require 'package'
+require 'utils'
 require 'rexml/document'
 require 'pathname'
 require 'fileutils'
@@ -158,10 +159,10 @@ class ClassFileArchiveDiscoverer
         name = entry.name
         paths << name
         if is_manifest_file?(name)
-          info[0][:manifest_version] = get_version_from_manifest(read_java_input_stream(zip_file.get_input_stream(entry)))
+          info[0][:manifest_version] = get_version_from_manifest(Utils.read_java_input_stream(zip_file.get_input_stream(entry)))
         end
         if is_maven_pom_file?(name)
-          info[0][:pom_version] = get_version_from_maven_pom(read_java_input_stream(zip_file.get_input_stream(entry)))
+          info[0][:pom_version] = get_version_from_maven_pom(Utils.read_java_input_stream(zip_file.get_input_stream(entry)))
         end
       end
     rescue java.io.IOException => e
@@ -230,18 +231,6 @@ class ClassFileArchiveDiscoverer
     doc = REXML::Document.new(pom)
     version_node = doc.root.elements["version"]
     version_node ? version_node.text.strip.gsub(/"/, "") : nil
-  end
-
-  # fully read the given input stream into a string
-  def self.read_java_input_stream(is)
-    reader = java.io.BufferedReader.new(java.io.InputStreamReader.new(is))
-    text = ""
-    while line = reader.read_line
-      text << line << "\n"
-    end
-    reader.close
-    is.close
-    text
   end
 
   # read the given ZipFileEntry into a string
