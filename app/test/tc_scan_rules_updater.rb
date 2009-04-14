@@ -66,7 +66,7 @@ class TcScanRulesUpdater < Test::Unit::TestCase
     dest_dir = File.expand_path(File.dirname(__FILE__))
     
     sru = ScanRulesUpdater.new("http://repo1.maven.org/", "http://repo1.maven.org/")
-    sru.download_file("maven2/ant/ant/maven-metadata.xml", dest_dir)
+    sru.download_file(RulesFile.new("maven2/ant/ant/maven-metadata.xml", nil, nil), dest_dir)
     
     downloaded_file = File.expand_path(File.join(dest_dir, "maven-metadata.xml"))
     assert(File.exist?(downloaded_file))
