@@ -1,6 +1,5 @@
 require 'rbconfig'
 require 'digest/md5'
-require 'java'
 
 module Utils
   module_function
