@@ -38,7 +38,18 @@ class OlexConfig
   end
   
   def self.load
-    YAML::load_file(File.join(File.dirname(__FILE__), 'olex_config.yml'))
+    @@configs = YAML::load_file(File.join(File.dirname(__FILE__), 'olex_config.yml'))
+    override_discovery_defaults
+    @@configs
+  end
+
+  # necessary to point at the OLEX production server instead of the
+  # OSS Census production server
+  def self.override_discovery_defaults
+    Config.configs[:server_base_url] = @@configs["server_base_url"]
+    Config.configs[:rules_file_base_url] = @@configs["rules_file_base_url"]
+    Config.configs[:update_rules] = @@configs["update_rules"]
+    Config.configs[:update_rules_and_do_scan] = @@configs["update_rules_and_do_scan"]
   end
 
   def self.method_missing(method)

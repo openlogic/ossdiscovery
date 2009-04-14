@@ -47,6 +47,7 @@ class OlexPlugin
   OLEX_PREFIX = "http://olex.openlogic.com/packages/" unless defined? OLEX_PREFIX
 
   attr_accessor :olex_machine_file, :olex_local_detailed_file, :enable_olex_links, :no_paths, :show_base_dirs, :show_rollup
+  attr_accessor :override_https, :proxy_host, :proxy_port, :proxy_user, :proxy_password, :proxy_ntlm_domain
 
   def initialize
 
@@ -58,8 +59,13 @@ class OlexPlugin
     @enable_olex_links = OlexConfig.enable_olex_links || false
     @no_paths = OlexConfig.no_paths || false
     @show_base_dirs = OlexConfig.show_base_dirs || false
+    @override_https = false
+    @proxy_host = OlexConfig.proxy_host
+    @proxy_port = OlexConfig.proxy_port
+    @proxy_user = OlexConfig.proxy_user
+    @proxy_password = OlexConfig.proxy_password
+    @proxy_ntlm_domain = OlexConfig.proxy_ntlm_domain || ""
     @plugin_version = OLEX_PLUGIN_VERSION_KEY
-
   end 
 
   def plugin_version
