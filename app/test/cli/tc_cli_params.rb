@@ -76,9 +76,9 @@ class TcCLI < Test::Unit::TestCase
       lines << line
     end
     
-    first_line_first_val = lines[0].split(',')[0]
+    first_line_first_val = lines[1].split(',')[0]
     assert_equal(1, first_line_first_val.to_i)
-    first_line_second_val = lines[0].split(',')[1]
+    first_line_second_val = lines[1].split(',')[1]
     
     last_line_first_val = lines[lines.size - 1].split(',')[0]
     assert(last_line_first_val.to_i > 1)
