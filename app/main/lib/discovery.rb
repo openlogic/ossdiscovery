@@ -67,20 +67,18 @@
 # on the project web site:  http://www.ossdiscovery.org
 #
 
-$:.unshift File.join(File.dirname(__FILE__))
+@discovery_version = "2.3.0"
 
+print "OSS Discovery #{@discovery_version}: Initializing runtime environment..."
+
+$:.unshift File.join(File.dirname(__FILE__))
 require 'date'
+putc "."
 require 'getoptlong'
+putc "."
 require 'parsedate'
 require 'pp'
-
-require 'walker'
-require 'cliutils'
-require 'rule_engine'
-require 'search_trees'
-require 'scan_rules_updater'
-require 'utils'
-
+putc "."
 
 #--------------- global defaults ---------------------------------------------
 # maintain these in alphabetical order, please
@@ -88,7 +86,6 @@ require 'utils'
 @basedir = File.expand_path(File.dirname(__FILE__))
 @config = 'conf/config.rb'
 @copyright = "Copyright (C) 2007-2009 OpenLogic, Inc."
-@discovery_version = "2.3.0"
 @discovery_name = "ossdiscovery"
 @discovery_license = "GNU Affero General Public License version 3"
 @discovery_license_shortname = "Affero GPLv3" 
@@ -99,7 +96,6 @@ require 'utils'
 @census_code = ""
 @inclusion_filters = Hash.new
 @plugins_list = Hash.new
-@@log = Config.prop(:log)
 
 # walker configuration parameter defaults
 @list_files = false
@@ -124,10 +120,23 @@ require 'utils'
 @rule_engine = nil
 @walker = nil
 
+require 'walker'
+putc "."
+require 'cliutils'
+putc "."
+require 'rule_engine'
+putc "."
+require 'search_trees'
+putc "."
+require 'scan_rules_updater'
+require 'utils'
+
+
 # configuration file can override any of the parameters above
 require "#{@basedir}/#{@config}"
 
 require "#{@basedir}/#{Config.prop(:generic_filters)}"
+@@log = Config.prop(:log)
 
 # Load any plugins, meaning any file named 'init.rb' found somewhere
 # under the 'plugins' directory.
@@ -137,6 +146,7 @@ def load_plugins
 end
 
 load_plugins    # always load whatever plugins are found and enabled.
+putc "."
 
 =begin rdoc
  This is the main executive controller of discovery
@@ -463,6 +473,7 @@ options.set_options( *options_array )
 
 
 begin
+  puts "done."
    
 
   # Every property from the config.yml file is loaded as an instance variable of self.
