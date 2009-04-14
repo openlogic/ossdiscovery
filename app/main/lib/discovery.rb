@@ -755,10 +755,7 @@ if @update_rules && !@dont_update_rules
       puts "the discovery server is down at the moment.  Please try again later."
       puts ""
     else
-      error_msg =  "An error occurred while attempting to get the updated scan rules.\n"
-      error_msg << "  error: #{e.message}\n"
-      error_msg << "  The original scan rules should still be in effect.\n"
-      printf(error_msg)
+      puts e.message
     end
     @@log.error(e.inspect + e.backtrace.inspect.gsub("[\"", "\n\t[\"").gsub(", ", ",\n\t ")) # if there's a better/easier way to get a readable exception trace, I don't know what it is
     do_a_scan = "Going on to perform a scan using the original scan rules.\n"

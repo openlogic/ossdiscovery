@@ -66,10 +66,10 @@ update_rules_and_do_scan: true
 
 # This tells Discovery where to look for updates to the rules and other
 # configuration files.  These values should not include a trailing slash.
-server_base_url: http://localhost:3000/content/discovery/rules
-rules_file_base_url: http://localhost:3000/content/discovery/rules
-#server_base_url: https://olex.openlogic.com/content/discovery/rules
-#rules_file_base_url: https://olex.openlogic.com/content/discovery/rules
+#server_base_url: http://localhost:3000/content/discovery/rules
+#rules_file_base_url: http://localhost:3000/content/discovery/rules
+server_base_url: https://olex.openlogic.com/content/discovery/rules
+rules_file_base_url: https://olex.openlogic.com/content/discovery/rules
 
 #--------------------------------------------------------------------------------------
 # WARNING:  The previous section overrides settings in the main config.yml file!

@@ -135,8 +135,8 @@ class ScanRulesUpdater
     begin
       rules_files_to_download = http_get_rules_files_to_download(local_scan_rules_dir, rules_files_url_path)
     rescue Exception => ge
-      puts "problem: #{ge.inspect}"
-      raise ge, "Can't get the list of rules files to download -> caused by: #{ge.message}", ge.backtrace
+      #raise ge, "Can't get the list of rules files to download -> caused by: #{ge.message}", ge.backtrace
+      raise ge
       # either the server failed to respond or there was an issue on the client side or internet connection to the server
     end
 
@@ -224,7 +224,7 @@ class ScanRulesUpdater
     rules_files_url_path = ScanRulesUpdater.scrub_url_path(rules_files_url_path)
     response_body = http_get_file(@base_url + rules_files_url_path)    
     unless response_body.include?('rules-files')
-      raise "Unable to get rules files info from service at url '#{@base_url + rules_files_url_path}'"
+      raise "Discovery was unable to update scan rules from '#{@base_url + rules_files_url_path}'"
     end
 
     # grab the paths, versions, and md5's of rules files to download from the XML
