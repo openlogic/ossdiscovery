@@ -123706,6 +123706,7 @@ webk;webk;none;none
 webkalk;webkalk;none;none
 webkeepass;webkeepass;java,javascript;none
 webkey-x;webkey-x;java,jsp;none
+webkit;webkit;c++,objective c;none
 webkit-erp;webkit-erp;php;none
 webkit-project;webkit-project;php;none
 webkitjava;webkitjava;c++,java,objective c;none
