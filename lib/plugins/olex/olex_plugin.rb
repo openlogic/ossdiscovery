@@ -303,10 +303,10 @@ class OlexPlugin
     end
 
     template = %{START COMPONENT
-NAME= "OSSDiscovery OLEX Application Scan MIF"
+NAME= "OSSDiscovery OLEX <%= scandata.client_version[14..-1] %> Application Scan MIF"
   START GROUP
     NAME = "OPEN_SOURCE"
-    CLASS = "OSSDISCOVERY|OPEN_SOURCE|<%= scandata.client_version[14..-1] %>"
+    CLASS = "DMTF|OPEN_SOURCE|1.0"
     START ATTRIBUTE
       NAME = "Package_Id"
       ID = 1
@@ -336,7 +336,7 @@ NAME= "OSSDiscovery OLEX Application Scan MIF"
   START TABLE
     NAME = "OPEN_SOURCE"
     ID = 1
-    CLASS = "OSSDISCOVERY|OPEN_SOURCE|<%= scandata.client_version %>"
+    CLASS = "DMTF|OPEN_SOURCE|1.0"
 % if packages.length > 0
 %   packages.sort.each do |package|
 %     package.version.gsub!(" ", "")
