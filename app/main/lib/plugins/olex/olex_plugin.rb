@@ -268,7 +268,7 @@ class OlexPlugin
       %       package.version.chomp!                 # strip any carriage return from version string
       %     end
       %     package.version.tr!("\0", "")
-          <%= package.name %>,<%= package.version %>,<%= package.found_at %>
+          <%= package.name %>,<%= package.version %>,<%= package.found_at %>,<%= package.file_name %>
       %   end
       % end
     }
