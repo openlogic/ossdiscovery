@@ -259,7 +259,7 @@ class OlexPlugin
       group_code:              <%= @group_code %>
       universal_rules_md5:     <%= scandata.universal_rules_md5 %>
       universal_rules_version: <%= scandata.universal_rules_version %>
-      package,version,location
+      package,version,location,file_name
       % if packages.length > 0
       %   packages.sort.each do |package|
       %     package.version.gsub!(" ", "")
