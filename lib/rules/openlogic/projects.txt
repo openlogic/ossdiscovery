@@ -725,7 +725,7 @@ acechatserver;acechatserver;c++;none
 acecms;acecms;php;none
 acecombat3;acecombat3;none;none
 acegi-ext;acegi-ext;java;none
-acegi-security;acegi-security,acegi-security-cas,acegi-security-catalina,acegi-security-catalina-common,acegi-security-catalina-server,acegi-security-jboss,acegi-security-jboss-lib,acegi-security-jetty,acegi-security-jetty-ext,acegi-security-resin,acegi-security-resin-lib,acegi-security-taglib,acegi-security-tiger;java;org.acegisecurity
+acegi-security;acegi-security,acegi-security-doc,acegi-security-domain,acegi-security-adapters,acegi-security-cas,acegi-security-catalina,acegi-security-catalina-common,acegi-security-catalina-server,acegi-security-jboss,acegi-security-jboss-lib,acegi-security-jetty,acegi-security-jetty-ext,acegi-security-parent,acegi-security-resin,acegi-security-resin-lib,acegi-security-samples-contacts,acegi-security-samples,acegi-security-samples-tutorial,acegi-security-sandbox,acegi-security-taglib,acegi-security-tiger,acegi-security-webwork;java;org.acegisecurity
 acegi-test;acegi-test;java;none
 acegisamples;acegisamples;java;none
 acegisecurity;acegisecurity;java;none
@@ -884,6 +884,7 @@ acrash;acrash;c;none
 acre;acre;c;none
 acrilyc;acrilyc;c++;none
 acripper;acripper;c,unix shell;none
+acrobat;acrobat;java;com.adobe.acrobat
 acrobatreader;acrobatreader,acrobat;none;none
 acrodistlsrv;acrodistlsrv;none;none
 acroformtool;acroformtool;c;none
@@ -975,7 +976,7 @@ activemap;activemap;none;none
 activemdb;activemdb;none;none
 activemerchant;activemerchant;none;none
 activemon;activemon;perl;none
-activemq;activemq,activemq-core,apache-activemq,apache-activemq-core,jakarta-activemq;java;org.apache.activemq
+activemq;activemq,activemq-all,activemq-book,activemq-broker,activemq-camel,activemq-core,activemq-fileserver,activemq-jaas,activemq-jmdns,activemq-jpa-store,activemq-openwire-generator,activemq-optional,activemq-parent,activemq-pool,activemq-ra,activemq-rar,activemq-run,activemq-test-atomikos,activemq-tooling,activemq-web-console,activemq-web-demo,activemq-web,activemq-xmpp,activeio-core,activeio-parent,apache-activemq,apache-activemq-core,jakarta-activemq;java;org.apache.activemq
 activemsn;activemsn;delphi/kylix,object pascal;none
 activeperl;activeperl;none;none
 activepython;activepython;none;none
@@ -3896,6 +3897,7 @@ apache-authsympa;apache-authsympa;none;none
 apache-bench-helloworld;apache-bench-helloworld;none;none
 apache-centipaid;apache-centipaid;none;none
 apache-compile-howto;apache-compile-howto;none;none
+apache-directory;apache-directory,aciitemeditor;java;apache.directory.studio
 apache-filemanager;apache-filemanager;none;none
 apache-htaccess;apache-htaccess;perl;none
 apache-james;apache-james;java;org.apache.james
@@ -13930,6 +13932,7 @@ ceciliii;ceciliii;none;none
 cecontacttools;cecontacttools;c++;none
 ced;ced;c;none
 cedam;cedam;php;none
+cedarsoft-commons;cedarsoft-commons;java;com.cedarsoft.commons,eu.cedarsoft.commons
 cedar-backup;cedar-backup;python;none
 cedega;cedega;none;none
 cedet;cedet;lisp;none
@@ -27468,17 +27471,17 @@ eclipseplugin-amateras_struts;eclipseplugin-amateras_struts;none;none
 eclipseplugin-cdt;eclipseplugin-cdt;java;cbg.editor
 eclipseplugin-checkstyle;eclipseplugin-checkstyle;java;com.atlassw.tools.eclipse.checkstyle
 eclipseplugin-coloreditor;eclipseplugin-coloreditor;java;cbg.editor
-eclipseplugin-eclipse_birt;eclipseplugin-eclipse_birt;none;none
-eclipseplugin-eclipse_dtp;eclipseplugin-eclipse_dtp;none;none
-eclipseplugin-eclipse_emf;eclipseplugin-eclipse_emf;none;none
-eclipseplugin-eclipse_gef;eclipseplugin-eclipse_gef;none;none
-eclipseplugin-eclipse_gmf;eclipseplugin-eclipse_gmf;none;none
-eclipseplugin-eclipse_jem;eclipseplugin-eclipse_jem;none;none
-eclipseplugin-eclipse_mddi;eclipseplugin-eclipse_mddi;none;none
+eclipseplugin-eclipse_birt;eclipseplugin-eclipse_birt;java;none
+eclipseplugin-eclipse_dtp;eclipseplugin-eclipse_dtp;java;none
+eclipseplugin-eclipse_emf;eclipseplugin-eclipse_emf;java;none
+eclipseplugin-eclipse_gef;eclipseplugin-eclipse_gef;java;none
+eclipseplugin-eclipse_gmf;eclipseplugin-eclipse_gmf;java;org.eclipse.gmf,org.eclipse.gmf.runtime
+eclipseplugin-eclipse_jem;eclipseplugin-eclipse_jem;java;none
+eclipseplugin-eclipse_mddi;eclipseplugin-eclipse_mddi;java;none
 eclipseplugin-eclipse_stp;eclipseplugin-eclipse_stp;none;none
 eclipseplugin-eclipse_tools;eclipseplugin-eclipse_tools;java;org.eclipse
 eclipseplugin-eclipse_tptp;eclipseplugin-eclipse_tptp;java;org.eclipse.tptp.platform.execution
-eclipseplugin-eclipse_uml2;eclipseplugin-eclipse_uml2;java;net.sf.eclipsetidy
+eclipseplugin-eclipse_uml2;eclipseplugin-eclipse_uml2;java;net.sf.eclipsetidy,org.eclipse.uml2
 eclipseplugin-eclipsetidy;eclipseplugin-eclipsetidy;none;none
 eclipseplugin-epic;eclipseplugin-epic;none;none
 eclipseplugin-espell3;eclipseplugin-espell3;none;none
@@ -45601,7 +45604,7 @@ ibank;ibank;none;none
 ibaplayer;ibaplayer;c++;none
 ibargraph;ibargraph;none;none
 ibash;ibash;c,c++;none
-ibatis;ibatis;java;com.mydomain
+ibatis;ibatis;java;com.ibatis
 ibatisdb;ibatisdb;java;none
 ibatisjpetstore;ibatisjpetstore;java;none
 ibatisnet;ibatisnet;c#;none
@@ -76806,6 +76809,7 @@ nymm-genn;nymm-genn;c++;none
 nymproxy;nymproxy;python;none
 nymserv;nymserv;perl;none
 nyquist;nyquist;c,c++,lisp;none
+nyromodal;nyromodal,jquery.nyromodal;javascript;none
 nyx-irc;nyx-irc;c;none
 nyx-netmon;nyx-netmon;java;none
 nyxnetworkids;nyxnetworkids;java;none
@@ -80303,6 +80307,7 @@ orac;orac;c,euphoria;none
 oracaml;oracaml;c++,ocaml (objective caml);none
 oracdd;oracdd;fortran,python;none
 orace;orace;c#;none
+oracle;oracle,oracle0,oracle,orabase;c,c++;none
 oracle-enhanced;oracle-enhanced;ruby;none
 oracle-sdo;oracle-sdo;java,pl/sql;none
 oracle-sql;oracle-sql;c++;none
