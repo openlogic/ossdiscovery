@@ -56533,6 +56533,7 @@ keymouse;keymouse;c,c++;none
 keynote-newfeat;keynote-newfeat;delphi/kylix;none
 keynote;keynote;delphi/kylix;none
 keyos;keyos;assembly,c;none
+keypad;keypad,jquery.keypad;javascript;none
 keyplex;keyplex;c;none
 keypoint;keypoint;ruby;none
 keypress;keypress;perl,unix shell;none
@@ -120115,7 +120116,7 @@ valid_fields;valid_fields;none;none
 validate-bank;validate-bank;ruby;none
 validate-odt;validate-odt;java;none
 validate-ptbr;validate-ptbr;c;none
-validate;validate;php;none
+validate;validate,jquery.validate;javascript;none
 validateformjs;validateformjs;javascript;none
 validatephp;validatephp;php;none
 validaterequest;validaterequest;ruby;none
@@ -127210,7 +127211,7 @@ xbaydns;xbaydns;none;none
 xbb-code;xbb-code;php;none
 xbbtandem;xbbtandem;none;none
 xbcast;xbcast;c;none
-xbean;xbean;none;none
+xbean;xbean;java;none
 xbeans;xbeans;java;none
 xbeats;xbeats;c;none
 xbeedriver;xbeedriver;java;none
@@ -128314,7 +128315,7 @@ xmlautoindex;xmlautoindex;none;none
 xmlaxgen;xmlaxgen;java;none
 xmlb;xmlb;none;none
 xmlbase;xmlbase;standard ml;none
-xmlbeans;xmlbeans,apache-xmlbeans,jakarta-xmlbeans;none;org.apache.xmlbeans
+xmlbeans;xmlbeans,apache-xmlbeans,jakarta-xmlbeans;java;org.apache.xmlbeans
 xmlbeansplug;xmlbeansplug;java;none
 xmlbeansxx;xmlbeansxx;c++;none
 xmlbench;xmlbench;c,c++,java;none
