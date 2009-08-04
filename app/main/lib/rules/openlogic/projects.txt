@@ -21374,7 +21374,7 @@ db2mc;db2mc;javascript,php;none
 db2rails;db2rails;ruby;none
 db2tcl;db2tcl;c,tcl;none
 db2viewer;db2viewer;java;none
-db2xml;db2xml;java;org.w3c.dom
+db2xml;db2xml;java;db2xml
 db3xs;db3xs;c;none
 db4o;db4o;asp.net,c#,java,visual basic .net;none
 db4oboobrowser;db4oboobrowser;none;none
@@ -50618,7 +50618,7 @@ javaguard;javaguard;java;none
 javagui;javagui;java;none
 javahack;javahack;java;none
 javahacks;javahacks;c,java;none
-javahelp;javahelp;java;sunw.demo
+javahelp;javahelp,jhall;java;sunw.demo
 javahelpcenter;javahelpcenter;java;none
 javahexeditor;javahexeditor;java;none
 javahii;javahii;java;none
@@ -52434,7 +52434,6 @@ jh2n;jh2n;none;none
 jh9n;jh9n;java,python;none
 jhaapi;jhaapi;java;none
 jhaipc;jhaipc;none;none
-jhall;jhall;none;none
 jhamachi;jhamachi;none;none
 jhandballmoves;jhandballmoves;java;none
 jhashcalc;jhashcalc;java;none
@@ -125887,7 +125886,6 @@ woodit;woodit;none;none
 woodjef;woodjef;none;none
 woodpecker;woodpecker;java;none
 woodratreader;woodratreader;c++;none
-woodstox;woodstox;java;com.ctc.wstx
 woodsy;woodsy;none;none
 woodward;woodward;java;none
 woody;woody;python;none
@@ -126476,7 +126474,7 @@ wstats;wstats;c;none
 wstbeta;wstbeta;visual basic;none
 wstester;wstester;java;none
 wstframework;wstframework;javascript;none
-wstx-asl;wstx-asl;none;none
+woodstox;woodstox,wstx,wstx-asl;java;com.ctc.wstx
 wsuexplorer;wsuexplorer;java;none
 wsunewsmanager;wsunewsmanager;none;none
 wsuqt;wsuqt;c,c++,php,javascript;none
