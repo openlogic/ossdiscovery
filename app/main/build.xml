@@ -27,10 +27,11 @@
       <zipfileset src="vendor/commons-httpclient-3.1.jar" excludes="**/LICENSE.txt,**/NOTICE.txt"/>
     </jarjar>
 
-    <signjar jar="jars/OLDiscovery.jar"
+<!--    <signjar jar="jars/OLDiscovery.jar"
              alias="OpenLogic"
              storepass="openlogic1!"
              keystore="openlogic-keystore"/>
+             -->
 
     <exec dir="." executable="pack200" failonerror="true">
       <arg line="--strip-debug"/>
