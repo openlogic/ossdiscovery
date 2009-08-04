@@ -25,17 +25,11 @@
 #
 #--------------------------------------------------------------------------------------------------
 
+require 'plugins/olex/conf/olex_config'
 
-$:.unshift File.dirname(__FILE__)
-require 'conf/olex_config'
+if OlexConfig.olex_enabled
+  require 'plugins/olex/olex_plugin'
 
-if ( OlexConfig.olex_enabled )
-   require 'olex_plugin'
-
-   OLEX_PLUGIN_VERSION = "1.1"
-   OLEX_PLUGIN_VERSION_KEY =  "30the24special47secret32".to_i(36).to_s(16)
-
-   # create the plugin and register it with the ossdiscovery plugin framework
-   olex_plugin = OlexPlugin.new
-   @plugins_list["Olex"] = olex_plugin  # registers the plugin
+  OLEX_PLUGIN_VERSION = "1.1"
+  OLEX_PLUGIN_VERSION_KEY =  "30the24special47secret32".to_i(36).to_s(16)
 end

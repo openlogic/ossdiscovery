@@ -45,7 +45,9 @@ module Config
   end
   
   def Config.load()
-    raw_configs = YAML::load_file(File.join(File.dirname(__FILE__), 'config.yml'))
+    #raw_configs = YAML::load_file(File.join(File.dirname(__FILE__), 'config.yml'))
+    contents = Utils.load_openlogic_config_file('config.yml')
+    raw_configs = YAML::load(contents)
     @@configs = Hash.new
 
     raw_configs.each_pair do |key, value| 

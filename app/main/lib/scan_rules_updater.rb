@@ -32,7 +32,7 @@ require 'fileutils'
 require 'open-uri'
 require 'set'
 require 'net/http'
-require File.join(File.dirname(__FILE__), 'conf', 'config')
+require 'conf/config'
 
 begin
   # not all ruby installs and builds contain openssl, so degrade

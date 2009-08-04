@@ -29,7 +29,6 @@
 #
 #  cliutils.rb contains methods to support CLI command processing and output
 #
-
 require 'scan_rules_updater'
 
 require 'base64'   # used for java proxy authentication properties
@@ -48,10 +47,10 @@ MAX_GEO_NUM = 195
 
 begin
   # if we're running under JRuby use the apache httpclient for https posts
-  require 'java'
-  require "#{ENV['OSSDISCOVERY_HOME']}/lib/commons-codec-1.3.jar"
-  require "#{ENV['OSSDISCOVERY_HOME']}/lib/commons-httpclient-3.1.jar"
-  require "#{ENV['OSSDISCOVERY_HOME']}/lib/commons-logging-1.1.jar"
+  #require 'java'
+  #require "#{ENV['OSSDISCOVERY_HOME']}/lib/commons-codec-1.3.jar"
+  #require "#{ENV['OSSDISCOVERY_HOME']}/lib/commons-httpclient-3.1.jar"
+  #require "#{ENV['OSSDISCOVERY_HOME']}/lib/commons-logging-1.1.jar"
 
   JAVA_HTTPS_AVAILABLE = true
 
@@ -503,13 +502,14 @@ end
   this code is responsible for generating a unique and static machine id
 =end
 def make_machine_id
-
   # allow plugins to supply machine id instead of the default - first plugin to have make_machine_id wins
-  @plugins_list.each do | plugin_name, aPlugin |
-    if (aPlugin.respond_to?( :make_machine_id, false ) )
-      return aPlugin.make_machine_id
-    end
-  end
+  #@plugins_list.each do | plugin_name, aPlugin |
+  #  puts "seeing if #{plugin_name} defines :make_machine_id"
+  #  if aPlugin.respond_to?(:make_machine_id)
+  #    puts "#{plugin_name} does define :make_machine_id - calling it"
+  #    return aPlugin.make_machine_id
+  #  end
+  #end
 
   # otherwise, no plugin supplies machine_id, so do the normal machine id generation
   # for non-windows machines, everything else is u*ix like and should support uname
@@ -529,7 +529,6 @@ end
   return a hashed machine id composed of only hostname, IP address, and distro string
 =end
 def make_windows_machine_id
-
   hostname = Socket.gethostname
   ipaddr = IPSocket.getaddress(hostname)
 

@@ -45,7 +45,7 @@
 # The default directory to scan is whatever the path is up to the first \ or / in the
 # current working directory.  This results in / for unix-based environments and c:\
 # for windows (or whatever drive discovery is running from)
-directory_to_scan: <% ENV['OSSDISCOVERY_HOME'].match(/^.*?[\\\/]/)[0] %>
+#directory_to_scan: <% ENV['OSSDISCOVERY_HOME'].match(/^.*?[\\\/]/)[0] %>
 
 #--------------------------------------------------------------------------------------
 # which default filter set to use
@@ -109,7 +109,7 @@ no_class_files: false
 class_file_archive_extensions: <% [ '.jar', '.war', '.ear' ] %>
 
 #--------------------------------------------------------------------------------------
-# Set to true to open source files to find traces of open source usage.
+# Set to true to look in source files to find traces of open source usage.
 examine_source_files: false
 
 #--------------------------------------------------------------------------------------
@@ -118,6 +118,15 @@ examine_source_files: false
 # can be in this list because the discovery technique used can look inside them
 # similar to how it looks inside a .java or .groovy file.
 source_file_extensions: <% [ '.java', '.groovy', '.class' ] %>
+
+
+#--------------------------------------------------------------------------------------
+# Set to true to look inside windows binary files to find traces of open source usage.
+examine_windows_binary_files: false
+
+#--------------------------------------------------------------------------------------
+# Which file extensions signify a windows binary file.
+windows_binary_file_extensions: <% [ '.exe', '.dll' ] %>
 
 #--------------------------------------------------------------------------------------
 # When a scan is performed on a production machine, the person performing the scan does
@@ -137,11 +146,11 @@ throttle_seconds_to_pause: 2.5
 ################################################################################
 # Logging properties
 # Arg that will be passed to Logger.new().  From the rdoc: This is a filename (String) or IO object (typically STDOUT, STDERR, or an open file).
-log_device: <% File.expand_path( File.join( ENV['OSSDISCOVERY_HOME'], 'log', 'discovery.log')) %>
+#log_device: <% File.expand_path( File.join( ENV['OSSDISCOVERY_HOME'], 'log', 'discovery.log')) %>
 
 # Valid options are: FATAL, ERROR, WARN, INFO, DEBUG - 'WARN' is the recommended setting for
 # productions runs, it shouldn't give you too much output, but you also won't miss importatnt warnings.
-log_level: <% Logger::INFO %>
+#log_level: <% Logger::INFO %>
 ################################################################################
 
 
@@ -194,8 +203,8 @@ results: STDOUT
 
 # where to pick up the default scan rules
 #  TODO - change "openlogic" to "census" to make this more generic
-rules_openlogic: <% File.expand_path(File.join( ENV['OSSDISCOVERY_HOME'], 'lib','rules', 'openlogic')) %>
-rules_drop_ins: <% File.expand_path(File.join( ENV['OSSDISCOVERY_HOME'], 'lib','rules', 'drop_ins')) %>
+#rules_openlogic: <% File.expand_path(File.join( ENV['OSSDISCOVERY_HOME'], 'lib','rules', 'openlogic')) %>
+#rules_drop_ins: <% File.expand_path(File.join( ENV['OSSDISCOVERY_HOME'], 'lib','rules', 'drop_ins')) %>
 
 rules_dirs: <% ['rules_openlogic', 'rules_drop_ins'] %>
 

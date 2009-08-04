@@ -46,8 +46,9 @@ require 'zip/zipfilesystem'
 require 'zip/tempfile_bugfixed'
 require 'class_file_archive_discoverer'
 require 'source_file_discoverer'
+require 'windows_binary_file_discoverer'
 
-require File.join(File.dirname(__FILE__), 'conf', 'config')
+require 'conf/config'
 
 # how many times we try to create a temporary directory for storing archive
 # contents until we give up
@@ -73,6 +74,7 @@ class Walker
   attr_accessor :archive_extensions
   attr_accessor :class_file_archive_extensions, :no_class_files, :always_open_class_file_archives
   attr_accessor :examine_source_files, :source_file_extensions, :source_files_found_ct
+  attr_accessor :examine_windows_binary_files, :windows_binary_file_extensions, :windows_binary_files_found_ct
   attr_accessor :unopenable_archive_ct
   attr_accessor :list_exclusions, :list_files, :show_permission_denied, :starttime, :last_verbose_report_time
   attr_accessor :should_show_progress_report
@@ -127,6 +129,7 @@ class Walker
     @class_file_archives_found_ct = 0
     @unopenable_archive_ct = 0
     @source_files_found_ct = 0
+    @windows_binary_files_found_ct = 0
     @show_progress = false
     @show_permission_denied = false
     @show_verbose = false
@@ -301,6 +304,14 @@ class Walker
               examine_source_file(fileordir, archive_parents)
             end
 
+            # we didn't recognize the file, so check to see if it's an exe or a
+            # dll, if we're running on Windows, and the exe or dll makes import
+            # references to (other) DLL's of interest
+            if !discovered && @examine_windows_binary_files && is_windows_binary_file?(file_string)
+              @windows_binary_files_found_ct += 1
+              examine_windows_binary_file(fileordir, archive_parents)
+            end
+
             # we didn't recognize the file, so check to see if it might contain
             # class files we recognize
             if ((!discovered && !@no_class_files) || @always_open_class_file_archives) && is_class_file_archive?(file_string)
@@ -448,6 +459,11 @@ class Walker
   # Return true if the given file name ends with ".class"
   def is_class_file?(file_name)
     file_name.ends_with?(".class")
+  end
+  
+  # Return true if the given file name ends with ".exe" or ".dll"
+  def is_windows_binary_file?(file_name)
+    @windows_binary_file_extensions.any? { |ext| ends_with?(file_name, ext) }
   end
 
   # Return true if the given source string ends with the given target string
@@ -643,6 +659,13 @@ class Walker
   # statements or do other Java-specific discovery.
   def examine_source_file(path, archive_parents = [])
     SourceFileDiscoverer.discover(path, get_new_parents_for_container(path, archive_parents))
+  end
+
+  # Look inside the given Windows binary file to see if we can recognize
+  # anything inside of it.  For example, see if we detect a reference to
+  # webkit.dll.
+  def examine_windows_binary_file(path, archive_parents = [])
+    WindowsBinaryFileDiscoverer.discover(path, get_new_parents_for_container(path, archive_parents))
   end
 
 

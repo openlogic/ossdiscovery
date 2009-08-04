@@ -37,7 +37,7 @@
 
 require 'set'
 
-require File.join(File.dirname(__FILE__), 'conf', 'config')
+require 'conf/config'
 
 class Package
   VERSION_UNKNOWN = "unknown"
@@ -88,6 +88,10 @@ class Package
 #
 #    return val
 #  end
+
+  def to_s
+    "#{name} (#{version}): #{found_at}/#{file_name}"
+  end
   
   def eql?(other)
     if ((self.==(other)) && (self.class == other.class)) then

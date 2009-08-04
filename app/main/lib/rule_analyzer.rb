@@ -71,6 +71,7 @@ class RuleAnalyzer
     # Also merge in anything found in class file archives or source files
     allpackages_with_unknowns.merge(ClassFileArchiveDiscoverer.discovered_packages)
     allpackages_with_unknowns.merge(SourceFileDiscoverer.discovered_packages)
+    allpackages_with_unknowns.merge(WindowsBinaryFileDiscoverer.discovered_packages)
     
     # We have to go through a similar step here since we allow multiple 'project-rule' definitions.  
     # All unnecessary 'unknown' version identifications will have been removed within the context of one
@@ -91,7 +92,9 @@ class RuleAnalyzer
   
   def self.remove_our_dogfood(allpackages)    
     return nil if allpackages.nil?    
-    app_home = normalize_dir(ENV['OSSDISCOVERY_HOME'])
+    # Rod - 4/23/2009 - our dogfood is now delivered in just one jar file
+    #app_home = normalize_dir(ENV['OSSDISCOVERY_HOME'])
+    app_home = "OLDiscovery.jar"
     
     running_on_windows = false
     if (Utils.major_platform.include?('windows')) then # major_platform lives in cliutils

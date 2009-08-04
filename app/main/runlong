@@ -1,2 +1,2 @@
 #!/bin/bash
-ruby ../test/long_running/tslong_test_all.rb
+ruby test/long_running/tslong_test_all.rb

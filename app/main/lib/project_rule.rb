@@ -30,7 +30,7 @@
 require 'set'
 
 require 'package'
-require File.join(File.dirname(__FILE__), 'conf', 'config')
+require 'conf/config'
 
 class ProjectRule
   attr_accessor :name, :from, :operating_systems, :rulesets, :eval_rule, :desc

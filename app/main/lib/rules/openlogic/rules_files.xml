@@ -1,0 +1,7 @@
+<rules-files>
+  <file path="/project-rules.xml"        version="2009-04-14T13:22:36" md5="f852cfe5a71024e4410c07ee19e3f66b"/>
+  <file path="/project-rules-mvngen.xml" version="2009-04-14T13:22:36" md5="10f536146d3c26fbae8e4d1b24b739de"/>
+  <file path="/projects.txt"             version="2009-04-14T13:22:36" md5="a8d7bd03bf55f60d06ccb7bc97e8c3dd"/>
+  <file path="/languages.yml"            version="2009-04-14T13:22:36" md5="3bf2046522e00c98469eea6455771551"/>
+  <file path="/special-projects.yml"     version="2009-04-14T13:22:36" md5="83118613b6cf05f7389b3be10297f8a1"/>
+</rules-files>

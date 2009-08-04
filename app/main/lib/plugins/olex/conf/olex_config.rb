@@ -26,6 +26,7 @@
 #--------------------------------------------------------------------------------------------------
 
 require 'yaml'
+require 'utils'
 
 class OlexConfig
   def self.[](key)
@@ -38,7 +39,9 @@ class OlexConfig
   end
   
   def self.load
-    @@configs = YAML::load_file(File.join(File.dirname(__FILE__), 'olex_config.yml'))
+    #@@configs = YAML::load_file(File.join(File.dirname(__FILE__), 'olex_config.yml'))
+    @@configs = YAML::load(Utils.load_openlogic_olex_plugin_config_file('olex_config.yml'))
+
     override_discovery_defaults
     @@configs
   end

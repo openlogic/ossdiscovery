@@ -4,7 +4,7 @@ require 'rake/packagetask'
 namespace :release do
 
   PACKAGE_NAME= ( ENV["NAME"] || "ossdiscovery" ) + "-" + (ENV['plugin'].nil? ? "error" : ENV['plugin'])
-  PACKAGE_VERSION=ENV["VERSION"] || "2.3.1"
+  PACKAGE_VERSION=ENV["VERSION"] || "3.0.0"
 
 
   def prep_dir
@@ -20,9 +20,10 @@ namespace :release do
     puts "Cleaning up discovery.log files"
     `find . -name "discovery.log" -exec rm {} \\;`
 
-    # if inventory, then dynamically enable the plugin - by default it's disabled because census test cases
-    # are the ones active in CCrb and consequently, it tries to load both plugins which have colliding command  line parameters
-    # so inventory is disabled so cli params don't collide.  
+    # if inventory, then dynamically enable the plugin - by default it's
+    # disabled because census test cases are the ones active in CCrb and
+    # consequently, it tries to load both plugins which have colliding command
+    # line parameters so inventory is disabled so cli params don't collide.
 
     if ( ENV['plugin'] == "inventory")
       inventory_yml = File.open("lib/plugins/inventory/conf/inventory_config.yml").read
@@ -49,13 +50,13 @@ namespace :release do
 
   def cleanup
     if ENV['plugin'] == "inventory"
-       # revert the temporary enabling of the inventory plugin 
-       puts "reverting inventory_config.yml"
-       `svn revert lib/plugins/inventory/conf/inventory_config.yml`
+      # revert the temporary enabling of the inventory plugin
+      puts "reverting inventory_config.yml"
+      `svn revert lib/plugins/inventory/conf/inventory_config.yml`
     elsif ENV['plugin'] == "olex"
-       # revert the temporary enabling of the olex plugin 
-       puts "reverting olex_config.yml"
-       `svn revert lib/plugins/olex/conf/olex_config.yml`
+      # revert the temporary enabling of the olex plugin
+      puts "reverting olex_config.yml"
+      `svn revert lib/plugins/olex/conf/olex_config.yml`
     end
   end
 
@@ -121,8 +122,8 @@ namespace :release do
       cp "discovery_jruby.bat", "pkg/#{jruby_package_filename}/discovery.bat"
       require 'find'
 
-      # Remove all .svn directories.  There's no way to prevent cp_r from copying them,
-      # but we don't want them in the distributions
+      # Remove all .svn directories.  There's no way to prevent cp_r from
+      # copying them, but we don't want them in the distributions
       Find.find("pkg/#{jruby_package_filename}") { |path| rm_rf path if File.directory?(path) and File.basename(path) == ".svn" }
 
     end
@@ -178,8 +179,8 @@ namespace :release do
       cp "discovery_jre_windows.bat", "#{dest_dir}/discovery.bat"
       require 'find'
 
-      # Remove all .svn directories.  There's no way to prevent cp_r from copying them,
-      # but we don't want them in the distributions
+      # Remove all .svn directories.  There's no way to prevent cp_r from
+      # copying them, but we don't want them in the distributions
       Find.find("#{dest_dir}") { |path| rm_rf path if File.directory?(path) and File.basename(path) == ".svn" }
 
     end
@@ -248,8 +249,8 @@ namespace :release do
       cp "discovery_jre_linux", "#{dest_dir}/discovery"
       require 'find'
 
-      # Remove all .svn directories.  There's no way to prevent cp_r from copying them,
-      # but we don't want them in the distributions
+      # Remove all .svn directories.  There's no way to prevent cp_r from
+      # copying them, but we don't want them in the distributions
       Find.find("#{dest_dir}") { |path| rm_rf path if File.directory?(path) and File.basename(path) == ".svn" }
 
     end
@@ -304,8 +305,8 @@ namespace :release do
       cp "discovery_jre_solaris", "#{dest_dir}/discovery"
       require 'find'
 
-      # Remove all .svn directories.  There's no way to prevent cp_r from copying them,
-      # but we don't want them in the distributions
+      # Remove all .svn directories.  There's no way to prevent cp_r from
+      # copying them, but we don't want them in the distributions
       Find.find("#{dest_dir}") { |path| rm_rf path if File.directory?(path) and File.basename(path) == ".svn" }
 
     end
@@ -332,6 +333,75 @@ namespace :release do
 
 end
 
+# for packaging up stuff for Java Web Start delivery
+namespace :webstart do
 
+  JRUBY_VERSION = "1.2.0"
 
+  def jruby
+    "jruby/bin/jruby"
+  end
 
+  def jrubyc
+    "jruby/bin/jrubyc"
+  end
+
+  task :default => "webstart:dist:build"
+
+  desc "Run the application from the filesystem"
+  task :run do
+    sh "#{jruby} lib/application_bootstrap.rb"
+  end
+
+  namespace :java do
+    output_directory = "classes"
+
+    desc "Compile java executable stub class"
+    task :stub => "webstart:java:clean" do
+      mkdir_p output_directory
+      sh %+javac -target 1.6 -d #{output_directory} -classpath vendor/jruby-complete-#{JRUBY_VERSION}.jar lib/Main.java+
+    end
+
+    desc "Compile the Ruby files into class files"
+    task :rb => :clean do
+      prefix = "com.openlogic.discovery"
+      #sh %+#{jruby} #{jrubyc} -p #{prefix} -t #{output_directory} lib+
+      sh %+#{jruby} #{jrubyc} -t #{output_directory} lib+
+    end
+
+    desc "Compile all source files into class files"
+    task :compile => ["webstart:java:stub", "webstart:java:rb"]
+
+    task :clean do
+      rm_rf output_directory
+    end
+  end
+
+  namespace :dist do
+    desc "Build the deliverable jar"
+    task :build => ['webstart:dist:clean', 'webstart:java:compile'] do
+      build_cmd = "ant dist"
+      if PLATFORM =~ /mswin/
+        sh(build_cmd  + '&') # makes windows wait until build is done
+      else
+        sh build_cmd
+      end
+    end
+
+    desc "Run the application from the deliverable jar"
+    task :run => 'webstart:dist:build' do
+      path = ENV['path'] || "~/dev/discovery_baselines/dealManagement"
+      system "java -Xms256m -Xmx256m -jar jars/OLDiscovery.jar -- --path #{path}"
+    end
+
+    desc "Run the application from the deliverable jar without building first"
+    task :only_run do
+      path = ENV['path'] || "~/dev/discovery_baselines/dealManagement"
+      system "java -Xms256m -Xmx256m -jar jars/OLDiscovery.jar -- --path #{path}"
+    end
+
+    task :clean do
+      rm_rf "jars"
+    end
+  end
+end

@@ -214,7 +214,7 @@ class InventoryPlugin
     dumps a simple ASCII text report to the console
 =end
 
-  def report( destination, packages, scandata  )
+  def report( destination, packages, scandata, rollup_report_destination = nil )
 
     io = nil
     if ( destination == STDOUT) then
@@ -303,7 +303,7 @@ class InventoryPlugin
 
   # this is a callback from the framework after reports have been built to give the plugin an opportunity to send the report if it wants to
   # it's only called if the --deliver-results option is active in the framework
-  def send_results()
+  def send_results(results_file_name = nil)
     return deliver_results( self, nil, nil )
   end
 

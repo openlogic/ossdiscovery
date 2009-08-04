@@ -29,9 +29,8 @@
 #
 
 require 'digest/md5' 
-$:.unshift File.join(File.dirname(__FILE__), '..')
 require 'matchrules/filename_match_rule'
-require File.join(File.dirname(__FILE__), '..', 'conf', 'config')
+require 'conf/config'
 
 class MD5MatchRule < FilenameMatchRule
   

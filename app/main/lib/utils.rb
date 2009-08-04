@@ -3,6 +3,8 @@ require 'digest/md5'
 
 module Utils
   module_function
+
+  # show a number like 131165 as 131,165
   def number_with_delimiter(number, delimiter=",", separator=".")
     begin
       parts = number.to_s.split('.')
@@ -13,6 +15,8 @@ module Utils
     end
   end
 
+  # show elapsed time like "almost a minute" or "about 2 hours" instead of just
+  # a large number of seconds
   def elapsed_time(from_time, include_seconds = false)
     from_time = from_time.to_time if from_time.respond_to?(:to_time)
     to_time = Time.new
@@ -102,8 +106,46 @@ module Utils
   end
 
   # compute a checksum for the given string
-  def get_checksum(response_body)
-    Digest::MD5.hexdigest(response_body)
+  def get_checksum(text)
+    Digest::MD5.hexdigest(text)
+  end
+
+  # Return the contents of the given rules file in a string
+  def load_openlogic_rules_file(file_name)
+    load_file_in_jar("rules/openlogic/#{file_name}")
+  end
+
+  # Return the contents of the given config file in a string
+  def load_openlogic_config_file(file_name)
+    load_file_in_jar("conf/#{file_name}")
+  end
+
+  # Return the contents of the given olex plugin config file in a string
+  def load_openlogic_olex_plugin_config_file(file_name)
+    load_file_in_jar("plugins/olex/conf/#{file_name}")
+  end
+
+  # Return the contents of the given file path that represents a file inside the
+  # jar that contains our application, or nil if the file could not be found or
+  # loaded for some reason.
+  def load_file_in_jar(path)
+    begin
+      # Use some ugly JRuby syntax to grab a reference to our Main class, which
+      # is written in Java, so we can then get it's "java_class", which tells
+      # JRuby that we really want access to the underlying Java and not just a
+      # Ruby-esque wrapper.  From there we can get to the Java class loader that
+      # knows how to find stuff in the jar in which we live.  That class loader
+      # can then give us a stream to the file we want in the jar.
+      is = Java::lib.Main.new.java_class.class_loader.get_resource_as_stream(path)
+      if is
+        read_java_input_stream(is)
+      else
+        nil
+      end
+    rescue Exception, java.io.IOException => e
+      puts "problem loading #{path} from jar: #{e.inspect}"
+      nil
+    end
   end
 
 end

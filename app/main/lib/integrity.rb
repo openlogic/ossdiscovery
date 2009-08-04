@@ -1,4 +1,4 @@
-require 'hmac/hmac-sha1'
+require 'hmac/hmacsha1'
 
 class Integrity
 

@@ -28,9 +28,8 @@
 # --------------------------------------------------------------------------------------------------
 #
 
-$:.unshift File.join(File.dirname(__FILE__), '..')
 require 'matchrules/filename_match_rule'
-require File.join(File.dirname(__FILE__), '..', 'conf', 'config')
+require 'conf/config'
 
 require 'set'
 

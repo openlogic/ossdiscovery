@@ -1,2 +1,2 @@
 #!/bin/bash
-ruby ../test/ts_test_unit.rb
+ruby test/ts_test_unit.rb
