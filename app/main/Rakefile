@@ -390,13 +390,13 @@ namespace :webstart do
 
     desc "Run the application from the deliverable jar"
     task :run => 'webstart:dist:build' do
-      path = ENV['path'] || "~/dev/discovery_baselines/dealManagement"
-      system "java -Xms256m -Xmx256m -jar jars/OLDiscovery.jar -- --path #{path}"
+      #path = ENV['path'] || "~/dev/discovery_baselines/testapp"
+      #system "java -Xms256m -Xmx256m -jar jars/OLDiscovery.jar -- --path #{path}"
     end
 
     desc "Run the application from the deliverable jar without building first"
     task :only_run do
-      #path = ENV['path'] || "~/dev/discovery_baselines/dealManagement"
+      #path = ENV['path'] || "~/dev/discovery_baselines/testapp"
       #system "java -Xms256m -Xmx256m -jar jars/OLDiscovery.jar -- --path #{path}"
       system "java -Xms256m -Xmx256m -jar jars/OLDiscovery.jar"
     end
