@@ -67,7 +67,7 @@
 # on the project web site:  http://www.ossdiscovery.org
 #
 
-@discovery_version = "2.3.1"
+@discovery_version = "2.3.2"
 
 print "OSS Discovery #{@discovery_version}: Initializing runtime environment..."
 

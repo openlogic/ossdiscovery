@@ -468,7 +468,7 @@ class ScanRulesUpdater
     restore_list = backup_files_list - current_rules_list
 
     restore_list.each { |file_name|
-      puts "Copying #{dir_with_rollback_content}/#{file_name} to #{rules_dir}"
+      #puts "Copying #{dir_with_rollback_content}/#{file_name} to #{rules_dir}"
       FileUtils.mv("#{dir_with_rollback_content}/#{file_name}", "#{rules_dir}")}
   end
 
