@@ -1,0 +1,44 @@
+<project-rules>
+
+	<project-rule name="junit" from="wild" os="windows,linux">
+		<eval expression="justfilenames" speed="1" confidence='95'/>
+		<eval expression="junit_md5" speed="2" confidence='100'/>
+		
+		<match-rules name="justfilenames">
+			<result expression="post4 OR series3 OR ancient" />
+			<!-- starting at JUnit 4, the project's jars contained the version number in the jar name -->
+			<match-rule name="post4" type="filename" filename="junit-([0-9]\.[0-9])\.jar" />
+			<!-- lots of junit 3 versions like this -->
+			<match-rule name="series3" type="filename" filename="junit.jar" />
+			<!-- some junit jars, back in the 2 days, were junit2.jar -->
+			<match-rule name="ancient" type="filename" filename="junit([0-9])\.jar" />
+		</match-rules>
+
+		<match-rules name="junit_md5">
+			<!-- would be nice to do an OR-ALL as an expression instead of explicitly OR'ing -->
+			<result expression="ju2 OR ju3 OR ju3.2 OR ju3.4 OR ju3.5 OR ju3.6 OR ju3.7 OR ju3.8 OR ju3.8.1 OR ju3.8.2 OR ju4.0 OR ju4.1 OR ju4.2 OR ju4.3.1 OR ju4.4" /> 
+			<match-rule name="ju2" type="MD5" filename="(.+?).jar" version="2" md5sum="06e503d7e6457e7c3470e65b36a1529f" />
+			<match-rule name="ju3" type="MD5" filename="(.+?).jar" version="3" md5sum="6cc8728e66815a4e136ec17fa703c424" />
+			<match-rule name="ju3.2" type="MD5" filename="(.+?).jar" version="3.2" md5sum="d5171fc6c7860889b8224b9f822fb891" />
+			<match-rule name="ju3.4" type="MD5" filename="(.+?).jar" version="3.4" md5sum="04023ede5a649ec9a61596e046f44ba0" />			
+			<match-rule name="ju3.5" type="MD5" filename="(.+?).jar" version="3.5" md5sum="12702a79719214df90e7c468ee0bd6d7" />
+			<match-rule name="ju3.6" type="MD5" filename="(.+?).jar" version="3.6" md5sum="c6e6a3c947575b4c5980ab782d7c2a87" />
+			<match-rule name="ju3.7" type="MD5" filename="(.+?).jar" version="3.7" md5sum="96079ce2323b1e68431fdfd20efa6e2d" />
+			<match-rule name="ju3.8" type="MD5" filename="(.+?).jar" version="3.8" md5sum="8f978abc1bcd0bd48402883d7f7e228a" />
+			<match-rule name="ju3.8.1" type="MD5" filename="(.+?).jar" version="3.8.1" md5sum="1f40fb782a4f2cf78f161d32670f7a3a" />
+			<match-rule name="ju3.8.2" type="MD5" filename="(.+?).jar" version="3.8.2" md5sum="28e7eb9eeefe31a657c68755bfccc541" />
+			<match-rule name="ju4.0" type="MD5" filename="(.+?).jar" version="4.0" md5sum="9bf6686f948a5bb4fbe951d5578e19c3" />
+			<match-rule name="ju4.1" type="MD5" filename="(.+?).jar" version="4.1" md5sum="3aa45be8fd3f5ae8c69b73959a7fa57c" />
+			<match-rule name="ju4.2" type="MD5" filename="(.+?).jar" version="4.2" md5sum="b5a27973a2c87d161b4c2729b64ecf66" />
+			<match-rule name="ju4.3.1" type="MD5" filename="(.+?).jar" version="4.3.1" md5sum="868b4d5d488858c57bc5a04245154da6" />
+			<match-rule name="ju4.4" type="MD5" filename="(.+?).jar" version="4.4" md5sum="f852bbb2bbe0471cef8e5b833cb36078" />	
+			
+			<!-- the rule engine makes an optimization assumption that any md5 match rule types within a match-rules will not have 
+			     duplicate md5sums.  this saves it from having to evaluate all md5 match rules after it's found the first match
+                 with a given location/filename. 
+              -->
+		</match-rules>
+
+	</project-rule>
+
+</project-rules>

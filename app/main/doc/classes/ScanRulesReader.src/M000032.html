@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>setup_project_rules (ScanRulesReader)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/scan_rules_reader.rb, line 71</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-constant">ScanRulesReader</span>.<span class="ruby-identifier">setup_project_rules</span>(<span class="ruby-identifier">scan_rules_dirs</span>, <span class="ruby-identifier">speed</span>=<span class="ruby-value">1</span>)
+    <span class="ruby-identifier">projects</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
+    
+    <span class="ruby-identifier">scan_rules_dirs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">scan_rules_dir</span><span class="ruby-operator">|</span>
+      
+      <span class="ruby-identifier">rules_files</span> = <span class="ruby-constant">ScanRulesReader</span>.<span class="ruby-identifier">find_all_scanrules_files</span>(<span class="ruby-identifier">scan_rules_dir</span>)
+      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">rules_files</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">rules_files</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>) <span class="ruby-keyword kw">then</span> 
+        <span class="ruby-ivar">@@log</span>.<span class="ruby-identifier">warn</span>(<span class="ruby-value str">&quot;ScanRulesReader&quot;</span>) { <span class="ruby-node">&quot;No scan rules xml files found in directory: '#{scan_rules_dir}'&quot;</span> }
+        <span class="ruby-keyword kw">next</span>
+      <span class="ruby-keyword kw">end</span>
+        
+      <span class="ruby-identifier">rules_files</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">filepath</span><span class="ruby-operator">|</span> 
+        <span class="ruby-ivar">@@log</span>.<span class="ruby-identifier">info</span>(<span class="ruby-value str">&quot;ScanRulesReader&quot;</span>) { <span class="ruby-node">&quot;Reading rules file: '#{filepath}'&quot;</span> }
+        
+        <span class="ruby-identifier">file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">filepath</span>)
+        <span class="ruby-identifier">xml</span> = <span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">file</span>)
+        <span class="ruby-identifier">root</span> = <span class="ruby-identifier">xml</span>.<span class="ruby-identifier">root</span>
+       
+        <span class="ruby-comment cmt"># spin through all the projects in the scan rules file</span>
+        <span class="ruby-identifier">root</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">xproject</span><span class="ruby-operator">|</span> 
+          
+          <span class="ruby-identifier">project</span> = <span class="ruby-constant">ProjectRule</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">xproject</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;name&quot;</span>], 
+                                <span class="ruby-identifier">xproject</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;from&quot;</span>], 
+                                <span class="ruby-identifier">xproject</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;os&quot;</span>].<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;,&quot;</span>).<span class="ruby-identifier">to_set</span>)
+          <span class="ruby-identifier">projects</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">project</span>
+    
+          <span class="ruby-comment cmt"># next, dig out project's eval expression for the ruleset evaluation</span>
+          <span class="ruby-comment cmt">#     &lt;eval rule=&quot;executables AND versionstring&quot; speed=&quot;2&quot; value=&quot;100&quot; /&gt;</span>
+          <span class="ruby-comment cmt">#</span>
+          <span class="ruby-comment cmt"># from this example, the rulesets of interest for speed level 2 would be 'executables' and 'versionstring'</span>
+          <span class="ruby-identifier">evalrulesets</span> = <span class="ruby-keyword kw">nil</span>
+          <span class="ruby-identifier">xproject</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">&quot;eval&quot;</span>) { <span class="ruby-operator">|</span> <span class="ruby-identifier">xeval</span> <span class="ruby-operator">|</span> 
+            
+            <span class="ruby-comment cmt"># look for an eval that matches the given speed hint. speed must be a numeric, so if it's not already, make it one</span>
+            <span class="ruby-keyword kw">if</span> ( <span class="ruby-identifier">xeval</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;speed&quot;</span>].<span class="ruby-identifier">to_i</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">speed</span>.<span class="ruby-identifier">to_i</span> )
+    
+              <span class="ruby-comment cmt"># this eval rule should be activated because it's defined for this speed.</span>
+              <span class="ruby-comment cmt"># to activate it, add it to the project's eval rules.</span>
+              <span class="ruby-comment cmt"># each project should have one eval rule per speed factor</span>
+              
+              <span class="ruby-identifier">evalrule</span> = <span class="ruby-constant">EvalRule</span>.<span class="ruby-identifier">new</span>( <span class="ruby-identifier">xeval</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;expression&quot;</span>],  <span class="ruby-identifier">xeval</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;speed&quot;</span>] )
+              <span class="ruby-identifier">project</span>.<span class="ruby-identifier">eval_rule</span> = <span class="ruby-identifier">evalrule</span>
+              
+              <span class="ruby-comment cmt"># get a list of rule set names that the project needs for this speed level</span>
+              <span class="ruby-comment cmt"># these names are derived from the EvalRule's expression</span>
+              <span class="ruby-comment cmt"># so, this array will just be something like &quot;executables&quot;, &quot;versionstring&quot; - ruleset names</span>
+              
+              <span class="ruby-identifier">evalrulesets</span> = <span class="ruby-identifier">project</span>.<span class="ruby-identifier">eval_rule</span>.<span class="ruby-identifier">get_rule_names</span>()
+              
+              <span class="ruby-keyword kw">break</span>  <span class="ruby-comment cmt"># right now there should be only one eval per speed factor per project, so break out of this after speed matched</span>
+            <span class="ruby-keyword kw">end</span>           
+          }
+           
+          <span class="ruby-comment cmt"># now we should have the active rulesets for this speed factor, pull just those from the scan rules for this project and </span>
+          <span class="ruby-comment cmt"># activate them by adding them into the project's set of rulesets</span>
+          
+          <span class="ruby-keyword kw">if</span> ( <span class="ruby-identifier">evalrulesets</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">evalrulesets</span>.<span class="ruby-identifier">empty?</span> )
+            
+            <span class="ruby-comment cmt"># we have the ruleset names derived from the eval statement; need to add just those rulesets to the project</span>
+            
+            <span class="ruby-identifier">xproject</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">&quot;match-rules&quot;</span>) { <span class="ruby-operator">|</span> <span class="ruby-identifier">xruleset</span> <span class="ruby-operator">|</span>
+    
+              <span class="ruby-identifier">ruleset_name</span> = <span class="ruby-identifier">xruleset</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;name&quot;</span>]
+    
+              <span class="ruby-keyword kw">if</span> ( <span class="ruby-identifier">evalrulesets</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">ruleset_name</span>) )
+                            
+                <span class="ruby-identifier">ruleset</span> = <span class="ruby-constant">MatchRuleSet</span>.<span class="ruby-identifier">new</span>( <span class="ruby-identifier">ruleset_name</span> )
+                <span class="ruby-identifier">project</span>.<span class="ruby-identifier">rulesets</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">ruleset</span>
+    
+                <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">xruleset</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;result&quot;</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span>) <span class="ruby-keyword kw">then</span>
+                  <span class="ruby-identifier">ruleset</span>.<span class="ruby-identifier">result_expression</span> = <span class="ruby-identifier">xruleset</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;result&quot;</span>].<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;expression&quot;</span>]
+                <span class="ruby-keyword kw">end</span>
+    
+                <span class="ruby-comment cmt"># add all the match rules for this ruleset into the ruleset match_rules container</span>
+                <span class="ruby-comment cmt"># this initializes the ruleset with the atomic match rules needed</span>
+                
+                <span class="ruby-identifier">xruleset</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">&quot;match-rule&quot;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">xmatchrule</span><span class="ruby-operator">|</span>
+                  <span class="ruby-identifier">ruletype</span> = <span class="ruby-identifier">xmatchrule</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;type&quot;</span>]
+                  <span class="ruby-identifier">xmatchrule_attrs</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+                  <span class="ruby-identifier">xmatchrule</span>.<span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span> <span class="ruby-identifier">xmatchrule_attrs</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">value</span> }
+                  <span class="ruby-identifier">match_rule</span> = <span class="ruby-identifier">create_match_rule</span>(<span class="ruby-identifier">xmatchrule_attrs</span>)
+                  <span class="ruby-identifier">ruleset</span>.<span class="ruby-identifier">match_rules</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">match_rule</span>
+                }
+                
+                <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">ruleset</span>.<span class="ruby-identifier">result_expression</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">ruleset</span>.<span class="ruby-identifier">result_expression</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">ruleset</span>.<span class="ruby-identifier">result_expression</span> <span class="ruby-operator">==</span> <span class="ruby-constant">BooleanExpression</span><span class="ruby-operator">::</span><span class="ruby-constant">AND_ALL</span>) <span class="ruby-keyword kw">then</span>
+                  <span class="ruby-identifier">names</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
+                  <span class="ruby-identifier">ruleset</span>.<span class="ruby-identifier">match_rules</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">mr</span><span class="ruby-operator">|</span>
+                    <span class="ruby-identifier">names</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">mr</span>.<span class="ruby-identifier">name</span>
+                  }
+                  <span class="ruby-identifier">ruleset</span>.<span class="ruby-identifier">result_expression</span> = <span class="ruby-constant">BooleanExpression</span>.<span class="ruby-identifier">get_and_all_expr</span>(<span class="ruby-identifier">names</span>)
+                <span class="ruby-keyword kw">elsif</span> (<span class="ruby-identifier">ruleset</span>.<span class="ruby-identifier">result_expression</span> <span class="ruby-operator">==</span> <span class="ruby-constant">BooleanExpression</span><span class="ruby-operator">::</span><span class="ruby-constant">OR_ALL</span>)
+                  <span class="ruby-identifier">names</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
+                  <span class="ruby-identifier">ruleset</span>.<span class="ruby-identifier">is_result_expression_or_all</span> = <span class="ruby-keyword kw">true</span>
+                  <span class="ruby-identifier">ruleset</span>.<span class="ruby-identifier">match_rules</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">mr</span><span class="ruby-operator">|</span>
+                    <span class="ruby-identifier">names</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">mr</span>.<span class="ruby-identifier">name</span>
+                  }
+                  <span class="ruby-identifier">ruleset</span>.<span class="ruby-identifier">result_expression</span> = <span class="ruby-constant">BooleanExpression</span>.<span class="ruby-identifier">get_or_all_expr</span>(<span class="ruby-identifier">names</span>)
+                <span class="ruby-keyword kw">else</span>
+                  <span class="ruby-keyword kw">if</span> (<span class="ruby-constant">BooleanExpression</span>.<span class="ruby-identifier">is_verbose_or_all</span>(<span class="ruby-identifier">ruleset</span>.<span class="ruby-identifier">result_expression</span>)) <span class="ruby-keyword kw">then</span>
+                    <span class="ruby-identifier">ruleset</span>.<span class="ruby-identifier">is_result_expression_or_all</span> = <span class="ruby-keyword kw">true</span>
+                  <span class="ruby-keyword kw">end</span>
+                <span class="ruby-keyword kw">end</span>
+              <span class="ruby-keyword kw">end</span>
+    
+            }  <span class="ruby-comment cmt"># each xruleset</span>
+            
+          <span class="ruby-keyword kw">else</span>
+            <span class="ruby-comment cmt"># TODO - in the case where an eval rule is not supplied in the scan rules file, either decide to throw an error or </span>
+            <span class="ruby-comment cmt"># default AND all rule set results - just need to decide.  For now, warn of this condition</span>
+            <span class="ruby-ivar">@@log</span>.<span class="ruby-identifier">warn</span>(<span class="ruby-value str">&quot;ScanRulesReader&quot;</span>) {<span class="ruby-node">&quot;Warning: No eval expression was found for project '#{xproject.attributes[&quot;name&quot;]}', speed #{speed}&quot;</span>}
+          <span class="ruby-keyword kw">end</span>
+    
+        <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># of root.elements.each</span>
+        
+      <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># of rules_file.each</span>
+      
+    <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># of scan_rules_dirs.each</span>
+      
+    <span class="ruby-constant">ScanRulesReader</span>.<span class="ruby-identifier">validate_expressions</span>(<span class="ruby-identifier">projects</span>)
+    
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">projects</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

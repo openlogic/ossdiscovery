@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>major_platform (lib/cliutils.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/cliutils.rb, line 306</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">major_platform</span>()
+  <span class="ruby-keyword kw">case</span>
+  <span class="ruby-keyword kw">when</span> ( <span class="ruby-constant">RUBY_PLATFORM</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/linux/</span> )    <span class="ruby-comment cmt"># ie: x86_64-linux</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;linux&quot;</span>
+  <span class="ruby-keyword kw">when</span> ( <span class="ruby-constant">RUBY_PLATFORM</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/solaris/</span> )  <span class="ruby-comment cmt"># ie: sparc-solaris2.8</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;solaris&quot;</span>
+  <span class="ruby-keyword kw">when</span> ( <span class="ruby-constant">RUBY_PLATFORM</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/mswin/</span> )    <span class="ruby-comment cmt"># ie: i386-mswin32</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;windows&quot;</span>
+  <span class="ruby-keyword kw">when</span> ( <span class="ruby-constant">RUBY_PLATFORM</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/darwin/</span> )   <span class="ruby-comment cmt"># ie: powerpc-darwin8.10.0</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;macosx&quot;</span>
+  <span class="ruby-keyword kw">when</span> ( <span class="ruby-constant">RUBY_PLATFORM</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/cygwin/</span> )
+    <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;cygwin&quot;</span>    
+  <span class="ruby-keyword kw">when</span> ( <span class="ruby-constant">RUBY_PLATFORM</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/java/</span> )     <span class="ruby-comment cmt"># JRuby returns java regardless of platform</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;java&quot;</span>    
+  <span class="ruby-keyword kw">end</span>
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

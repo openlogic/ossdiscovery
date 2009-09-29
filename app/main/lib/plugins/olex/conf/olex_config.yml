@@ -1,0 +1,90 @@
+# olex_config.yml
+#
+# LEGAL NOTICE
+# -------------
+# 
+# OSS Discovery is a tool that finds installed open source software.
+#    Copyright (C) 2007-2009OpenLogic, Inc.
+#  
+# OSS Discovery is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License version 3 as 
+# published by the Free Software Foundation.  
+#  
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License version 3 (discovery2-client/license/OSSDiscoveryLicense.txt) 
+# for more details.
+#  
+# You should have received a copy of the GNU Affero General Public License along with this program.  
+# If not, see http://www.gnu.org/licenses/
+#  
+# You can learn more about OSSDiscovery or contact the team at www.ossdiscovery.com.
+# You can contact OpenLogic at info@openlogic.com.
+#
+#--------------------------------------------------------------------------------------------------
+# 
+
+################################################################################
+
+olex_enabled: true
+
+results: STDOUT
+
+machine_report: scanresults-olex.txt
+local_report: scanresults-local-detailed-olex.txt
+local_rollup_report: scanresults-local-rollup-olex.txt
+mif_report: scanresults-olex.mif
+
+# Set to true to see http://olex.openlogic.com/packages/(package_id) links in
+# on-screen results instead of just the package_id for discovered packages.  This
+# makes it easy for Linux and certain other users to quickly bring up a discovered
+# package page in their browser.
+enable_olex_links: false
+
+# Set to true to only show file names of discovered packages instead of their
+# full paths in addition to file names.
+no_paths: false
+
+# Set to true to show absolute paths to discovered files instead of paths that
+# are relative to the scanned directory.
+show_base_dirs: false
+
+
+#--------------------------------------------------------------------------------------
+# WARNING:  The next section overrides settings in the main config.yml file!
+#--------------------------------------------------------------------------------------
+
+# Set to true to make Discovery check the OLEX site for new rules and other
+# configuration files and download them.
+update_rules: true
+
+# Set to true to make Discovery check the OLEX site for new rules and other
+# configuration files and download them before continuing to perform a new scan.
+update_rules_and_do_scan: true
+
+# This tells Discovery where to look for updates to the rules and other
+# configuration files.  These values should not include a trailing slash.
+#server_base_url: http://localhost:3000/content/discovery/rules
+#rules_file_base_url: http://localhost:3000/content/discovery/rules
+server_base_url: https://olex.openlogic.com/content/discovery/rules
+rules_file_base_url: https://olex.openlogic.com/content/discovery/rules
+
+#--------------------------------------------------------------------------------------
+# WARNING:  The previous section overrides settings in the main config.yml file!
+#--------------------------------------------------------------------------------------
+
+#--------------------------------------------------------------------------------------
+# Some corporations require all web traffic to go through an internal proxy
+# server.  It can be configured here as necessary.
+
+# IMPORTANT: proxy data needs to be nil'd out if no proxy is used.
+# Any proxy value not specified (used) is required to be nil
+
+proxy_host: nil     # example: "192.168.10.211"
+proxy_port: nil     # example: 4545
+proxy_user: nil     # example: corpusername
+proxy_password: nil # example: corppassword
+
+proxy_ntlm_domain: "" # typically left blank, but in case an NTLM-only proxy requires it, it's available for configuration

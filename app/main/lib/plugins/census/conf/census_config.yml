@@ -1,0 +1,97 @@
+# census_config.yml
+#
+# LEGAL NOTICE
+# -------------
+# 
+# OSS Discovery is a tool that finds installed open source software.
+#    Copyright (C) 2007-2009OpenLogic, Inc.
+#  
+# OSS Discovery is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License version 3 as 
+# published by the Free Software Foundation.  
+#  
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License version 3 (discovery2-client/license/OSSDiscoveryLicense.txt) 
+# for more details.
+#  
+# You should have received a copy of the GNU Affero General Public License along with this program.  
+# If not, see http://www.gnu.org/licenses/
+#  
+# You can learn more about OSSDiscovery or contact the team at www.ossdiscovery.com.
+# You can contact OpenLogic at info@openlogic.com.
+#
+#--------------------------------------------------------------------------------------------------
+# 
+
+################################################################################
+
+#--------------------------------------------------------------------------------------
+# To allow this discovery client to participate in the Open Source Census (osscensus.org),
+# make sure the following value is set to 'true'.  If this value is set to 'false',
+# no other parameters in this file will be used.
+census_enabled: false
+
+machine_report: scanresults-census.txt
+local_report: scanresults-local.txt
+
+################################################################################
+##### Server properties
+
+#--------------------------------------------------------------------------------------
+# these items describe where and how scan results are sent
+# 
+
+# Note that destination_server_url and server_base_url can neither be localhost urls if proxying is being 
+# used or tested.  You can't proxy a localhost URL.
+#destination_server_url: https://www.osscensus.org/service/scans/scanpost  # osscensus official
+
+destination_server_url: https://www.osscensus.org/service/scans/scanpost
+
+viewing_url: https://www.osscensus.org
+
+# set this to true this if for some reason your network is not allowing HTTPS posts
+# also change the destination_server_url to http from https, if this is the case
+override_https: false
+
+# in some cases, ie: just can't get around a proxy configuration or protocol to programmatically submit results,
+# it's still possible to submit results by going to this URL in your browser and uploading the machine results file
+upload_url: https://www.osscensus.org/service/upload  # manually upload scanresults-census.txt, use this URL
+
+# username password of server submission, should be nil if no authentication is in use
+username: nil
+password: nil 
+
+# IMPORTANT: proxy data needs to be nil'd out if no proxy is used. 
+# Any proxy value not specified (used) is required to be nil
+
+proxy_host: nil     # example: "192.168.10.211"
+proxy_port: nil     # 4545 # 3128
+proxy_user: nil     # example: corpusername
+proxy_password: nil # example: corppassword
+
+proxy_ntlm_domain: "" # typically left blank, but in case an NTLM-only proxy requires it, it's available for configuration
+
+# geography - used when user wants to submit an anonymous scan to the census
+# geography is the minimal data required for the submission
+#   geography should be one of the following values:
+# 
+#  This value can be overridden on the command line with the --geography
+#
+# in order to see the numeric value to supply for this property, run ossdiscovery --list-geos
+# 9999 is an invalid geography, it must be overridden to submit a scan anonymously
+
+geography: 9999
+
+#--------------------------------------------------------------------------------------
+# Census code is how the census groups multiple machines together for unified reporting purposes.
+# In other words, you can see an aggregated report for all machines using the same census code.
+#
+# If you already have a census code from registering with the census, you can
+# insert the value below or pass it on the command-line.
+
+census_code: nil
+
+

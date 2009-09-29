@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>backup_scanrules_dir (ScanRulesUpdater)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/scan_rules_updater.rb, line 267</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-constant">ScanRulesUpdater</span>.<span class="ruby-identifier">backup_scanrules_dir</span>(<span class="ruby-identifier">local_scan_rules_dir</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">bak_extension</span>=<span class="ruby-keyword kw">nil</span>) 
+    <span class="ruby-ivar">@@log</span>.<span class="ruby-identifier">info</span>(<span class="ruby-value str">&quot;ScanRulesUpdater&quot;</span>) {<span class="ruby-node">&quot;Backing up the local scan rules dir (#{local_scan_rules_dir}) with extension '#{bak_extension}'&quot;</span>}
+    <span class="ruby-identifier">path</span> = <span class="ruby-value str">&quot;&quot;</span>
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">local_scan_rules_dir</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>) <span class="ruby-keyword kw">then</span>
+      <span class="ruby-identifier">path</span> = <span class="ruby-constant">ScanRulesUpdater</span>.<span class="ruby-identifier">get_default_scan_rules_dir</span>()
+    <span class="ruby-keyword kw">else</span> 
+      <span class="ruby-identifier">path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">local_scan_rules_dir</span>)
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">bak_extension</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>) <span class="ruby-keyword kw">then</span>
+      <span class="ruby-identifier">bak_extension</span> = <span class="ruby-value str">&quot;_&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-constant">ScanRulesUpdater</span>.<span class="ruby-identifier">get_YYYYMMDD_HHMM_str</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;.bak&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-identifier">backup</span> = <span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">bak_extension</span>
+    <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mv</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">backup</span>)
+    
+    <span class="ruby-identifier">all_files</span> = <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-constant">Find</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">backup</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword kw">if</span> (<span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">path</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">path</span>) <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;.svn&quot;</span>) <span class="ruby-keyword kw">then</span>
+        <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">remove_dir</span>(<span class="ruby-identifier">path</span>, <span class="ruby-keyword kw">true</span>)
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">backup</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

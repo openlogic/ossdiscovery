@@ -1,0 +1,10 @@
+ant;ant;java;org.apache.tools.ant
+ant-tools;ant-tools;java;org.apache.tools
+antlr;antlr;java;org.antlr
+apache;apache;none;none
+apache-logging;apache-logging;java;org.apache.tools.ant.logging
+apache2;apache2;none;none
+apache-tomcat;apache-tomcat;java;org.apache.tomcat,org.catalina
+commons-collections;commons-collections;java;org.apache.commons.collections
+tomcat;tomcat;java;org.tomcat
+jquery;jquery;javascript;none

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>help (lib/cliutils.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/cliutils.rb, line 60</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">help</span>()
+
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;\nUsage: %s [options]\n&quot;</span>, <span class="ruby-ivar">@discovery_name</span> )
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;\nThe simplest usage of %s is: ./%s\n&quot;</span>, <span class="ruby-ivar">@discovery_name</span>, <span class="ruby-ivar">@discovery_name</span> )
+  <span class="ruby-comment cmt"># please maintain this list in alphabetical order</span>
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;\nOptions are not order dependent and may be one or more of:\n&quot;</span>)
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;--conf,           -c the absolute or relative path and filename of the configuration file to use for the scan\n&quot;</span>)
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;--deliver-results -d existence says 'yes' deliver results to server. Server destination is configured in %s\n&quot;</span>, <span class="ruby-ivar">@config</span> )
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;                     optionally --deliver-results can take a parameter which is a path to an existing scan results file to deliver\n&quot;</span>)
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;--help,           -h print this help message\n&quot;</span>)
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;--human-results,  -u the absolute or relative path and filename for the human readable results files.  The default is %s\n&quot;</span>, <span class="ruby-value str">&quot;STDOUT&quot;</span> )
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;--inc-path,       -I include the path/location of detected package in machine scan results\n&quot;</span>)  
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;--list-excluded,  -e during a scan, print a list of files that are excluded and the filter that excluded each\n&quot;</span>)
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;--list-files,     -f during a scan, print a list of all files that matched a rule or other criteria\n&quot;</span>)
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;--list-filters,   -g print a list of generic filters that would be active during the next scan\n&quot;</span>)
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;--list-foi,       -i print a list of files of interest %s will be looking for\n&quot;</span>, <span class="ruby-ivar">@discovery_name</span>)
+  <span class="ruby-identifier">printf</span>(<span class="ruby-node">&quot;--list-os,        -o list the operating system, version, and distro on which #{@discovery_name} is running\n&quot;</span>)  
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;--list-projects,  -j print a list of the projects that are capable of being discovered\n&quot;</span>)
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;                     Optionally append 'verbose' to get verbose output.\n&quot;</span>)
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;--list-md5-dupes, -M If the same MD5 digest is used in two or more match rule definitions, then the duplicated digests are printed.\n&quot;</span>)
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;--list-tag,       -t print the machine ID (tag) that will be reported with scan results\n&quot;</span>)
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;--machine-results,-m the absolute or relative path and filename for the machine readable results files.\n&quot;</span> )
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;--nofollow,       -N don't follow symlinks, default is: %s, follow symlinks\n&quot;</span>, <span class="ruby-ivar">@follow_symlinks</span> <span class="ruby-operator">?</span> <span class="ruby-value str">&quot;Yes&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-value str">&quot;No&quot;</span> )
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;--preview-results,-R this flag will dump the machine results file to the console when the scan is complete\n&quot;</span>)
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;--progress,       -x show progress indicator every X number of files scanned - X given by the parameter to --progress\n&quot;</span>)
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;--path,           -p the absolute or relative path of the directory to scan, the default is %s\n&quot;</span>, <span class="ruby-ivar">@directory_to_scan</span> )
+  <span class="ruby-comment cmt"># future printf(&quot;--speed,          -s a value of 1,2, or 3 which is a hint to the rule engine for how precise to be.\n&quot;)</span>
+  <span class="ruby-comment cmt"># future printf(&quot;                     the lower the number, the faster but less precise the scan will be.\n&quot;)</span>
+  <span class="ruby-comment cmt"># future printf(&quot;                     The default speed is 2, medium\n&quot;)</span>
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;--update-rules,   -r Gets updated scan rules from the server (discovery scan not performed).\n&quot;</span>)
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;                     Providing an optional 'scan' argument (--update-rules scan) will first get the updated rules\n&quot;</span>)
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;                     from the server and then go ahead and perform a discovery scan of the specified --path.\n&quot;</span>)
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;--version,        -v print the version of %s\n&quot;</span>, <span class="ruby-ivar">@discovery_name</span> )
+  
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;\nThe default configuration file is %s and can contain \n&quot;</span>, <span class="ruby-value str">'conf/config.yml'</span>, <span class="ruby-ivar">@discovery_name</span> )
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;all the parameters required for a scan.  Any command line parameter given will\n&quot;</span>)
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;override what is found in the configuration file. \n&quot;</span>, <span class="ruby-ivar">@discovery_name</span> )
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;\nIf no command line parameters are given, %s will do a root directory scan and place the results \n&quot;</span>, <span class="ruby-ivar">@discovery_name</span> )
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;in the directory from which the scan was invoked.\n&quot;</span>)
+
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;\n\nExamples:\n&quot;</span>)
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;./discovery --path /home/lcox --results /tmp/myscan.txt\n&quot;</span>)
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;   scans the directory /home/lcox and places the results file in the /tmp directory with a filename of myscan.txt\n&quot;</span>)
+
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;\n%s\n&quot;</span>, <span class="ruby-identifier">version</span>() )    
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;%s\n&quot;</span>, <span class="ruby-ivar">@copyright</span> )
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;Unique Machine Tag (ID): %s\n&quot;</span>, <span class="ruby-ivar">@machine_id</span> )
+  <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;License: %s\n&quot;</span>, <span class="ruby-ivar">@discovery_license_shortname</span> )
+
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

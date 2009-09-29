@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>get_os_version_str (lib/cliutils.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/cliutils.rb, line 583</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_os_version_str</span>()
+   
+  <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">major_platform</span>()
+  <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;linux&quot;</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">get_linux_version_str</span>()
+  <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;windows&quot;</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">get_windows_version_str</span>()
+  <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;macosx&quot;</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">get_macosx_version_str</span>()
+  <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;solaris&quot;</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">get_solaris_version_str</span>()
+  <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;cygwin&quot;</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">get_cygwin_version_str</span>()
+  <span class="ruby-keyword kw">else</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;Unknown: Unrecognized&quot;</span>
+  <span class="ruby-keyword kw">end</span>
+  
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

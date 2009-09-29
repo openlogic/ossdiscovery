@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>make_machine_id (lib/cliutils.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/cliutils.rb, line 450</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">make_machine_id</span>()
+
+  <span class="ruby-comment cmt"># if someone has overridden the machine id in the configuration.rb file and/or </span>
+  <span class="ruby-comment cmt"># changed the current value of the machine id to anything besides &quot;default&quot;, then</span>
+  <span class="ruby-comment cmt"># assume they know what they're doing and use it instead of making one</span>
+  
+  <span class="ruby-comment cmt"># for non-windows machines, everything else is u*ix like and should support uname</span>
+  
+  <span class="ruby-identifier">platform</span> = <span class="ruby-identifier">major_platform</span>()
+  
+  <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">platform</span>
+  <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;windows&quot;</span>, <span class="ruby-value str">&quot;java&quot;</span>     <span class="ruby-comment cmt"># java is what's reported if running under JRuby, </span>
+                             <span class="ruby-comment cmt"># so use the simplest possible machine id regardless of &quot;real&quot; platform</span>
+                             <span class="ruby-comment cmt"># if using JRuby</span>
+    
+    <span class="ruby-identifier">hostname</span> = <span class="ruby-constant">Socket</span>.<span class="ruby-identifier">gethostname</span>
+
+    <span class="ruby-identifier">ipaddr</span> = <span class="ruby-constant">IPSocket</span>.<span class="ruby-identifier">getaddress</span>( <span class="ruby-identifier">hostname</span> )  
+    
+    <span class="ruby-keyword kw">if</span> ( <span class="ruby-ivar">@machine_id</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;default&quot;</span>)
+      <span class="ruby-ivar">@machine_id</span> = <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">MD5</span>.<span class="ruby-identifier">hexdigest</span>( <span class="ruby-identifier">hostname</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">ipaddr</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@company_name</span> )
+    <span class="ruby-comment cmt"># else use the one that was set in config.yml</span>
+    <span class="ruby-keyword kw">end</span>
+    
+    <span class="ruby-comment cmt"># TODO - if we support JRuby at some point, we need to fix this so the &quot;real&quot; platform is determined</span>
+    <span class="ruby-comment cmt"># through JRuby/java and if linux or other unix, find the real kernel version</span>
+    <span class="ruby-ivar">@kernel</span> = <span class="ruby-constant">RUBY_PLATFORM</span>
+        
+  <span class="ruby-keyword kw">else</span>  <span class="ruby-comment cmt"># every other platform including cygwin supports uname -a</span>
+    
+    <span class="ruby-comment cmt">#-------------- the uname method --------------------------------------------------------------------</span>
+    <span class="ruby-comment cmt"># this assumes all other platforms support uname -a</span>
+    <span class="ruby-comment cmt"># this also assumes that if a machine upgrades its OS or changes its hostname it essentially becomes</span>
+    <span class="ruby-comment cmt"># a different machine and will be considered different for scanning purposes</span>
+
+    <span class="ruby-identifier">hostname</span> = <span class="ruby-constant">Socket</span>.<span class="ruby-identifier">gethostname</span>
+    <span class="ruby-identifier">mac</span> = <span class="ruby-value str">&quot;&quot;</span>
+
+    <span class="ruby-comment cmt"># try to find some other reasonably static info about the machine</span>
+    <span class="ruby-keyword kw">if</span> ( <span class="ruby-identifier">platform</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;linux&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">platform</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;macosx&quot;</span> )
+      <span class="ruby-identifier">ifconfig</span> = <span class="ruby-value">`/sbin/ifconfig`</span>
+
+      <span class="ruby-keyword kw">if</span> ( <span class="ruby-identifier">platform</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;linux&quot;</span> )  <span class="ruby-comment cmt"># get the fully qualified hostname with domain if it's available</span>
+        <span class="ruby-identifier">hostname</span> = <span class="ruby-value">`hostname -f 2&gt;&amp;1`</span>
+    
+        <span class="ruby-keyword kw">if</span> ( <span class="ruby-identifier">hostname</span>.<span class="ruby-identifier">match</span>(<span class="ruby-value str">'Unknown host'</span>) <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span> )
+          <span class="ruby-comment cmt"># we found some versions of ubuntu which would report Unknown host on a hostname -f but the </span>
+          <span class="ruby-comment cmt"># one-word hostname (not fully qualified) for the `hostname`, so gracefully degrade if this</span>
+          <span class="ruby-comment cmt"># condition exists on the users' box.</span>
+          <span class="ruby-identifier">hostname</span> = <span class="ruby-value">`hostname 2&gt;&amp;1`</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">elsif</span> ( <span class="ruby-identifier">platform</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;solaris&quot;</span> )
+      <span class="ruby-comment cmt"># on solaris, if you ifconfig -a as a normal user you can't get the MAC address, only hostname</span>
+      <span class="ruby-comment cmt"># solaris, ifconfig with no -a will dump, so must have -a</span>
+  
+      <span class="ruby-identifier">ifconfig</span> = <span class="ruby-value">`/sbin/ifconfig -a`</span>
+      <span class="ruby-identifier">hostname</span> = <span class="ruby-value">`hostname`</span>
+    <span class="ruby-keyword kw">end</span>
+  
+    <span class="ruby-comment cmt"># see if the mac address is in the output...if so, use it, otherwise, mangle the output of ifconfig.</span>
+    <span class="ruby-comment cmt"># Yes, this can cause the machine id to change if the machine is on DHCP and the lease expires</span>
+    <span class="ruby-comment cmt"># or if the machine is carried around and constantly rescanned, but short of using the machine's hostname </span>
+    <span class="ruby-comment cmt"># exclusively (which can also change), have to find a combination of items which help define the uniqueness of a box</span>
+    <span class="ruby-comment cmt">#</span>
+    <span class="ruby-comment cmt"># The only other known unique ID is from a pentium processor (and not all pentiums), but that instruction was removed</span>
+    <span class="ruby-comment cmt"># due to privacy concerns.  So, the fact is, we don't care about the true unchangeable identity of the machine</span>
+    <span class="ruby-comment cmt"># and you'd freak if we did.  So, just obfuscate some of the basic, relatively static parameters of a machine</span>
+    <span class="ruby-comment cmt"># that help identify it in standard ways such as the address, mac address, hostname and attempt to be unique</span>
+    <span class="ruby-comment cmt"># in their own domains.</span>
+
+    <span class="ruby-comment cmt"># these are two forms of ifconfig output for showing mac, 'HWaddr' and 'ether'</span>
+    <span class="ruby-keyword kw">if</span> ( <span class="ruby-identifier">ifconfig</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">&amp;&amp;</span> 
+        ((<span class="ruby-identifier">matchdata</span> = <span class="ruby-identifier">ifconfig</span>.<span class="ruby-identifier">match</span>( <span class="ruby-value str">'(HWaddr) ([0-9:A-F].*?)+$'</span>)) <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">||</span> 
+         (<span class="ruby-identifier">matchdata</span> = <span class="ruby-identifier">ifconfig</span>.<span class="ruby-identifier">match</span>( <span class="ruby-value str">'(ether) ([0-9:A-F].*?)+$'</span> )) <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span>) )
+
+      <span class="ruby-comment cmt"># load the found mac address</span>
+      <span class="ruby-identifier">mac</span> = <span class="ruby-identifier">matchdata</span>[<span class="ruby-value">2</span>]
+
+    <span class="ruby-keyword kw">elsif</span>( <span class="ruby-identifier">ifconfig</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span> )
+
+      <span class="ruby-comment cmt"># substitute an MD5 related to the output of ifconfig instead of mac if it can't be found</span>
+      <span class="ruby-comment cmt"># so just load the variable up with the content of ifconfig</span>
+      <span class="ruby-identifier">mac</span> = <span class="ruby-identifier">ifconfig</span>
+
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">mac</span> = <span class="ruby-value str">&quot;unknown&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-identifier">mac</span> = <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">MD5</span>.<span class="ruby-identifier">hexdigest</span>( <span class="ruby-identifier">mac</span> )  <span class="ruby-comment cmt"># obfuscate the mac address or ifconfig output</span>
+
+    <span class="ruby-ivar">@uname</span> = <span class="ruby-value">`uname -a`</span>
+    <span class="ruby-ivar">@uname_parts</span> = <span class="ruby-ivar">@uname</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot; &quot;</span>)
+    <span class="ruby-ivar">@kernel</span> = <span class="ruby-identifier">sprintf</span>( <span class="ruby-value str">&quot;%s %s&quot;</span>, <span class="ruby-ivar">@uname_parts</span>[<span class="ruby-value">2</span>], <span class="ruby-ivar">@uname_parts</span>[<span class="ruby-value">3</span>] )
+
+    <span class="ruby-comment cmt"># typical output from uname -a </span>
+    <span class="ruby-comment cmt">#   Linux smoker 2.6.16.21-0.8-smp #1 SMP Mon Jul 3 18:25:39 UTC 2006 x86_64 x86_64 x86_64 GNU/Linux</span>
+
+    <span class="ruby-comment cmt"># obfuscate the entire blob of info we gather into a single, 32 byte MD5 sum   </span>
+    <span class="ruby-comment cmt"># if any single one of these items changes over time, the machine ID will change.  This is a known</span>
+    <span class="ruby-comment cmt"># limitation.  If you want to control your machine ID according to your own unique scheme, override</span>
+    <span class="ruby-comment cmt"># it in the configuration.rb file on a machine by machine basis.</span>
+
+    <span class="ruby-keyword kw">if</span> ( <span class="ruby-ivar">@machine_id</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;default&quot;</span> )
+      <span class="ruby-ivar">@machine_id</span> = <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">MD5</span>.<span class="ruby-identifier">hexdigest</span>( <span class="ruby-identifier">hostname</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">mac</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@uname</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@company_name</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@distro</span> )
+      <span class="ruby-comment cmt"># else use the one set in config.yml</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span>
+
+  <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@machine_id</span>, <span class="ruby-ivar">@kernel</span>  
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

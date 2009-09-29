@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>execute (lib/discovery.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/discovery.rb, line 127</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-identifier">execute</span>()
+
+  <span class="ruby-comment cmt"># mark the beginning of a scan</span>
+  <span class="ruby-ivar">@starttime</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">new</span>
+
+  <span class="ruby-comment cmt"># create the application's Walker instance - @list_files is boolean for whether to dump files as encountered</span>
+  <span class="ruby-ivar">@walker</span> = <span class="ruby-constant">Walker</span><span class="ruby-operator">::</span><span class="ruby-identifier">new</span>( )
+  
+  <span class="ruby-keyword kw">if</span> ( <span class="ruby-ivar">@walker</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> )
+    <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;FATAL - walker cannot be created\n&quot;</span>)
+    <span class="ruby-identifier">exit</span> <span class="ruby-value">1</span>
+  <span class="ruby-keyword kw">end</span>
+  
+  <span class="ruby-comment cmt"># setup all the walker behavior based on CLI flags</span>
+  <span class="ruby-comment cmt">#</span>
+  <span class="ruby-comment cmt"># exclusion filters is a hash of descriptions/regexs, so just pass the criteria to the walker</span>
+  <span class="ruby-ivar">@walker</span>.<span class="ruby-identifier">add_dir_exclusions</span>( <span class="ruby-ivar">@dir_exclusion_filters</span>.<span class="ruby-identifier">values</span> )
+  <span class="ruby-ivar">@walker</span>.<span class="ruby-identifier">add_file_exclusions</span>( <span class="ruby-ivar">@file_exclusion_filters</span>.<span class="ruby-identifier">values</span> )
+  
+  <span class="ruby-ivar">@walker</span>.<span class="ruby-identifier">list_exclusions</span> = <span class="ruby-ivar">@list_exclusions</span>
+  <span class="ruby-ivar">@walker</span>.<span class="ruby-identifier">list_files</span> = <span class="ruby-ivar">@list_files</span>
+  <span class="ruby-ivar">@walker</span>.<span class="ruby-identifier">show_permission_denied</span> = <span class="ruby-ivar">@show_permission_denied</span>
+  <span class="ruby-ivar">@walker</span>.<span class="ruby-identifier">show_every</span> = <span class="ruby-ivar">@show_every</span>.<span class="ruby-identifier">to_i</span>
+  <span class="ruby-ivar">@walker</span>.<span class="ruby-identifier">show_progress</span> = <span class="ruby-ivar">@show_progress</span>
+  <span class="ruby-ivar">@walker</span>.<span class="ruby-identifier">show_verbose</span> = <span class="ruby-ivar">@show_verbose</span>  
+  <span class="ruby-ivar">@walker</span>.<span class="ruby-identifier">symlink_depth</span> = <span class="ruby-ivar">@symlink_depth</span>
+  <span class="ruby-ivar">@walker</span>.<span class="ruby-identifier">follow_symlinks</span> = <span class="ruby-ivar">@follow_symlinks</span>
+  
+  <span class="ruby-comment cmt"># create the applications RuleEngine instance</span>
+  <span class="ruby-comment cmt"># in the process of constructing the object, the rule engine</span>
+  <span class="ruby-comment cmt"># will register with the walker and set up the list of files of interest</span>
+  <span class="ruby-comment cmt"># after this object is created, the machine is ready to scan</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Reading project rules....\n&quot;</span>
+  <span class="ruby-ivar">@rule_engine</span> = <span class="ruby-constant">RuleEngine</span>.<span class="ruby-identifier">new</span>(  <span class="ruby-ivar">@rules_dirs</span>, <span class="ruby-ivar">@walker</span>, <span class="ruby-constant">SPEEDHINT</span> )
+<span class="ruby-comment cmt">#  @rule_engine = RuleEngine.new(  @rules_dirs, @walker, @speedhint ) - future, whenever 'speedhint' gets added back to config.yml</span>
+
+  <span class="ruby-comment cmt"># obey the command line parameter to list the files of interest.  this can't be done until</span>
+  <span class="ruby-comment cmt"># the rule engine has parsed the scan rules file so that we know all the actual files of </span>
+  <span class="ruby-comment cmt"># interest determined by scan rules expressions</span>
+  
+  <span class="ruby-keyword kw">if</span> ( <span class="ruby-ivar">@list_foi</span> )
+    <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;Files of interest:\n&quot;</span>)
+    <span class="ruby-ivar">@walker</span>.<span class="ruby-identifier">get_files_of_interest</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span> <span class="ruby-identifier">foi</span> <span class="ruby-operator">|</span>
+      <span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;%s\n&quot;</span>, <span class="ruby-identifier">foi</span>.<span class="ruby-identifier">source</span>)
+    }
+    <span class="ruby-identifier">exit</span> <span class="ruby-value">0</span>
+  <span class="ruby-keyword kw">end</span>
+  
+  <span class="ruby-comment cmt"># This is the main call to start scanning a machine</span>
+  <span class="ruby-ivar">@directory_to_scan</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-ivar">@directory_to_scan</span>)
+  <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Scanning #{@directory_to_scan}\n&quot;</span>
+  <span class="ruby-ivar">@walker</span>.<span class="ruby-identifier">walk_dir</span>( <span class="ruby-ivar">@directory_to_scan</span> )
+
+  <span class="ruby-comment cmt"># mark the end of a scan</span>
+  <span class="ruby-ivar">@endtime</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">new</span>
+
+<span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

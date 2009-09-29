@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>new (RuleEngine)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/rule_engine.rb, line 50</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>( <span class="ruby-identifier">rulesdirs</span>, <span class="ruby-identifier">walker</span>, <span class="ruby-identifier">speedhint</span> )
+
+    <span class="ruby-ivar">@scan_rules_dirs</span> = <span class="ruby-identifier">rulesdirs</span>
+    <span class="ruby-ivar">@walker</span> = <span class="ruby-identifier">walker</span>
+    <span class="ruby-ivar">@projects</span> = <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@speed</span> = <span class="ruby-identifier">speedhint</span>
+
+    <span class="ruby-identifier">load_scan_rules</span>()
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

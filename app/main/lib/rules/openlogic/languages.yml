@@ -1,0 +1,38 @@
+javascript:
+  - .js
+  - .javascript
+#
+#java:
+#  - .class
+#  - .jar
+#  - .ear
+#  - .war
+#  - .java
+#
+#c++:
+#  - .cpp
+#  - .cxx
+#  - .dll
+#  - .exe
+#  - .so
+#  - ""
+#
+#c:
+#  - .c
+#  - .dll
+#  - .exe
+#  - .so
+#  - ""
+#
+#perl:
+#  - .pl
+#  - .perl
+#
+#python:
+#  - .py
+#  - .python
+#  - .pyc
+#
+#ruby:
+#  - .rb
+#  - .ruby

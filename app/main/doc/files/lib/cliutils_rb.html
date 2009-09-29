@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: cliutils.rb</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>cliutils.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>lib/cliutils.rb
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Tue Dec 11 10:59:38 -0700 2007</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+cliutils.rb
+</p>
+<p>
+LEGAL NOTICE
+</p>
+<hr size="10"></hr><p>
+OSS Discovery is a tool that finds installed open source software.
+</p>
+<pre>
+   Copyright (C) 2007-2009 OpenLogic, Inc.
+</pre>
+<p>
+OSS Discovery is free software: you can redistribute it and/or modify it
+under the terms of the GNU Affero General Public License <a
+href="cliutils_rb.html#M000002">version</a> 3 as published by the Free
+Software Foundation.
+</p>
+<p>
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+<a href="cliutils_rb.html#M000002">version</a> 3
+(discovery2-client/license/OSSDiscoveryLicense.txt) for more details.
+</p>
+<p>
+You should have received a copy of the GNU Affero General Public License
+along with this program. If not, see <a
+href="http://www.gnu.org/licenses">www.gnu.org/licenses</a>/
+</p>
+<p>
+You can learn more about OSSDiscovery, <a
+href="cliutils_rb.html#M000003">report</a> bugs and get the latest versions
+at <a href="http://www.ossdiscovery.org">www.ossdiscovery.org</a>. You can
+contact the OSS Discovery team at info@ossdiscovery.org. You can contact
+OpenLogic at info@openlogic.com.
+</p>
+
+    </div>
+
+    <div id="requires-list">
+      <h3 class="section-bar">Required files</h3>
+
+      <div class="name-list">
+      net/http&nbsp;&nbsp;
+      net/https&nbsp;&nbsp;
+      digest/md5&nbsp;&nbsp;
+      </div>
+    </div>
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000010">deliver_results</a>&nbsp;&nbsp;
+      <a href="#M000009">dump_filters</a>&nbsp;&nbsp;
+      <a href="#M000014">get_cygwin_version_str</a>&nbsp;&nbsp;
+      <a href="#M000015">get_linux_version_str</a>&nbsp;&nbsp;
+      <a href="#M000017">get_macosx_version_str</a>&nbsp;&nbsp;
+      <a href="#M000012">get_os_version_str</a>&nbsp;&nbsp;
+      <a href="#M000016">get_solaris_version_str</a>&nbsp;&nbsp;
+      <a href="#M000013">get_windows_version_str</a>&nbsp;&nbsp;
+      <a href="#M000001">help</a>&nbsp;&nbsp;
+      <a href="#M000005">machine_report</a>&nbsp;&nbsp;
+      <a href="#M000008">major_platform</a>&nbsp;&nbsp;
+      <a href="#M000011">make_machine_id</a>&nbsp;&nbsp;
+      <a href="#M000007">normalize_path!</a>&nbsp;&nbsp;
+      <a href="#M000003">report</a>&nbsp;&nbsp;
+      <a href="#M000004">report_audit_records</a>&nbsp;&nbsp;
+      <a href="#M000006">validate_speed</a>&nbsp;&nbsp;
+      <a href="#M000002">version</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">NO_SSL</td>
+          <td>=</td>
+          <td class="context-item-value">false</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">NO_SSL</td>
+          <td>=</td>
+          <td class="context-item-value">true</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+bail on using any HTTPS delivery mechanisms since the client machine
+doesn&#8216;t have the prerequisite software
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
+
+        <div class="method-heading">
+          <a href="cliutils_rb.src/M000010.html" target="Code" class="method-signature"
+            onclick="popupCode('cliutils_rb.src/M000010.html');return false;">
+          <span class="method-name">deliver_results</span><span class="method-args">( result_file )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+this method posts the machine scan results back to the discovery server
+using the Net classes in stdlib
+</p>
+<p>
+good reference: <a
+href="http://www.ruby-doc.org/stdlib/libdoc/net/http/rdoc/classes/Net/HTTP.html">www.ruby-doc.org/stdlib/libdoc/net/http/rdoc/classes/Net/HTTP.html</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+          <a href="cliutils_rb.src/M000009.html" target="Code" class="method-signature"
+            onclick="popupCode('cliutils_rb.src/M000009.html');return false;">
+          <span class="method-name">dump_filters</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+this method dumps the set of inclusion and exclusion filters out to the
+console
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
+
+        <div class="method-heading">
+          <a href="cliutils_rb.src/M000014.html" target="Code" class="method-signature"
+            onclick="popupCode('cliutils_rb.src/M000014.html');return false;">
+          <span class="method-name">get_cygwin_version_str</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+return the string containing the cygwin <a
+href="cliutils_rb.html#M000002">version</a> info
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
+
+        <div class="method-heading">
+          <a href="cliutils_rb.src/M000015.html" target="Code" class="method-signature"
+            onclick="popupCode('cliutils_rb.src/M000015.html');return false;">
+          <span class="method-name">get_linux_version_str</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+return the string containing the linux distro and <a
+href="cliutils_rb.html#M000002">version</a>
+</p>
+<p>
+list of distros and their release files derived from information found on:
+<a
+href="http://linuxmafia.com/faq/Admin/release-files.html">linuxmafia.com/faq/Admin/release-files.html</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000017" class="method-detail">
+        <a name="M000017"></a>
+
+        <div class="method-heading">
+          <a href="cliutils_rb.src/M000017.html" target="Code" class="method-signature"
+            onclick="popupCode('cliutils_rb.src/M000017.html');return false;">
+          <span class="method-name">get_macosx_version_str</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+return the string containing the macosx <a
+href="cliutils_rb.html#M000002">version</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000012" class="method-detail">
+        <a name="M000012"></a>
+
+        <div class="method-heading">
+          <a href="cliutils_rb.src/M000012.html" target="Code" class="method-signature"
+            onclick="popupCode('cliutils_rb.src/M000012.html');return false;">
+          <span class="method-name">get_os_version_str</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+return an os name, <a href="cliutils_rb.html#M000002">version</a> string
+</p>
+<p>
+whatever the distro is of linux or whatever the major windows type is for
+windows, this type of data will be returned in the string. It can include
+major OS name, major distro name, <a
+href="cliutils_rb.html#M000002">version</a>, architecture...all in a single
+line string.
+</p>
+<p>
+the overall format of the string will always be:
+</p>
+<pre>
+   Major OS: distro details
+
+   Major OS strings will not change; distro details could change over time
+</pre>
+<p>
+Examples: Mac OS X: Darwin 8.10.0 RELEASE_PPC Power Macintosh powerpc
+Solaris: Solaris 8 2/02 s28s_u7wos_08a SPARC SUSE Linux: SUSE Linux
+Enterprise Desktop 10 (x86_64)
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000016" class="method-detail">
+        <a name="M000016"></a>
+
+        <div class="method-heading">
+          <a href="cliutils_rb.src/M000016.html" target="Code" class="method-signature"
+            onclick="popupCode('cliutils_rb.src/M000016.html');return false;">
+          <span class="method-name">get_solaris_version_str</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+return the string containing the solaris distro and <a
+href="cliutils_rb.html#M000002">version</a>
+</p>
+<p>
+takes the first line of the solaris /etc/release file (ie:)
+</p>
+<p>
+Solaris 9 9/05 s9s_u8wos_05 SPARC
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000013" class="method-detail">
+        <a name="M000013"></a>
+
+        <div class="method-heading">
+          <a href="cliutils_rb.src/M000013.html" target="Code" class="method-signature"
+            onclick="popupCode('cliutils_rb.src/M000013.html');return false;">
+          <span class="method-name">get_windows_version_str</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+return the string containing the windows <a
+href="cliutils_rb.html#M000002">version</a> info
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000001" class="method-detail">
+        <a name="M000001"></a>
+
+        <div class="method-heading">
+          <a href="cliutils_rb.src/M000001.html" target="Code" class="method-signature"
+            onclick="popupCode('cliutils_rb.src/M000001.html');return false;">
+          <span class="method-name">help</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+dumps the discovery CLI usage statements
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+          <a href="cliutils_rb.src/M000005.html" target="Code" class="method-signature"
+            onclick="popupCode('cliutils_rb.src/M000005.html');return false;">
+          <span class="method-name">machine_report</span><span class="method-args">( packages )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+this method will generate a <a href="cliutils_rb.html#M000003">report</a>
+format suitable for posting to the discovery server
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <a href="cliutils_rb.src/M000008.html" target="Code" class="method-signature"
+            onclick="popupCode('cliutils_rb.src/M000008.html');return false;">
+          <span class="method-name">major_platform</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+get the major platform on which this instance of the app is running.
+possible return values are: linux, solaris, windows, macosx
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000011" class="method-detail">
+        <a name="M000011"></a>
+
+        <div class="method-heading">
+          <a href="cliutils_rb.src/M000011.html" target="Code" class="method-signature"
+            onclick="popupCode('cliutils_rb.src/M000011.html');return false;">
+          <span class="method-name">make_machine_id</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+this code is responsible for generating a unique and static machine id
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <a href="cliutils_rb.src/M000007.html" target="Code" class="method-signature"
+            onclick="popupCode('cliutils_rb.src/M000007.html');return false;">
+          <span class="method-name">normalize_path!</span><span class="method-args">( thepath )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+normalize path will take a given path and if there are backslashes in it
+(windows cases), they will be transformed to for
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
+
+        <div class="method-heading">
+          <a href="cliutils_rb.src/M000003.html" target="Code" class="method-signature"
+            onclick="popupCode('cliutils_rb.src/M000003.html');return false;">
+          <span class="method-name">report</span><span class="method-args">( packages )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+dumps a simple ASCII text <a href="cliutils_rb.html#M000003">report</a> to
+the console
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <a href="cliutils_rb.src/M000004.html" target="Code" class="method-signature"
+            onclick="popupCode('cliutils_rb.src/M000004.html');return false;">
+          <span class="method-name">report_audit_records</span><span class="method-args">( records )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+dumps the audit <a href="cliutils_rb.html#M000003">report</a> to the
+console in the form of simple ASCII text
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+          <a href="cliutils_rb.src/M000006.html" target="Code" class="method-signature"
+            onclick="popupCode('cliutils_rb.src/M000006.html');return false;">
+          <span class="method-name">validate_speed</span><span class="method-args">( speedarg )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+returns true or false. if the speed argument is valid, it returns true,
+otherwise false
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000002" class="method-detail">
+        <a name="M000002"></a>
+
+        <div class="method-heading">
+          <a href="cliutils_rb.src/M000002.html" target="Code" class="method-signature"
+            onclick="popupCode('cliutils_rb.src/M000002.html');return false;">
+          <span class="method-name">version</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+returns a standard <a href="cliutils_rb.html#M000002">version</a> string to
+use throughout discovery
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

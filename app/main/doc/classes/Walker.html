@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Walker</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Walker</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/walker_rb.html">
+                lib/walker.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+an instance of <a href="Walker.html">Walker</a> is given a directory from
+which it will start walking through files and directories. In order to walk
+individual directories which aren&#8216;t nested, you must call walkdir
+once for each directory.
+</p>
+<p>
+For example, to walk /usr, /opt, and /tmp without walking the entire root
+directory, you&#8216;d walkdir 3 times, once for each directory off of root
+that you want scanned. You can use the same <a
+href="Walker.html">Walker</a> instance for each walkdir.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000022">add_dir_exclusions</a>&nbsp;&nbsp;
+      <a href="#M000023">add_file_exclusions</a>&nbsp;&nbsp;
+      <a href="#M000024">clear_exclusions</a>&nbsp;&nbsp;
+      <a href="#M000031">get_files_of_interest</a>&nbsp;&nbsp;
+      <a href="#M000029">name_match</a>&nbsp;&nbsp;
+      <a href="#M000021">new</a>&nbsp;&nbsp;
+      <a href="#M000028">notify_subscribers</a>&nbsp;&nbsp;
+      <a href="#M000027">progress_report</a>&nbsp;&nbsp;
+      <a href="#M000026">resolve_symlink</a>&nbsp;&nbsp;
+      <a href="#M000030">set_files_of_interest</a>&nbsp;&nbsp;
+      <a href="#M000025">walk_dir</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">bad_link_ct</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">dir_ct</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">file_ct</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">foi_ct</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">follow_symlinks</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">list_exclusions</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">list_files</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">not_followed_ct</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">not_found_ct</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">permission_denied_ct</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">show_every</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">show_permission_denied</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">show_progress</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">show_verbose</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">sym_link_ct</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">symlink_depth</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000021" class="method-detail">
+        <a name="M000021"></a>
+
+        <div class="method-heading">
+          <a href="Walker.src/M000021.html" target="Code" class="method-signature"
+            onclick="popupCode('Walker.src/M000021.html');return false;">
+          <span class="method-name">new</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000022" class="method-detail">
+        <a name="M000022"></a>
+
+        <div class="method-heading">
+          <a href="Walker.src/M000022.html" target="Code" class="method-signature"
+            onclick="popupCode('Walker.src/M000022.html');return false;">
+          <span class="method-name">add_dir_exclusions</span><span class="method-args">( exclusion_list )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+takes an array of exclusions such as literals or regular expressions which
+if matched to a directory that&#8216;s encountered by the walker will cause
+that file or directory to be ignored. No subscriber will ever get a chance
+to process a file or directory ignored through the generic exclusion
+mechanism
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000023" class="method-detail">
+        <a name="M000023"></a>
+
+        <div class="method-heading">
+          <a href="Walker.src/M000023.html" target="Code" class="method-signature"
+            onclick="popupCode('Walker.src/M000023.html');return false;">
+          <span class="method-name">add_file_exclusions</span><span class="method-args">( exclusion_list )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+takes an array of exclusions such as literals or regular expressions which
+if matched to a directory that&#8216;s encountered by the walker will cause
+that file or directory to be ignored. No subscriber will ever get a chance
+to process a file or directory ignored through the generic exclusion
+mechanism
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000024" class="method-detail">
+        <a name="M000024"></a>
+
+        <div class="method-heading">
+          <a href="Walker.src/M000024.html" target="Code" class="method-signature"
+            onclick="popupCode('Walker.src/M000024.html');return false;">
+          <span class="method-name">clear_exclusions</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+clear out the generic exclusions list
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000031" class="method-detail">
+        <a name="M000031"></a>
+
+        <div class="method-heading">
+          <a href="Walker.src/M000031.html" target="Code" class="method-signature"
+            onclick="popupCode('Walker.src/M000031.html');return false;">
+          <span class="method-name">get_files_of_interest</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+returns the keys of the criteria as an array
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000029" class="method-detail">
+        <a name="M000029"></a>
+
+        <div class="method-heading">
+          <a href="Walker.src/M000029.html" target="Code" class="method-signature"
+            onclick="popupCode('Walker.src/M000029.html');return false;">
+          <span class="method-name">name_match</span><span class="method-args">( fileordir )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+this is the main method which compares a filename found by the walker
+against the list of files of interest to see if there&#8216;s a match. if
+there is a match, this code will fire the subscriber notification method to
+tell the subscriber (ie <a href="RuleEngine.html">RuleEngine</a>) a file of
+interest has been found
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000028" class="method-detail">
+        <a name="M000028"></a>
+
+        <div class="method-heading">
+          <a href="Walker.src/M000028.html" target="Code" class="method-signature"
+            onclick="popupCode('Walker.src/M000028.html');return false;">
+          <span class="method-name">notify_subscribers</span><span class="method-args">( subscribers, location, filename, rule_used )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+given the filename, this code will check the list of subscribers and notify
+those subscribers whose filename criteria matches this filename a
+subscriber must have a notify method that receives filename, location
+parameters
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000027" class="method-detail">
+        <a name="M000027"></a>
+
+        <div class="method-heading">
+          <a href="Walker.src/M000027.html" target="Code" class="method-signature"
+            onclick="popupCode('Walker.src/M000027.html');return false;">
+          <span class="method-name">progress_report</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+periodically called to show more verbose progress
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000026" class="method-detail">
+        <a name="M000026"></a>
+
+        <div class="method-heading">
+          <a href="Walker.src/M000026.html" target="Code" class="method-signature"
+            onclick="popupCode('Walker.src/M000026.html');return false;">
+          <span class="method-name">resolve_symlink</span><span class="method-args">( fileordir )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+return true or false if the symlink could be resolved and the realpath if
+it can
+</p>
+<p>
+always returns a resolved state of false if @follow_symlinks is false
+</p>
+<p>
+true - link resolved to a real path false - link was broken or circular and
+could not be resolved to a real path
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000030" class="method-detail">
+        <a name="M000030"></a>
+
+        <div class="method-heading">
+          <a href="Walker.src/M000030.html" target="Code" class="method-signature"
+            onclick="popupCode('Walker.src/M000030.html');return false;">
+          <span class="method-name">set_files_of_interest</span><span class="method-args">( subscriber, filelist )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+this method receives a subscriber who is interested in a certain set of
+files. The files list may include regex&#8216;s or literal filenames. Each
+of the files of interest will be associated with one or more subscribers
+who are interested in that same file or file type. When a file match is
+found, the subscriber will be notified. Subscribers must support a:
+</p>
+<p>
+found_file( location, filename, rule_used )
+</p>
+<p>
+method so the walker can notify it of a found file.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000025" class="method-detail">
+        <a name="M000025"></a>
+
+        <div class="method-heading">
+          <a href="Walker.src/M000025.html" target="Code" class="method-signature"
+            onclick="popupCode('Walker.src/M000025.html');return false;">
+          <span class="method-name">walk_dir</span><span class="method-args">( fileordir )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+this method will recursively walk the given directory. It will compare the
+files it encounters with the filter list, both the generic filters first,
+and then the list of files gleaned from the subscribers (usually a <a
+href="RuleEngine.html">RuleEngine</a> instance.) If it finds a file of
+interest, it notifies the subscriber for that file match of the match,
+passes the file and location to the subscriber.
+</p>
+<p>
+returns false if given fileordir is a directory excluded by a filter
+returns true if given fileordir was walked
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

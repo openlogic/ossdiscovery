@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>load (Config)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/conf/config.rb, line 47</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Config</span>.<span class="ruby-identifier">load</span>()
+    <span class="ruby-identifier">raw_configs</span> = <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">load_file</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword kw">__FILE__</span>), <span class="ruby-value str">'config.yml'</span>))
+    <span class="ruby-ivar">@@configs</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-comment cmt"># This binding allows us to do things like 'File.dirname(__FILE__)' and have that expression be </span>
+    <span class="ruby-comment cmt"># evaluated within the context of this Config module.  See the ruby docs for more info.  It </span>
+    <span class="ruby-comment cmt"># should be used as the 2nd argument to any 'eval' method call made below.</span>
+    <span class="ruby-identifier">bind_env</span> = <span class="ruby-identifier">binding</span>()
+    <span class="ruby-identifier">raw_configs</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span> 
+      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">value</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-constant">String</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;nil&quot;</span>) <span class="ruby-keyword kw">then</span>
+        <span class="ruby-ivar">@@configs</span>[<span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_sym</span>] = <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-keyword kw">elsif</span> (<span class="ruby-identifier">value</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-constant">String</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">upcase</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;STDOUT&quot;</span>) <span class="ruby-keyword kw">then</span>
+        <span class="ruby-ivar">@@configs</span>[<span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_sym</span>] = <span class="ruby-constant">STDOUT</span>
+      <span class="ruby-keyword kw">elsif</span> (<span class="ruby-identifier">value</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-constant">String</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">value</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">2</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;&lt;% &quot;</span>) <span class="ruby-keyword kw">then</span> 
+        <span class="ruby-identifier">to_eval</span> = <span class="ruby-identifier">value</span>[<span class="ruby-value">3</span><span class="ruby-operator">..</span><span class="ruby-identifier">value</span>.<span class="ruby-identifier">length</span>].<span class="ruby-identifier">strip</span>
+        <span class="ruby-identifier">to_eval</span> = <span class="ruby-identifier">to_eval</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span>(<span class="ruby-identifier">to_eval</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">-</span> <span class="ruby-value">3</span>)].<span class="ruby-identifier">strip</span>
+        <span class="ruby-ivar">@@configs</span>[<span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_sym</span>] = <span class="ruby-identifier">eval</span>(<span class="ruby-identifier">to_eval</span>, <span class="ruby-identifier">bind_env</span>)
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-ivar">@@configs</span>[<span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_sym</span>] = <span class="ruby-identifier">value</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># of raw_configs.each_pair</span>
+
+    <span class="ruby-identifier">rules_dirs</span> = <span class="ruby-ivar">@@configs</span>[<span class="ruby-identifier">:rules_dirs</span>]
+    <span class="ruby-ivar">@@configs</span>[<span class="ruby-identifier">:rules_dirs</span>] = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-identifier">rules_dirs</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">rd</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@@configs</span>[<span class="ruby-identifier">:rules_dirs</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@@configs</span>[<span class="ruby-identifier">rd</span>.<span class="ruby-identifier">to_sym</span>] }
+    
+    <span class="ruby-comment cmt"># set up a logger and make it available by putting it in the @@configs hash</span>
+    <span class="ruby-ivar">@@configs</span>[<span class="ruby-identifier">:log</span>] = <span class="ruby-constant">Logger</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@@configs</span>[<span class="ruby-identifier">:log_device</span>])
+    <span class="ruby-ivar">@@configs</span>[<span class="ruby-identifier">:log</span>].<span class="ruby-identifier">level</span> = <span class="ruby-ivar">@@configs</span>[<span class="ruby-identifier">:log_level</span>]
+    
+    <span class="ruby-ivar">@@configs</span>[<span class="ruby-identifier">:log</span>].<span class="ruby-identifier">debug</span>(<span class="ruby-value str">'Config'</span>) {<span class="ruby-node">&quot;raw configuration values: #{raw_configs.inspect}&quot;</span>}
+    <span class="ruby-ivar">@@configs</span>[<span class="ruby-identifier">:log</span>].<span class="ruby-identifier">debug</span>(<span class="ruby-value str">'Config'</span>) {<span class="ruby-node">&quot;configuration values: #{@@configs.inspect}&quot;</span>}
+    <span class="ruby-ivar">@@configs_loaded</span> = <span class="ruby-keyword kw">true</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

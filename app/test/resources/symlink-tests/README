@@ -1,0 +1,9 @@
+This directory structure is set up to help test the symlink behavior of the walker.
+
+To setup the tests, you need to run the run-me.sh script once before any tests can
+be done.  After you run it once, you don't need to run it again to perform subsequent
+tests.
+
+chmod a+x run-me.sh
+./run-me.sh
+

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>create_expression_to_eval (BooleanExpression)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/expression.rb, line 51</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_expression_to_eval</span>(<span class="ruby-identifier">the_expression</span>, <span class="ruby-identifier">name_value_pairs</span>)
+    <span class="ruby-comment cmt"># TODO - at some point we should probably add a syntax validation step to this</span>
+    
+    <span class="ruby-ivar">@expression</span> = <span class="ruby-value str">&quot; &quot;</span>
+    <span class="ruby-ivar">@expression</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">the_expression</span>
+    
+    <span class="ruby-comment cmt"># translate the English logical operators to their Ruby equivalents    </span>
+    <span class="ruby-ivar">@expression</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-value str">&quot;AND&quot;</span>, <span class="ruby-value str">&quot; &amp;&amp; &quot;</span> )
+    <span class="ruby-ivar">@expression</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-value str">&quot;OR&quot;</span>, <span class="ruby-value str">&quot; || &quot;</span> )
+    <span class="ruby-ivar">@expression</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-value str">&quot;NOT&quot;</span>, <span class="ruby-value str">&quot; ! &quot;</span> )
+    <span class="ruby-ivar">@expression</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-value str">&quot;(&quot;</span>, <span class="ruby-value str">&quot; ( &quot;</span> )
+    <span class="ruby-ivar">@expression</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-value str">&quot;)&quot;</span>, <span class="ruby-value str">&quot; ) &quot;</span> )
+    <span class="ruby-ivar">@expression</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot; &quot;</span>
+    
+    
+    <span class="ruby-comment cmt"># translate the rule names to their boolean outcomes</span>
+    <span class="ruby-identifier">name_value_pairs</span>.<span class="ruby-identifier">each_pair</span> { <span class="ruby-operator">|</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">value</span> <span class="ruby-operator">|</span>
+      <span class="ruby-ivar">@expression</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-node">&quot; #{name} &quot;</span>, <span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_s</span> )
+    }
+    
+    <span class="ruby-comment cmt"># we now have string composed of boolean operations that can be evaluated directly by Ruby</span>
+    <span class="ruby-comment cmt"># it's a string that will look something like this:</span>
+    <span class="ruby-comment cmt">#</span>
+    <span class="ruby-comment cmt">#  &quot;(false &amp;&amp; true) || (true &amp;&amp; false)&quot;</span>
+    <span class="ruby-comment cmt">#</span>
+    <span class="ruby-comment cmt"># the result of evaluating this will be a boolean that corresponds to the evaluation of the</span>
+    <span class="ruby-comment cmt"># rule sets or match rules</span>
+    <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@expression</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

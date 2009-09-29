@@ -1,0 +1,37 @@
+
+Census Plugin v1.0 --help
+
+--list-geos,      -G print a list of geographies and their numeric code
+
+--list-plugins,   -N lists just the enabled plugins, not all plugins installed
+
+--geography,      -Y geography code. If the scan is submitted to census server
+                     as an anonymous scan, this overrides value in the
+                     config.yml file.
+
+--census-code,    -C the identifier code received at census registration time
+
+--census-local,   -u the absolute or relative path and filename for the human
+                     readable results file.  The default is STDOUT
+
+--census-results, -m the absolute or relative path and filename for the machine
+                     readable results file to submit to OSSCensus
+
+--production-scan,-P This flag identifies the scan you run as a scan of a
+                     production machine in the results.
+
+Example:
+./discovery --path /home/lcox --census-results /tmp/myscan_machine_results.txt
+            --census-local /tmp/myscan_human_results.txt
+
+   Explanation: scans the directory /home/lcox and places the results files
+                in the /tmp directory.
+
+For geography codes used with --geography command line option or the geography
+config.yml property, see command line option --list-geos for a full listing
+of geographies
+
+
+Copyright (C) 2007-2009 OpenLogic, Inc.
+License: Affero GPLv3
+

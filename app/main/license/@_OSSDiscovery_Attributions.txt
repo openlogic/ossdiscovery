@@ -1,0 +1,99 @@
+OSS Discovery is open source software licensed under the Affero GPL v3.
+
+This product includes software developed by the Apache Software Foundation (http://www.apache.org/) and the following other open source communities.  The Open Source Census and the OSS Discovery Team extends thanks to the following communities. If you're an author or contributer on a particular project and we didn't recognize you, send us an email! 
+ 
+
+ASM                     http://asm.objectweb.org 
+			Authors: Eric Bruneton, Eugene Kuleshov, Andrei Loskutov 
+
+EMMA                    http://emma.sourceforge.net
+			Authors: Erik Beijnoff, Felipe Leme, Chad Woolley, Vlad Roubtsov
+
+
+JarJar                  http://code.google.com/p/jarjar/
+			Authors: Know where we can find contributors information on JarJar? Send us email!
+
+Jline                   http://jline.sourceforge.net/
+			Authors: Marc Prud'hommeaux, Damian Steer, Dale Kemp, Jun Liu, malcolm@epcc.ed.ac.uk, 
+			Simon Patarin, Amy Isard, Ryan Bell, Marc Herbert and Christian Salm 
+
+JNA                     https://jna.dev.java.net/
+			Authors: Sheng Liang, Todd Fast, Timothy Wall and Wayne Meissner
+
+Joda 			joda-time.sourceforge.net/ 
+			Authors:  Al Major, Brian S O'Neill, Chris Gardner, Grégory Joseph, Mario Ivankovits,
+			Jim Newsham, Jeremy Rickard, Stephen Colebourne
+
+Joni			Know where we can find site and contributor information for Joni? Send us email!!	
+
+JUnit                   http://www.junit.org/
+			Authors: Mike Clark, Matthias Schmidt, David Saff, Erich Gamma, Erik G. H. Meade, Kent Beck, 	
+			Vladimir Ritz Bossicard
+
+RetroWeaver             http://retroweaver.sourceforge.net/
+			Authors: Toby REyelts, Xavier Le Vourch
+
+BSF                     http://jakarta.apache.org/bsf/
+			Authors: Know where we can find contributors information on BSF? Send us email!
+
+Ruby                    http://www.ruby-lang.org
+			Authors: Know where we can find contributors information on Ruby? Send us email!
+
+JRuby                   http://jruby.codehaus.org/
+			Authors: Charles Nutter, Thomas E Enebo, Ola Bini, Nick Sieger, Marcin Mielzynski, Bill 				Dortch, Stefan Matthias Aust, Anders Bengtsson, Geert Bevin, Piergiuliano Bossi, Johannes 				Brodwall, Rocky Burt, Evan Buswell, Paul Butcher, Benoit Cerrina, Wyss Clemens, David Corbin,
+			Robert Evans, Lucas Felber, Robert Feldt, Jason Foreman, Russ Freeman, Chad Fowler,
+			Joey Gibson, Marc Hadley, Kiel Hodges, Xandy Johnson, Kelvin Liu, Alan Moore, Akinori Musha,
+			Takashi Okamoto, Jan Arne Petersen, Tobias Reif, David Saff, Ed Sinjiashvili, Mirko Stocker,
+			Daiki Ueno, Matthias Veit, Jason Voegele, Sergey Yevtushenko, Robert Yokota
+
+requireTest		Know where we can find site and contributor information for requireTest? Send us email!!
+
+Rake                    https://rubyforge.org/projects/rake/
+			Authors: Jim Weirich
+
+Rspec                   https://rubyforge.org/projects/rspec/
+			Authors: Aslak Hellesoy, Brian Takita, Dave Astels, David Chelimsky, Luke Redpath,
+			Steven Baker, Dan North
+
+Jvyaml                  https://jvyaml.dev.java.net/   
+			Authors: Ola Bini
+                   
+rbyaml                  http://rubyforge.org/projects/rbyaml
+			Authors: Ola Bini
+
+Ant                     http://ant.apache.org/
+			Authors: Nick King, Anil Vijendran, James Todd, Jesse Stockall, Jon S. Stevens, Gal Schachor,
+			Nico Seessle, Harish Prabhandham, Adam Murdoch, Craig McClanahan, Glenn McAllister, Stefano
+			Mazzocchi, Arnout J. Kuiper, Arun Jamwal, Justyna Horwat, Jason Hunter, Thomas Haas, Simeon 
+			H. K. Fitch, Danno Ferrin, Peter Donald, Darrell DeBoer, Nick Davis, Preston Bannister,
+			Alexey Solofnenko, Jesse Glick, Jose Alberto Fernandez, Steve Cohen, Jon Skeet, Costin
+			Monolache, Donald Leslie, Diane Holt, James Duncan Davidson, Kevin Jackson, Christoph 
+			Wilhelms, Magesh Umasankar, Sam Ruby, Peter Reilly, Jan Materne, Conor MacNeil, Steve
+			Loughran, Antoine Levy-Lambert, Martijn (J.M.) Kruithof, Erik Hatcher, Dominque Devienne,
+			Stefan Bodewig, Matt Benson, Stephane Bailliez, Bruce Atherton
+			
+
+BouncyCastle            http://www.bouncycastle.org/
+			Authors: David Hook
+
+Inno Setup		http://www.jrsoftware.org/isinfo.php
+			Authors: Jordan Russell
+
+Commons Codec		http://jakarta.apache.org/commons/codec
+			Authors: Henri Yandell, Tim OBrien, Scott Sanders, Rodney Waldhoff, Daniel Rall, 
+			Jon S. Stevens, Gary D. Gregory, David Graham
+
+Commons Logging		http://jakarta.apache.org/commons/logging
+			Authors: Morgan Delagrange, Rodney Waldhoff, Craig McClanahan, Scott Snders, Robert Burrell
+			Donkin, Peter Donald, Costin Manolache, Richard Sitze, Juozas Baliuka, Simon Kitching,
+			Dennis Lundberg, Brian Stransberry
+
+Commons HTTPClient	http://jakarta.apache.org/commons/httpclient
+			Authors: Michael Becke, Jeff Dever, dIon Gillard, Ortwin Glueck, Sung-Gu, Oleg Kalnichevski,
+			Sean C. Sullivan, Adrian Sutton, Rodney Waldhoff
+ 
+
+The licenses for each of these projects are located in the 'License' directory of OSS Discovery.
+
+
+

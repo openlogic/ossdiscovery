@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>discoverable_projects (ScanRulesReader)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/scan_rules_reader.rb, line 299</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-constant">ScanRulesReader</span>.<span class="ruby-identifier">discoverable_projects</span>(<span class="ruby-identifier">scan_rules_dirs</span>) 
+    
+    <span class="ruby-identifier">projects</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
+    
+    <span class="ruby-identifier">scan_rules_dirs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">scan_rules_dir</span><span class="ruby-operator">|</span>
+      
+      <span class="ruby-identifier">rules_files</span> = <span class="ruby-constant">ScanRulesReader</span>.<span class="ruby-identifier">find_all_scanrules_files</span>(<span class="ruby-identifier">scan_rules_dir</span>)
+      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">rules_files</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">rules_files</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>) <span class="ruby-keyword kw">then</span> 
+        <span class="ruby-ivar">@@log</span>.<span class="ruby-identifier">warn</span>(<span class="ruby-value str">&quot;ScanRulesReader&quot;</span>) { <span class="ruby-node">&quot;No scan rules xml files found in directory: '#{scan_rules_dir}'&quot;</span> }
+        <span class="ruby-keyword kw">next</span>
+      <span class="ruby-keyword kw">end</span>
+        
+      <span class="ruby-identifier">rules_files</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">filepath</span>, <span class="ruby-identifier">index</span><span class="ruby-operator">|</span> 
+        <span class="ruby-identifier">file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">filepath</span>)
+        <span class="ruby-identifier">xml</span> = <span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">file</span>)
+        <span class="ruby-identifier">root</span> = <span class="ruby-identifier">xml</span>.<span class="ruby-identifier">root</span>
+     
+        <span class="ruby-comment cmt"># spin through all the projects in the scan rules file</span>
+        <span class="ruby-identifier">root</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">xproject</span><span class="ruby-operator">|</span> 
+          
+          <span class="ruby-identifier">project</span> = <span class="ruby-constant">ProjectRule</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">xproject</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;name&quot;</span>], 
+                                <span class="ruby-identifier">xproject</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;from&quot;</span>], 
+                                <span class="ruby-identifier">xproject</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;os&quot;</span>].<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;,&quot;</span>))
+          <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">xproject</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;description&quot;</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span>) <span class="ruby-keyword kw">then</span>
+            <span class="ruby-identifier">project</span>.<span class="ruby-identifier">desc</span> = <span class="ruby-identifier">xproject</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;description&quot;</span>].<span class="ruby-identifier">text</span>
+          <span class="ruby-keyword kw">end</span>
+  
+          <span class="ruby-identifier">projects</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">project</span>
+        <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># of root.elements.each</span>
+        
+      <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># of rules_files.each</span>
+      
+    <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt"># of scan_rules_dirs.each</span>
+    
+    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">projects</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

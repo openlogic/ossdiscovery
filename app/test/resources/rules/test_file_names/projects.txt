@@ -1,0 +1,1 @@
+apache-soap;SOAP;apache-soap;java;org.apache.soap;commons-collections;Commons Collections;commons-collections,jakarta-commons-collections,apache-commons-collections;java;org.apache.commons.collections;

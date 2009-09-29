@@ -1,0 +1,111 @@
+<project-rules>
+	
+	<project-rule name="junit" from="wild" os="all">
+		<eval expression="justfilenames" speed="1" confidence='95'/>
+		<eval expression="junit_md5" speed="2" confidence='100'/>
+		
+		<match-rules name="justfilenames">
+			<result expression="post4 OR series3 OR ancient" />
+			<!-- starting at JUnit 4, the project's jars contained the version number in the jar name -->
+			<match-rule name="post4" type="filename" filename="junit-([0-9]\.[0-9])\.jar" />
+			<!-- lots of junit 3 versions like this -->
+			<match-rule name="series3" type="filename" filename="junit.jar" />
+			<!-- some junit jars, back in the 2 days, were junit2.jar -->
+			<match-rule name="ancient" type="filename" filename="junit([0-9])\.jar" />
+		</match-rules>
+
+		<match-rules name="junit_md5">
+			<!-- would be nice to do an OR-ALL as an expression instead of explicitly OR'ing -->
+			<result expression="ju2 OR ju3 OR ju3.2 OR ju3.4 OR ju3.5 OR ju3.6 OR ju3.7 OR ju3.8 OR ju3.8.1 OR ju3.8.2 OR ju4.0 OR ju4.1 OR ju4.2 OR ju4.3.1 OR ju4.4" /> 
+			<match-rule name="ju2" type="MD5" filename="(.+?).jar" version="2" md5sum="06e503d7e6457e7c3470e65b36a1529f" />
+			<match-rule name="ju3" type="MD5" filename="(.+?).jar" version="3" md5sum="6cc8728e66815a4e136ec17fa703c424" />
+			<match-rule name="ju3.2" type="MD5" filename="(.+?).jar" version="3.2" md5sum="d5171fc6c7860889b8224b9f822fb891" />
+			<match-rule name="ju3.4" type="MD5" filename="(.+?).jar" version="3.4" md5sum="04023ede5a649ec9a61596e046f44ba0" />			
+			<match-rule name="ju3.5" type="MD5" filename="(.+?).jar" version="3.5" md5sum="12702a79719214df90e7c468ee0bd6d7" />
+			<match-rule name="ju3.6" type="MD5" filename="(.+?).jar" version="3.6" md5sum="c6e6a3c947575b4c5980ab782d7c2a87" />
+			<match-rule name="ju3.7" type="MD5" filename="(.+?).jar" version="3.7" md5sum="96079ce2323b1e68431fdfd20efa6e2d" />
+			<match-rule name="ju3.8" type="MD5" filename="(.+?).jar" version="3.8" md5sum="8f978abc1bcd0bd48402883d7f7e228a" />
+			<match-rule name="ju3.8.1" type="MD5" filename="(.+?).jar" version="3.8.1" md5sum="1f40fb782a4f2cf78f161d32670f7a3a" />
+			<match-rule name="ju3.8.2" type="MD5" filename="(.+?).jar" version="3.8.2" md5sum="28e7eb9eeefe31a657c68755bfccc541" />
+			<match-rule name="ju4.0" type="MD5" filename="(.+?).jar" version="4.0" md5sum="9bf6686f948a5bb4fbe951d5578e19c3" />
+			<match-rule name="ju4.1" type="MD5" filename="(.+?).jar" version="4.1" md5sum="3aa45be8fd3f5ae8c69b73959a7fa57c" />
+			<match-rule name="ju4.2" type="MD5" filename="(.+?).jar" version="4.2" md5sum="b5a27973a2c87d161b4c2729b64ecf66" />
+			<match-rule name="ju4.3.1" type="MD5" filename="(.+?).jar" version="4.3.1" md5sum="868b4d5d488858c57bc5a04245154da6" />
+			<match-rule name="ju4.4" type="MD5" filename="(.+?).jar" version="4.4" md5sum="f852bbb2bbe0471cef8e5b833cb36078" />	
+			
+			<!-- the rule engine makes an optimization assumption that any md5 match rule types within a match-rules will not have 
+			     duplicate md5sums.  this saves it from having to evaluate all md5 match rules after it's found the first match
+                 with a given location/filename. 
+              -->
+		</match-rules>
+
+	</project-rule>
+
+	<project-rule name="openssl" from="wild" os="all" >
+		<eval expression="filematch" speed="1" confidence="100" />
+		<eval expression="version" speed="2" confidence="100" />
+		
+		<match-rules name="filematch">
+			<match-rule name="libfile" type="filename" filename="^libssl.so\.(.+?)$" />
+		</match-rules>
+		
+		<match-rules name="version">
+			<result expression="exe OR bin OR lib091 OR lib092 OR lib093 OR lib094 OR lib095 OR lib096 OR lib097 OR lib098 OR lib3" />
+
+			<match-rule name="exe" type="binary" filename="^openssl.exe" regexp="OpenSSL ([0-9]\.[0-9]+\.[0-9][a-z]) "/>
+			<match-rule name="bin" type="binary" filename="^openssl$" regexp="OpenSSL ([0-9]\.[0-9]+\.[0-9][a-z]) "/>
+			<!-- these are separate match rules instead of the filename regex of ^libssl.so.(.+?)$ because many of these versions can end 
+			up in the same directory and the match-rule is defined to only use the first match of a filename in the same directory...
+			otherwise it asks the filename be made more explicit -->
+			<match-rule name="lib091" type="binary" filename="^libssl.so.0.9.1$" regexp="OpenSSL ([0-9]\.[0-9]+\.[0-9][a-z]?) " />
+			<match-rule name="lib092" type="binary" filename="^libssl.so.0.9.2$" regexp="OpenSSL ([0-9]\.[0-9]+\.[0-9][a-z]?) " />
+			<match-rule name="lib093" type="binary" filename="^libssl.so.0.9.3$" regexp="OpenSSL ([0-9]\.[0-9]+\.[0-9][a-z]?) " />
+			<match-rule name="lib094" type="binary" filename="^libssl.so.0.9.4$" regexp="OpenSSL ([0-9]\.[0-9]+\.[0-9][a-z]?) " />
+			<match-rule name="lib095" type="binary" filename="^libssl.so.0.9.5$" regexp="OpenSSL ([0-9]\.[0-9]+\.[0-9][a-z]?) " />
+			<match-rule name="lib096" type="binary" filename="^libssl.so.0.9.6$" regexp="OpenSSL ([0-9]\.[0-9]+\.[0-9][a-z]?) " />
+			<match-rule name="lib097" type="binary" filename="^libssl.so.0.9.7$" regexp="OpenSSL ([0-9]\.[0-9]+\.[0-9][a-z]?) " />
+			<match-rule name="lib098" type="binary" filename="^libssl.so.0.9.8$" regexp="OpenSSL ([0-9]\.[0-9]+\.[0-9][a-z]?) " />
+			<match-rule name="lib3" type="binary" filename="^libssl[0-9].so$" regexp="OpenSSL ([0-9]\.[0-9]+\.[0-9][a-z]?) " />			
+		</match-rules>
+	</project-rule>
+	
+	<project-rule name="openssh" from="wild" os="linux,sunos-5.8,sunos-5.9,sunos-5.10" >
+		<eval expression="sshfile" speed="1" confidence="100" />		
+		<eval expression="version" speed="2" confidence="100" />
+
+		<match-rules name="sshfile">
+			<match-rule name="sshbin" type="filename" filename="^ssh$"/>			
+		</match-rules>
+				
+		<match-rules name="version">
+			<match-rule name="sshbin" type="binary" filename="^ssh$" regexp="OpenSSH_([0-9]\.[0-9][a-z]?[0-9]?)" />			
+		</match-rules>
+	</project-rule>	
+		
+	<project-rule name="php" from="wild" os="all">
+		<eval expression="(executables-php4 OR executables-php5)" speed="1" confidence="100" />
+		<eval expression="versionstring" speed="2" confidence="100" />
+				
+		<match-rules name="executables-php5">
+			<result expression="php5lib OR phpdll" />
+			<match-rule name="php5lib" type="filename" filename="^libphp5.so$" />
+			<match-rule name="phpdll" type="filename" filename="^php5.dll" />			
+		</match-rules>
+		<match-rules name="executables-php4">
+			<result expression="php4lib OR phpdll" />			
+			<match-rule name="php4lib" type="filename" filename="^libphp4.so$" />
+			<match-rule name="phpdll" type="filename" filename="^php4.dll" />			
+		</match-rules>
+		
+		<match-rules name="versionstring">
+			<result expression="libversion OR binversion OR modversion OR exeversion OR dllthreadedversion OR dllversion" />
+			<match-rule name="libversion" type="binary" filename="^libphp(.?).so$" regexp="PHP/([0-9].[0-9]+.[0-9]+)" />
+			<match-rule name="binversion" type="binary" filename="^php$" regexp="PHP/([0-9].[0-9]+.[0-9]+)" />
+			<match-rule name="exeversion" type="binary" filename="^php.exe$" regexp="PHP/([0-9].[0-9]+.[0-9]+)" />
+			<match-rule name="modversion" type="binary" filename="^mod_php(.?).so$" regexp="PHP/([0-9].[0-9]+.[0-9]+)" />
+			<match-rule name="dllthreadedversion" type="binary" filename="^php[4-5]ts.dll$" regexp="PHP/([0-9].[0-9]+.[0-9]+)" />
+			<match-rule name="dllversion" type="binary" filename="^php[4-5].dll$" regexp="PHP/([0-9].[0-9]+.[0-9]+)" />			
+		</match-rules>
+	</project-rule>	
+
+</project-rules>
