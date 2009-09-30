@@ -50,13 +50,13 @@ require 'rexml/document'
 =begin rdoc
   ScanRulesUpdater, believe it or not, is responsible for updating scan rules.
   This is done by going out to a server and downloading the latest and greates scan rules.
-=end    
+=end
 class ScanRulesUpdater
-  
+
   @@log = Config.log
-  
+
   attr_accessor :base_url, :proxy_host, :proxy_port, :proxy_username, :proxy_password
-  
+
 =begin rdoc
   Construct a ScanRulesUpdater.  The 'base_url' argument is intended to be the base_url of the site
   that contains the list of rules files that tells what to download, and the actual downloadable
@@ -84,7 +84,7 @@ class ScanRulesUpdater
 
   This class assumes that the 'rules_file.xml' file and the downloadable files themselves with have
   the same 'base_url'
-=end    
+=end
   def initialize(service_base_url, rules_file_base_url)
     if (service_base_url == nil)
       @base_url = "http://localhost:3000/"
@@ -95,7 +95,7 @@ class ScanRulesUpdater
         @base_url = service_base_url << "/"
       end
     end
-    
+
     @proxy_host = nil
     @proxy_port = nil
     @proxy_username = nil
@@ -111,7 +111,7 @@ class ScanRulesUpdater
         @rules_file_base_url = rules_file_base_url << "/"
       end
     end
-   
+
   end
 
 =begin rdoc
@@ -125,12 +125,12 @@ class ScanRulesUpdater
     * rules_files_url_path -
 
        There is no default for this value.  A valid value must be passed in for this operation to work.
- 
-=end  
+
+=end
   def update_scanrules(local_scan_rules_dir, rules_files_url_path)
     @@log.info("ScanRulesUpdater") {"Updating scan rules: local_scan_rules_dir: '#{local_scan_rules_dir}'; rules_files_url_path = '#{rules_files_url_path}'"}
     rules_files_url_path = ScanRulesUpdater.scrub_url_path(rules_files_url_path)
-    
+
     # get the list of files that need to be downloaded
     begin
       rules_files_to_download = http_get_rules_files_to_download(local_scan_rules_dir, rules_files_url_path)
@@ -157,7 +157,7 @@ class ScanRulesUpdater
 
     # download the files
     FileUtils.mkdir(rules_dir) # making the directory for the rules to be downloaded into
-    
+
     begin
       print "Downloading rule updates from server..."
       # re-download our rules_file.xml file so we have it to compare with for next time
@@ -167,6 +167,7 @@ class ScanRulesUpdater
         download_file(file_to_download, rules_dir)
       end
       puts "done."
+      ScanRulesUpdater.restore_unchanged(backup_dir, rules_dir)
       ScanRulesUpdater.remove_backup(backup_dir)
     rescue Exception => e
       ScanRulesUpdater.rollback_update(backup_dir)
@@ -190,8 +191,8 @@ class ScanRulesUpdater
         rules/scan-rules.xml
     * dest_dir - Where you want the file to be saved/downloaded to.
 
-=end 
-  def download_file(file_to_download, dest_dir="") 
+=end
+  def download_file(file_to_download, dest_dir="")
     retries = 2
     file_to_download_path = ScanRulesUpdater.scrub_url_path(file_to_download.path)
     File.open(File.join(dest_dir, File.basename(file_to_download_path)), "wb") do |downloaded_file|
@@ -203,7 +204,7 @@ class ScanRulesUpdater
             downloaded_file.write(response_body)
             return
           else
-            # puts "checksum mismatch: expected #{file_to_download.md5} but got #{md5}"
+            #puts "checksum mismatch: expected #{file_to_download.md5} but got #{md5}"
           end
         end
         # try again
@@ -211,7 +212,7 @@ class ScanRulesUpdater
       end
     end # of File.open
     # download was not successful even after retrying
-    raise "Could not succssfully download an update because the transmitted file was corrupted."
+    raise "Could not successfully download an update because the transmitted file was corrupted."
   end
 
 =begin rdoc
@@ -222,14 +223,14 @@ class ScanRulesUpdater
 
   def http_get_rules_files_to_download(local_scan_rules_dir, rules_files_url_path)
     rules_files_url_path = ScanRulesUpdater.scrub_url_path(rules_files_url_path)
-    response_body = http_get_file(@base_url + rules_files_url_path)    
+    response_body = http_get_file(@base_url + rules_files_url_path)
     unless response_body.include?('rules-files')
       raise "Discovery was unable to update scan rules from '#{@base_url + rules_files_url_path}'"
     end
 
     # grab the paths, versions, and md5's of rules files to download from the XML
     rules_files = get_rules_files_from_xml(response_body)
-    
+
     filter_already_current(local_scan_rules_dir, rules_files)
   end
 
@@ -257,14 +258,14 @@ class ScanRulesUpdater
     xml = REXML::Document.new(xml_str)
     root = xml.root
     rules_files = Set.new
-     
-    root.elements.each do |xrules_file| 
+
+    root.elements.each do |xrules_file|
       rf = RulesFile.new(xrules_file.attributes["path"], xrules_file.attributes["version"], xrules_file.attributes["md5"])
       rules_files << rf
     end
     rules_files
   end
-  
+
 =begin rdoc
   encapsulates all the support we need to do an http request - including https or proxy support
   several places needed the same functionality, so put it here.
@@ -275,10 +276,10 @@ class ScanRulesUpdater
   Uses the Net::HTTPResponse.value method to do so.
 
   TODO - we may want to pull this out and extend Net::HTTP with this helper
-=end  
+=end
   def http_get_file( a_url )
     @@log.debug("ScanRulesUpdater") {"Doing an HTTP Get on '#{a_url}'"}
-    
+
     # Net::HTTP.Proxy will use a normal HTTP if proxy host and port are nil, so this code will work whether or not
     # proxy support is enabled, but if it's not enabled, proxy host and port need to be nil
 
@@ -301,13 +302,13 @@ class ScanRulesUpdater
         end
 
         response = http.get( path )
-		
+
         return response.body
 
       rescue Exception => e # most likely will be a Timeout::Error because a download failed midstream (the network cable yank scenario)
         raise e, "Failure trying to get '#{a_url}' -> caused by: #{e.message}", e.backtrace
       end
-	    
+
       begin
         # Raises HTTP error if the response is not 2xx (aka... is not successful).
         response.value
@@ -337,33 +338,33 @@ class ScanRulesUpdater
       response = Utils.read_java_input_stream(is)
       return response
     end
-   
-    return nil 
+
+    return nil
   end
-  
-  
+
+
 =begin rdoc
   Method is intended only as a helper internal to this class.  It is only accessible so it can be tested.
 
   Backs up the default scan rules directory.  '.svn' directories are deleted.
 
   Returns the expanded path to the backup directory.
-=end    
-  def ScanRulesUpdater.backup_scanrules_dir(local_scan_rules_dir=nil, bak_extension=nil) 
-    
-    if (bak_extension.nil? or bak_extension == "") then bak_extension = "_" + ScanRulesUpdater.get_YYYYMMDD_HHMM_str + ".bak" end    
+=end
+  def ScanRulesUpdater.backup_scanrules_dir(local_scan_rules_dir=nil, bak_extension=nil)
+
+    if (bak_extension.nil? or bak_extension == "") then bak_extension = "_" + ScanRulesUpdater.get_YYYYMMDD_HHMM_str + ".bak" end
     @@log.info("ScanRulesUpdater") {"Backing up the local scan rules dir (#{local_scan_rules_dir}) with extension '#{bak_extension}'"}
-    
+
     path = ""
     if (local_scan_rules_dir == nil) then
       path = ScanRulesUpdater.get_default_scan_rules_dir()
-    else 
+    else
       path = File.expand_path(local_scan_rules_dir)
-    end    
-    
+    end
+
     backup = path + bak_extension
     FileUtils.mv(path, backup)
-    
+
     Find.find(backup) do |the_path|
       if (File.directory?(the_path) && File.basename(the_path) == ".svn") then
         FileUtils.remove_dir(the_path, true)
@@ -371,18 +372,18 @@ class ScanRulesUpdater
     end
     return backup
   end
-  
+
   def ScanRulesUpdater.get_default_scan_rules_dir()
     return File.expand_path(Config.prop(:rules_openlogic))
   end
-  
+
 =begin rdoc
   Method is intended only as a helper internal to this class.  It is only accessible so it can be tested.
 
   if 'url-path' is equal to "/rules_files.xml" then this method returns "rules_files.xml"
 
   if 'url-path' is equal to "rules_files.xml" then this method returns "rules_files.xml" (does nothing)
-=end      
+=end
   def ScanRulesUpdater.scrub_url_path(url_path)
     if (url_path[0..0] == "/") then
       return url_path[1..url_path.size]
@@ -390,30 +391,30 @@ class ScanRulesUpdater
       return url_path
     end
   end
-  
+
   def ScanRulesUpdater.get_YYYYMMDD_HHMM_str(time=Time.new)
     # TODO findme: move this method to a utils class
     str = "#{time.year}"
-    
+
     month = "#{time.month}"
     if (month.size == 1) then month = "0" + month end
     str << month
-    
+
     day = "#{time.day}"
     if (day.size == 1) then day = "0" + day end
     str << day
-    
+
     hour = "#{time.hour}"
     if (hour.size == 1) then hour = "0" + hour end
     str << "_" << hour
-    
+
     minute = "#{time.min}"
     if (minute.size == 1) then minute = "0" + minute end
     str << minute
-    
+
     return str
   end
-  
+
 =begin rdoc
   Method is intended only as a helper internal to this class.  It is only accessible so it can be tested.
 
@@ -427,21 +428,48 @@ class ScanRulesUpdater
       '.../rules/openlogic_20071106_0950.bak'
     * rules_dir - This argument is only available for testing, because by default, in a real
       client-in-production scenario, this will always be '.../rules/openlogic'.
-=end     
+=end
   def ScanRulesUpdater.rollback_update(dir_with_rollback_content, rules_dir=nil)
     @@log.info("ScanRulesUpdater") {"Rolling back the scan rules update. Rolling back to the rules in '#{dir_with_rollback_content}'"}
-    
+
     unfinished_update_dir = ""
     if (rules_dir == nil) then # the production case
       unfinished_update_dir = File.join(File.dirname(dir_with_rollback_content), "openlogic")
     else # the test case
       unfinished_update_dir = rules_dir
     end
-    
+
     unfinished_update_dir_new_name = File.join(File.dirname(dir_with_rollback_content), File.basename(dir_with_rollback_content) + ".failed-update")
     FileUtils.mv(unfinished_update_dir, unfinished_update_dir_new_name)
     FileUtils.mv(dir_with_rollback_content, unfinished_update_dir)
     return unfinished_update_dir # not currently used for anything, but more explicit than returning whatever FileUtils.mv returns
+  end
+
+
+=begin rdoc
+  Method is intended only as a helper internal to this class.  It is only accessible so it can be tested.
+
+  This method is called after new rules files have been downloaded to restore any
+  rules files that didn't have new versions
+
+  Params:
+    * dir_with_rollback_content - This is the dir that holds the original scan rules (the last valid set
+      of scan rules we had before trying to update to the new ones).  It will be named something like:
+      '.../rules/openlogic_20071106_0950.bak'
+    * rules_dir - This argument is only available for testing, because by default, in a real
+      client-in-production scenario, this will always be '.../rules/openlogic'.
+=end
+  def ScanRulesUpdater.restore_unchanged(dir_with_rollback_content, rules_dir)
+    @@log.info("ScanRulesUpdater") {"Restoring rules files from '#{dir_with_rollback_content}' which weren't updated to '#{rules_dir}'."}
+
+    backup_files_list = Dir.entries(dir_with_rollback_content)
+    current_rules_list = Dir.entries(rules_dir)
+
+    restore_list = backup_files_list - current_rules_list
+
+    restore_list.each { |file_name|
+      #puts "Copying #{dir_with_rollback_content}/#{file_name} to #{rules_dir}"
+      FileUtils.mv("#{dir_with_rollback_content}/#{file_name}", "#{rules_dir}")}
   end
 
   # All went well with the update so there's no point in retaining a .bak
@@ -449,12 +477,12 @@ class ScanRulesUpdater
   def self.remove_backup(backup_dir)
     FileUtils.rm_rf(backup_dir)
   end
-  
+
 end
 
 class RulesFile
   attr_accessor :path, :version, :md5
-  
+
   def initialize(path, version, md5)
     @path = path
     @version = version
