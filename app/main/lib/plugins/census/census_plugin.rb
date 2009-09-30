@@ -275,7 +275,7 @@ class CensusPlugin
     printf(io, "integrity_check: #{Integrity.create_integrity_check(text,scandata.universal_rules_md5,CENSUS_PLUGIN_VERSION_KEY)}\n")
 
     begin
-      printf(io, text )
+      printf(io, text.gsub('%','%%') )
     rescue Exception => e
       printf("Sorry, can't write the machine report\n#{e.to_s}\n")
     end

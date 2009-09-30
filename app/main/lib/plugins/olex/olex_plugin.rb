@@ -282,7 +282,7 @@ class OlexPlugin
 
     # TODO - when a rogue rule runs afoul and matches too much text on a package, it will blow chunks here
     begin
-      printf(io, text )
+      printf(io, text.gsub('%','%%') )
     rescue Exception => e
       printf("Sorry, can't write the machine report\n#{e.to_s}\n")
     end
@@ -357,7 +357,7 @@ END COMPONENT
 
     # TODO - when a rogue rule runs afoul and matches too much text on a package, it will blow chunks here
     begin
-      printf(io, text )
+      printf(io, text.gsub('%','%%') )
     rescue Exception => e
       printf("Sorry, can't write the mif report\n#{e.to_s}\n")
     end
@@ -523,9 +523,9 @@ slower, but more accurate search, run discovery with --rule-types=all
     rollup_report = header_text + rollup_text
 
     # TODO - when a rogue rule runs afoul and matches too much text on a package, it will blow chunks here
-    begin
-      printf(detailed_io, detailed_report )
-      printf(rollup_io, rollup_report )
+    begin      
+      printf(detailed_io, detailed_report.gsub('%','%%') )
+      printf(rollup_io, rollup_report.gsub('%','%%') )
     rescue Exception => e
       printf("Sorry, can't write the reports\n#{e.to_s}\n")
     end

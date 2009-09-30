@@ -201,7 +201,7 @@ class InventoryPlugin
 
     # TODO - when a rogue rule runs afoul and matches too much text on a package, it will blow chunks here
     begin
-      printf(io, text )
+      printf(io, text.gsub('%','%%')  )
     rescue Exception => e
       printf("Sorry, can't write the machine report\n#{e.to_s}\n")
     end
