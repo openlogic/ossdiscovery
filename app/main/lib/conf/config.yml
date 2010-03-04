@@ -90,7 +90,7 @@ archive_temp_dir: nil
 #--------------------------------------------------------------------------------------
 # Which file extensions signify an archive to open if the open_archives flag is set?
 # NOTE:  these must currently be files stored in the 'zip' format only.
-archive_extensions: <% [ '.zip', '.war', '.ear' ] %>
+archive_extensions: <% [ '.zip', '.war', '.ear', '.sar', '.rar', '.bar' ] %>
 
 #--------------------------------------------------------------------------------------
 # Set to true to force discovery to look inside of a jar file for known class
@@ -106,7 +106,7 @@ no_class_files: false
 # Which file extensions signify an archive that could contain .class files to
 # examine if the archive is not recognized and no_class_files is false.
 # NOTE:  these must currently be files stored in the 'zip' format only.
-class_file_archive_extensions: <% [ '.jar', '.war', '.ear' ] %>
+class_file_archive_extensions: <% [ '.jar', '.war', '.ear', '.sar', '.rar', '.bar' ] %>
 
 #--------------------------------------------------------------------------------------
 # Set to true to look in source files to find traces of open source usage.

@@ -34,7 +34,7 @@
       <!-- MATCH EVERYTHING -->
       <!--match-rule name="ternarytree" type="filenameList" filename=".*" projectfile="projects.txt"/-->
       <!-- MATCH ONLY SPECIFIC EXTENSIONS -->
-      <match-rule name="ternarytree" type="filenameList" filename="(\.jar|\.war|\.ear|\.sar|\.zip|\.java|\.dll|\.exe)$" projectfile="projects.txt"/>
+      <match-rule name="ternarytree" type="filenameList" filename="(\.jar|\.war|\.ear|\.sar|\.rar|\.bar|\.zip|\.java|\.dll|\.exe)$" projectfile="projects.txt"/>
       <!-- MATCH ONLY SPECIFIC EXTENSIONS - This smaller list may be better for inventory scans -->
       <!-- match-rule name="ternarytree" type="filenameList" filename="(\.jar|\.war|\.ear|\.sar|\.java)$" projectfile="projects.txt"/-->
       <!-- MATCH WITHOUT NON-INTERESTING OR PROBLEMATIC EXTENSIONS -->
