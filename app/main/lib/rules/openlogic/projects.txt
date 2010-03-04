@@ -21343,7 +21343,7 @@ db2mc;db2mc;javascript,php;none
 db2rails;db2rails;ruby;none
 db2tcl;db2tcl;c,tcl;none
 db2viewer;db2viewer;java;none
-db2xml;db2xml;java;org.w3c.dom
+db2xml;db2xml;java;db2xml
 db3xs;db3xs;c;none
 db4o;db4o;asp .net,c#,java,visual basic .net;none
 db4oboobrowser;db4oboobrowser;none;none
@@ -40003,7 +40003,7 @@ gnupinch;gnupinch;c,fortran;none
 gnupipo-bbs;gnupipo-bbs;none;none
 gnupiter;gnupiter;c++,perl;none
 gnuplant;gnuplant;c++,perl;none
-gnuplot;gnuplot;c,java;org.codehaus.groovy
+gnuplot;gnuplot;c,java;none
 gnuplot-py;gnuplot-py;python;none
 gnuplotfortran;gnuplotfortran;fortran;none
 gnuplothelper;gnuplothelper;basic;none

@@ -1,13 +1,13 @@
 javascript:
   - .js
   - .javascript
-
-java:
-  - .class
-  - .jar
-  - .ear
-  - .war
-  - .java
+#
+#java:
+#  - .class
+#  - .jar
+#  - .ear
+#  - .war
+#  - .java
 #
 #c++:
 #  - .cpp
@@ -36,4 +36,4 @@ java:
 #ruby:
 #  - .rb
 #  - .ruby
-#
+
