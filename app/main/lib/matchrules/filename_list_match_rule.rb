@@ -70,10 +70,10 @@ class FilenameListMatchRule < MatchRule
   
   # look up path in our ternary search tree
   def FilenameListMatchRule.match?(defined_filename, actual_filepath)
-    unless FilenameMatchRule.match?(defined_filename, actual_filepath)
+    unless FilenameMatchRule.match?(defined_filename, actual_filepath.downcase)
       return false
     end
-    SearchTrees.match_file_name(File.basename(actual_filepath)) || false
+    SearchTrees.match_file_name(File.basename(actual_filepath.downcase)) || false
   end
 
   def FilenameListMatchRule.create(attributes)

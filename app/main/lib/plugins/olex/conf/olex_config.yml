@@ -58,11 +58,11 @@ show_base_dirs: false
 
 # Set to true to make Discovery check the OLEX site for new rules and other
 # configuration files and download them.
-update_rules: true
+update_rules: false
 
 # Set to true to make Discovery check the OLEX site for new rules and other
 # configuration files and download them before continuing to perform a new scan.
-update_rules_and_do_scan: true
+update_rules_and_do_scan: false
 
 # This tells Discovery where to look for updates to the rules and other
 # configuration files.  These values should not include a trailing slash.
