@@ -79,7 +79,7 @@ open_archives: true
 # Set to true to not look inside archives if we already match against the archive
 # file itself.  For example, if the archive is hibernate3.zip, we may not need
 # to open it.
-dont_open_discovered_archives: true
+dont_open_discovered_archives: false
 
 #--------------------------------------------------------------------------------------
 # Where archives are temporarily unpacked for scanning
@@ -90,12 +90,12 @@ archive_temp_dir: nil
 #--------------------------------------------------------------------------------------
 # Which file extensions signify an archive to open if the open_archives flag is set?
 # NOTE:  these must currently be files stored in the 'zip' format only.
-archive_extensions: <% [ '.zip', '.war', '.ear' ] %>
+archive_extensions: <% [ '.zip', '.war', '.ear', '.sar', '.rar', '.bar'  ] %>
 
 #--------------------------------------------------------------------------------------
 # Set to true to force discovery to look inside of a jar file for known class
 # files even if the jar file itself is recognized.
-always_open_class_file_archives: false
+always_open_class_file_archives: true
 
 #--------------------------------------------------------------------------------------
 # Set to true to avoid looking inside of a jar file for known class files if the
@@ -106,7 +106,7 @@ no_class_files: false
 # Which file extensions signify an archive that could contain .class files to
 # examine if the archive is not recognized and no_class_files is false.
 # NOTE:  these must currently be files stored in the 'zip' format only.
-class_file_archive_extensions: <% [ '.jar', '.war', '.ear' ] %>
+class_file_archive_extensions: <% [ '.jar', '.war', '.ear', '.sar', '.rar', '.bar' ] %>
 
 #--------------------------------------------------------------------------------------
 # Set to true to open source files to find traces of open source usage.

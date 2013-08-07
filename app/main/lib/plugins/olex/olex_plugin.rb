@@ -44,17 +44,12 @@ end
 class OlexPlugin
 
   # where to link packages to on the OLEX production site
-  OLEX_PREFIX = "https://olex.openlogic.com/packages/" unless defined? OLEX_PREFIX
+  OLEX_PREFIX = "http://olex.openlogic.com/packages/" unless defined? OLEX_PREFIX
 
-  # need this so we can show messages to the user
-  @@discovery = nil
-
-  attr_accessor :olex_machine_file, :olex_local_detailed_file, :olex_mif_file, :olex_local_rollup_file,
-    :enable_olex_links, :no_paths, :show_base_dirs, :show_rollup
+  attr_accessor :olex_machine_file, :olex_local_detailed_file, :enable_olex_links, :no_paths, :show_base_dirs, :show_rollup
   attr_accessor :override_https, :proxy_host, :proxy_port, :proxy_user, :proxy_password, :proxy_ntlm_domain
 
-  def initialize(discovery)
-    @@discovery = discovery
+  def initialize
 
     @show_rollup = false
     @olex_machine_file = OlexConfig.machine_report 
@@ -96,90 +91,90 @@ class OlexPlugin
     case opt
 
     when "--olex-local"
-      # Test access to the results directory/filename before performing
-      # any scan.  This meets one of the requirements for disco 2 which is to not perform
-      # a huge scan and then bomb at the end because the results can't be written
+       # Test access to the results directory/filename before performing 
+       # any scan.  This meets one of the requirements for disco 2 which is to not perform
+       # a huge scan and then bomb at the end because the results can't be written
 
-      # need to do a test file create/write - if it succeeds, proceed
-      # if it fails, bail now so you don't end up running a scan when there's no place
-      # to put the results
+       # need to do a test file create/write - if it succeeds, proceed
+       # if it fails, bail now so you don't end up running a scan when there's no place
+       # to put the results
 
-      @olex_local_detailed_file = arg
-      begin
-        # Issue 34: only open as append in this test so we do not blow away an existing results file
-        File.open(@olex_local_detailed_file, "a") {|file|}
-      rescue Exception => e
-        @@discovery.say "ERROR: Unable to write to file: '#{@olex_local_detailed_file}'\n"
-        if ( !(File.directory?( File.dirname(@olex_local_detailed_file) ) ) )
-          @@discovery.say "The directory " + File.dirname(@olex_local_detailed_file) + " does not exist\n"
-        end
-        exit 0
-      end
+       @olex_local_detailed_file = arg
+       begin
+         # Issue 34: only open as append in this test so we do not blow away an existing results file
+         File.open(@olex_local_detailed_file, "a") {|file|}
+       rescue Exception => e
+         puts "ERROR: Unable to write to file: '#{@olex_local_detailed_file}'\n"
+         if ( !(File.directory?( File.dirname(@olex_local_detailed_file) ) ) )
+           puts "The directory " + File.dirname(@olex_local_detailed_file) + " does not exist\n"
+         end
+         exit 0
+       end
 
     when "--olex-results"
-      # Test access to the results directory/filename before performing
-      # any scan.  This meets one of the requirements for disco 2 which is to not perform
-      # a huge scan and then bomb at the end because the results can't be written
+       # Test access to the results directory/filename before performing 
+       # any scan.  This meets one of the requirements for disco 2 which is to not perform
+       # a huge scan and then bomb at the end because the results can't be written
 
-      # need to do a test file create/write - if it succeeds, proceed
-      # if it fails, bail now so you don't end up running a scan when there's no place
-      # to put the results
+       # need to do a test file create/write - if it succeeds, proceed
+       # if it fails, bail now so you don't end up running a scan when there's no place
+       # to put the results
 
-      @olex_machine_file = arg
-      begin
-        # Issue 34: only open as append in this test so we do not blow away an existing results file
-        File.open(@olex_machine_file, "a") {|file|}
-      rescue Exception => e
-        @@discovery.say "ERROR: Unable to write to file: '#{@olex_machine_file}'\n"
-        if ( !(File.directory?( File.dirname(@olex_machine_file) ) ) )
-          @@discovery.say "The directory " + File.dirname(@olex_machine_file) + " does not exist\n"
-        end
-        exit 0
-      end
+       @olex_machine_file = arg
+       begin
+         # Issue 34: only open as append in this test so we do not blow away an existing results file
+         File.open(@olex_machine_file, "a") {|file|}      
+       rescue Exception => e
+         puts "ERROR: Unable to write to file: '#{@olex_machine_file}'\n"
+         if ( !(File.directory?( File.dirname(@olex_machine_file) ) ) )
+           puts "The directory " + File.dirname(@olex_machine_file) + " does not exist\n"
+         end
+         exit 0
+       end
 
     when "--olex-rollup"
-      # Test access to the results directory/filename before performing
-      # any scan.  This meets one of the requirements for disco 2 which is to not perform
-      # a huge scan and then bomb at the end because the results can't be written
+       # Test access to the results directory/filename before performing
+       # any scan.  This meets one of the requirements for disco 2 which is to not perform
+       # a huge scan and then bomb at the end because the results can't be written
 
-      # need to do a test file create/write - if it succeeds, proceed
-      # if it fails, bail now so you don't end up running a scan when there's no place
-      # to put the results
+       # need to do a test file create/write - if it succeeds, proceed
+       # if it fails, bail now so you don't end up running a scan when there's no place
+       # to put the results
 
-      @show_rollup = true
-      @olex_local_rollup_file = arg if ( !arg.nil? && !arg.empty?)
+       @show_rollup = true
+       @olex_local_rollup_file = arg if ( !arg.nil? && !arg.empty?)
 
-      begin
-        # Issue 34: only open as append in this test so we do not blow away an existing results file
-        File.open(@olex_local_rollup_file, "a") {|file|}
-      rescue Exception => e
-        @@discovery.say "ERROR: Unable to write to file: '#{@olex_local_rollup_file}'\n"
-        if ( !(File.directory?( File.dirname(@olex_local_rollup_file) ) ) )
-          @@discovery.say "The directory " + File.dirname(@olex_local_rollup_file) + " does not exist\n"
-        end
+       begin
+         # Issue 34: only open as append in this test so we do not blow away an existing results file
+         File.open(@olex_local_rollup_file, "a") {|file|}
+       rescue Exception => e
+         puts "ERROR: Unable to write to file: '#{@olex_local_rollup_file}'\n"
+         if ( !(File.directory?( File.dirname(@olex_local_rollup_file) ) ) )
+           puts "The directory " + File.dirname(@olex_local_rollup_file) + " does not exist\n"
+         end
         exit 0
-      end
+       end
 
     when "--olex-mif-file"
-      # Test access to the results directory/filename before performing
-      # any scan.  This meets one of the requirements for disco 2 which is to not perform
-      # a huge scan and then bomb at the end because the results can't be written
+       # Test access to the results directory/filename before performing
+       # any scan.  This meets one of the requirements for disco 2 which is to not perform
+       # a huge scan and then bomb at the end because the results can't be written
 
-      # need to do a test file create/write - if it succeeds, proceed
-      # if it fails, bail now so you don't end up running a scan when there's no place
-      # to put the results
+       # need to do a test file create/write - if it succeeds, proceed
+       # if it fails, bail now so you don't end up running a scan when there's no place
+       # to put the results
 
-      @olex_mif_file = arg
-      begin
-        # Issue 34: only open as append in this test so we do not blow away an existing results file
-        File.open(@olex_mif_file, "a") {|file|}
-      rescue Exception => e
-        @@discovery.say "ERROR: Unable to write to file: '#{@olex_mif_file}'\n"
-        if ( !(File.directory?( File.dirname(@olex_mif_file) ) ) )
-          @@discovery.say "The directory " + File.dirname(@olex_mif_file) + " does not exist\n"
-        end
-        exit 0
-      end
+       @olex_mif_file = arg
+       begin
+         # Issue 34: only open as append in this test so we do not blow away an existing results file
+         File.open(@olex_mif_file, "a") {|file|}
+       rescue Exception => e
+         puts "ERROR: Unable to write to file: '#{@olex_mif_file}'\n"
+         if ( !(File.directory?( File.dirname(@olex_mif_file) ) ) )
+           puts "The directory " + File.dirname(@olex_mif_file) + " does not exist\n"
+         end
+         exit 0
+       end
 
 
     when "--olex-links"
@@ -208,7 +203,7 @@ class OlexPlugin
   end
 
   def local_report_filename
-    @olex_local_detailed_file
+    @olex_local_file
   end
 
   def local_rollup_report_filename
@@ -220,7 +215,7 @@ class OlexPlugin
   end
 
   def can_deliver?
-    true
+    false
   end
 
 =begin rdoc
@@ -308,7 +303,7 @@ class OlexPlugin
     end
 
     template = %{START COMPONENT
-NAME= "OSSDiscovery OLEX <%= scandata.client_version[14..-1] %>  Application Scan MIF"
+NAME= "OSSDiscovery OLEX <%= scandata.client_version[14..-1] %> Application Scan MIF"
   START GROUP
     NAME = "OPEN_SOURCE"
     CLASS = "DMTF|OPEN_SOURCE|1.0"
@@ -356,7 +351,7 @@ NAME= "OSSDiscovery OLEX <%= scandata.client_version[14..-1] %>  Application Sca
   END TABLE
 END COMPONENT
 
-    }
+}
 
     text = ERB.new(template, 0, "%").result(binding)
 
@@ -374,26 +369,10 @@ END COMPONENT
 =begin rdoc
     dumps a simple ASCII text report including every individual match
 =end
-  def report( destination, packages, scandata, rollup_report_destination = nil )
-    #    detailed_io = File.new(@olex_local_detailed_file, "w")
-    #    rollup_io = File.new(@olex_local_rollup_file, "w")
+  def report( destination, packages, scandata  )
+    detailed_io = File.new(@olex_local_detailed_file, "w")
+    rollup_io = File.new(@olex_local_rollup_file, "w")
 
-    detailed_io = nil
-    rollup_io = nil
-
-    if ( destination == STDOUT) then
-      detailed_io = STDOUT
-    else
-      detailed_io = File.new( destination, "w")
-    end
-
-    if rollup_report_destination
-      if ( rollup_report_destination == STDOUT) then
-        rollup_io = STDOUT
-      else
-        rollup_io = File.new( rollup_report_destination, "w")
-      end
-    end
 
     scan_ftime = scandata.endtime - scandata.starttime  # seconds
     scan_hours = (scan_ftime/3600).to_i
@@ -442,9 +421,9 @@ unique packages found   : <%= unique_packages.length %>
 throttling              : <%= throttling_enabled_or_disabled %> (total seconds paused: <%= scandata.total_seconds_paused_for_throttling %>)
 production machine      : <%= scandata.production_scan %>
 
-    }
+}
 
-    detailed_report_template = %{
+     detailed_report_template = %{
 %    if ( packages.length > 0 )
 %      # Format the output by making sure the columns are lined up so it's easier to read.
 %      longest_name = "Package Name".length
@@ -494,9 +473,9 @@ To show OLEX web site links for discovered packages, run discovery with --olex-l
 NOTE: OSSDiscovery with the OLEX plugin uses the fast rules by default.  To do a
 slower, but more accurate search, run discovery with --rule-types=all
 
-    }
+}
 
-    rollup_report_template = %{
+     rollup_report_template = %{
 %    if ( packages.length > 0 )
 %      # Format the output by making sure the columns are lined up so it's easier to read.
 %      longest_entry = "Package Name (#)".length
@@ -534,7 +513,7 @@ To show OLEX web site links for discovered packages, run discovery with --olex-l
 NOTE: OSSDiscovery with the OLEX plugin uses the fast rules by default.  To do a
 slower, but more accurate search, run discovery with --rule-types=all
 
-    }
+}
 
     header_text = ERB.new(header_template, 0, "%").result(binding)
     detailed_text = ERB.new(detailed_report_template, 0, "%").result(binding)
@@ -544,7 +523,7 @@ slower, but more accurate search, run discovery with --rule-types=all
     rollup_report = header_text + rollup_text
 
     # TODO - when a rogue rule runs afoul and matches too much text on a package, it will blow chunks here
-    begin
+    begin      
       printf(detailed_io, detailed_report.gsub('%','%%') )
       printf(rollup_io, rollup_report.gsub('%','%%') )
     rescue Exception => e
@@ -556,9 +535,9 @@ slower, but more accurate search, run discovery with --rule-types=all
 
     # now echo final results to console also
     if ( @show_rollup )
-      @@discovery.say rollup_report
+      puts rollup_report
     else
-      @@discovery.say detailed_report
+      puts detailed_report
     end
   end
 
@@ -599,78 +578,10 @@ slower, but more accurate search, run discovery with --rule-types=all
     OLEX_PREFIX + package_id
   end
 
-  # this is a callback from the framework after reports have been built to give
-  # the plugin an opportunity to send the report if it wants to
-  def send_results(results_file_name = nil)
-    corp_account_id = java.lang.System.getProperty("olex.corp.account_id", "0")
-    corp_id         = java.lang.System.getProperty("olex.corp.id", "0")
-    user_id         = java.lang.System.getProperty("olex.user.id", "0")
-    project_id      = java.lang.System.getProperty("olex.project.id", "0")
-    upload_url      = destination_server_url
-
-    # build our final URL from required parameters
-    url = "#{upload_url}projects/#{project_id}/scans/discovery_upload_results?user_id=#{user_id}&corp_id=#{corp_id}&corp_account_id=#{corp_account_id}"
-
-    client = org.apache.commons.httpclient.HttpClient.new
-    post = org.apache.commons.httpclient.methods.PostMethod.new(url)
-    post.set_do_authentication(true)
-
-    if @proxy_host != nil
-      # setting up proxy
-      client.get_host_configuration.set_proxy(@proxy_host, @proxy_port)
-      scope = Java::OrgApacheCommonsHttpclientAuth::AuthScope::ANY
-
-      # it's necessary to change the authentication scheme preference so that NTLM is not the first choice...
-      # users have experiences issues because NTLM is the first priority of HttpClient by default and if it fails
-      # it bails.   In those environments, it was found that often the proxy will support additional authentication
-      # schemes such as BASIC and DIGEST.  Trying those before NTLM often solves the issue
-      authPrefs = java.util.ArrayList.new
-      authPrefs.add(Java::OrgApacheCommonsHttpclientAuth::AuthPolicy::BASIC)
-      authPrefs.add(Java::OrgApacheCommonsHttpclientAuth::AuthPolicy::DIGEST)
-      authPrefs.add(Java::OrgApacheCommonsHttpclientAuth::AuthPolicy::NTLM)
-
-      client.get_params().set_parameter(Java::OrgApacheCommonsHttpclientAuth::AuthPolicy::AUTH_SCHEME_PRIORITY, authPrefs)
-
-      if @proxy_user && @proxy_password
-        # since NTCredentials derives from standard username password credentials,
-        # it works for other authentication schemes like BASIC
-        credentials = org.apache.commons.httpclient.NTCredentials.new(@proxy_user,
-          @proxy_password,
-          Socket.gethostname,
-          @proxy_ntlm_domain)
-        client.get_state.set_proxy_credentials(scope, credentials)
-      end
-    end
-
-    # read the contents of our report file
-    unless results_file_name.nil? || results_file_name.empty?
-      results = IO.read(results_file_name)
-    else
-      results = IO.read(@olex_machine_file)
-    end
-
-    post_data = [org.apache.commons.httpclient.NameValuePair.new("scan[scan_results]", "#{results}")]
-
-    post.set_request_body(post_data.to_java(org.apache.commons.httpclient.NameValuePair))
-
-    client.executeMethod(post)
-    response_line = post.get_status_line
-
-    # DEBUG
-    # puts response_line   # HTTP/1.1 200 OK
-
-    # release the method connection
-    post.release_connection
-
-    # the upload was successful if we get a 200 back from the server
-    okay = response_line.to_s =~ /200/
-    okay
-  end
-
-  # where should we try to send scan results
-  def destination_server_url
-    # see if we were passed this value (through the JNLP file)
-    java.lang.System.getProperty("olex.scan.upload.url", "https://olex.openlogic.com/")
+  # this is a callback from the framework after reports have been built to give the plugin an opportunity to send the report if it wants to
+  # this plugin never sends results to an OLEX server
+  def send_results
+    false
   end
 
   def send_file(filename, overrides={})

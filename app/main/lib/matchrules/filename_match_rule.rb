@@ -28,9 +28,10 @@
 # --------------------------------------------------------------------------------------------------
 #
 
+$:.unshift File.join(File.dirname(__FILE__), '..')
 require 'package'
 require 'matchrules/match_rule'
-require 'conf/config'
+require File.join(File.dirname(__FILE__), '..', 'conf', 'config')
 
 require 'set'
 

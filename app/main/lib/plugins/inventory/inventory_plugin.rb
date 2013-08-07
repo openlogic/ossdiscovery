@@ -201,7 +201,7 @@ class InventoryPlugin
 
     # TODO - when a rogue rule runs afoul and matches too much text on a package, it will blow chunks here
     begin
-      printf(io, text.gsub('%','%%') )
+      printf(io, text.gsub('%','%%')  )
     rescue Exception => e
       printf("Sorry, can't write the machine report\n#{e.to_s}\n")
     end
@@ -214,7 +214,7 @@ class InventoryPlugin
     dumps a simple ASCII text report to the console
 =end
 
-  def report( destination, packages, scandata, rollup_report_destination = nil )
+  def report( destination, packages, scandata  )
 
     io = nil
     if ( destination == STDOUT) then
@@ -303,7 +303,7 @@ class InventoryPlugin
 
   # this is a callback from the framework after reports have been built to give the plugin an opportunity to send the report if it wants to
   # it's only called if the --deliver-results option is active in the framework
-  def send_results(results_file_name = nil)
+  def send_results()
     return deliver_results( self, nil, nil )
   end
 

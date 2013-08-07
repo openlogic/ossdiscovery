@@ -59,13 +59,13 @@ namespace :release do
     end
   end
 
-  namespace :ruby do 
+  namespace :ruby do
 
     Rake::PackageTask.new(PACKAGE_NAME, PACKAGE_VERSION) do |p|
-  
+
       p.need_tar_gz = true
       p.need_zip = true
-      p.package_files.include("lib/**/*", "doc/*", "log/*", "log", "license/*", "README*", "discovery", "discovery.bat", "help.txt" )
+      p.package_files.include("lib/**/*", "doc/*", "log/*", "log", "LICENSE", "NOTICE", "README*", "discovery", "discovery.bat", "help.txt" )
 
       if ( ENV['plugin'] == "inventory")  # then exclude census and vica versa
         p.package_files.exclude("lib/**/*.jar", "lib/plugins/census" )
@@ -88,9 +88,9 @@ namespace :release do
 
   end
 
-  namespace :jruby do 
-  
-    plugin = ENV['plugin']    
+  namespace :jruby do
+
+    plugin = ENV['plugin']
     jruby_package_name="#{PACKAGE_NAME}-jruby"
     jruby_package_filename="#{jruby_package_name}-#{PACKAGE_VERSION}"
 
@@ -112,11 +112,14 @@ namespace :release do
       end
 
       cp_r "jruby", "pkg/#{jruby_package_filename}/jruby", :remove_destination=>true
-      cp_r "license", "pkg/#{jruby_package_filename}/license", :remove_destination=>true
+      cp_r "3rdparty", "pkg/#{jruby_package_filename}/3rdparty", :remove_destination=>true
       cp_r "doc", "pkg/#{jruby_package_filename}/doc", :remove_destination=>true
       cp_r "log", "pkg/#{jruby_package_filename}/log", :remove_destination=>true
-      cp "README.txt", "pkg/#{jruby_package_filename}/"      
-      cp "help.txt", "pkg/#{jruby_package_filename}/"      
+      cp "LICENSE", "pkg/#{jruby_package_filename}/"
+      cp "NOTICE", "pkg/#{jruby_package_filename}/"
+      cp "README", "pkg/#{jruby_package_filename}/"
+      cp "README.txt", "pkg/#{jruby_package_filename}/"
+      cp "help.txt", "pkg/#{jruby_package_filename}/"
       cp "discovery_jruby", "pkg/#{jruby_package_filename}/discovery"
       cp "discovery_jruby.bat", "pkg/#{jruby_package_filename}/discovery.bat"
       require 'find'
@@ -142,9 +145,9 @@ namespace :release do
 
   end
 
-  namespace :windows do 
-   
-    plugin = ENV['plugin']    
+  namespace :windows do
+
+    plugin = ENV['plugin']
     package_name="#{PACKAGE_NAME}-windows"
 
     package_filename="#{package_name}-#{PACKAGE_VERSION}"
@@ -169,12 +172,15 @@ namespace :release do
       end
 
       cp_r "jruby", "#{dest_dir}/jruby", :remove_destination=>true
-      cp_r "license", "#{dest_dir}/license", :remove_destination=>true
+      cp_r "3rdparty", "#{dest_dir}/3rdparty", :remove_destination=>true
       cp_r "log", "#{dest_dir}/log", :remove_destination=>true
       cp_r "doc", "#{dest_dir}/doc", :remove_destination=>true
       cp_r "jre/jre-1.6.0_20-windows-ia32", "#{dest_dir}/jre", :remove_destination=>true
-      cp "README.txt", "#{dest_dir}"      
-      cp "help.txt", "#{dest_dir}"      
+      cp "LICENSE", "#{dest_dir}"
+      cp "NOTICE", "#{dest_dir}"
+      cp "README", "#{dest_dir}"
+      cp "README.txt", "#{dest_dir}"
+      cp "help.txt", "#{dest_dir}"
       cp "discovery_jre_windows.bat", "#{dest_dir}/discovery.bat"
       require 'find'
 
@@ -213,9 +219,9 @@ namespace :release do
 
   end
 
-  namespace :linux do 
+  namespace :linux do
 
-    plugin = ENV['plugin']    
+    plugin = ENV['plugin']
     package_name="#{PACKAGE_NAME}-linux"
     package_filename="#{package_name}-#{PACKAGE_VERSION}"
     dest_dir="pkg/#{package_filename}"
@@ -239,12 +245,15 @@ namespace :release do
       end
 
       cp_r "jruby", "#{dest_dir}/jruby", :remove_destination=>true
-      cp_r "license", "#{dest_dir}/license", :remove_destination=>true
+      cp_r "3rdparty", "#{dest_dir}/3rdparty", :remove_destination=>true
       cp_r "log", "#{dest_dir}/log", :remove_destination=>true
       cp_r "doc", "#{dest_dir}/doc", :remove_destination=>true
       cp_r "jre/jre-1.6.0_20-linux-ia32", "#{dest_dir}/jre", :remove_destination=>true
-      cp "README.txt", "#{dest_dir}"      
-      cp "help.txt", "#{dest_dir}"      
+      cp "LICENSE", "#{dest_dir}"
+      cp "NOTICE", "#{dest_dir}"
+      cp "README", "#{dest_dir}"
+      cp "README.txt", "#{dest_dir}"
+      cp "help.txt", "#{dest_dir}"
       cp "discovery_jre_linux", "#{dest_dir}/discovery"
       require 'find'
 
@@ -295,12 +304,15 @@ namespace :release do
       end
 
       cp_r "jruby", "#{dest_dir}/jruby", :remove_destination=>true
-      cp_r "license", "#{dest_dir}/license", :remove_destination=>true
+      cp_r "3rdparty", "#{dest_dir}/3rdparty", :remove_destination=>true
       cp_r "log", "#{dest_dir}/log", :remove_destination=>true
       cp_r "doc", "#{dest_dir}/doc", :remove_destination=>true
       cp_r "jre/jre-1.5.0_10-b03-solaris-sparc32", "#{dest_dir}/jre", :remove_destination=>true
-      cp "README.txt", "#{dest_dir}"      
-      cp "help.txt", "#{dest_dir}"      
+      cp "LICENSE", "#{dest_dir}"
+      cp "NOTICE", "#{dest_dir}"
+      cp "README", "#{dest_dir}"
+      cp "README.txt", "#{dest_dir}"
+      cp "help.txt", "#{dest_dir}"
       cp "discovery_jre_solaris", "#{dest_dir}/discovery"
       require 'find'
 

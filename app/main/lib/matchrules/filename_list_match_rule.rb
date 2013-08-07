@@ -28,10 +28,11 @@
 # --------------------------------------------------------------------------------------------------
 #
 
+$:.unshift File.join(File.dirname(__FILE__), '..')
 require 'package'
 require 'search_trees'
 require 'matchrules/match_rule'
-require 'conf/config'
+require File.join(File.dirname(__FILE__), '..', 'conf', 'config')
 
 require 'set'
 require 'yaml'

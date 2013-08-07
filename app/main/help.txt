@@ -69,7 +69,7 @@ Options are not order dependent and may be one or more of:
 --no-class-files,       -C if a jar file is not recognized, do not look inside
                            of it for known .class files
 
---nofollow,             -N don't follow symlinks, default is: Yes,
+--nofollow,             -S don't follow symlinks, default is: Yes,
                            follow symlinks
 
 --preview-results,      -R This flag will dump the machine results file to

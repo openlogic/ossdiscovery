@@ -1,2 +1,8 @@
 dots_in_name:
-#  - jquery
+  - jquery
+  - ninject
+  - jquery-jqgrid
+  - grid
+  - linfu
+  - microsoft-shared-dlls
+

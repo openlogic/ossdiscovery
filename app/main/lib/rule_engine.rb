@@ -44,6 +44,8 @@ require 'set'
 require 'rexml/document'
 include REXML
 
+$:.unshift File.join(File.dirname(__FILE__))
+
 # from internal source
 require 'eval_rule'
 require 'project_rule'

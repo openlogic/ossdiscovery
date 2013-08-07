@@ -49,20 +49,14 @@ require 'matchrules/filename_list_match_rule'
 require 'matchrules/filename_version_match_rule'
 require 'matchrules/md5_match_rule'
 
-require 'conf/config'
+require File.join(File.dirname(__FILE__), 'conf', 'config')
 
 class ScanRulesReader
   
   @@log = Config.log
-  @@discovery = nil
 
   ERROR_NO_UNIVERSAL_VERSION_VALUES_SET = "NO_UNIVERSAL_VERSION_VALUES_SET" unless defined? ERROR_NO_UNIVERSAL_VERSION_VALUES_SET
   ERROR_MULTIPLE_UNIQUE_UNIVERSAL_VERSIONS = "MULTIPLE_UNIQUE_UNIVERSAL_VERSIONS" unless defined? ERROR_MULTIPLE_UNIQUE_UNIVERSAL_VERSIONS
-
-  # need a hook back to discovery so we can display progress messages to the user
-  def self.prep(discovery)
-    @@discovery = discovery
-  end
   
 =begin rdoc
   This method turns stuff from a scanrules xml file into ProjectRule objects (with their 
@@ -81,24 +75,19 @@ class ScanRulesReader
     count = 0
     projects = Array.new
     
-    # Rod - 4/23/2009
-    # rules are now baked into the jar file that contains discovery
-    #scan_rules_dirs.each do |scan_rules_dir|
+    scan_rules_dirs.each do |scan_rules_dir|
       
-    #  rules_files = ScanRulesReader.find_all_scanrules_files(scan_rules_dir)
-    #  if (rules_files == nil || rules_files.size == 0) then
-    #    @@log.warn("ScanRulesReader") { "No scan rules xml files found in directory: '#{scan_rules_dir}'" }
-    #    next
-    #  end
+      rules_files = ScanRulesReader.find_all_scanrules_files(scan_rules_dir)
+      if (rules_files == nil || rules_files.size == 0) then 
+        @@log.warn("ScanRulesReader") { "No scan rules xml files found in directory: '#{scan_rules_dir}'" }
+        next
+      end
         
-      %w(project-rules project-rules-mvngen).each do |file_name|
-        xml_text = Utils.load_openlogic_rules_file("#{file_name}.xml")
-        xml = Document.new(xml_text)
-      #rules_files.each do |filepath|
-      #  @@log.info("ScanRulesReader") { "Reading rules file: '#{filepath}'" }
+      rules_files.each do |filepath| 
+        @@log.info("ScanRulesReader") { "Reading rules file: '#{filepath}'" }
         
-      #  file = File.new(filepath)
-      #  xml = Document.new(file)
+        file = File.new(filepath)
+        xml = Document.new(file)
         root = xml.root
        
         # spin through all the projects in the scan rules file
@@ -132,7 +121,7 @@ class ScanRulesReader
               
               projects << project
               break  # right now there should be only one eval per speed factor per project, so break out of this after speed matched
-            end
+            end           
           }
            
           # now we should have the active rulesets for this speed factor, pull just those from the scan rules for this project and 
@@ -160,8 +149,8 @@ class ScanRulesReader
                 
                 xruleset.elements.each("match-rule") { |xmatchrule|
                   count += 1
-                  if @@discovery && count % 250 == 0
-                    @@discovery.say "."
+                  if count % 250 == 0
+                    putc "."
                   end
                   ruletype = xmatchrule.attributes["type"]
                   xmatchrule_attrs = Hash.new
@@ -202,7 +191,7 @@ class ScanRulesReader
         
       end # of rules_file.each
       
-    #end # of scan_rules_dirs.each
+    end # of scan_rules_dirs.each
       
     ScanRulesReader.validate_expressions(projects)
     
@@ -318,22 +307,17 @@ class ScanRulesReader
     
     projects = Array.new
     
-    # Rod - 4/23/2009
-    # rules are now baked into the jar file that contains discovery
-    #scan_rules_dirs.each do |scan_rules_dir|
+    scan_rules_dirs.each do |scan_rules_dir|
       
-    #  rules_files = ScanRulesReader.find_all_scanrules_files(scan_rules_dir)
-    #  if (rules_files == nil || rules_files.size == 0) then
-    #    @@log.warn("ScanRulesReader") { "No scan rules xml files found in directory: '#{scan_rules_dir}'" }
-    #    next
-    #  end
+      rules_files = ScanRulesReader.find_all_scanrules_files(scan_rules_dir)
+      if (rules_files == nil || rules_files.size == 0) then 
+        @@log.warn("ScanRulesReader") { "No scan rules xml files found in directory: '#{scan_rules_dir}'" }
+        next
+      end
         
-      #rules_files.each_with_index do |filepath, index|
-        #file = File.new(filepath)
-        #xml = Document.new(file)
-      %w(project-rules project-rules-mvngen).each do |file_name|
-        xml_text = Utils.load_openlogic_rules_file("#{file_name}.xml")
-        xml = Document.new(xml_text)
+      rules_files.each_with_index do |filepath, index| 
+        file = File.new(filepath)
+        xml = Document.new(file)
         root = xml.root
      
         # spin through all the projects in the scan rules file
@@ -348,11 +332,10 @@ class ScanRulesReader
   
           projects << project
         end # of root.elements.each
-      end
         
-      #end # of rules_files.each
+      end # of rules_files.each
       
-    #end # of scan_rules_dirs.each
+    end # of scan_rules_dirs.each
     
     return projects
   end
@@ -410,14 +393,10 @@ class ScanRulesReader
       end # of rules_files.each
     end # of scan_rules_dirs.each
     dupes = md5_strings.inject({}) {|h,v| h[v]=h[v].to_i+1; h}.reject{|k,v| v==1}.keys
-    dupes.each {|dupe| @@discovery.say(dupe)} if @@discovery
+    dupes.each {|dupe| puts dupe}
   end # of the method
   
   def self.generate_aggregate_md5(dir_with_rules_files)
-    # Rod - 4/23/2009
-    # rules are now baked into the jar file that contains discovery so this value
-    # can't be wrong, which means we no longer need to check it
-    return "123"
     files = ScanRulesReader.find_all_scanrules_files(dir_with_rules_files).to_a.sort
     md5s = Array.new
     files.each do |f|
@@ -437,10 +416,6 @@ class ScanRulesReader
   end
   
   def self.get_universal_rules_version()
-    # Rod - 4/23/2009
-    # rules are now baked into the jar file that contains discovery so this value
-    # can't be wrong, which means we no longer need to check it
-    return "123"
     openlogic_rules_dir = Config.prop(:rules_openlogic)
     rules_files = ScanRulesReader.find_all_scanrules_files(openlogic_rules_dir)
     
