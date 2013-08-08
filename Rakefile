@@ -3,7 +3,8 @@ require 'rake/packagetask'
 
 namespace :release do
 
-  PACKAGE_NAME= ( ENV["NAME"] || "ossdiscovery" ) + "-" + (ENV['plugin'].nil? ? "error" : ENV['plugin'])
+  ENV['plugin'] = ENV['plugin'].nil? ? "olex" : ENV['plugin']
+  PACKAGE_NAME= ( ENV["NAME"] || "ossdiscovery" ) + "-" + ENV['plugin']
   PACKAGE_VERSION=ENV["VERSION"] || "2.3.3"
 
 
@@ -34,7 +35,9 @@ namespace :release do
         yml_fd.close
       end
 
-    elsif ( ENV['plugin'] == "olex")
+    # OLEX is the default plugin
+    #elsif ( ENV['plugin'] == "olex")
+    else
       olex_yml = File.open("lib/plugins/olex/conf/olex_config.yml").read
       olex_yml.gsub!("olex_enabled: false", "olex_enabled: true")
       puts olex_yml
@@ -52,7 +55,9 @@ namespace :release do
        # revert the temporary enabling of the inventory plugin 
        puts "reverting inventory_config.yml"
        `svn revert lib/plugins/inventory/conf/inventory_config.yml`
-    elsif ENV['plugin'] == "olex"
+    # OLEX is the default plugin
+    #elsif ENV['plugin'] == "olex"
+    else
        # revert the temporary enabling of the olex plugin 
        puts "reverting olex_config.yml"
        `svn revert lib/plugins/olex/conf/olex_config.yml`
@@ -65,7 +70,7 @@ namespace :release do
 
       p.need_tar_gz = true
       p.need_zip = true
-      p.package_files.include("lib/**/*", "doc/*", "log/*", "log", "LICENSE", "NOTICE", "README*", "discovery", "discovery.bat", "help.txt" )
+      p.package_files.include("lib/**/*", "doc/*", "log/*", "log", "LICENSE", "NOTICE", "README", "discovery", "discovery.bat", "help.txt" )
 
       if ( ENV['plugin'] == "inventory")  # then exclude census and vica versa
         p.package_files.exclude("lib/**/*.jar", "lib/plugins/census" )
@@ -73,7 +78,9 @@ namespace :release do
       elsif ( ENV['plugin'] == "census" )
         p.package_files.exclude("lib/**/*.jar", "lib/plugins/inventory")
         p.package_files.exclude("lib/**/*.jar", "lib/plugins/olex")
-      elsif ( ENV['plugin'] == "olex" )
+    # OLEX is the default plugin
+      #elsif ( ENV['plugin'] == "olex" )
+      else
         p.package_files.exclude("lib/**/*.jar", "lib/plugins/inventory")
         p.package_files.exclude("lib/**/*.jar", "lib/plugins/census")
       end
@@ -106,7 +113,9 @@ namespace :release do
       elsif ( plugin == "census" )
         rm_r "pkg/#{jruby_package_filename}/lib/plugins/inventory"
         rm_r "pkg/#{jruby_package_filename}/lib/plugins/olex"
-      elsif ( plugin == "olex" )
+    # OLEX is the default plugin
+      #elsif ( plugin == "olex" )
+      else
         rm_r "pkg/#{jruby_package_filename}/lib/plugins/inventory"
         rm_r "pkg/#{jruby_package_filename}/lib/plugins/census"
       end
@@ -118,7 +127,6 @@ namespace :release do
       cp "LICENSE", "pkg/#{jruby_package_filename}/"
       cp "NOTICE", "pkg/#{jruby_package_filename}/"
       cp "README", "pkg/#{jruby_package_filename}/"
-      cp "README.txt", "pkg/#{jruby_package_filename}/"
       cp "help.txt", "pkg/#{jruby_package_filename}/"
       cp "discovery_jruby", "pkg/#{jruby_package_filename}/discovery"
       cp "discovery_jruby.bat", "pkg/#{jruby_package_filename}/discovery.bat"
@@ -166,7 +174,9 @@ namespace :release do
       elsif ( plugin == "census")
         rm_r "pkg/#{package_filename}/lib/plugins/inventory"
         rm_r "pkg/#{package_filename}/lib/plugins/olex"
-      elsif ( plugin == "olex")
+      # OLEX is now the default plugin
+      #elsif ( plugin == "olex")
+      else
         rm_r "pkg/#{package_filename}/lib/plugins/inventory"
         rm_r "pkg/#{package_filename}/lib/plugins/census"
       end
@@ -179,7 +189,6 @@ namespace :release do
       cp "LICENSE", "#{dest_dir}"
       cp "NOTICE", "#{dest_dir}"
       cp "README", "#{dest_dir}"
-      cp "README.txt", "#{dest_dir}"
       cp "help.txt", "#{dest_dir}"
       cp "discovery_jre_windows.bat", "#{dest_dir}/discovery.bat"
       require 'find'
@@ -239,7 +248,9 @@ namespace :release do
       elsif ( plugin == "census")
         rm_r "pkg/#{package_filename}/lib/plugins/inventory"
         rm_r "pkg/#{package_filename}/lib/plugins/olex"
-      elsif ( plugin == "olex")
+      # OLEX is the default plugin
+      #elsif ( plugin == "olex")
+      else
         rm_r "pkg/#{package_filename}/lib/plugins/inventory"
         rm_r "pkg/#{package_filename}/lib/plugins/census"
       end
@@ -252,7 +263,6 @@ namespace :release do
       cp "LICENSE", "#{dest_dir}"
       cp "NOTICE", "#{dest_dir}"
       cp "README", "#{dest_dir}"
-      cp "README.txt", "#{dest_dir}"
       cp "help.txt", "#{dest_dir}"
       cp "discovery_jre_linux", "#{dest_dir}/discovery"
       require 'find'
@@ -298,7 +308,9 @@ namespace :release do
       elsif ( plugin == "census")
         rm_r "pkg/#{package_filename}/lib/plugins/inventory"
         rm_r "pkg/#{package_filename}/lib/plugins/olex"
-      elsif ( plugin == "olex")
+      # OLEX is the default plugin
+      #elsif ( plugin == "olex")
+      else
         rm_r "pkg/#{package_filename}/lib/plugins/inventory"
         rm_r "pkg/#{package_filename}/lib/plugins/census"
       end
@@ -311,7 +323,6 @@ namespace :release do
       cp "LICENSE", "#{dest_dir}"
       cp "NOTICE", "#{dest_dir}"
       cp "README", "#{dest_dir}"
-      cp "README.txt", "#{dest_dir}"
       cp "help.txt", "#{dest_dir}"
       cp "discovery_jre_solaris", "#{dest_dir}/discovery"
       require 'find'
