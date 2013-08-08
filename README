@@ -2,23 +2,18 @@
 The intended audience for this README is a developer on this project.
 ================================================================================
 
-Source Code Structure
-======================
-The source code is organized like this:
 
-  https://github.com/openlogic/ossdiscovery/
+- About OSSDiscovery
+====================
 
-  This has been done for a reason.  The reason is, down in the test directory 
-  (specifically the 'test/resources' directory and all sub-directories of that)
-  there are many megabytes worth of binary key files from discoverable projects.
-  These are there so that they can be successfully discovered in tests.  Because
-  these resources live under the test directory, it can take a good bit of time
-  for a person to check out.  Splitting the directory structure up in the 
-  aforementioned way gives a person the ability to check out only the main 
-  source code if that's all they want, so that they don't have to wait forever 
-  and a day for all of the many megs worth of stuff that comes down in the test 
-  directory.
+OSS Discovery finds the open source software embedded in applications and
+installed on computers. OSS Discovery helps enterprises better manage open
+source usage and remain compliant with internal policies, regulations, and
+software license terms.
 
+OSS Discovery, from version 2 on, was built originally to support the
+OSS Census efforts in 2007-2008 which was an effort to show how prevalent
+Open Source usage was in the world and in enterprises.
 
 - CLI 
 ======
@@ -33,9 +28,6 @@ The source code is organized like this:
 
 - Testing
 ===========
-- Make sure you're actually checking the tests out as per the instructions in 
-  the 'Source Code Organization' section above.
-
 - Setting up so tests can be run properly:
   - Currently, you must run the following series of commands to set up your 
     environment for testing.  Doing this is only required once/the first time. 
