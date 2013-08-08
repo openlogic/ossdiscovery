@@ -1,11 +1,11 @@
 #!/bin/bash
 # This script needs to be run from directory directly above 'main' (which is where CruiseControl runs it from).
 export OSSDISCOVERY_HOME=`pwd`/main
-svn up $OSSDISCOVERY_HOME/../test-internal $OSSDISCOVERY_HOME --username guest && \
-ruby $OSSDISCOVERY_HOME/../test-internal/ts_test_all.rb && \
-ruby $OSSDISCOVERY_HOME/../test/ts_test_unit.rb && \
-$OSSDISCOVERY_HOME/jruby/bin/jruby -J-Xmx256m $OSSDISCOVERY_HOME/../test-internal/ts_test_all.rb && \
-$OSSDISCOVERY_HOME/jruby/bin/jruby -J-Xmx1024m $OSSDISCOVERY_HOME/../test/ts_test_unit.rb && \
+svn up $OSSDISCOVERY_HOME/test-internal $OSSDISCOVERY_HOME --username guest && \
+ruby $OSSDISCOVERY_HOME/test-internal/ts_test_all.rb && \
+ruby $OSSDISCOVERY_HOME/test/ts_test_unit.rb && \
+$OSSDISCOVERY_HOME/jruby/bin/jruby -J-Xmx256m $OSSDISCOVERY_HOME/test-internal/ts_test_all.rb && \
+$OSSDISCOVERY_HOME/jruby/bin/jruby -J-Xmx1024m $OSSDISCOVERY_HOME/test/ts_test_unit.rb && \
 ruby $OSSDISCOVERY_HOME/lib/discovery.rb --list-projects >> $CC_BUILD_ARTIFACTS/discoverable_projects_list
 
 # A command to come back to some day if we want to get rcov results posted on the CI server.
